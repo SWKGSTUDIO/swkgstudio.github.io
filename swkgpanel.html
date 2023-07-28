@@ -29,40 +29,25 @@
         <h2>ПАНЕЛЬ УПРАВЛЕНИЯ</h2>
         <form id="unityForm">
           <input type="text" id="unityDataInput" placeholder="Введите текст...">
-          <button type="submit">Отправить</button>
+          <button onclick="sendUnityData()">LINK</button>
         </form>
       </div>
     </div>
   </main>
   
   <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const unityForm = document.getElementById("unityForm");
-      const unityDataInput = document.getElementById("unityDataInput");
+    const ws = new WebSocket('wss://intermediate-easy-ship.glitch.me');
   
-      unityForm.addEventListener("submit", (event) => {
-        event.preventDefault();
+    ws.onopen = () => {
+      console.log('Подключено к серверу');
+    };
   
-        const unityData = unityDataInput.value;
-  
-        // Отправляем данные на сервер с помощью fetch
-        fetch("https://intermediate-easy-ship.glitch.me/send-unity-data", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({ unityData })
-        })
-        .then(response => response.json())
-        .then(data => {
-          console.log("Ответ от сервера:", data);
-        })
-        .catch(error => {
-          console.error("Ошибка при отправке данных:", error);
-        });
-      });
-    });
+    function sendUnityData() {
+      const unityData = document.getElementById("unityDataInput").value;
+      ws.send(JSON.stringify({ unityData }));
+    }
   </script>
+  
 
   <script src="assets/bootstrap/js/bootstrap.min.js"></script>
 </body>

@@ -156,7 +156,6 @@
   .button-list.horizontal li {
     width: 100px;
     height: 50px;
-    margin-right: 5px;
   }
   
   /* Уменьшаем высоту кнопок на очень маленьких экранах */

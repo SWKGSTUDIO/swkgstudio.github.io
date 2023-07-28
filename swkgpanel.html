@@ -27,9 +27,42 @@
     <div class="filem-container">
       <div class="col text-center chat-info">
         <h2>ПАНЕЛЬ УПРАВЛЕНИЯ</h2>
+        <form id="unityForm">
+          <input type="text" id="unityDataInput" placeholder="Введите текст...">
+          <button type="submit">Отправить</button>
+        </form>
       </div>
     </div>
   </main>
+  
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const unityForm = document.getElementById("unityForm");
+      const unityDataInput = document.getElementById("unityDataInput");
+  
+      unityForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+  
+        const unityData = unityDataInput.value;
+  
+        // Отправляем данные на сервер с помощью fetch
+        fetch("https://intermediate-easy-ship.glitch.me/send-unity-data", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ unityData })
+        })
+        .then(response => response.json())
+        .then(data => {
+          console.log("Ответ от сервера:", data);
+        })
+        .catch(error => {
+          console.error("Ошибка при отправке данных:", error);
+        });
+      });
+    });
+  </script>
 
   <script src="assets/bootstrap/js/bootstrap.min.js"></script>
 </body>

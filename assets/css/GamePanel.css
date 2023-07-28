@@ -147,18 +147,26 @@
   pointer-events: none;
 }
 
-/* Медиа-запрос для уменьшения панели на маленьких экранах (телефонах) */
-@media (max-width: 768px) {
+@media (max-width: 768px) or (max-height: 600px) {
   .game-panel-container {
     max-width: 400px;
     max-height: 300px;
   }
 
   .button-list.horizontal li {
-    width: calc(50% - 10px);
+    width: 100px;
+    height: 50px;
+    margin-right: 0;
   }
   
+  /* Уменьшаем высоту кнопок на очень маленьких экранах */
   .button-list li {
-    height: 50px;
+    height: 30px;
   }
+
+  /* Устанавливаем ширину кнопок равной высоте, чтобы сделать их квадратными */
+  .button-list li button {
+    width: 100%;
+  }
+
 }

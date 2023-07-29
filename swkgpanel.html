@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="assets/css/tileback.css">
   <link rel="stylesheet" href="assets/css/style.css">
   <link rel="stylesheet" href="assets/css/filem.css">
+  
 
 </head>
 
@@ -31,23 +32,32 @@
           <input type="text" id="unityDataInput" placeholder="Введите текст...">
           <button onclick="sendUnityData()">LINK</button>
         </form>
+        <div id="unityDataOutput"></div>
       </div>
     </div>
   </main>
   
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
   <script>
     const ws = new WebSocket('wss://intermediate-easy-ship.glitch.me');
   
-    ws.onopen = () => {
+    ws.onopen = function () {
       console.log('Подключено к серверу');
     };
   
     function sendUnityData() {
-      const unityData = document.getElementById("unityDataInput").value;
+      const unityData = document.getElementById('unityDataInput').value;
       ws.send(JSON.stringify({ unityData }));
     }
-  </script>
   
+    ws.onmessage = function (event) {
+      const data = JSON.parse(event.data);
+      document.getElementById('unityDataOutput').innerHTML = data.unityData;
+    };
+  </script>
+
+
 
   <script src="assets/bootstrap/js/bootstrap.min.js"></script>
 </body>

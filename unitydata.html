@@ -14,14 +14,20 @@
   <script>
     // Выполняем GET-запрос на сервер для получения данных Unity
     fetch('https://intermediate-easy-ship.glitch.me:3000/unity-data')
-      .then(response => response.json())
-      .then(data => {
-        const unityDataOutput = document.getElementById('unityDataOutput');
-        unityDataOutput.textContent = data.unityData || 'Нет данных Unity на сервере.';
-      })
-      .catch(error => {
-        console.error('Ошибка при выполнении GET-запроса:', error);
-      });
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Ошибка при выполнении GET-запроса');
+    }
+    return response.json();
+  })
+  .then(data => {
+    const unityDataOutput = document.getElementById('unityDataOutput');
+    unityDataOutput.textContent = data.unityData || 'Нет данных Unity на сервере.';
+  })
+  .catch(error => {
+    console.error('Ошибка при выполнении GET-запроса:', error);
+  });
+
   </script>
 </body>
 

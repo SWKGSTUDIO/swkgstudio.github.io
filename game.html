@@ -33,14 +33,19 @@
             // Добавляем спрайт воды и устанавливаем его размеры равные размерам канваса
             const water = this.add.tileSprite(0, 0, game.config.width, game.config.height, 'water').setOrigin(0);
 
-            // Добавляем игрока (белый шарик)
+            // Добавляем игрока (белый шарик) по центру экрана
+            const playerRadius = 50;
             player = this.add.graphics();
             player.fillStyle(0xffffff, 1); // Белый цвет и непрозрачность 1 (полностью непрозрачный)
-            player.fillCircle(window.innerWidth / 2, window.innerHeight / 2, 50); // Радиус шарика - 50 пикселей
+            player.fillCircle(game.config.width / 2, game.config.height / 2, playerRadius); // Радиус шарика - 50 пикселей
             cursors = this.input.keyboard.createCursorKeys();
 
-            // Задаем камеру, чтобы она следовала за игроком
-            this.cameras.main.startFollow(player);
+            // Задаем камеру
+            this.cameras.main.setBounds(0, 0, game.config.width, game.config.height);
+            this.cameras.main.startFollow(player, true, 0.5, 0.5); // Камера следует за игроком с учетом смещения
+
+            // Устанавливаем смещение камеры по вертикали так, чтобы она была над игроком
+            this.cameras.main.setY(game.config.height / 2 - player.y + playerRadius);
         }
 
         function update() {

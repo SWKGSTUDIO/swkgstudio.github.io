@@ -2,25 +2,18 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Phaser Camera Follow</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.55.0/phaser.min.js"></script>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto&display=swap">
+    <title>PixiJS Camera Follow</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/5.3.4/pixi.min.js"></script>
 </head>
 <body>
     <script>
-        // Определяем размеры игровой сцены
-        const gameConfig = {
-            type: Phaser.AUTO,
+        // Создаем новую игровую сцену
+        const app = new PIXI.Application({
             width: window.innerWidth,
-            height: window.innerHeight,
-            scene: {
-                preload: preload,
-                create: create,
-                update: update
-            }
-        };
+            height: window.innerHeight
+        });
 
-        const game = new Phaser.Game(gameConfig);
+        document.body.appendChild(app.view);
 
         let player;
         let cursors;
@@ -32,36 +25,45 @@
         let waterTileWidth = 200;
         let waterTileHeight = 200;
 
-        function preload() {
-            // Загружаем текстуру для воды
-            this.load.image('water', 'assets/water.png');
-        }
+        // Загружаем текстуру для воды
+        PIXI.Loader.shared.add('water', 'assets/water.png').load(setup);
 
-        function create() {
-            // Добавляем спрайт воды и устанавливаем его размеры равные размерам канваса
-            water = this.add.tileSprite(0, 0, waterTileWidth, waterTileHeight, 'water').setOrigin(0);
-
-            // Уменьшаем количество тайлов воды по горизонтали и вертикали
-            water.setTileScale(0.3, 0.3);
+        function setup() {
+            // Создаем спрайт воды и устанавливаем его размеры равные размерам канваса
+            water = new PIXI.TilingSprite(
+                PIXI.Texture.from('water'),
+                app.view.width,
+                app.view.height
+            );
+            app.stage.addChild(water);
 
             // Добавляем игрока (белый шарик) по центру экрана
             const playerRadius = 50;
-            player = this.add.graphics();
-            player.fillStyle(0xffffff, 1); // Белый цвет и непрозрачность 1 (полностью непрозрачный)
-            player.fillCircle(game.config.width / 2, game.config.height / 2, playerRadius); // Радиус шарика - 50 пикселей
-            cursors = this.input.keyboard.createCursorKeys();
+            player = new PIXI.Graphics();
+            player.beginFill(0xffffff);
+            player.drawCircle(0, 0, playerRadius);
+            player.endFill();
+            player.x = app.view.width / 2;
+            player.y = app.view.height / 2;
+            app.stage.addChild(player);
 
-            // Задаем камеру
-            this.cameras.main.setBounds(0, 0, game.config.width, game.config.height);
-            this.cameras.main.startFollow(player, true, 0.5, 0.5); // Камера следует за игроком с учетом смещения
+            cursors = app.renderer.plugins.interaction.keyboard;
 
             // Добавляем текстовый объект для отображения скорости перемещения
-            speedText = this.add.text(player.x, player.y - playerRadius - 10, '', { fontFamily: 'Arial', fontSize: '20px', color: '#ff0000' }); // Красный цвет текста
-            speedText.setDepth(2); // Задаем depth, чтобы текст всегда был видим над всеми другими элементами
+            speedText = new PIXI.Text('', { fontFamily: 'Arial', fontSize: 20, fill: '#ff0000' });
+            speedText.anchor.set(0.5, 1); // Центрируем текст относительно игрока по горизонтали
+            speedText.x = player.x;
+            speedText.y = player.y - playerRadius - 10;
+            app.stage.addChild(speedText);
 
             // Добавляем текст "ПИРАТЫ" в правый верхний угол
-            pirateText = this.add.text(game.config.width - 120, 50, 'ПИРАТЫ', { fontFamily: 'Roboto', fontSize: '30px', color: '#ffffff' });
-            pirateText.setDepth(2); // Задаем depth, чтобы текст всегда был видим над всеми другими элементами
+            pirateText = new PIXI.Text('ПИРАТЫ', { fontFamily: 'Roboto', fontSize: 30, fill: '#ffffff' });
+            pirateText.x = app.view.width - 120;
+            pirateText.y = 50;
+            app.stage.addChild(pirateText);
+
+            // Запускаем игровой цикл
+            app.ticker.add(update);
         }
 
         function update() {
@@ -79,9 +81,12 @@
             }
 
             // Плавное управление игроком к точке, куда тыкаем мышкой
-            if (this.input.activePointer.isDown) {
-                const targetX = this.input.activePointer.worldX;
-                const targetY = this.input.activePointer.worldY;
+            if (app.renderer.plugins.interaction.mouse.global.x > 0 &&
+                app.renderer.plugins.interaction.mouse.global.x < app.view.width &&
+                app.renderer.plugins.interaction.mouse.global.y > 0 &&
+                app.renderer.plugins.interaction.mouse.global.y < app.view.height) {
+                const targetX = app.renderer.plugins.interaction.mouse.global.x;
+                const targetY = app.renderer.plugins.interaction.mouse.global.y;
                 const speed = 3;
 
                 const directionX = targetX - player.x;
@@ -96,20 +101,21 @@
                     player.y += directionYNormalized * speed;
 
                     // Обновляем текстовый объект с текущей скоростью перемещения
-                    speedText.x = player.x - speedText.width / 2; // Центрируем текст относительно игрока по горизонтали
+                    speedText.text = `Speed: ${speed.toFixed(2)}`;
+                    speedText.x = player.x;
                     speedText.y = player.y - 80;
-                    speedText.setText(`Speed: ${speed.toFixed(2)}`);
 
                     // Обновляем текстовый объект "ПИРАТЫ" в правом верхнем углу
-                    pirateText.x = game.config.width - 120;
+                    pirateText.x = app.view.width - 120;
                     pirateText.y = 50;
 
                     // Обновляем позицию и размеры спрайта воды в зависимости от положения игрока
                     water.x = Math.floor(player.x / waterTileWidth) * waterTileWidth;
                     water.y = Math.floor(player.y / waterTileHeight) * waterTileHeight;
-                    waterWidth = Math.ceil(game.config.width / waterTileWidth) * waterTileWidth;
-                    waterHeight = Math.ceil(game.config.height / waterTileHeight) * waterTileHeight;
-                    water.setSize(waterWidth, waterHeight);
+                    waterWidth = Math.ceil(app.view.width / waterTileWidth) * waterTileWidth;
+                    waterHeight = Math.ceil(app.view.height / waterTileHeight) * waterTileHeight;
+                    water.width = waterWidth;
+                    water.height = waterHeight;
                 }
             }
         }

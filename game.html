@@ -7,27 +7,33 @@
     body, html {
       margin: 0;
       padding: 0;
-      overflow: hidden; /* Убираем полосы прокрутки */
+      overflow: hidden;
     }
     canvas {
-      display: block; /* Канвас займет всю доступную область */
+      display: block;
     }
   </style>
 </head>
 <body>
   <script>
-    // Создаем приложение
     const app = new PIXI.Application({
       width: window.innerWidth,
       height: window.innerHeight,
-      backgroundColor: 0x000000 // Черный цвет фона
+      backgroundColor: 0x000000
     });
 
-    // Добавляем канвас сцены в тело документа
     document.body.appendChild(app.view);
+
+    // Создаем контейнер для элементов на сцене
+    const sceneContainer = new PIXI.Container();
+    app.stage.addChild(sceneContainer);
 
     // Загружаем текстуры для воды и персонажа
     PIXI.Loader.shared.add('water', 'assets/water.png').load(setup);
+
+    let player;
+    let cursorX = 0;
+    let cursorY = 0;
 
     function setup() {
       // Получаем текстуру воды
@@ -37,29 +43,86 @@
       const waterSprite = new PIXI.Sprite(waterTexture);
       waterSprite.width = app.view.width;
       waterSprite.height = app.view.height;
-      app.stage.addChild(waterSprite);
+      sceneContainer.addChild(waterSprite);
 
       // Создаем графический объект - черный шарик
-      const player = new PIXI.Graphics();
+      player = new PIXI.Graphics();
       player.beginFill(0x000000); // Черный цвет
       player.drawCircle(0, 0, app.view.width * 0.05); // Радиус шарика - 5% от ширины канваса
       player.endFill();
       player.x = app.view.width / 2;
       player.y = app.view.height / 2;
-      app.stage.addChild(player);
+      sceneContainer.addChild(player);
 
-      // Обновляем размеры спрайта воды при изменении размера окна
+      // Обновляем размеры спрайта воды и шарика при изменении размера окна
       window.addEventListener('resize', function() {
         app.renderer.resize(window.innerWidth, window.innerHeight);
         waterSprite.width = app.view.width;
         waterSprite.height = app.view.height;
         player.clear();
-        player.beginFill(0x000000); // Черный цвет
-        player.drawCircle(0, 0, app.view.width * 0.05); // Радиус шарика - 5% от ширины канваса
+        player.beginFill(0x000000);
+        player.drawCircle(0, 0, app.view.width * 0.05);
         player.endFill();
         player.x = app.view.width / 2;
         player.y = app.view.height / 2;
       });
+
+      // Обработчик события нажатия кнопки мыши
+      app.view.addEventListener('pointerdown', onMouseDown);
+
+      // Обработчик события движения курсора мыши
+      app.view.addEventListener('mousemove', onMouseMove);
+    }
+
+    // Обновление состояния приложения
+    app.ticker.add(function() {
+      // Обновляем позицию игрока
+      updatePlayerPosition();
+
+      // Обновляем позицию камеры (контейнера)
+      updateCameraPosition();
+    });
+
+    // Обработчик события нажатия кнопки мыши
+    function onMouseDown(event) {
+      // Устанавливаем новую позицию шарика в место, куда ткнули мышью
+      player.x = event.clientX;
+      player.y = event.clientY;
+    }
+
+    // Обработчик события движения курсора мыши
+    function onMouseMove(event) {
+      // Обновляем координаты курсора мыши
+      cursorX = event.clientX;
+      cursorY = event.clientY;
+    }
+
+    // Обновляем позицию игрока в направлении курсора
+    function updatePlayerPosition() {
+      // Рассчитываем вектор направления от игрока до курсора мыши
+      const directionX = cursorX - player.x;
+      const directionY = cursorY - player.y;
+
+      // Нормализуем вектор направления
+      const length = Math.sqrt(directionX * directionX + directionY * directionY);
+      const directionXNormalized = directionX / length;
+      const directionYNormalized = directionY / length;
+
+      // Устанавливаем новую позицию игрока с учетом направления и скорости
+      const speed = 3;
+      player.x += directionXNormalized * speed;
+      player.y += directionYNormalized * speed;
+    }
+
+    // Обновляем позицию камеры (контейнера)
+    function updateCameraPosition() {
+      // Рассчитываем вектор направления от камеры до игрока
+      const cameraDirectionX = player.x - app.view.width / 2;
+      const cameraDirectionY = player.y - app.view.height / 2;
+
+      // Перемещаем камеру (контейнер) в направлении игрока
+      sceneContainer.x -= cameraDirectionX;
+      sceneContainer.y -= cameraDirectionY;
     }
   </script>
 </body>

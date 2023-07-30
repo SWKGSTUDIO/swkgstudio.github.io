@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My PIXI Game</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/5.3.2/pixi.min.js"></script>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      overflow: hidden; /* Убираем полосы прокрутки */
+    }
+    canvas {
+      display: block; /* Канвас займет всю доступную область */
+    }
+  </style>
+</head>
+<body>
+  <script>
+    // Создаем приложение
+    const app = new PIXI.Application({
+      width: window.innerWidth,
+      height: window.innerHeight,
+      backgroundColor: 0x000000 // Черный цвет фона
+    });
+
+    // Добавляем канвас сцены в тело документа
+    document.body.appendChild(app.view);
+
+    // Загружаем текстуры для воды и персонажа
+    PIXI.Loader.shared.add('water', 'assets/water.png').load(setup);
+
+    function setup() {
+      // Получаем текстуру воды
+      const waterTexture = PIXI.Loader.shared.resources['water'].texture;
+
+      // Создаем спрайт для воды
+      const waterSprite = new PIXI.Sprite(waterTexture);
+      waterSprite.width = app.view.width;
+      waterSprite.height = app.view.height;
+      app.stage.addChild(waterSprite);
+
+      // Создаем графический объект - черный шарик
+      const player = new PIXI.Graphics();
+      player.beginFill(0x000000); // Черный цвет
+      player.drawCircle(0, 0, app.view.width * 0.05); // Радиус шарика - 5% от ширины канваса
+      player.endFill();
+      player.x = app.view.width / 2;
+      player.y = app.view.height / 2;
+      app.stage.addChild(player);
+
+      // Обновляем размеры спрайта воды при изменении размера окна
+      window.addEventListener('resize', function() {
+        app.renderer.resize(window.innerWidth, window.innerHeight);
+        waterSprite.width = app.view.width;
+        waterSprite.height = app.view.height;
+        player.clear();
+        player.beginFill(0x000000); // Черный цвет
+        player.drawCircle(0, 0, app.view.width * 0.05); // Радиус шарика - 5% от ширины канваса
+        player.endFill();
+        player.x = app.view.width / 2;
+        player.y = app.view.height / 2;
+      });
+    }
+  </script>
+</body>
+</html>

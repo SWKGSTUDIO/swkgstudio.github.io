@@ -30,8 +30,34 @@
         }
 
         function create() {
-            // Добавляем спрайт воды
-            this.add.image(0, 0, 'water').setOrigin(0);
+            // Добавляем спрайт воды и устанавливаем его размеры равные размерам канваса
+            const water = this.add.image(0, 0, 'water').setOrigin(0);
+            water.displayWidth = game.config.width;
+            water.displayHeight = game.config.height;
+
+            // Создаем графический объект для фона с волнами
+            const waveGraphics = this.add.graphics();
+
+            // Задаем параметры волн
+            const waveColor = 0xffffff; // Белый цвет волн
+            const waveWidth = 20; // Ширина волн
+            const waveHeight = 10; // Высота волн
+            const numWaves = Math.ceil(game.config.width / waveWidth); // Количество волн, чтобы заполнить ширину канваса
+
+            // Рисуем волны
+            for (let i = 0; i < numWaves; i++) {
+                const startX = i * waveWidth;
+                const startY = game.config.height;
+                const controlX = startX + waveWidth / 2;
+                const controlY = startY - waveHeight;
+                const endX = startX + waveWidth;
+
+                waveGraphics.lineStyle(2, waveColor, 1); // Устанавливаем стиль линии для волны
+                waveGraphics.beginPath();
+                waveGraphics.moveTo(startX, startY);
+                waveGraphics.quadraticCurveTo(controlX, controlY, endX, startY);
+                waveGraphics.strokePath();
+            }
 
             // Добавляем игрока (белый шарик)
             player = this.add.graphics();

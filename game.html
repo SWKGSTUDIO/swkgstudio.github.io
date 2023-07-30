@@ -41,13 +41,16 @@
             player.fillCircle(game.config.width / 2, game.config.height / 2, playerRadius); // Радиус шарика - 50 пикселей
             cursors = this.input.keyboard.createCursorKeys();
 
+            // Задаем камеру
+            this.cameras.main.setBounds(0, 0, game.config.width, game.config.height);
+            this.cameras.main.startFollow(player, true, 0.5, 0.5); // Камера следует за игроком с учетом смещения
+
             // Добавляем текстовый объект для отображения скорости перемещения
             speedText = this.add.text(player.x, player.y - playerRadius - 10, '', { fontFamily: 'Arial', fontSize: '20px', color: '#ff0000' }); // Красный цвет текста
             speedText.setDepth(1); // Задаем depth, чтобы текст всегда был видим над всеми другими элементами
 
-            // Задаем камеру
-            this.cameras.main.setBounds(0, 0, game.config.width, game.config.height);
-            this.cameras.main.startFollow(player, true, 0.5, 0.5); // Камера следует за игроком с учетом смещения
+            // Устанавливаем смещение камеры по вертикали так, чтобы она была над игроком
+            this.cameras.main.setY(game.config.height / 2 - player.y + playerRadius);
         }
 
         function update() {

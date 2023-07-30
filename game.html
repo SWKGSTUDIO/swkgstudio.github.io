@@ -30,6 +30,9 @@
         }
 
         function create() {
+            // Добавляем спрайт воды и устанавливаем его размеры равные размерам канваса
+            const water = this.add.tileSprite(0, 0, game.config.width, game.config.height, 'water').setOrigin(0);
+
             // Добавляем игрока (белый шарик)
             player = this.add.graphics();
             player.fillStyle(0xffffff, 1); // Белый цвет и непрозрачность 1 (полностью непрозрачный)
@@ -38,9 +41,6 @@
 
             // Задаем камеру, чтобы она следовала за игроком
             this.cameras.main.startFollow(player);
-
-            // Добавляем спрайт воды и устанавливаем его размеры равные размерам канваса
-            const water = this.add.tileSprite(0, 0, game.config.width, game.config.height, 'water').setOrigin(0);
         }
 
         function update() {

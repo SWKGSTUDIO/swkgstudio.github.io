@@ -26,6 +26,11 @@
         let cursors;
         let speedText;
         let pirateText;
+        let water;
+        let waterWidth = 0;
+        let waterHeight = 0;
+        let waterTileWidth = 200;
+        let waterTileHeight = 200;
 
         function preload() {
             // Загружаем текстуру для воды
@@ -34,7 +39,7 @@
 
         function create() {
             // Добавляем спрайт воды и устанавливаем его размеры равные размерам канваса
-            const water = this.add.tileSprite(0, 0, game.config.width, game.config.height, 'water').setOrigin(0);
+            water = this.add.tileSprite(0, 0, waterTileWidth, waterTileHeight, 'water').setOrigin(0);
 
             // Уменьшаем количество тайлов воды по горизонтали и вертикали
             water.setTileScale(0.3, 0.3);
@@ -92,12 +97,19 @@
 
                     // Обновляем текстовый объект с текущей скоростью перемещения
                     speedText.x = player.x - speedText.width / 2; // Центрируем текст относительно игрока по горизонтали
-                    speedText.y = player.y - playerRadius - 10;
+                    speedText.y = player.y - 80;
                     speedText.setText(`Speed: ${speed.toFixed(2)}`);
 
                     // Обновляем текстовый объект "ПИРАТЫ" в правом верхнем углу
                     pirateText.x = game.config.width - 120;
                     pirateText.y = 50;
+
+                    // Обновляем позицию и размеры спрайта воды в зависимости от положения игрока
+                    water.x = Math.floor(player.x / waterTileWidth) * waterTileWidth;
+                    water.y = Math.floor(player.y / waterTileHeight) * waterTileHeight;
+                    waterWidth = Math.ceil(game.config.width / waterTileWidth) * waterTileWidth;
+                    waterHeight = Math.ceil(game.config.height / waterTileHeight) * waterTileHeight;
+                    water.setSize(waterWidth, waterHeight);
                 }
             }
         }

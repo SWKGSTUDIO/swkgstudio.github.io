@@ -1,103 +1,79 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>My PIXI Game</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/5.3.2/pixi.min.js"></script>
-  <style>
-    body, html {
-      margin: 0;
-      padding: 0;
-      overflow: hidden; /* Убираем полосы прокрутки */
-    }
-    canvas {
-      display: block; /* Канвас займет всю доступную область */
-    }
-  </style>
+    <title>Simple Canvas Game</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            overflow: hidden; /* Убираем полосы прокрутки */
+        }
+        canvas {
+            display: block; /* Канвас займет всю доступную область */
+            background-color: #000; /* Черный фон канваса */
+        }
+    </style>
 </head>
 <body>
-  <script>
-    // Создаем приложение
-    const app = new PIXI.Application({
-      width: window.innerWidth,
-      height: window.innerHeight,
-      backgroundColor: 0x000000 // Черный цвет фона
-    });
+    <canvas id="gameCanvas"></canvas>
 
-    // Добавляем канвас сцены в тело документа
-    document.body.appendChild(app.view);
+    <script>
+        // Получаем ссылку на элемент canvas
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
 
-    // Загружаем текстуры для воды и персонажа
-    PIXI.Loader.shared.add('water', 'assets/water.png').load(setup);
+        // Устанавливаем размеры канваса
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
 
-    let player; // Графический объект для шарика
-    let targetPosition = { x: app.view.width / 2, y: app.view.height / 2 }; // Координаты точки, куда движется шарик
+        // Создаем объект игрока
+        const player = {
+            x: canvas.width / 2,
+            y: canvas.height / 2,
+            radius: 20,
+            color: '#fff',
+            speed: 3,
+            targetX: canvas.width / 2,
+            targetY: canvas.height / 2
+        };
 
-    function setup() {
-      // Получаем текстуру воды
-      const waterTexture = PIXI.Loader.shared.resources['water'].texture;
+        // Обработчик события нажатия кнопки мыши
+        canvas.addEventListener('click', function(event) {
+            player.targetX = event.clientX;
+            player.targetY = event.clientY;
+        });
 
-      // Создаем спрайт для воды
-      const waterSprite = new PIXI.Sprite(waterTexture);
-      waterSprite.width = app.view.width;
-      waterSprite.height = app.view.height;
-      app.stage.addChild(waterSprite);
+        // Обновление состояния игры
+        function update() {
+            // Рассчитываем вектор направления от игрока до целевой точки
+            const directionX = player.targetX - player.x;
+            const directionY = player.targetY - player.y;
 
-      // Создаем графический объект - черный шарик
-      player = new PIXI.Graphics();
-      player.beginFill(0x000000); // Черный цвет
-      player.drawCircle(0, 0, app.view.width * 0.05); // Радиус шарика - 5% от ширины канваса
-      player.endFill();
-      player.x = app.view.width / 2;
-      player.y = app.view.height / 2;
-      app.stage.addChild(player);
+            // Нормализуем вектор направления
+            const length = Math.sqrt(directionX * directionX + directionY * directionY);
+            const directionXNormalized = directionX / length;
+            const directionYNormalized = directionY / length;
 
-      // Обновляем размеры спрайта воды и шарика при изменении размера окна
-      window.addEventListener('resize', function() {
-        app.renderer.resize(window.innerWidth, window.innerHeight);
-        waterSprite.width = app.view.width;
-        waterSprite.height = app.view.height;
-        player.clear();
-        player.beginFill(0x000000); // Черный цвет
-        player.drawCircle(0, 0, app.view.width * 0.05); // Радиус шарика - 5% от ширины канваса
-        player.endFill();
-        player.x = app.view.width / 2;
-        player.y = app.view.height / 2;
-      });
+            // Устанавливаем новую позицию игрока с учетом направления и скорости
+            player.x += directionXNormalized * player.speed;
+            player.y += directionYNormalized * player.speed;
 
-      // Обработчик события нажатия кнопки мыши
-      app.view.addEventListener('click', onClick);
-    }
+            // Очищаем канвас
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Обновление состояния приложения
-    app.ticker.add(function() {
-      // Обновляем позицию игрока
-      updatePlayerPosition();
-    });
+            // Рисуем игрока
+            ctx.beginPath();
+            ctx.arc(player.x, player.y, player.radius, 0, Math.PI * 2);
+            ctx.fillStyle = player.color;
+            ctx.fill();
+            ctx.closePath();
 
-    // Обработчик события нажатия кнопки мыши
-    function onClick(event) {
-      // Записываем координаты клика
-      targetPosition.x = event.clientX;
-      targetPosition.y = event.clientY;
-    }
+            // Запускаем следующий кадр анимации
+            requestAnimationFrame(update);
+        }
 
-    // Обновляем позицию игрока в направлении точки targetPosition
-    function updatePlayerPosition() {
-      // Рассчитываем вектор направления от игрока до целевой точки
-      const directionX = targetPosition.x - player.x;
-      const directionY = targetPosition.y - player.y;
-
-      // Нормализуем вектор направления
-      const length = Math.sqrt(directionX * directionX + directionY * directionY);
-      const directionXNormalized = directionX / length;
-      const directionYNormalized = directionY / length;
-
-      // Устанавливаем новую позицию игрока с учетом направления и скорости
-      
-      const speed = 3;
-      player.x += directionXNormalized * speed;
-      player.y += directionYNormalized * speed;
-    }
-  </script>
+        // Запускаем анимацию
+        update();
+    </script>
 </body>
 </html>

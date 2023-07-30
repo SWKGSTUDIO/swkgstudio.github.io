@@ -37,7 +37,7 @@
             const water = this.add.tileSprite(0, 0, game.config.width, game.config.height, 'water').setOrigin(0);
 
             // Уменьшаем количество тайлов воды по горизонтали и вертикали
-            water.setTileScale(0.1, 0.1);
+            water.setTileScale(0.2, 0.2);
 
             // Добавляем игрока (белый шарик) по центру экрана
             const playerRadius = 50;
@@ -53,11 +53,6 @@
             // Добавляем текстовый объект для отображения скорости перемещения
             speedText = this.add.text(player.x, player.y - playerRadius - 10, '', { fontFamily: 'Arial', fontSize: '20px', color: '#ff0000' }); // Красный цвет текста
             speedText.setDepth(2); // Задаем depth, чтобы текст всегда был видим над всеми другими элементами
-
-            // Устанавливаем смещение камеры по вертикали так, чтобы она была над игроком
-            this.cameras.main.setY(game.config.height / 2 - player.y + playerRadius);
-            // Устанавливаем смещение камеры по горизонтали так, чтобы она оставалась на том же расстоянии от игрока по горизонтали
-            this.cameras.main.setX(game.config.width / 2 - player.x);
 
             // Добавляем текст "ПИРАТЫ" в правый верхний угол
             pirateText = this.add.text(game.config.width - 120, 50, 'ПИРАТЫ', { fontFamily: 'Roboto', fontSize: '30px', color: '#ffffff' });
@@ -86,6 +81,10 @@
                     speedText.x = player.x - speedText.width / 2; // Центрируем текст относительно игрока по горизонтали
                     speedText.y = player.y - playerRadius - 10;
                     speedText.setText(`Speed: ${speed.toFixed(2)}`);
+
+                    // Обновляем текстовый объект "ПИРАТЫ" в правом верхнем углу
+                    pirateText.x = game.config.width - 120;
+                    pirateText.y = 50;
                 }
             }
 

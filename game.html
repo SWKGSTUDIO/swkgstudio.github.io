@@ -34,6 +34,9 @@
             // Добавляем спрайт воды и устанавливаем его размеры равные размерам канваса
             const water = this.add.tileSprite(0, 0, game.config.width, game.config.height, 'water').setOrigin(0);
 
+            // Уменьшаем количество тайлов воды по горизонтали и вертикали
+            water.setTileScale(0.5, 0.5);
+
             // Добавляем игрока (белый шарик) по центру экрана
             const playerRadius = 50;
             player = this.add.graphics();

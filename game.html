@@ -1,79 +1,62 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Simple Canvas Game</title>
-    <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            overflow: hidden; /* Убираем полосы прокрутки */
-        }
-        canvas {
-            display: block; /* Канвас займет всю доступную область */
-            background-color: #000; /* Черный фон канваса */
-        }
-    </style>
+    <meta charset="utf-8">
+    <title>Phaser Camera Follow</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.55.0/phaser.min.js"></script>
 </head>
 <body>
-    <canvas id="gameCanvas"></canvas>
-
     <script>
-        // Получаем ссылку на элемент canvas
-        const canvas = document.getElementById('gameCanvas');
-        const ctx = canvas.getContext('2d');
-
-        // Устанавливаем размеры канваса
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-
-        // Создаем объект игрока
-        const player = {
-            x: canvas.width / 2,
-            y: canvas.height / 2,
-            radius: 20,
-            color: '#fff',
-            speed: 3,
-            targetX: canvas.width / 2,
-            targetY: canvas.height / 2
+        // Определяем размеры игровой сцены
+        const gameConfig = {
+            type: Phaser.AUTO,
+            width: window.innerWidth,
+            height: window.innerHeight,
+            scene: {
+                preload: preload,
+                create: create,
+                update: update
+            }
         };
 
-        // Обработчик события нажатия кнопки мыши
-        canvas.addEventListener('click', function(event) {
-            player.targetX = event.clientX;
-            player.targetY = event.clientY;
-        });
+        const game = new Phaser.Game(gameConfig);
 
-        // Обновление состояния игры
-        function update() {
-            // Рассчитываем вектор направления от игрока до целевой точки
-            const directionX = player.targetX - player.x;
-            const directionY = player.targetY - player.y;
+        let player;
+        let cursors;
 
-            // Нормализуем вектор направления
-            const length = Math.sqrt(directionX * directionX + directionY * directionY);
-            const directionXNormalized = directionX / length;
-            const directionYNormalized = directionY / length;
-
-            // Устанавливаем новую позицию игрока с учетом направления и скорости
-            player.x += directionXNormalized * player.speed;
-            player.y += directionYNormalized * player.speed;
-
-            // Очищаем канвас
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            // Рисуем игрока
-            ctx.beginPath();
-            ctx.arc(player.x, player.y, player.radius, 0, Math.PI * 2);
-            ctx.fillStyle = player.color;
-            ctx.fill();
-            ctx.closePath();
-
-            // Запускаем следующий кадр анимации
-            requestAnimationFrame(update);
+        function preload() {
+            // Загружаем текстуру для воды
+            this.load.image('water', 'assets/water.png');
         }
 
-        // Запускаем анимацию
-        update();
+        function create() {
+            // Добавляем спрайт воды
+            this.add.image(0, 0, 'water').setOrigin(0);
+
+            // Добавляем игрока (белый шарик)
+            player = this.add.graphics();
+            player.fillStyle(0xffffff, 1); // Белый цвет и непрозрачность 1 (полностью непрозрачный)
+            player.fillCircle(window.innerWidth / 2, window.innerHeight / 2, 50); // Радиус шарика - 50 пикселей
+            cursors = this.input.keyboard.createCursorKeys();
+
+            // Задаем камеру, чтобы она следовала за игроком
+            this.cameras.main.startFollow(player);
+        }
+
+        function update() {
+            // Обрабатываем ввод от пользователя
+            if (cursors.left.isDown) {
+                player.x -= 5;
+            } else if (cursors.right.isDown) {
+                player.x += 5;
+            }
+
+            if (cursors.up.isDown) {
+                player.y -= 5;
+            } else if (cursors.down.isDown) {
+                player.y += 5;
+            }
+        }
     </script>
 </body>
 </html>

@@ -29,6 +29,9 @@
     // Загружаем текстуры для воды и персонажа
     PIXI.Loader.shared.add('water', 'assets/water.png').load(setup);
 
+    let player; // Графический объект для шарика
+    let targetPosition = { x: app.view.width / 2, y: app.view.height / 2 }; // Координаты точки, куда движется шарик
+
     function setup() {
       // Получаем текстуру воды
       const waterTexture = PIXI.Loader.shared.resources['water'].texture;
@@ -40,7 +43,7 @@
       app.stage.addChild(waterSprite);
 
       // Создаем графический объект - черный шарик
-      const player = new PIXI.Graphics();
+      player = new PIXI.Graphics();
       player.beginFill(0x000000); // Черный цвет
       player.drawCircle(0, 0, app.view.width * 0.05); // Радиус шарика - 5% от ширины канваса
       player.endFill();
@@ -48,7 +51,7 @@
       player.y = app.view.height / 2;
       app.stage.addChild(player);
 
-      // Обновляем размеры спрайта воды при изменении размера окна
+      // Обновляем размеры спрайта воды и шарика при изменении размера окна
       window.addEventListener('resize', function() {
         app.renderer.resize(window.innerWidth, window.innerHeight);
         waterSprite.width = app.view.width;
@@ -60,6 +63,39 @@
         player.x = app.view.width / 2;
         player.y = app.view.height / 2;
       });
+
+      // Обработчик события нажатия кнопки мыши
+      app.view.addEventListener('click', onClick);
+    }
+
+    // Обновление состояния приложения
+    app.ticker.add(function() {
+      // Обновляем позицию игрока
+      updatePlayerPosition();
+    });
+
+    // Обработчик события нажатия кнопки мыши
+    function onClick(event) {
+      // Записываем координаты клика
+      targetPosition.x = event.clientX;
+      targetPosition.y = event.clientY;
+    }
+
+    // Обновляем позицию игрока в направлении точки targetPosition
+    function updatePlayerPosition() {
+      // Рассчитываем вектор направления от игрока до целевой точки
+      const directionX = targetPosition.x - player.x;
+      const directionY = targetPosition.y - player.y;
+
+      // Нормализуем вектор направления
+      const length = Math.sqrt(directionX * directionX + directionY * directionY);
+      const directionXNormalized = directionX / length;
+      const directionYNormalized = directionY / length;
+
+      // Устанавливаем новую позицию игрока с учетом направления и скорости
+      const speed = 3;
+      player.x += directionXNormalized * speed;
+      player.y += directionYNormalized * speed;
     }
   </script>
 </body>

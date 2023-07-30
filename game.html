@@ -42,14 +42,12 @@
             cursors = this.input.keyboard.createCursorKeys();
 
             // Добавляем текстовый объект для отображения скорости перемещения
-            speedText = this.add.text(player.x, player.y - 50, '', { fontFamily: 'Arial', fontSize: '20px', color: '#ffffff' });
+            speedText = this.add.text(player.x, player.y - playerRadius - 10, '', { fontFamily: 'Arial', fontSize: '20px', color: '#ffffff' });
+            speedText.setDepth(1); // Задаем depth, чтобы текст всегда был видим над всеми другими элементами
 
             // Задаем камеру
             this.cameras.main.setBounds(0, 0, game.config.width, game.config.height);
             this.cameras.main.startFollow(player, true, 0.5, 0.5); // Камера следует за игроком с учетом смещения
-
-            // Устанавливаем смещение камеры по вертикали так, чтобы она была над игроком
-            this.cameras.main.setY(game.config.height / 2 - player.y + playerRadius);
         }
 
         function update() {
@@ -72,7 +70,7 @@
 
                     // Обновляем текстовый объект с текущей скоростью перемещения
                     speedText.x = player.x;
-                    speedText.y = player.y - 50;
+                    speedText.y = player.y - playerRadius - 10;
                     speedText.setText(`Speed: ${speed.toFixed(2)}`);
                 }
             }

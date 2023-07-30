@@ -42,7 +42,7 @@
             cursors = this.input.keyboard.createCursorKeys();
 
             // Добавляем текстовый объект для отображения скорости перемещения
-            speedText = this.add.text(player.x, player.y - playerRadius - 10, '', { fontFamily: 'Arial', fontSize: '20px', color: '#ffffff' });
+            speedText = this.add.text(player.x, player.y - playerRadius - 10, '', { fontFamily: 'Arial', fontSize: '20px', color: '#ff0000' }); // Красный цвет текста
             speedText.setDepth(1); // Задаем depth, чтобы текст всегда был видим над всеми другими элементами
 
             // Задаем камеру

@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <title>Phaser Camera Follow</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.55.0/phaser.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto&display=swap">
 </head>
 <body>
     <script>
@@ -24,6 +25,7 @@
         let player;
         let cursors;
         let speedText;
+        let pirateText;
 
         function preload() {
             // Загружаем текстуру для воды
@@ -35,7 +37,7 @@
             const water = this.add.tileSprite(0, 0, game.config.width, game.config.height, 'water').setOrigin(0);
 
             // Уменьшаем количество тайлов воды по горизонтали и вертикали
-            water.setTileScale(0.5, 0.5);
+            water.setTileScale(0.1, 0.1);
 
             // Добавляем игрока (белый шарик) по центру экрана
             const playerRadius = 50;
@@ -50,12 +52,16 @@
 
             // Добавляем текстовый объект для отображения скорости перемещения
             speedText = this.add.text(player.x, player.y - playerRadius - 10, '', { fontFamily: 'Arial', fontSize: '20px', color: '#ff0000' }); // Красный цвет текста
-            speedText.setDepth(1); // Задаем depth, чтобы текст всегда был видим над всеми другими элементами
+            speedText.setDepth(2); // Задаем depth, чтобы текст всегда был видим над всеми другими элементами
 
             // Устанавливаем смещение камеры по вертикали так, чтобы она была над игроком
             this.cameras.main.setY(game.config.height / 2 - player.y + playerRadius);
             // Устанавливаем смещение камеры по горизонтали так, чтобы она оставалась на том же расстоянии от игрока по горизонтали
             this.cameras.main.setX(game.config.width / 2 - player.x);
+
+            // Добавляем текст "ПИРАТЫ" в правый верхний угол
+            pirateText = this.add.text(game.config.width - 120, 50, 'ПИРАТЫ', { fontFamily: 'Roboto', fontSize: '30px', color: '#ffffff' });
+            pirateText.setDepth(2); // Задаем depth, чтобы текст всегда был видим над всеми другими элементами
         }
 
         function update() {

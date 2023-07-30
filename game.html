@@ -23,6 +23,7 @@
 
         let player;
         let cursors;
+        let speedText;
 
         function preload() {
             // Загружаем текстуру для воды
@@ -39,6 +40,9 @@
             player.fillStyle(0xffffff, 1); // Белый цвет и непрозрачность 1 (полностью непрозрачный)
             player.fillCircle(game.config.width / 2, game.config.height / 2, playerRadius); // Радиус шарика - 50 пикселей
             cursors = this.input.keyboard.createCursorKeys();
+
+            // Добавляем текстовый объект для отображения скорости перемещения
+            speedText = this.add.text(player.x, player.y - 50, '', { fontFamily: 'Arial', fontSize: '20px', color: '#ffffff' });
 
             // Задаем камеру
             this.cameras.main.setBounds(0, 0, game.config.width, game.config.height);
@@ -65,6 +69,11 @@
 
                     player.x += directionXNormalized * speed;
                     player.y += directionYNormalized * speed;
+
+                    // Обновляем текстовый объект с текущей скоростью перемещения
+                    speedText.x = player.x;
+                    speedText.y = player.y - 50;
+                    speedText.setText(`Speed: ${speed.toFixed(2)}`);
                 }
             }
 

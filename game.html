@@ -30,33 +30,6 @@
         }
 
         function create() {
-            // Добавляем спрайт воды и устанавливаем его размеры равные размерам канваса
-            const water = this.add.tileSprite(0, 0, game.config.width, game.config.height, 'water').setOrigin(0);
-
-            // Создаем графический объект для фона с волнами
-            const waveGraphics = this.add.graphics();
-
-            // Задаем параметры волн
-            const waveColor = 0xffffff; // Белый цвет волн
-            const waveWidth = 20; // Ширина волн
-            const waveHeight = 10; // Высота волн
-            const numWaves = Math.ceil(game.config.width / waveWidth); // Количество волн, чтобы заполнить ширину канваса
-
-            // Рисуем волны
-            for (let i = 0; i < numWaves; i++) {
-                const startX = i * waveWidth;
-                const startY = game.config.height;
-                const controlX = startX + waveWidth / 2;
-                const controlY = startY - waveHeight;
-                const endX = startX + waveWidth;
-
-                waveGraphics.lineStyle(2, waveColor, 1); // Устанавливаем стиль линии для волны
-                waveGraphics.beginPath();
-                waveGraphics.moveTo(startX, startY);
-                waveGraphics.quadraticCurveTo(controlX, controlY, endX, startY);
-                waveGraphics.strokePath();
-            }
-
             // Добавляем игрока (белый шарик)
             player = this.add.graphics();
             player.fillStyle(0xffffff, 1); // Белый цвет и непрозрачность 1 (полностью непрозрачный)
@@ -65,6 +38,9 @@
 
             // Задаем камеру, чтобы она следовала за игроком
             this.cameras.main.startFollow(player);
+
+            // Добавляем спрайт воды и устанавливаем его размеры равные размерам канваса
+            const water = this.add.tileSprite(0, 0, game.config.width, game.config.height, 'water').setOrigin(0);
         }
 
         function update() {

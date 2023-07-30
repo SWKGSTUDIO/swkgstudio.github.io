@@ -24,6 +24,7 @@
         let player;
         let cursors;
         let speedText;
+        let islands;
 
         function preload() {
             // Загружаем текстуру для воды
@@ -34,6 +35,12 @@
             // Добавляем спрайт воды и устанавливаем его размеры равные размерам канваса
             const water = this.add.tileSprite(0, 0, game.config.width, game.config.height, 'water').setOrigin(0);
 
+            // Создаем новый слой для островов
+            islands = this.add.group();
+
+            // Генерируем острова
+            generateIslands();
+
             // Добавляем игрока (белый шарик) по центру экрана
             const playerRadius = 50;
             player = this.add.graphics();
@@ -41,13 +48,16 @@
             player.fillCircle(game.config.width / 2, game.config.height / 2, playerRadius); // Радиус шарика - 50 пикселей
             cursors = this.input.keyboard.createCursorKeys();
 
+            // Устанавливаем depth игрока на самом верху
+            player.setDepth(1);
+
             // Задаем камеру
             this.cameras.main.setBounds(0, 0, game.config.width, game.config.height);
             this.cameras.main.startFollow(player, true, 0.5, 0.5); // Камера следует за игроком с учетом смещения
 
             // Добавляем текстовый объект для отображения скорости перемещения
             speedText = this.add.text(player.x, player.y - playerRadius - 10, '', { fontFamily: 'Arial', fontSize: '20px', color: '#ff0000' }); // Красный цвет текста
-            speedText.setDepth(1); // Задаем depth, чтобы текст всегда был видим над всеми другими элементами
+            speedText.setDepth(2); // Задаем depth, чтобы текст всегда был видим над всеми другими элементами
 
             // Устанавливаем смещение камеры по вертикали так, чтобы она была над игроком
             this.cameras.main.setY(game.config.height / 2 - player.y + playerRadius);
@@ -89,6 +99,35 @@
                 player.y -= 5;
             } else if (cursors.down.isDown) {
                 player.y += 5;
+            }
+        }
+
+        function generateIslands() {
+            // Генерируем случайное количество островов (от 5 до 10)
+            const numIslands = Phaser.Math.Between(5, 10);
+
+            for (let i = 0; i < numIslands; i++) {
+                // Генерируем случайные координаты острова
+                const x = Phaser.Math.Between(100, game.config.width - 100);
+                const y = Phaser.Math.Between(100, game.config.height - 100);
+
+                // Генерируем случайный радиус острова (от 30 до 80)
+                const radius = Phaser.Math.Between(30, 80);
+
+                // Создаем остров (векторный элемент)
+                const island = new Phaser.Geom.Polygon();
+                island.setTo([x - radius, y, x, y - radius, x + radius, y, x, y + radius]);
+
+                // Проверяем, что остров не перекрывается с игроком
+                const playerBounds = player.getBounds();
+                if (!Phaser.Geom.Intersects.RectangleToPolygon(playerBounds, island)) {
+                    // Рисуем остров
+                    const islandGraphics = game.add.graphics({ fillStyle: { color: 0x00ff00 } });
+                    islandGraphics.fillPoints(island.points, true);
+
+                    // Добавляем остров в группу островов
+                    islands.add(islandGraphics);
+                }
             }
         }
     </script>

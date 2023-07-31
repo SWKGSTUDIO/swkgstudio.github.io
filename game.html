@@ -61,83 +61,83 @@ sun.shadow.camera.far = 500;
 scene.add(sun);
 
 
-// Создаем геометрию для морской поверхности (океана)
-const seaGeometry = new THREE.PlaneGeometry(1000, 1000, 50, 50);
+// Глобальная переменная для хранения времени
+let time = 0;
 
-// Создаем текстуру для морской поверхности (океана)
-const seaTexture = new THREE.TextureLoader().load('assets/water.png');
-seaTexture.wrapS = THREE.RepeatWrapping;
-seaTexture.wrapT = THREE.RepeatWrapping;
-seaTexture.repeat.set(10, 10);
+// Функция для обновления морской поверхности на каждом кадре
+function updateSea() {
+  // Увеличиваем время на шаг
+  time += 0.01;
 
-// Создаем материал для морской поверхности (океана) с использованием текстуры
-const seaMaterial = new THREE.MeshStandardMaterial({
-  map: seaTexture,
-  color: 0x008080, // Цвет морской поверхности без текстуры
-});
+  // Получаем доступ к текстуре материала морской поверхности
+  const seaTexture = sea.material.map;
 
-// Создаем меш морской поверхности (океана) из геометрии и материала
-const sea = new THREE.Mesh(seaGeometry, seaMaterial);
+  // Изменяем текстурные координаты на основе значения шума для анимации
+  for (let i = 0; i < sea.geometry.vertices.length; i++) {
+    const vertex = sea.geometry.vertices[i];
+    vertex.z = noise.noise2D(vertex.x * 0.02, vertex.y * 0.02 + time * 0.2) * 2;
+  }
 
-// Поворачиваем морскую поверхность (океан) по оси x на -90 градусов
-sea.rotation.x = -Math.PI / 2;
+  // Помечаем геометрию как измененную
+  sea.geometry.verticesNeedUpdate = true;
 
-// Помещаем морскую поверхность (океан) ниже островов
-sea.position.y = 0;
+  // Обновляем повторение текстуры, чтобы она перемещалась вместе с анимацией
+  seaTexture.offset.y += 0.1;
+}
 
-// Добавляем меш морской поверхности (океана) в сцену
-scene.add(sea);
 
+
+
+// ОСТРОВА
     
-// Создаем геометрию и материал для островов
-    const islandGeometry = new THREE.PlaneGeometry(1000, 1000, 50, 50);
-    const islandMaterial = new THREE.MeshPhongMaterial({ color: 0xf4a460 }); // Красный цвет
-    function islandNoise(x, y) {
-      const simplex = new SimplexNoise();
-      return simplex.noise2D(x, y) * 50;
-    }
-     function updateIsland() {
-      const positionAttribute = islandGeometry.getAttribute("position");
-      const colorAttribute = islandGeometry.getAttribute("color"); // Получаем атрибут с цветами вершин
-      for (let i = 0; i < positionAttribute.count; i++) {
-        const x = positionAttribute.getX(i);
-        const y = positionAttribute.getY(i);
-        const z = Math.random() * 10;
-        positionAttribute.setZ(i, z);
-        
-      }
-      positionAttribute.needsUpdate = true;
-     }
-    const island = new THREE.Mesh(islandGeometry, islandMaterial);
-    island.rotation.x = -Math.PI / 2;
-    island.position.y = -5;
-    scene.add(island);
+  function generateRandomIslandGeometry() {
+  const geometries = [
+  new THREE.CylinderGeometry(5 + Math.random() * 10, 5 + Math.random() * 10, 1 + Math.random() * 5, 16)
+  ];
+  return geometries[Math.floor(Math.random() * geometries.length)];
+  }
+  const islands = [];
+  // Создаем несколько островов и добавляем их в сцену
+  for (let i = 0; i < 10; i++) {
+  const islandGeometry = generateRandomIslandGeometry();
+  const islandMaterial = new THREE.MeshPhongMaterial({ color: 0xC2B280 });
+  const islandMesh = new THREE.Mesh(islandGeometry, islandMaterial);
+  // Располагаем остров случайным образом на сцене
+  islandMesh.position.x = Math.random() * 250 - 50;
+  islandMesh.position.z = Math.random() * 250 - 50;
+  // Получаем размеры острова
+  const islandBoundingBox = new THREE.Box3().setFromObject(islandMesh);
+  const islandHeight = islandBoundingBox.max.y - islandBoundingBox.min.y;
+  // Поднимаем остров на половину его высоты, чтобы его нижняя часть была на уровне воды
+  islandMesh.position.y = -islandHeight / 3;
+  scene.add(islandMesh);
+  islands.push(islandMesh);
+}
 
-    const shipGeometry = new THREE.BoxGeometry(1, 1, 5);
+
+
+    // КОРБАЛЬ
+    const shipGeometry = new THREE.BoxGeometry(2, 1, 1);
     const shipMaterial = new THREE.MeshPhongMaterial({ color: 0xff0000 }); // Красный цвет
     const ship = new THREE.Mesh(shipGeometry, shipMaterial);
     ship.position.y = 1;
     scene.add(ship);
-
      // Контроллер для камеры
     const cameraControls = new THREE.Object3D();
     cameraControls.add(camera);
     scene.add(cameraControls);
-
     const shipDirection = new THREE.Vector3(0, 0, 1); // Направление движения корабля (вперед)
-
     // Параметры для управления кораблем
-const shipControls = {
-  moveForward: false,
-  moveBackward: false,
-  turnLeft: false,
-  turnRight: false
+    const shipControls = {
+    moveForward: false,
+    moveBackward: false,
+    turnLeft: false,
+    turnRight: false
 };
 
 // Обработчик события при нажатии клавиши
 function onKeyDown(event) {
   const keyCode = event.keyCode;
-
   // Нажата клавиша "W" - движение вперед
   if (keyCode === 87) {
     shipControls.moveForward = true;
@@ -155,11 +155,9 @@ function onKeyDown(event) {
     shipControls.turnRight = true;
   }
 }
-
 // Обработчик события при отпускании клавиши
 function onKeyUp(event) {
   const keyCode = event.keyCode;
-
   // Отпущена клавиша "W" - остановить движение вперед
   if (keyCode === 87) {
     shipControls.moveForward = false;
@@ -183,7 +181,7 @@ document.addEventListener("keydown", onKeyDown);
 document.addEventListener("keyup", onKeyUp);
 
 // Параметры для управления скоростью и поворотом корабля
-const shipSpeed = 0.1;
+const shipSpeed = 0.5;
 const turnSpeed = 0.03;
 let shipVelocity = new THREE.Vector3(0, 0, 0);
 
@@ -223,9 +221,61 @@ function updateShip() {
 
   // Обновляем позицию корабля
   ship.position.add(shipVelocity);
+  // Логируем позицию корабля после обновления в элемент <div> с id="result"
 }
 
-updateIsland();
+
+ // Создаем океан
+ const oceanGeometry = new THREE.PlaneGeometry(2000, 2000, 100, 100);
+
+// Загружаем текстуру воды
+const waterTexture = new THREE.TextureLoader().load("path/to/your/water_texture.jpg");
+waterTexture.wrapS = waterTexture.wrapT = THREE.RepeatWrapping;
+waterTexture.repeat.set(20, 20); // Увеличиваем повторение текстуры, чтобы океан выглядел более реалистично
+
+// Создаем материал для водной поверхности
+const waterMaterial = new THREE.ShaderMaterial({
+    uniforms: {
+      uTime: { value: 0.0 }, // Переменная для передачи времени в шейдер
+    },
+    vertexShader: `
+      uniform float uTime;
+      varying vec2 vUv;
+
+      void main() {
+        vUv = uv;
+        vec3 transformed = position.xyz;
+        float amplitude = 0.5; // Амплитуда волн
+        float frequency = 3.5; // Частота волн
+        transformed.z += amplitude * sin(uv.x * frequency + uTime) * cos(uv.y * frequency + uTime);
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(transformed, 1.0);
+      }
+    `,
+    fragmentShader: `
+      uniform float uTime;
+      varying vec2 vUv;
+
+      void main() {
+        // Простой голубой цвет для водной поверхности
+        vec3 waterColor = vec3(0.2, 0.5, 0.8);
+
+        // Эффект глубины в зависимости от позиции y
+        float depth = (1.0 - gl_FragCoord.z) * 10.0;
+
+        // Добавляем глубинный эффект к цвету
+        gl_FragColor = vec4(waterColor - depth, 1.0);
+      }
+    `,
+    side: THREE.DoubleSide,
+  });
+
+  // Создаем океан с заданным материалом
+  const ocean = new THREE.Mesh(oceanGeometry, waterMaterial);
+  ocean.rotation.x = -Math.PI / 2; // Поворачиваем океан горизонтально
+  ocean.receiveShadow = true; // Позволяем океану принимать тени
+  scene.add(ocean);
+
+
 
 // Создаем часы
 const clock = new THREE.Clock();
@@ -237,8 +287,10 @@ function animate() {
   // Получаем время с предыдущего кадра
   const deltaTime = clock.getDelta();
 
-  // Обновляем корабль с учетом deltaTime
   updateShip(deltaTime);
+
+  // Обновляем анимацию волн
+  waterMaterial.uniforms.uTime.value += 0.01;
 
    // Перемещаем камеру относительно корабля
    const distance = 30; // Расстояние от корабля до камеры по оси z

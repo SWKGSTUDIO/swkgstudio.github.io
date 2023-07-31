@@ -14,7 +14,6 @@
     <script type="module">
     import * as THREE from "https://threejs.org/build/three.module.js";
 
-
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight); // ширина и высота окна браузера
 renderer.setClearColor(0x87ceeb); // светло-голубой цвет
@@ -84,15 +83,15 @@ const sea = new THREE.Mesh(seaGeometry, seaMaterial);
 sea.rotation.x = -Math.PI / 2;
 
 // Помещаем морскую поверхность (океан) ниже островов
-sea.position.y = -0.9;
+sea.position.y = 0;
 
 // Добавляем меш морской поверхности (океана) в сцену
 scene.add(sea);
 
     
 // Создаем геометрию и материал для островов
-const islandGeometry = new THREE.PlaneGeometry(1000, 1000, 50, 50);
-const islandMaterial = new THREE.MeshPhongMaterial({ color: 0xf4a460 }); // Красный цвет
+    const islandGeometry = new THREE.PlaneGeometry(1000, 1000, 50, 50);
+    const islandMaterial = new THREE.MeshPhongMaterial({ color: 0xf4a460 }); // Красный цвет
     function islandNoise(x, y) {
       const simplex = new SimplexNoise();
       return simplex.noise2D(x, y) * 50;
@@ -114,11 +113,18 @@ const islandMaterial = new THREE.MeshPhongMaterial({ color: 0xf4a460 }); // Кр
     island.position.y = -5;
     scene.add(island);
 
-    const shipGeometry = new THREE.BoxGeometry(1, 1, 1);
+    const shipGeometry = new THREE.BoxGeometry(1, 1, 5);
     const shipMaterial = new THREE.MeshPhongMaterial({ color: 0xff0000 }); // Красный цвет
     const ship = new THREE.Mesh(shipGeometry, shipMaterial);
     ship.position.y = 1;
     scene.add(ship);
+
+     // Контроллер для камеры
+    const cameraControls = new THREE.Object3D();
+    cameraControls.add(camera);
+    scene.add(cameraControls);
+
+    const shipDirection = new THREE.Vector3(0, 0, 1); // Направление движения корабля (вперед)
 
     // Параметры для управления кораблем
 const shipControls = {
@@ -177,7 +183,7 @@ document.addEventListener("keydown", onKeyDown);
 document.addEventListener("keyup", onKeyUp);
 
 // Параметры для управления скоростью и поворотом корабля
-const shipSpeed = 0.05;
+const shipSpeed = 0.1;
 const turnSpeed = 0.03;
 let shipVelocity = new THREE.Vector3(0, 0, 0);
 
@@ -194,20 +200,22 @@ function updateShip() {
     ship.rotation.y -= turnSpeed; // Поворачиваем корабль вправо
   }
 
+  // Обновляем направление движения корабля на основе его поворота
+  shipDirection.set(0, 0, 1);
+  shipDirection.applyAxisAngle(new THREE.Vector3(0, 1, 0), ship.rotation.y);
+
+  // Двигаем корабль вперед или назад в зависимости от управления
+  if (shipControls.moveForward) {
+    ship.position.add(shipDirection.clone().multiplyScalar(-shipSpeed)); // Перемещаем корабль вперед
+  }
+
+  if (shipControls.moveBackward) {
+    ship.position.add(shipDirection.clone().multiplyScalar(shipSpeed)); // Перемещаем корабль назад
+  }
   // Двигаем корабль вперед или назад в зависимости от управления
   const angle = ship.rotation.y;
   const dx = Math.sin(angle);
   const dz = Math.cos(angle);
-
-  if (shipControls.moveForward) {
-    shipVelocity.x -= dx * shipSpeed;
-    shipVelocity.z += dz * shipSpeed;
-  }
-
-  if (shipControls.moveBackward) {
-    shipVelocity.x += dx * shipSpeed;
-    shipVelocity.z -= dz * shipSpeed;
-  }
 
   // Применяем затухание скорости, чтобы корабль остановился после отпускания клавиш управления
   shipVelocity.x *= 0.9;
@@ -232,10 +240,15 @@ function animate() {
   // Обновляем корабль с учетом deltaTime
   updateShip(deltaTime);
 
-  camera.position.copy(ship.position);
-  camera.position.y += 10; // Поднимаем камеру над кораблем
-  camera.position.z += 20; // Перемещаем камеру немного назад относительно корабля
-  camera.lookAt(ship.position); // Направляем камеру на корабль
+   // Перемещаем камеру относительно корабля
+   const distance = 30; // Расстояние от корабля до камеры по оси z
+    const offsetX = Math.sin(ship.rotation.y) * distance; // Смещение по оси x
+    const offsetZ = Math.cos(ship.rotation.y) * distance; // Смещение по оси z
+    camera.position.set(ship.position.x + offsetX, ship.position.y + 10, ship.position.z + offsetZ);
+
+    // Направляем камеру на корабль
+    camera.lookAt(ship.position);
+
 
   // Отрисовываем сцену и камеру
   renderer.render(scene, camera);

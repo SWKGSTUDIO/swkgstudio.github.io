@@ -9,17 +9,16 @@
 </head>
 <body>
     <script src="https://cdn.jsdelivr.net/npm/simplex-noise@4.0.1"></script>
-    <script type="module">
-    // Импортируем модуль three.js
-    import * as THREE from "https://threejs.org/build/three.module.js";
-// Создаем рендерер
-const renderer = new THREE.WebGLRenderer();
+    <script src="https://cdn.jsdelivr.net/npm/three-obj-loader@1.1.3/dist/index.min.js"></script>
 
-// Задаем размер и цвет фона рендерера
+    <script type="module">
+    import * as THREE from "https://threejs.org/build/three.module.js";
+
+
+const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight); // ширина и высота окна браузера
 renderer.setClearColor(0x87ceeb); // светло-голубой цвет
 
-// Добавляем холст рендерера в документ
 document.body.appendChild(renderer.domElement);
 
 
@@ -40,7 +39,7 @@ const ambientLight = new THREE.AmbientLight(0xffffff, 0.8); // белый цве
 scene.add(ambientLight);
 
 
-    // Создаем направленный свет (солнце)
+// Создаем направленный свет (солнце)
 const sun = new THREE.DirectionalLight(0xffffff, 1.0);
 
 // Задаем положение и направление света
@@ -115,20 +114,10 @@ const islandMaterial = new THREE.MeshPhongMaterial({ color: 0xf4a460 }); // Кр
     island.position.y = -5;
     scene.add(island);
 
-
-
-
-    // Создаем геометрию и материал для корабля (куба)
     const shipGeometry = new THREE.BoxGeometry(1, 1, 1);
     const shipMaterial = new THREE.MeshPhongMaterial({ color: 0xff0000 }); // Красный цвет
-
-    // Создаем меш корабля из геометрии и материала
     const ship = new THREE.Mesh(shipGeometry, shipMaterial);
-
-    // Помещаем корабль на определенную высоту над водой
     ship.position.y = 1;
-
-    // Добавляем меш корабля в сцену
     scene.add(ship);
 
     // Параметры для управления кораблем

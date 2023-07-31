@@ -93,12 +93,7 @@ scene.add(sea);
     
 // Создаем геометрию и материал для островов
 const islandGeometry = new THREE.PlaneGeometry(1000, 1000, 50, 50);
-const islandMaterial = new THREE.MeshStandardMaterial({
-  color: 0x00ff00, // Зеленый цвет
-  vertexColors: true,
-  roughness: 0,
-  metalness: 0
-});
+const islandMaterial = new THREE.MeshPhongMaterial({ color: 0xf4a460 }); // Красный цвет
     function islandNoise(x, y) {
       const simplex = new SimplexNoise();
       return simplex.noise2D(x, y) * 50;

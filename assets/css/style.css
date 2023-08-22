@@ -31,13 +31,6 @@
 
 }
 
-.yandex-banner {
-    display: flex;
-    background-color: rgba(0, 0, 0, 0.278);
-    border-radius: 15px;
-    width: 100px;
-    height: 100px;
-}
 
 /* Стиль для кнопки "ЧАТ" */
 .chat-button {

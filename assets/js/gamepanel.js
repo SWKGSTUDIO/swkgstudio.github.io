@@ -44,11 +44,11 @@ const apiKey = 'key9kpLHqsdRFXvS2';
               "platform": "desktop"
             });
       
-            console.log("Logging advertisement click event");
-            firebase.analytics().logEvent('advertisement_clicked', {
-              advertisement_type: 'yandex_rtb',
-              advertisement_blockId: 'R-A-2697791-1'
-            });
+            // console.log("Logging advertisement click event");
+            // firebase.analytics().logEvent('advertisement_clicked', {
+            //   advertisement_type: 'yandex_rtb',
+            //   advertisement_blockId: 'R-A-2697791-1'
+            // });
         
             setTimeout(() => {
               console.log("Redirecting to URL"); // Отладочный вывод

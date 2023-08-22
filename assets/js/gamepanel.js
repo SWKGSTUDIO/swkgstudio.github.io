@@ -36,21 +36,21 @@ const apiKey = 'key9kpLHqsdRFXvS2';
           button.classList.add('button-on');
           button.addEventListener('click', () => {
         
-            // Отслеживание события аналитики "advertisement_clicked"
-            firebase.analytics().logEvent('advertisement_clicked', {
-              advertisement_type: 'yandex_rtb',
-              advertisement_blockId: 'R-A-2697791-1'
-            });
-        
             Ya.Context.AdvManager.render({
               "blockId": "R-A-2697791-1",
               "type": "fullscreen",
               "platform": "desktop"
             });
         
+            // Отслеживание события аналитики
+            firebase.analytics().logEvent('advertisement_clicked', {
+              advertisement_type: 'yandex_rtb',
+              advertisement_blockId: 'R-A-2697791-1'
+            });
+        
             setTimeout(() => {
               window.location.href = url;
-            }, 2000);
+            }, 1000);
           });
          
         } else if (power === "OFF") {

@@ -36,6 +36,8 @@ const apiKey = 'key9kpLHqsdRFXvS2';
           button.classList.add('button-on');
           button.addEventListener('click', () => {
 
+          firebase.analytics().logEvent('Game', { custom_parameter: 'Open' });
+
           Ya.Context.AdvManager.render({
           "blockId": "R-A-2697791-1",
           "type": "fullscreen",

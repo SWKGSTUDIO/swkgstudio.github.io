@@ -1,17 +1,17 @@
 const apiKey = 'key9kpLHqsdRFXvS2';
-  const baseId = 'appaePimTt1Ji6hSr';
-  const tableName = 'tblivWUpxtGbTszm3';
+              const baseId = 'appaePimTt1Ji6hSr';
+              const tableName = 'tblivWUpxtGbTszm3';
 
-  fetch(`https://api.airtable.com/v0/${baseId}/${tableName}?api_key=${apiKey}`)
-    .then(response => response.json())
-    .then(data => {
-      const listWidget = document.getElementById('list-widget');
-      const ul = document.createElement('ul');
-      ul.classList.add('button-list', 'horizontal');
+              fetch(`https://api.airtable.com/v0/${baseId}/${tableName}?api_key=${apiKey}`)
+              .then(response => response.json())
+            .then(data => {
+        const listWidget = document.getElementById('list-widget');
+        const ul = document.createElement('ul');
+        ul.classList.add('button-list', 'horizontal');
 
-      data.records.sort((a, b) => a.fields.Num - b.fields.Num);
+        data.records.sort((a, b) => a.fields.Num - b.fields.Num);
 
-      data.records.forEach(record => {
+        data.records.forEach(record => {
         const fields = record.fields;
         const name = fields.Name;
         const imageUrl = fields.Image;
@@ -43,12 +43,6 @@ const apiKey = 'key9kpLHqsdRFXvS2';
               "type": "fullscreen",
               "platform": "desktop"
             });
-      
-            // console.log("Logging advertisement click event");
-            // firebase.analytics().logEvent('advertisement_clicked', {
-            //   advertisement_type: 'yandex_rtb',
-            //   advertisement_blockId: 'R-A-2697791-1'
-            // });
         
             setTimeout(() => {
               console.log("Redirecting to URL"); // Отладочный вывод

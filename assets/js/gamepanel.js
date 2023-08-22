@@ -37,17 +37,12 @@ fetch(`https://api.airtable.com/v0/${baseId}/${tableName}?api_key=${apiKey}`)
         button.classList.add('button-on');
         button.addEventListener('click', () => {
 
-          // console.log("Button clicked"); 
-          // const analytics = getAnalytics();
-          // logEvent(analytics, 'goal_completion', { name: 'CLICK GAME' });
-
           Ya.Context.AdvManager.render({
             "blockId": "R-A-2697791-1",
             "type": "fullscreen",
             "platform": "desktop"
           });
 
-           // Показ рекламы для мобильных устройств
           if (isMobileDevice()) {
           Ya.Context.AdvManager.render({
           "blockId": "R-A-2697791-3",

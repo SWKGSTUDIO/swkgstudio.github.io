@@ -32,12 +32,22 @@ const apiKey = 'key9kpLHqsdRFXvS2';
 
         const li = document.createElement('li');
 
-        // Проверка значения поля "Power" и установка классов CSS
-        if (power === "ON") {
+
+          if (power === "ON") {
           button.classList.add('button-on');
           button.addEventListener('click', () => {
-            window.location.href = url;
+
+          Ya.Context.AdvManager.render({
+          "blockId": "R-A-2697791-1",
+          "type": "fullscreen",
+          "platform": "desktop"
           });
+
+          setTimeout(() => {
+          window.location.href = url;
+          }, 1000);
+          });
+         
         } else if (power === "OFF") {
           button.classList.add('button-off');
           button.disabled = true;

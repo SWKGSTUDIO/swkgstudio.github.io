@@ -47,11 +47,14 @@ fetch(`https://api.airtable.com/v0/${baseId}/${tableName}?api_key=${apiKey}`)
             "platform": "desktop"
           });
 
+           // Показ рекламы для мобильных устройств
+          if (isMobileDevice()) {
           Ya.Context.AdvManager.render({
           "blockId": "R-A-2697791-3",
           "type": "fullscreen",
           "platform": "touch"
-          })
+          });
+          }
 
           setTimeout(() => {
             console.log("Redirecting to URL");
@@ -85,3 +88,7 @@ fetch(`https://api.airtable.com/v0/${baseId}/${tableName}?api_key=${apiKey}`)
   .catch(error => {
     console.error(error);
   });
+
+  function isMobileDevice() {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  }

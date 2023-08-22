@@ -36,6 +36,8 @@ const apiKey = 'key9kpLHqsdRFXvS2';
           button.classList.add('button-on');
           button.addEventListener('click', () => {
         
+            console.log("Button clicked"); // Отладочный вывод
+        
             Ya.Context.AdvManager.render({
               "blockId": "R-A-2697791-1",
               "type": "fullscreen",
@@ -43,12 +45,14 @@ const apiKey = 'key9kpLHqsdRFXvS2';
             });
         
             // Отслеживание события аналитики
+            console.log("Logging advertisement click event"); // Отладочный вывод
             firebase.analytics().logEvent('advertisement_clicked', {
               advertisement_type: 'yandex_rtb',
               advertisement_blockId: 'R-A-2697791-1'
             });
         
             setTimeout(() => {
+              console.log("Redirecting to URL"); // Отладочный вывод
               window.location.href = url;
             }, 1000);
           });

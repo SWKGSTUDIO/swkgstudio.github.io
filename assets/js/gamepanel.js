@@ -47,7 +47,7 @@ const apiKey = 'key9kpLHqsdRFXvS2';
             setTimeout(() => {
               console.log("Redirecting to URL"); // Отладочный вывод
               window.open(url, '_blank');
-            }, 1000);
+            }, 2000);
           });
          
         } else if (power === "OFF") {

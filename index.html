@@ -64,6 +64,9 @@
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
             <div id="list-widget" style="display: none;"></div>
             <script>
+              
+              import { getAnalytics, logEvent } from "firebase/analytics";
+
               const apiKey = 'key9kpLHqsdRFXvS2';
               const baseId = 'appaePimTt1Ji6hSr';
               const tableName = 'tblivWUpxtGbTszm3';
@@ -110,10 +113,10 @@
               "platform": "desktop"
             });
       
-            console.log("Logging advertisement click event");
-            firebase.analytics().logEvent('advertisement_clicked', {
-              advertisement_type: 'yandex_rtb',
-              advertisement_blockId: 'R-A-2697791-1'
+            const analytics = getAnalytics();
+            logEvent(analytics, 'ADYANDEX', {
+            content_type: 'AD',
+            content_id: 'YANDEXAD'
             });
         
             setTimeout(() => {

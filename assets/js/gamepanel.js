@@ -32,21 +32,25 @@ const apiKey = 'key9kpLHqsdRFXvS2';
         const li = document.createElement('li');
 
 
-          if (power === "ON") {
+        if (power === "ON") {
           button.classList.add('button-on');
           button.addEventListener('click', () => {
-
-          firebase.analytics().logEvent('Game', { custom_parameter: 'Open' });
-
-          Ya.Context.AdvManager.render({
-          "blockId": "R-A-2697791-1",
-          "type": "fullscreen",
-          "platform": "desktop"
-          });
-
-          setTimeout(() => {
-          window.location.href = url;
-          }, 2000);
+        
+            // Отслеживание события аналитики "advertisement_clicked"
+            firebase.analytics().logEvent('advertisement_clicked', {
+              advertisement_type: 'yandex_rtb',
+              advertisement_blockId: 'R-A-2697791-1'
+            });
+        
+            Ya.Context.AdvManager.render({
+              "blockId": "R-A-2697791-1",
+              "type": "fullscreen",
+              "platform": "desktop"
+            });
+        
+            setTimeout(() => {
+              window.location.href = url;
+            }, 2000);
           });
          
         } else if (power === "OFF") {

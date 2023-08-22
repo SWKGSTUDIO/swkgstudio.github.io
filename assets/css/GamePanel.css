@@ -168,3 +168,29 @@
     width: 100%;
   }
 }
+
+.ad-banner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  bottom: 0; /* Разместить баннер внизу */
+  left: 0;
+  width: 100%;
+  height: auto;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.5); /* Полупрозрачный фон */
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  color: white;
+}
+
+
+/* Медиа-запрос для адаптивного дизайна */
+@media (max-width: 768px) {
+  .ad-banner {
+    margin-top: 10px; /* Уменьшите отступ сверху на маленьких экранах */
+    padding: 10px; /* Уменьшите внутренний отступ на маленьких экранах */
+  }
+}

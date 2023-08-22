@@ -1,4 +1,4 @@
-import { getAnalytics, logEvent } from "firebase/analytics";
+// import { getAnalytics, logEvent } from "firebase/analytics";
 
 const apiKey = 'key9kpLHqsdRFXvS2';
 const baseId = 'appaePimTt1Ji6hSr';
@@ -37,9 +37,9 @@ fetch(`https://api.airtable.com/v0/${baseId}/${tableName}?api_key=${apiKey}`)
         button.classList.add('button-on');
         button.addEventListener('click', () => {
 
-          console.log("Button clicked"); 
-          const analytics = getAnalytics();
-          logEvent(analytics, 'goal_completion', { name: 'CLICK GAME' });
+          // console.log("Button clicked"); 
+          // const analytics = getAnalytics();
+          // logEvent(analytics, 'goal_completion', { name: 'CLICK GAME' });
 
           Ya.Context.AdvManager.render({
             "blockId": "R-A-2697791-1",

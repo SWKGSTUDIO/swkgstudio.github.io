@@ -47,49 +47,49 @@
   <strong style="color: rgb(255, 255, 255); font-size: 60px; margin: 10px; position: fixed;">
     <img src="assets/img/logo.webp" width="38" height="61" style="margin: 13px;">SWKG
     
-    <div class="navigation-panel">
+       <!-- <div class="navigation-panel"> -->
       <!-- <button id="gamesButton" class="btn btn-primary">ИГРЫ</button> -->
       <!-- <button id="chatButton" class="btn btn-primary">ЧАТ</button> -->
       <!-- <button id="filesButton" class="btn btn-primary">ФАЙЛЫ</button> -->
-    </div>
+    <!-- </div> --> 
 
   </strong>
   
-  <div>
+  <div style="display: flex; flex-direction: column; align-items: center;">
     <div class="tab-content">
-      <!-- ЭКРАН ИГРЫ -->
       <div class="tab-pane fade show active" role="tabpanel" id="tab-1">
         <main style="width: 100%; height: 100%; right: 50%; left: 50%;">
           <div class="game-panel-container">
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-            
             <div id="list-widget" style="display: none;"></div>
-
             <script src="assets/js/gamepanel.js"></script>
-            <div id="yandex_rtb_R-A-2697791-2"></div>
-        
+            
+            <div id="yandex_rtb_R-A-2697791-2">
+              <script>
+                window.yaContextCb.push(() => {
+                  Ya.Context.AdvManager.render({
+                    "blockId": "R-A-2697791-2",
+                    "type": "banner",
+                    "platform": isMobileDevice() ? "touch" : "desktop",
+                    "renderTo": "yandex_rtb_R-A-2697791-2"
+                  });
+                });
+              </script>
+            </div>
           </div>
-
-          <script>
-          window.yaContextCb.push(()=>{
-          Ya.Context.AdvManager.render({
-          "blockId": "R-A-2697791-2",
-          "type": "banner",
-          "platform": isMobileDevice() ? "touch" : "desktop",
-          "renderTo": "yandex_rtb_R-A-2697791-2"
-            })
-          })
-          </script>
-
-          <!-- <script>
-          window.yaContextCb.push(()=>{
-          Ya.Context.AdvManager.render({
-          "blockId": "R-A-2697791-1",
-          "type": "fullscreen",
-          "platform": "desktop"
-          })
-          })
-          </script> -->
+        </main>
+      </div>
+    </div>
+  
+    
+  </div>
+  
+  
+  
+  
+  
+  
+  
 
         </main>
 

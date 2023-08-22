@@ -43,8 +43,7 @@ const apiKey = 'key9kpLHqsdRFXvS2';
               "type": "fullscreen",
               "platform": "desktop"
             });
-        
-
+      
             console.log("Logging advertisement click event");
             firebase.analytics().logEvent('advertisement_clicked', {
               advertisement_type: 'yandex_rtb',
@@ -53,7 +52,7 @@ const apiKey = 'key9kpLHqsdRFXvS2';
         
             setTimeout(() => {
               console.log("Redirecting to URL"); // Отладочный вывод
-              window.location.href = url;
+              window.open(url, '_blank');
             }, 1000);
           });
          

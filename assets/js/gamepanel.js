@@ -37,7 +37,8 @@ const apiKey = 'key9kpLHqsdRFXvS2';
           button.addEventListener('click', () => {
         
             console.log("Button clicked"); // Отладочный вывод
-        
+            analytics.logEvent('goal_completion', { name: 'CLICK GAME'});
+
             Ya.Context.AdvManager.render({
               "blockId": "R-A-2697791-1",
               "type": "fullscreen",

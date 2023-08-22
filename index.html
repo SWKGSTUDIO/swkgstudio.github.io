@@ -63,17 +63,105 @@
           <div class="game-panel-container">
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
             <div id="list-widget" style="display: none;"></div>
-            <script src="assets/js/gamepanel.js"></script>
+            <script>
+              const apiKey = 'key9kpLHqsdRFXvS2';
+              const baseId = 'appaePimTt1Ji6hSr';
+              const tableName = 'tblivWUpxtGbTszm3';
+
+              fetch(`https://api.airtable.com/v0/${baseId}/${tableName}?api_key=${apiKey}`)
+              .then(response => response.json())
+            .then(data => {
+        const listWidget = document.getElementById('list-widget');
+        const ul = document.createElement('ul');
+        ul.classList.add('button-list', 'horizontal');
+
+        data.records.sort((a, b) => a.fields.Num - b.fields.Num);
+
+        data.records.forEach(record => {
+        const fields = record.fields;
+        const name = fields.Name;
+        const imageUrl = fields.Image;
+        const url = fields.URL;
+        const power = fields.Power;
+
+        const button = document.createElement('button');
+        const img = document.createElement('img');
+        img.src = imageUrl;
+        img.alt = name;
+        button.appendChild(img);
+
+        const span = document.createElement('span');
+        span.innerText = name;
+        span.classList.add('image-text');
+        img.parentNode.insertBefore(span, img.nextSibling);
+
+        const li = document.createElement('li');
+
+
+        if (power === "ON") {
+          button.classList.add('button-on');
+          button.addEventListener('click', () => {
+        
+            console.log("Button clicked"); // Отладочный вывод
+        
+            Ya.Context.AdvManager.render({
+              "blockId": "R-A-2697791-1",
+              "type": "fullscreen",
+              "platform": "desktop"
+            });
+      
+            // console.log("Logging advertisement click event");
+            // firebase.analytics().logEvent('advertisement_clicked', {
+            //   advertisement_type: 'yandex_rtb',
+            //   advertisement_blockId: 'R-A-2697791-1'
+            // });
+        
+            setTimeout(() => {
+              console.log("Redirecting to URL"); // Отладочный вывод
+              window.open(url, '_blank');
+            }, 1000);
+          });
+         
+        } else if (power === "OFF") {
+          button.classList.add('button-off');
+          button.disabled = true;
+        }
+
+        li.classList.add('hide');
+        li.appendChild(button);
+        ul.appendChild(li);
+      });
+
+      listWidget.appendChild(ul);
+
+      setTimeout(function() {
+        document.getElementById('list-widget').style.display = 'block';
+
+        const listItems = ul.querySelectorAll('li');
+        listItems.forEach((item, index) => {
+          setTimeout(function() {
+            item.classList.add('show');
+          }, index * 50);
+        });
+      }, 100);
+    })
+    .catch(error => {
+      console.error(error);
+    });
+            </script>
+            
+            <!-- <script src="assets/js/gamepanel.js"></script> -->
+
           </div>
-          <!-- Yandex.RTB R-A-2697791-1 -->
-          <!-- <script>window.yaContextCb.push(()=>{
+          <script>
+          window.yaContextCb.push(()=>{
           Ya.Context.AdvManager.render({
           "blockId": "R-A-2697791-1",
           "type": "fullscreen",
           "platform": "desktop"
-        })
-      })
-</script> -->
+          })
+          })
+        </script>
         </main>
       </div>
       

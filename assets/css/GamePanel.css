@@ -181,10 +181,7 @@
   max-width: 300px; /* Максимальная ширина */
   max-height: 50px;
   height: 30px;
-  padding: 10px; /* Уменьшенный внутренний отступ */
-  background-color: rgba(0, 0, 0, 0.5); /* Полупрозрачный фон */
   border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   text-align: center;
   color: white;
   font-size: 14px; /* Уменьшенный размер шрифта */

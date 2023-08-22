@@ -69,12 +69,16 @@
 
           </div>
 
-          <div id="yandex_rtb_R-A-2697791-2"></div>
-
+          <div class="yandex-banner-container">
+            <div id="yandex_rtb_R-A-2697791-2"></div>
+          </div>
+          
           <script>
           window.yaContextCb.push(()=>{
           Ya.Context.AdvManager.render({
           "blockId": "R-A-2697791-2",
+          "type": "banner",
+          "platform": isMobileDevice() ? "touch" : "desktop",
           "renderTo": "yandex_rtb_R-A-2697791-2"
           })
           })

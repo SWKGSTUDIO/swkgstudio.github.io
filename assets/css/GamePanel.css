@@ -169,30 +169,28 @@
   }
 }
 
-..ad-banner {
+.ad-banner {
   display: flex;
   justify-content: center;
   align-items: center;
   position: fixed;
   bottom: 0;
   left: 0;
-  width: 60%;
-  height: 100px; /* Высота стандартного баннера Яндекса */
-  background-color: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  max-height: 60px; /* Максимальная высота баннера */
+  background-color: rgba(0, 0, 0, 0.8);
   color: white;
-  font-size: 14px;
-  border-top: 1px solid rgba(255, 255, 255, 0.1); /* Граница сверху для отделения от контента */
-  z-index: 9999; /* Перемещение баннера поверх остальных элементов */
+  font-size: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  z-index: 9999;
 }
 
 @media (max-width: 768px) {
   .ad-banner {
-    height: 80px; /* Уменьшенная высота на маленьких экранах */
-    font-size: 12px;
+    max-height: 40px; /* Уменьшенная максимальная высота на маленьких экранах */
+    font-size: 10px;
   }
 }
-Этот стиль создаст баннер с размерами и расположением, подходящими для стандартных баннеров Яндекса, и поместит его внизу страницы. Он также будет адаптироваться для маленьких экранов. Вы можете вставить этот стиль в свой CSS файл или внутрь тега <style> в HTML коде вашей страницы.
-
 
 
 

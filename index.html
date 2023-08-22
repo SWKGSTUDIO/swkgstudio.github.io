@@ -63,10 +63,9 @@
           <div class="game-panel-container">
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
             <div id="list-widget" style="display: none;"></div>
-            <script>
-              
-              import { getAnalytics, logEvent } from "firebase/analytics";
 
+
+            <script>
               const apiKey = 'key9kpLHqsdRFXvS2';
               const baseId = 'appaePimTt1Ji6hSr';
               const tableName = 'tblivWUpxtGbTszm3';
@@ -113,10 +112,10 @@
               "platform": "desktop"
             });
       
-            const analytics = getAnalytics();
-            logEvent(analytics, 'ADYANDEX', {
-            content_type: 'AD',
-            content_id: 'YANDEXAD'
+            analytics.logEvent('select_content', {
+            content_type: 'Yandex',
+            content_id: 'AD',
+            items: [{ name: 'YandexAD' }]
             });
         
             setTimeout(() => {

@@ -9,7 +9,6 @@ const apiKey = 'key9kpLHqsdRFXvS2';
       const ul = document.createElement('ul');
       ul.classList.add('button-list', 'horizontal');
 
-      // Сортировка данных по полю "Num"
       data.records.sort((a, b) => a.fields.Num - b.fields.Num);
 
       data.records.forEach(record => {
@@ -45,7 +44,7 @@ const apiKey = 'key9kpLHqsdRFXvS2';
 
           setTimeout(() => {
           window.location.href = url;
-          }, 1000);
+          }, 2000);
           });
          
         } else if (power === "OFF") {

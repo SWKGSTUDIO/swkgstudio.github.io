@@ -1,24 +1,131 @@
 <!DOCTYPE html>
-<html lang="en" style="width: 100%; height: 100vh; background: url(&quot;assets/img/background.webp&quot;) center / cover repeat, rgba(0, 0, 0, 0); margin: 0; padding: 0; overflow: hidden;">
+<html lang="en" style="width: 100%;height: 100vh;background: url(&quot;assets/img/background.webp&quot;) center / cover repeat, rgba(0,0,0,0);margin: 0;padding: 0;overflow: hidden;">
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-  <title>SWKG - Sweety Kitty Games</title>
-  <link rel="icon" href="assets/img/icon_logo.ico">
-  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-  <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
-  <link rel="stylesheet" href="assets/css/Background.css">
-  <link rel="stylesheet" href="assets/css/chat.css">
-  <link rel="stylesheet" href="assets/css/GamePanel.css">
-  <link rel="stylesheet" href="assets/css/tileback.css">
-  <link rel="stylesheet" href="assets/css/style.css">
-  <link rel="stylesheet" href="assets/css/filem.css">
-
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>SWKG - Sweety Kitty Games</title>
+    <link rel="canonical" href="https://deizeshot.github.io/">
+    <meta property="og:url" content="https://deizeshot.github.io/">
+    <meta name="description" content="Sweety Kitty Games Studio: Окунитесь в Мир Игр с Лучшими Впечатлениями!
+Добро пожаловать в мир Sweety Kitty Games Studio – вашего надежного проводника в увлекательные и захватывающие путешествия в игровой вселенной. Наша студия является источником невероятных впечатлений, где мы объединяем вашу страсть к играм, радость майнкрафтовых приключений, веселый мир Губки Боба и магию Google Play.
+Что делает Sweety Kitty Games Studio таким особенным? Это просто: мы предлагаем сервис игр, который исходит из вашей страсти и желания провести время с удовольствием. Мы стремимся создавать не просто игры, а настоящие миры, в которых вы можете раскрыть свой потенциал, научиться сотрудничать и соревноваться, а главное – получить удовольствие.
+Вы любите исследовать блоки, строить виртуальные империи и сражаться с монстрами? Наша студия создает мир Майнкрафта, в котором каждый блок – это новая возможность для вашей креативности и приключений. Играя в Minecraft от Sweety Kitty Games Studio, вы окунетесь в удивительный пиксельный мир, где вы решаете, какие истории будут развиваться.
+И что может быть более веселым, чем играть вместе со своими любимыми персонажами из мультсериала Губка Боб? В наших играх вы встретите Губку Боба, Патрика и других забавных обитателей Бикини Боттом. Погрузитесь в морскую атмосферу и отправьтесь в водоворот смеха и приключений вместе с ними.
+Sweety Kitty Games Studio также приветствует вас в мире Google Play. Мы гордимся нашими играми, доступными на этой платформе, где вы можете наслаждаться невероятными приключениями прямо на вашем мобильном устройстве. Вместе с Google Play мы делаем игры ближе и доступнее для всех, кто жаждет веселья и развлечений.
+Так что если вы ищете непередаваемые эмоции, захватывающие истории и драйв, добро пожаловать в Sweety Kitty Games Studio – ваш источник веселья, креативности и приключений. Доверьтесь нам и окунитесь в увлекательные миры, которые мы создаем специально для вас!">
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/Background.css">
+    <link rel="stylesheet" href="assets/css/chat.css">
+    <link rel="stylesheet" href="assets/css/GamePanel.css">
+    <link rel="stylesheet" href="assets/css/tileback.css">
 </head>
 
+<body style="background: rgba(255,255,255,0);height: 100vh;width: 100%;overflow: hidden;"><img style="width: 100%;height: 100vh;background: url(&quot;assets/img/tile.png&quot;) center / auto repeat;position: absolute;overflow: hidden;opacity: 0.09;text-align: left;z-index: -1;animation: slideAnima 190000s linear infinite;"><strong style="color: rgb(255,255,255);font-size: 45px;margin: 10px;"><img src="assets/img/logo.webp" width="38" height="61" style="margin: 13px;">SWKG</strong>
+    <div class="row"><div class="button-list-container">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+                  <div id="list-widget" style="display: none;"></div>
+<script>
+  const apiKey = 'key9kpLHqsdRFXvS2';
+  const baseId = 'appaePimTt1Ji6hSr';
+  const tableName = 'tblivWUpxtGbTszm3';
 
-<script type="module">
+  fetch(`https://api.airtable.com/v0/${baseId}/${tableName}?api_key=${apiKey}`)
+    .then(response => response.json())
+    .then(data => {
+      const listWidget = document.getElementById('list-widget');
+      const ul = document.createElement('ul');
+      ul.classList.add('button-list', 'horizontal');
+
+      // Сортировка данных по полю "Num"
+      data.records.sort((a, b) => a.fields.Num - b.fields.Num);
+
+      data.records.forEach(record => {
+        const fields = record.fields;
+        const name = fields.Name;
+        const imageUrl = fields.Image;
+        const url = fields.URL;
+        const power = fields.Power;
+
+        const button = document.createElement('button');
+        const img = document.createElement('img');
+        img.src = imageUrl;
+        img.alt = name;
+        button.appendChild(img);
+
+        const span = document.createElement('span');
+        span.innerText = name;
+        span.classList.add('image-text');
+        img.parentNode.insertBefore(span, img.nextSibling);
+
+        const li = document.createElement('li');
+
+        if (power === "ON") {
+        button.classList.add('button-on');
+        button.addEventListener('click', () => {
+
+          Ya.Context.AdvManager.render({
+            "blockId": "R-A-2697791-1",
+            "type": "fullscreen",
+            "platform": "desktop"
+          });
+
+          if (isMobileDevice()) {
+          Ya.Context.AdvManager.render({
+          "blockId": "R-A-2697791-3",
+          "type": "fullscreen",
+          "platform": "touch"
+          });
+          }
+
+          setTimeout(() => {
+            console.log("Redirecting to URL");
+            window.open(url, '_blank');
+          }, 2000);
+        });
+
+        } else if (power === "OFF") {
+          button.classList.add('button-off');
+          button.disabled = true;
+        }
+
+        li.classList.add('hide');
+        li.appendChild(button);
+        ul.appendChild(li);
+      });
+
+      listWidget.appendChild(ul);
+
+      setTimeout(function() {
+        document.getElementById('list-widget').style.display = 'block';
+
+        const listItems = ul.querySelectorAll('li');
+        listItems.forEach((item, index) => {
+          setTimeout(function() {
+            item.classList.add('show');
+          }, index * 50);
+        });
+      }, 100);
+    })
+    .catch(error => {
+      console.error(error);
+    });
+</script>
+</div> <div class="ad-banner">
+            <div id="yandex_rtb_R-A-2697791-2">
+              <script>
+                window.yaContextCb.push(() => {
+                  Ya.Context.AdvManager.render({
+                    "blockId": "R-A-2697791-2",
+                    "type": "banner",
+                    "platform": isMobileDevice() ? "touch" : "desktop",
+                    "renderTo": "yandex_rtb_R-A-2697791-2"
+                  });
+                });
+              </script>
+            </div>
+          </div></div>
+    <div class="row"><script type="module">
   // Import the functions you need from the SDKs you need
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.2.0/firebase-app.js";
   import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.2.0/firebase-analytics.js";
@@ -40,125 +147,9 @@
 
 <!-- Yandex.RTB -->
 <script>window.yaContextCb=window.yaContextCb||[]</script>
-<script src="https://yandex.ru/ads/system/context.js" async></script>
-
-<body style="background: rgba(255, 255, 255, 0); height: 100vh; width: 100%; overflow: hidden;">
-  <img style="width: 100%; height: 100vh; background: url(&quot;assets/img/tile.png&quot;) center / auto repeat; position: absolute; overflow: hidden; opacity: 0.09; text-align: left; z-index: -1; animation: slideAnima 190000s linear infinite;">
-  <strong style="color: rgb(255, 255, 255); font-size: 60px; margin: 10px; position: fixed;">
-    <img src="assets/img/logo.webp" width="38" height="61" style="margin: 13px;">SWKG
-    
-       <!-- <div class="navigation-panel"> -->
-      <!-- <button id="gamesButton" class="btn btn-primary">ИГРЫ</button> -->
-      <!-- <button id="chatButton" class="btn btn-primary">ЧАТ</button> -->
-      <!-- <button id="filesButton" class="btn btn-primary">ФАЙЛЫ</button> -->
-    <!-- </div> --> 
-
-  </strong>
-      <div class="tab-content">
-      <div class="tab-pane fade show active" role="tabpanel" id="tab-1">
-        <main style="width: 100%; height: 100%; right: 50%; left: 50%;">
-          <div class="game-panel-container">
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-            <div id="list-widget" style="display: none;"></div>
-            <script src="assets/js/gamepanel.js"></script>
-          </div>
-            <div class="ad-banner">
-            <div id="yandex_rtb_R-A-2697791-2">
-              <script>
-                window.yaContextCb.push(() => {
-                  Ya.Context.AdvManager.render({
-                    "blockId": "R-A-2697791-2",
-                    "type": "banner",
-                    "platform": isMobileDevice() ? "touch" : "desktop",
-                    "renderTo": "yandex_rtb_R-A-2697791-2"
-                  });
-                });
-              </script>
-            </div>
-          </div>
-        </main>
-      </div>
-    </div>
-  
-    <div class="sidebar-text-container">
-      <div class="sidebar-text">
-      <p>Sweety Kitty Games Studio: Окунитесь в Мир Игр с Лучшими Впечатлениями!
-
-        Добро пожаловать в мир Sweety Kitty Games Studio – вашего надежного проводника в увлекательные и захватывающие путешествия в игровой вселенной. Наша студия является источником невероятных впечатлений, где мы объединяем вашу страсть к играм, радость майнкрафтовых приключений, веселый мир Губки Боба и магию Google Play.
-        
-        Что делает Sweety Kitty Games Studio таким особенным? Это просто: мы предлагаем сервис игр, который исходит из вашей страсти и желания провести время с удовольствием. Мы стремимся создавать не просто игры, а настоящие миры, в которых вы можете раскрыть свой потенциал, научиться сотрудничать и соревноваться, а главное – получить удовольствие.
-        
-        Вы любите исследовать блоки, строить виртуальные империи и сражаться с монстрами? Наша студия создает мир Майнкрафта, в котором каждый блок – это новая возможность для вашей креативности и приключений. Играя в Minecraft от Sweety Kitty Games Studio, вы окунетесь в удивительный пиксельный мир, где вы решаете, какие истории будут развиваться.
-        
-        И что может быть более веселым, чем играть вместе со своими любимыми персонажами из мультсериала Губка Боб? В наших играх вы встретите Губку Боба, Патрика и других забавных обитателей Бикини Боттом. Погрузитесь в морскую атмосферу и отправьтесь в водоворот смеха и приключений вместе с ними.
-        
-        Sweety Kitty Games Studio также приветствует вас в мире Google Play. Мы гордимся нашими играми, доступными на этой платформе, где вы можете наслаждаться невероятными приключениями прямо на вашем мобильном устройстве. Вместе с Google Play мы делаем игры ближе и доступнее для всех, кто жаждет веселья и развлечений.
-        
-        Так что если вы ищете непередаваемые эмоции, захватывающие истории и драйв, добро пожаловать в Sweety Kitty Games Studio – ваш источник веселья, креативности и приключений. Доверьтесь нам и окунитесь в увлекательные миры, которые мы создаем специально для вас!</p>
-    </div>
-  </div>
-    
-      
-      <!-- ЭКРАН ЧАТА -->
-      <div class="tab-pane fade" role="tabpanel" id="tab-2">
-        <main style="width: 100%; height: 100%;">
-          <div class="col" style="width: 100vh; height: 100vh;">
-            <div class="row">
-            </div> 
-
-            <div class="chat-container">
-               <!-- Здесь размещаем блок с паролем и скрипт для его проверки -->
-               <div class="password-wrapper" id="passwordWrapper">
-                <div class="password-container">
-                  <label for="password">Введите пароль:</label>
-                  <div class="password-input">
-                    <input type="password" id="password" />
-                    <button onclick="checkPassword()"><i class="fas fa-sign-in-alt"></i></button>
-                  </div>
-                </div>
-              </div>
-              
-              <div class="col text-center chat-info">
-                <h2>ЧАТ</h2>
-                <p>/regtg начать</p>
-                <p>/reg chatId регистрация</p>
-                <p>/bot chatId сообщение</p>
-                <!-- <p>/clear TELEGRAM_ID удаление</p> -->
-              </div>    
-              <div class="chat-messages" id="chatMessages">
-                <div class="chat-message sent">
-                </div>
-                <div class="chat-message received">
-                </div>
-              </div>
-              <div class="chat-input">
-                <input type="text" id="messageInput" placeholder="Cообщение...">
-                <button id="sendButton">
-                  <i class="fas fa-paper-plane"></i>
-                </button>
-              </div>
-            </div>
-            <script src="assets/js/chat.js"></script>
-          </div>
-        </div>
-        </main>
-      </div>
-
-      <!-- ЭКРАН ФАЙЛОВ -->
-      <div class="tab-pane fade" role="tabpanel" id="tab-3">
-        <main style="width: 100%; height: 100%;">
-          <div class="filem-container">
-            <div class="col text-center chat-info">
-              <h2>ФАЙЛЫ</h2>
-            </div>
-          </div>
-        </main>
-      </div>
-    </div>
-  </div>
-  
-  <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-  <!-- <script src="assets/js/TabSwitch.js"></script> -->
-
+<script src="https://yandex.ru/ads/system/context.js" async></script></div>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
 </body>
+
 </html>

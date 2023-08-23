@@ -31,7 +31,6 @@
 
 }
 
-
 /* Стиль для кнопки "ЧАТ" */
 .chat-button {
     position: absolute;
@@ -77,32 +76,3 @@
     }
 }
 
-.sidebar-text-container {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 300px;
-    height: 100%;
-    padding: 20px;
-    background-color: rgba(0, 0, 0, 0.5);
-    box-shadow: 5px 0 10px rgba(0, 0, 0, 0.2);
-    overflow-y: auto;
-    color: white;
-    font-size: 16px;
-    line-height: 1.4;
-    transition: font-size 0.3s;
-    opacity: 0;
-  }
-  
-  
-  /* Медиа-запрос для адаптивного изменения размера шрифта */
-  @media (max-width: 768px) {
-    .sidebar-text {
-      font-size: 14px; /* Уменьшенный размер шрифта на маленьких экранах */
-    }
-  }
-  
-  

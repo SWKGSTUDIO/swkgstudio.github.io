@@ -78,31 +78,33 @@ Sweety Kitty Games Studio также приветствует вас в мире
           const li = document.createElement('li');
 
           if (power === "ON") {
-            button.classList.add('button-on');
-            button.addEventListener('click', () => {
-              if (!isMobileDevice()) {
-                Ya.Context.AdvManager.render({
-                  "blockId": "R-A-2697791-1", // Десктопная фуллскрин реклама
-                  "type": "fullscreen",
-                  "platform": "desktop"
-                });
-              } else {
-                Ya.Context.AdvManager.render({
-                  "blockId": "R-A-2697791-3", // Мобильная фуллскрин реклама
-                  "type": "fullscreen",
-                  "platform": "touch"
-                });
-              }
-              
-              setTimeout(() => {
-                console.log("Redirecting to URL");
-                window.open(url, '_blank');
-              }, 2000);
-            });
-          } else if (power === "OFF") {
-            button.classList.add('button-off');
-            button.disabled = true;
+        button.classList.add('button-on');
+        button.addEventListener('click', () => {
+
+          Ya.Context.AdvManager.render({
+            "blockId": "R-A-2697791-1",
+            "type": "fullscreen",
+            "platform": "desktop"
+          });
+
+          if (isMobileDevice()) {
+          Ya.Context.AdvManager.render({
+          "blockId": "R-A-2697791-3",
+          "type": "fullscreen",
+          "platform": "touch"
+          });
           }
+
+          setTimeout(() => {
+            console.log("Redirecting to URL");
+            window.open(url, '_blank');
+          }, 2000);
+        });
+
+      } else if (power === "OFF") {
+        button.classList.add('button-off');
+        button.disabled = true;
+      }
 
           li.classList.add('hide');
           li.appendChild(button);

@@ -123,18 +123,25 @@ Sweety Kitty Games Studio также приветствует вас в мире
           ul.appendChild(li);
         });
 
-        // Вставляем баннер между кнопками
-        const bannerContainer = document.createElement('div');
-        bannerContainer.id = 'yandex_rtb_R-A-2697791-2';
-        ul.insertBefore(bannerContainer, ul.firstChild);
+         window.yaContextCb.push(() => {
+          const randomIndex = Math.floor(Math.random() * (data.records.length + 1));
+          const bannerContainer = document.getElementById('yandex_rtb_R-A-2697791-2');
+          const li = document.createElement('li');
+          li.classList.add('hide');
 
-        // Рендерим баннер
-        window.yaContextCb.push(() => {
+          if (randomIndex === 0) {
+            ul.insertBefore(li, ul.firstChild);
+          } else if (randomIndex === data.records.length) {
+            ul.appendChild(li);
+          } else {
+            ul.insertBefore(li, ul.childNodes[randomIndex]);
+          }
+
           Ya.Context.AdvManager.render({
             "blockId": "R-A-2697791-2",
             "type": "banner",
             "platform": isMobileDevice() ? "touch" : "desktop",
-            "renderTo": "yandex_rtb_R-A-2697791-2"
+            "renderTo": li
           });
         });
 
@@ -153,10 +160,10 @@ Sweety Kitty Games Studio также приветствует вас в мире
       .catch(error => {
         console.error(error);
       });
-      
-      function isMobileDevice() {
-        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-      }
+
+    function isMobileDevice() {
+      return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    }
   </script>
 </div>
 

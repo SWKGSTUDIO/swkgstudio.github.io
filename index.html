@@ -147,29 +147,9 @@ Sweety Kitty Games Studio также приветствует вас в мире
 </div>
 
 <style>
-  /* Ваш стиль для кнопок */
-  .button-list-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100vw;
-    height: 100vh;
-    overflow: hidden; /* Убираем скролл */
-  }
-
-  .button-list.horizontal {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    max-width: 1200px;
-    width: 100%;
-    flex-wrap: wrap;
-    gap: 20px;
-  }
-
+  /* Общие стили */
   .button-list li,
   #yandex_rtb_R-A-2697791-2 {
-    flex: 1 1 200px; /* Используем flex-basis для определения ширины */
     height: 150px;
     border-radius: 10px;
     overflow: hidden;
@@ -228,27 +208,40 @@ Sweety Kitty Games Studio также приветствует вас в мире
     opacity: 1;
   }
 
-  /* Ваш стиль для баннера */
-  #yandex_rtb_R-A-2697791-2 {
-    flex: 1 1 calc(33.33% - 40px);
-    width: 200px;
-    height: 150px;
-    margin: 0 10px;
-    border-radius: 10px;
-    overflow: hidden;
-    position: relative;
-    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  /* Стили для мобильной версии */
+  @media (max-width: 768px) {
+    .button-list.horizontal {
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: space-between;
+    }
+
+    .button-list li,
+    #yandex_rtb_R-A-2697791-2 {
+      flex: 1 1 calc(50% - 10px);
+      margin: 5px;
+    }
   }
 
-  #yandex_rtb_R-A-2697791-2 iframe {
-    width: 100%;
-    height: 100%;
-    border: none;
+  /* Стили для широких экранов */
+  @media (min-width: 769px) {
+    .button-list.horizontal {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .button-list li,
+    #yandex_rtb_R-A-2697791-2 {
+      flex: 1 1 auto;
+      margin: 0;
+    }
   }
 </style>
+
+
 
 
     <div class="row" style="margin: 0;height: 100vh;margin-top: 0;padding: 50px;">

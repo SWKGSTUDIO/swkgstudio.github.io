@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" style="width: 100%;height: 100vh;background: url(&quot;assets/img/background.webp&quot;) center / cover repeat, url(&quot;assets/img/tile.webp&quot;), rgb(0,0,0);margin: 0;padding: 0;overflow: visible;">
+<html lang="en" style="width: 100%;height: 100vh;background: rgb(0,0,0);margin: 0;padding: 0;">
 
 <head>
     <meta charset="utf-8">
@@ -28,7 +28,7 @@ Sweety Kitty Games Studio также приветствует вас в мире
     <link rel="stylesheet" href="assets/css/GamePanel.css">
 </head>
 
-<body style="background: rgba(255,255,255,0);height: 100vh;width: 100%;overflow: scroll;overflow-y: scroll;overflow-x: hidden;"><img style="position: absolute;overflow: visible;opacity: 0.09;text-align: left;/*z-index: 1;*/animation: slideAnima 190000s linear infinite;height: 100vh;width: 100%;background: url(&quot;assets/img/tile.webp&quot;);"><script type="module">
+<body style="background: rgba(255,255,255,0);height: 100vh;width: 100%;"><img style="position: fixed;overflow: auto;opacity: 1;text-align: left;/*z-index: 1;*/animation: slideAnima 190000s linear infinite;height: 100vh;width: 100%;background: linear-gradient(130deg, #141137, #2f204d 100%), #1f0b43;"><img style="position: fixed;overflow: auto;opacity: 0.09;text-align: left;/*z-index: 1;*/animation: slideAnima 190000s linear infinite;height: 100vh;width: 100%;background: url(&quot;assets/img/tile.webp&quot;), var(--bs-border-color-translucent);"><script type="module">
   // Import the functions you need from the SDKs you need
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.2.0/firebase-app.js";
   import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.2.0/firebase-analytics.js";
@@ -50,10 +50,11 @@ Sweety Kitty Games Studio также приветствует вас в мире
 
 <!-- Yandex.RTB -->
 
-    <div class="row">
-        <div class="col"><strong style="color: rgb(255,255,255);font-size: 45px;margin: 10px;font-family: 'Bowlby One', serif;"><img src="assets/img/logo.webp" width="38" height="61" style="margin: 13px;">SWKG</strong></div>
+    <div class="row" style="overflow: hidden;overflow-y: auto;z-index: 3;">
+        <div class="col" style="z-index: 2;"><strong style="color: rgb(255,255,255);font-size: 45px;margin: 10px;font-family: 'Bowlby One', serif;z-index: 2;"><img src="assets/img/logo.webp" width="38" height="61" style="margin: 13px;z-index: 2;">SWKG</strong></div>
     </div>
-    <div class="row"><script>window.yaContextCb=window.yaContextCb||[]</script>
+    <div class="row" style="overflow: hidden;">
+<script>window.yaContextCb=window.yaContextCb||[]</script>
 <script src="https://yandex.ru/ads/system/context.js" async></script>
 
 <div class="button-list-container">
@@ -177,7 +178,7 @@ Sweety Kitty Games Studio также приветствует вас в мире
 
 
 </div>
-    <div class="row" style="margin: 0;height: 100vh;margin-top: 0;padding: 50px;">
+    <div class="row" style="margin: 0;height: 100vh;margin-top: 0;padding: 50px;overflow: hidden;overflow-y: auto;">
         <div class="col" style="/*margin-top: auto;*/">
             <div data-bss-parallax-bg="true" style="/*height: 600px;*//*z-index: 2;*//*background: url(&quot;assets/img/background.webp&quot;) center / cover, rgba(255,255,255,0);*//*opacity: 50%;*/">
                 <div class="row h-100">

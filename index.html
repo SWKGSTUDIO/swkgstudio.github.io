@@ -123,29 +123,24 @@ Sweety Kitty Games Studio также приветствует вас в мире
           ul.appendChild(li);
         });
 
-         window.yaContextCb.push(() => {
-          const randomIndex = Math.floor(Math.random() * (data.records.length + 1));
-          const bannerContainer = document.getElementById('yandex_rtb_R-A-2697791-2');
+        listWidget.appendChild(ul);
+
+        // Render Yandex advertisement banner
+        window.yaContextCb.push(() => {
+          const bannerContainer = document.createElement('div');
+          bannerContainer.id = 'yandex_rtb_R-A-2697791-2';
           const li = document.createElement('li');
           li.classList.add('hide');
-
-          if (randomIndex === 0) {
-            ul.insertBefore(li, ul.firstChild);
-          } else if (randomIndex === data.records.length) {
-            ul.appendChild(li);
-          } else {
-            ul.insertBefore(li, ul.childNodes[randomIndex]);
-          }
+          li.appendChild(bannerContainer);
+          ul.insertBefore(li, ul.childNodes[Math.floor(Math.random() * ul.children.length)]);
 
           Ya.Context.AdvManager.render({
-            "blockId": "R-A-2697791-2",
-            "type": "banner",
-            "platform": isMobileDevice() ? "touch" : "desktop",
-            "renderTo": li
+            blockId: 'R-A-2697791-2',
+            type: 'banner',
+            platform: isMobileDevice() ? 'touch' : 'desktop',
+            renderTo: bannerContainer
           });
         });
-
-        listWidget.appendChild(ul);
 
         setTimeout(function() {
           document.getElementById('list-widget').style.display = 'block';

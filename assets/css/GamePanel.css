@@ -1,29 +1,5 @@
-/* .button-list-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100vw;
-  height: 100vh;
-  overflow-y: scroll;
-}
-
-.button-list.horizontal {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-  max-width: 1200px;
-  width: 100%;
-  flex-wrap: wrap;
-  gap: 20px;
-}
-
-.button-list li {
-  flex: 0 0 calc(33.33% - 20px);
-  width: 100%;
-  max-width: 150px;
+.button-list li, #yandex_rtb_R-A-2697791-2 {
   height: 150px;
-  margin: 10px;
   border-radius: 10px;
   overflow: hidden;
   transition: transform 0.3s ease;
@@ -45,7 +21,7 @@
   position: relative;
 }
 
-.button-list li img {
+.button-list li img, #yandex_rtb_R-A-2697791-2 iframe {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -78,5 +54,52 @@
 
 .button-list li:hover .image-text {
   opacity: 1;
-} */
+}
+
+@media (max-width: 768px) {
+  .button-list.horizontal {
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: space-between;
+  }
+}
+
+@media (max-width: 768px) {
+  .button-list li, #yandex_rtb_R-A-2697791-2 {
+    flex: 1 1 calc(50% - 10px);
+    margin: 5px;
+  }
+}
+
+@media (min-width: 769px) {
+  .button-list.horizontal {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+}
+
+@media (min-width: 769px) {
+  .button-list li, #yandex_rtb_R-A-2697791-2 {
+    flex: 1 1 auto;
+    margin: 0;
+  }
+}
+
+/* Добавляем анимацию для кнопок */
+
+@keyframes buttonAnimation {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.button-list li.button-animation button {
+  animation: buttonAnimation 3s infinite ease-in-out;
+}
 

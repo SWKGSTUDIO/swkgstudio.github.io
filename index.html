@@ -81,6 +81,9 @@ Sweety Kitty Games Studio также приветствует вас в мире
           img.alt = "";
           button.appendChild(img);
 
+          console.log("Adding button-animation class");
+          button.classList.add('button-animation');
+
           const li = document.createElement('li');
 
           if (power === "ON") {
@@ -152,99 +155,7 @@ Sweety Kitty Games Studio также приветствует вас в мире
   </script>
 </div>
 
-<style>
-  /* Общие стили */
-  .button-list li,
-  #yandex_rtb_R-A-2697791-2 {
-    height: 150px;
-    border-radius: 10px;
-    overflow: hidden;
-    transition: transform 0.3s ease;
-    position: relative;
-    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
-  }
 
-  .button-list li button {
-    width: 100%;
-    height: 100%;
-    padding: 0;
-    border: none;
-    background-color: transparent;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    transition: transform 0.3s ease;
-    position: relative;
-  }
-
-  .button-list li img,
-  #yandex_rtb_R-A-2697791-2 iframe {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s ease;
-  }
-
-  .button-list li:hover {
-    transform: scale(1.05);
-  }
-
-  .button-off {
-    opacity: 0.5;
-    pointer-events: none;
-  }
-
-  .image-text {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    padding: 10px;
-    background-color: rgba(0, 0, 0, 0.7);
-    color: white;
-    font-size: 14px;
-    text-align: center;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    pointer-events: none;
-  }
-
-  .button-list li:hover .image-text {
-    opacity: 1;
-  }
-
-  @media (max-width: 768px) {
-    .button-list.horizontal {
-      flex-wrap: wrap;
-      gap: 10px;
-      justify-content: space-between;
-    }
-
-    .button-list li,
-    #yandex_rtb_R-A-2697791-2 {
-      flex: 1 1 calc(50% - 10px);
-      margin: 5px;
-    }
-  }
-
-
-  @media (min-width: 769px) {
-    .button-list.horizontal {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .button-list li,
-    #yandex_rtb_R-A-2697791-2 {
-      flex: 1 1 auto;
-      margin: 0;
-    }
-  }
-</style>
 
 
 
@@ -255,8 +166,8 @@ Sweety Kitty Games Studio также приветствует вас в мире
                 <div class="row h-100">
                     <div class="col-md-6 text-center text-md-start d-flex d-sm-flex d-md-flex justify-content-center align-items-center justify-content-md-start align-items-md-center justify-content-xl-center">
                         <div style="/*max-width: 350px;*/">
-                            <h1 class="text-uppercase fw-bold" style="color: rgb(234,237,241);font-size: 17.455px;margin-top: 20vh;">ДОБРО ПОЖАЛОВАТЬ В УВЛЕКАТЕЛЬНЫЙ МИР SWEETY KITTY GAMES STUDIO – ВАШЕГО НАДЕЖНОГО ПРОВОДНИКА В ЗАХВАТЫВАЮЩИЕ ПУТЕШЕСТВИЯ ПО ИГРОВОЙ ВСЕЛЕННОЙ. МЫ ПРЕДОСТАВЛЯЕМ НЕВЕРОЯТНЫЕ ВПЕЧАТЛЕНИЯ, ОБЪЕДИНЯЯ ВАШУ СТРАСТЬ К ИГРАМ, МИРУ MINECRAFT, А ТАКЖЕ ПЕРСОНАЖАМ ИЗ ГУБКИ БОБА, ЧТОБЫ СОЗДАТЬ НЕЗАБЫВАЕМЫЕ ПРИКЛЮЧЕНИЯ НА ПЛАТФОРМЕ GOOGLE PLAY.</h1>
-                            <p class="my-3" style="color: rgb(232,236,241);font-size: 12px;margin-top: 20vh;">Что делает Sweety Kitty Games Studio особенным? Мы создаем уникальные миры, в которых вы сможете раскрыть свой потенциал, научиться сотрудничать и получить незабываемое удовольствие. Откройте для себя безграничные возможности в играх, основанных на популярных мировых франшизах, таких как Minecraft и Губка Боб.Sweety Kitty Games Studio – это источник впечатлений и развлечений, доступных на платформе Google Play. Наши игры позволят вам ощутить магию этих уникальных миров и погрузиться в увлекательные приключения, где каждый ваш выбор имеет значение.Если вы ищете захватывающие истории и возможность погрузиться в миры Minecraft и Губки Боба на платформе Google Play, Sweety Kitty Games Studio – ваш идеальный выбор. Доверьтесь нам и окунитесь в мир развлечений и фантастических приключений!</p>
+                            <h1 class="text-uppercase fw-bold" id="h1-element" style="color: rgb(234,237,241);font-size: 17.455px;margin-top: 20vh;">ДОБРО ПОЖАЛОВАТЬ В УВЛЕКАТЕЛЬНЫЙ МИР SWEETY KITTY GAMES STUDIO – ВАШЕГО НАДЕЖНОГО ПРОВОДНИКА В ЗАХВАТЫВАЮЩИЕ ПУТЕШЕСТВИЯ ПО ИГРОВОЙ ВСЕЛЕННОЙ. МЫ ПРЕДОСТАВЛЯЕМ НЕВЕРОЯТНЫЕ ВПЕЧАТЛЕНИЯ, ОБЪЕДИНЯЯ ВАШУ СТРАСТЬ К ИГРАМ, МИРУ MINECRAFT, А ТАКЖЕ ПЕРСОНАЖАМ ИЗ ГУБКИ БОБА, ЧТОБЫ СОЗДАТЬ НЕЗАБЫВАЕМЫЕ ПРИКЛЮЧЕНИЯ НА ПЛАТФОРМЕ GOOGLE PLAY.</h1>
+                            <p id="p-element" class="my-3" style="color: rgb(232,236,241);font-size: 12px;margin-top: 20vh;">Что делает Sweety Kitty Games Studio особенным? Мы создаем уникальные миры, в которых вы сможете раскрыть свой потенциал, научиться сотрудничать и получить незабываемое удовольствие. Откройте для себя безграничные возможности в играх, основанных на популярных мировых франшизах, таких как Minecraft и Губка Боб.Sweety Kitty Games Studio – это источник впечатлений и развлечений, доступных на платформе Google Play. Наши игры позволят вам ощутить магию этих уникальных миров и погрузиться в увлекательные приключения, где каждый ваш выбор имеет значение.Если вы ищете захватывающие истории и возможность погрузиться в миры Minecraft и Губки Боба на платформе Google Play, Sweety Kitty Games Studio – ваш идеальный выбор. Доверьтесь нам и окунитесь в мир развлечений и фантастических приключений!</p>
                         </div>
                     </div>
                 </div>

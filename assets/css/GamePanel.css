@@ -5,6 +5,7 @@
   transition: transform 0.3s ease;
   position: relative;
   box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+  animation: buttonBreathing 3s infinite ease-in-out;
 }
 
 .button-list li button {
@@ -19,6 +20,7 @@
   overflow: hidden;
   transition: transform 0.3s ease;
   position: relative;
+  animation: buttonBreathing 3s infinite ease-in-out;
 }
 
 .button-list li img, #yandex_rtb_R-A-2697791-2 iframe {
@@ -90,16 +92,12 @@
 
 /* Добавляем анимацию для кнопок */
 
-@keyframes buttonAnimation {
+@keyframes buttonBreathing {
   0%, 100% {
-    transform: translateY(0);
+    transform: scale(1);
   }
   50% {
-    transform: translateY(-5px);
+    transform: scale(1.01);
   }
-}
-
-.button-list li.button-animation button {
-  animation: buttonAnimation 3s infinite ease-in-out;
 }
 

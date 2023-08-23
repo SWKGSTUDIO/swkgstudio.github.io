@@ -15,13 +15,7 @@
 Sweety Kitty Games Studio также приветствует вас в мире Google Play. Мы гордимся нашими играми, доступными на этой платформе, где вы можете наслаждаться невероятными приключениями прямо на вашем мобильном устройстве. Вместе с Google Play мы делаем игры ближе и доступнее для всех, кто жаждет веселья и развлечений.
 Так что если вы ищете непередаваемые эмоции, захватывающие истории и драйв, добро пожаловать в Sweety Kitty Games Studio – ваш источник веселья, креативности и приключений. Доверьтесь нам и окунитесь в увлекательные миры, которые мы создаем специально для вас!">
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/css/Background.css">
-    <link rel="stylesheet" href="assets/css/chat.css">
     <link rel="stylesheet" href="assets/css/GamePanel.css">
-    <link rel="stylesheet" href="assets/css/Pricing-Centered-badges.css">
-    <link rel="stylesheet" href="assets/css/Pricing-Centered-icons.css">
-    <link rel="stylesheet" href="assets/css/tileback.css">
-    <link rel="stylesheet" href="assets/css/untitled.css">
 </head>
 
 <body style="background: rgba(255,255,255,0);height: 100vh;width: 100%;overflow: scroll;overflow-y: scroll;overflow-x: hidden;"><img style="position: absolute;overflow: hidden;opacity: 0.09;text-align: left;/*z-index: 1;*/animation: slideAnima 190000s linear infinite;height: 100vh;width: 100%;background: url(&quot;assets/img/tile.webp&quot;);"><script type="module">
@@ -52,95 +46,80 @@ Sweety Kitty Games Studio также приветствует вас в мире
     </div>
     <div class="row" style="padding-left: 25px;">
         <div class="col"><div class="button-list-container">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-                  <div id="list-widget" style="display: none;"></div>
-<script>
-  const apiKey = 'key9kpLHqsdRFXvS2';
-  const baseId = 'appaePimTt1Ji6hSr';
-  const tableName = 'tblivWUpxtGbTszm3';
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <div id="list-widget" style="display: none;"></div>
+  <script>
+    const apiKey = 'key9kpLHqsdRFXvS2';
+    const baseId = 'appaePimTt1Ji6hSr';
+    const tableName = 'tblivWUpxtGbTszm3';
 
-  fetch(`https://api.airtable.com/v0/${baseId}/${tableName}?api_key=${apiKey}`)
-    .then(response => response.json())
-    .then(data => {
-      const listWidget = document.getElementById('list-widget');
-      const ul = document.createElement('ul');
-      ul.classList.add('button-list', 'horizontal');
+    fetch(`https://api.airtable.com/v0/${baseId}/${tableName}?api_key=${apiKey}`)
+      .then(response => response.json())
+      .then(data => {
+        const listWidget = document.getElementById('list-widget');
+        const ul = document.createElement('ul');
+        ul.classList.add('button-list', 'horizontal');
 
-      // Сортировка данных по полю "Num"
-      data.records.sort((a, b) => a.fields.Num - b.fields.Num);
+        // Сортировка данных по полю "Num"
+        data.records.sort((a, b) => a.fields.Num - b.fields.Num);
 
-      data.records.forEach(record => {
-        const fields = record.fields;
-        const name = fields.Name;
-        const imageUrl = fields.Image;
-        const url = fields.URL;
-        const power = fields.Power;
+        data.records.forEach(record => {
+          const fields = record.fields;
+          const imageUrl = fields.Image;
+          const url = fields.URL;
+          const power = fields.Power;
 
-        const button = document.createElement('button');
-        const img = document.createElement('img');
-        img.src = imageUrl;
-        img.alt = name;
-        button.appendChild(img);
+          const button = document.createElement('button');
+          const img = document.createElement('img');
+          img.src = imageUrl;
+          img.alt = "";
+          button.appendChild(img);
 
-        const span = document.createElement('span');
-        span.innerText = name;
-        span.classList.add('image-text');
-        img.parentNode.insertBefore(span, img.nextSibling);
+          const li = document.createElement('li');
 
-        const li = document.createElement('li');
-
-        if (power === "ON") {
-        button.classList.add('button-on');
-        button.addEventListener('click', () => {
-
-          Ya.Context.AdvManager.render({
-            "blockId": "R-A-2697791-1",
-            "type": "fullscreen",
-            "platform": "desktop"
-          });
-
-          if (isMobileDevice()) {
-          Ya.Context.AdvManager.render({
-          "blockId": "R-A-2697791-3",
-          "type": "fullscreen",
-          "platform": "touch"
-          });
+          if (power === "ON") {
+            button.classList.add('button-on');
+            button.addEventListener('click', () => {
+              if (isMobileDevice()) {
+                Ya.Context.AdvManager.render({
+                  "blockId": "R-A-2697791-3",
+                  "type": "fullscreen",
+                  "platform": "touch"
+                });
+              }
+              setTimeout(() => {
+                console.log("Redirecting to URL");
+                window.open(url, '_blank');
+              }, 2000);
+            });
+          } else if (power === "OFF") {
+            button.classList.add('button-off');
+            button.disabled = true;
           }
 
-          setTimeout(() => {
-            console.log("Redirecting to URL");
-            window.open(url, '_blank');
-          }, 2000);
+          li.classList.add('hide');
+          li.appendChild(button);
+          ul.appendChild(li);
         });
 
-        } else if (power === "OFF") {
-          button.classList.add('button-off');
-          button.disabled = true;
-        }
+        listWidget.appendChild(ul);
 
-        li.classList.add('hide');
-        li.appendChild(button);
-        ul.appendChild(li);
+        setTimeout(function() {
+          document.getElementById('list-widget').style.display = 'block';
+          const listItems = ul.querySelectorAll('li');
+          listItems.forEach((item, index) => {
+            setTimeout(function() {
+              item.classList.add('show');
+            }, index * 50);
+          });
+        }, 100);
+      })
+      .catch(error => {
+        console.error(error);
       });
-
-      listWidget.appendChild(ul);
-
-      setTimeout(function() {
-        document.getElementById('list-widget').style.display = 'block';
-
-        const listItems = ul.querySelectorAll('li');
-        listItems.forEach((item, index) => {
-          setTimeout(function() {
-            item.classList.add('show');
-          }, index * 50);
-        });
-      }, 100);
-    })
-    .catch(error => {
-      console.error(error);
-    });
-</script>
-</div></div>
+  </script>
+</div>
+</div>
     </div>
     <div class="row" style="padding-left: 25px;border-color: rgb(0,0,0);width: 100vh;height: 100px;">
         <div class="col">           <div id="yandex_rtb_R-A-2697791-2">

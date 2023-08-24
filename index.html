@@ -28,7 +28,8 @@ Sweety Kitty Games Studio также приветствует вас в мире
     <link rel="stylesheet" href="assets/css/GamePanel.css">
 </head>
 
-<body style="background: rgba(255,255,255,0);height: 100vh;width: 100%;"><img style="position: fixed;overflow: auto;opacity: 1;text-align: left;/*z-index: 1;*/animation: slideAnima 190000s linear infinite;height: 100vh;width: 100%;background: linear-gradient(130deg, #141137, #2f204d 100%), #1f0b43;"><img style="position: fixed;overflow: auto;opacity: 0.09;text-align: left;/*z-index: 1;*/animation: slideAnima 190000s linear infinite;height: 100vh;width: 100%;background: url(&quot;assets/img/tile.webp&quot;), var(--bs-border-color-translucent);">    <meta name="google-site-verification" content="I_RTFSeKJvvHtJ5YmwNENy5Dqrstl8kFA8VQdmj6p9I" />
+<body style="background: rgba(255,255,255,0);height: 100vh;width: 100%;overflow-x: hidden;">
+    <div class="container" style="position: fixed;padding: 0px;color: rgba(33,37,41,0);overflow: hidden;z-index: -1;"><img style="position: fixed;overflow: auto;opacity: 1;text-align: left;/*z-index: 1;*/animation: slideAnima 190000s linear infinite;height: 100vh;width: 100%;background: linear-gradient(130deg, #141137, #2f204d 100%), #1f0b43;"><img style="position: fixed;overflow: auto;opacity: 0.09;text-align: left;/*z-index: 1;*/animation: slideAnima 190000s linear infinite;height: 100vh;width: 100%;background: url(&quot;assets/img/tile.webp&quot;), var(--bs-border-color-translucent);">    <meta name="google-site-verification" content="I_RTFSeKJvvHtJ5YmwNENy5Dqrstl8kFA8VQdmj6p9I" />
 
 <script type="module">
   // Import the functions you need from the SDKs you need
@@ -51,7 +52,7 @@ Sweety Kitty Games Studio также приветствует вас в мире
 
 
 <!-- Yandex.RTB -->
-
+</div>
     <div class="row" style="overflow: hidden;overflow-y: auto;z-index: 3;">
         <div class="col" style="z-index: 2;"><strong style="color: rgb(255,255,255);font-size: 45px;margin: 10px;font-family: 'Bowlby One', serif;z-index: 2;"><img src="assets/img/logo.webp" width="38" height="61" style="margin: 13px;z-index: 2;">SWKG</strong></div>
     </div>
@@ -180,7 +181,7 @@ Sweety Kitty Games Studio также приветствует вас в мире
 
 
 </div>
-    <div class="row" style="margin: 0;height: 100vh;margin-top: 0;padding: 50px;overflow: hidden;overflow-y: auto;">
+    <div class="row" style="margin: 0;height: 100vh;margin-top: 0;padding: 50px;overflow: hidden;">
         <div class="col" style="/*margin-top: auto;*/">
             <div data-bss-parallax-bg="true" style="/*height: 600px;*//*z-index: 2;*//*background: url(&quot;assets/img/background.webp&quot;) center / cover, rgba(255,255,255,0);*//*opacity: 50%;*/">
                 <div class="row h-100">
@@ -193,11 +194,13 @@ Sweety Kitty Games Studio также приветствует вас в мире
                 </div>
             </div>
         </div>
+        <div class="col" style="/*margin-top: auto;*/"><button class="btn btn-primary" id="generateButton" type="button" style="margin: 21%;margin-top: 38vh;width: 192.8203px;height: 60px;background: rgba(22,22,23,0.48);border-color: var(--bs-btn-disabled-color);filter: blur(0px);backdrop-filter: blur(0px);-webkit-backdrop-filter: blur(0px);">Generate Promo Code</button></div>
     </div>
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="assets/js/bs-init.js"></script>
     <script src="assets/js/localization.js"></script>
+    <script src="assets/js/promocode.js"></script>
 </body>
 
 </html>

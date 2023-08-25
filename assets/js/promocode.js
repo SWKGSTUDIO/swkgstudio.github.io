@@ -16,11 +16,11 @@ function generatePromoCode() {
 }
 
 // Function to copy text to clipboard
-function copyToClipboard(text) {
+function copyToClipboardWithNotification(text) {
   if (navigator.clipboard) {
     navigator.clipboard.writeText(text)
       .then(() => {
-        alert('Text copied to clipboard');
+        showNotification(`Promo code: ${text}`);
       })
       .catch(error => {
         console.error('Error copying text to clipboard:', error);
@@ -32,9 +32,79 @@ function copyToClipboard(text) {
     textArea.select();
     document.execCommand('copy');
     document.body.removeChild(textArea);
-    alert('Text copied to clipboard');
+    showNotification(`Promo code: ${text}`);
   }
 }
+
+let lastNotification;
+
+function showNotification(text) {
+  if (lastNotification) {
+    lastNotification.close();
+  }
+
+  lastNotification = new Notification('Promo Code Copied', {
+    body: text,
+  });
+
+  setTimeout(() => {
+    lastNotification.close();
+  }, 5000);
+}
+
+// ...
+
+document.addEventListener('DOMContentLoaded', function() {
+  const generateButton = document.getElementById('generateButton');
+  const promoCodeDisplay = document.getElementById('promoCodeDisplay');
+    
+  fetchAndDisplayPromoCode();
+
+  // Event listener for the button click
+  generateButton.addEventListener('click', function() {
+    const promoCode = generatePromoCode();
+
+    // Send promoCode to the server
+    fetch('https://intermediate-easy-ship.glitch.me/save-promo-code', {
+      method: 'POST',
+      body: JSON.stringify({ promoCode }),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(response => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        console.error('Failed to save Promo Code.');
+      }
+    }).then(data => {
+      if (data && data.message === 'Promo code saved successfully') {
+        // Fetch the promo code from the server
+        fetch('https://intermediate-easy-ship.glitch.me/get-promo-code')
+          .then(response => {
+            if (response.ok) {
+              return response.json();
+            } else {
+              console.error('Failed to fetch Promo Code.');
+            }
+          }).then(data => {
+            if (data && data.promoCode) {
+              promoCodeDisplay.innerText = `${data.promoCode}`;
+                promoCodeDisplay.addEventListener('click', function() {
+                copyToClipboardWithNotification(data.promoCode);
+            });
+            } else {
+              promoCodeDisplay.innerText = 'No promo code available.';
+            }
+          }).catch(error => {
+            console.error('Error fetching promo code:', error);
+          });
+      }
+    }).catch(error => {
+      console.error('Error fetching promo code:', error);
+    });
+  });
+});
 
 
 // Определение функции для получения и отображения промокода
@@ -97,9 +167,11 @@ document.addEventListener('DOMContentLoaded', function() {
           }).then(data => {
             if (data && data.promoCode) {
               promoCodeDisplay.innerText = `${data.promoCode}`;
+                
                 promoCodeDisplay.addEventListener('click', function() {
-                copyToClipboard(data.promoCode);
-            });
+                copyToClipboardWithNotification(data.promoCode);
+                });
+                
             } else {
               promoCodeDisplay.innerText = 'No promo code available.';
             }

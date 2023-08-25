@@ -3,18 +3,15 @@ function getRandomLetter() {
   const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
   return letters[Math.floor(Math.random() * letters.length)];
 }
-
 // Function to generate a random number or zero
 function getRandomNumberOrZero() {
   return Math.random() < 0.5 ? '0' : Math.floor(Math.random() * 10).toString();
 }
-
 // Function to generate a promo code
 function generatePromoCode() {
   const promoCode = `SWKG-${getRandomLetter()}${getRandomNumberOrZero()}${getRandomNumberOrZero()}${getRandomLetter()}-${getRandomNumberOrZero()}${getRandomLetter()}${getRandomNumberOrZero()}${getRandomNumberOrZero()}`;
   return promoCode;
 }
-
 // Function to copy text to clipboard
 function copyToClipboardWithNotification(text) {
   if (navigator.clipboard) {
@@ -35,35 +32,27 @@ function copyToClipboardWithNotification(text) {
     showNotification(`Promo code: ${text}`);
   }
 }
-
 let lastNotification;
 
 function showNotification(text) {
   if (lastNotification) {
     lastNotification.close();
   }
-
   lastNotification = new Notification('Promo Code Copied', {
     body: text,
   });
-
   setTimeout(() => {
     lastNotification.close();
   }, 5000);
 }
-
-// ...
-
 document.addEventListener('DOMContentLoaded', function() {
   const generateButton = document.getElementById('generateButton');
   const promoCodeDisplay = document.getElementById('promoCodeDisplay');
     
   fetchAndDisplayPromoCode();
-
   // Event listener for the button click
   generateButton.addEventListener('click', function() {
     const promoCode = generatePromoCode();
-
     // Send promoCode to the server
     fetch('https://intermediate-easy-ship.glitch.me/save-promo-code', {
       method: 'POST',
@@ -105,10 +94,8 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 });
-
-
 // Определение функции для получения и отображения промокода
-function fetchAndDisplayPromoCode() {
+  function fetchAndDisplayPromoCode() {
   const promoCodeDisplay = document.getElementById('promoCodeDisplay');
 
   fetch('https://intermediate-easy-ship.glitch.me/get-promo-code')
@@ -129,18 +116,16 @@ function fetchAndDisplayPromoCode() {
     });
 }
 
+let promoCodeIsCopied = false; // Флаг для отслеживания копирования промокода
 
 document.addEventListener('DOMContentLoaded', function() {
   const generateButton = document.getElementById('generateButton');
   const promoCodeDisplay = document.getElementById('promoCodeDisplay');
     
   fetchAndDisplayPromoCode();
-
-
   // Event listener for the button click
-  generateButton.addEventListener('click', function() {
+    generateButton.addEventListener('click', function() {
     const promoCode = generatePromoCode();
-
     // Send promoCode to the server
     fetch('https://intermediate-easy-ship.glitch.me/save-promo-code', {
       method: 'POST',
@@ -167,11 +152,15 @@ document.addEventListener('DOMContentLoaded', function() {
           }).then(data => {
             if (data && data.promoCode) {
               promoCodeDisplay.innerText = `${data.promoCode}`;
-                
+              // Проверка, не был ли промокод уже скопирован
+              if (!promoCodeIsCopied) {
                 promoCodeDisplay.addEventListener('click', function() {
-                copyToClipboardWithNotification(data.promoCode);
+                  setTimeout(function() {
+                  copyToClipboardWithNotification(data.promoCode);
+                  promoCodeIsCopied = true;
+                }, 0);
                 });
-                
+              }
             } else {
               promoCodeDisplay.innerText = 'No promo code available.';
             }

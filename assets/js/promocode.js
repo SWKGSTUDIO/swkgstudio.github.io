@@ -15,6 +15,28 @@ function generatePromoCode() {
   return promoCode;
 }
 
+// Function to copy text to clipboard
+function copyToClipboard(text) {
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text)
+      .then(() => {
+        alert('Text copied to clipboard');
+      })
+      .catch(error => {
+        console.error('Error copying text to clipboard:', error);
+      });
+  } else {
+    const textArea = document.createElement('textarea');
+    textArea.value = text;
+    document.body.appendChild(textArea);
+    textArea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textArea);
+    alert('Text copied to clipboard');
+  }
+}
+
+
 // Определение функции для получения и отображения промокода
 function fetchAndDisplayPromoCode() {
   const promoCodeDisplay = document.getElementById('promoCodeDisplay');
@@ -75,6 +97,9 @@ document.addEventListener('DOMContentLoaded', function() {
           }).then(data => {
             if (data && data.promoCode) {
               promoCodeDisplay.innerText = `${data.promoCode}`;
+                promoCodeDisplay.addEventListener('click', function() {
+                copyToClipboard(data.promoCode);
+            });
             } else {
               promoCodeDisplay.innerText = 'No promo code available.';
             }

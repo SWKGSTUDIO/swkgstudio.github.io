@@ -28,7 +28,7 @@ function fetchAndDisplayPromoCode() {
       }
     }).then(data => {
       if (data && data.promoCode) {
-        promoCodeDisplay.innerText = `Generated Promo Code: ${data.promoCode}`;
+        promoCodeDisplay.innerText = `${data.promoCode}`;
       } else {
         console.error('No promo code data received from server.');
       }
@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
           }).then(data => {
             if (data && data.promoCode) {
-              promoCodeDisplay.innerText = `Generated Promo Code: ${data.promoCode}`;
+              promoCodeDisplay.innerText = `${data.promoCode}`;
             } else {
               promoCodeDisplay.innerText = 'No promo code available.';
             }

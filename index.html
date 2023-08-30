@@ -199,71 +199,82 @@ Sweety Kitty Games Studio также приветствует вас в мире
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>App Tiles</title>
+  <title>Game Tiles</title>
   <style>
     /* Ваш CSS-код здесь */
 
-    .section-container {
+    .phone-container {
+      width: 375px;
+      height: 600px;
+      margin: 0 auto;
+      padding: 20px;
       background-color: black;
-      background-position: center;
-      background-size: cover;
-      backdrop-filter: blur(10px);
-      background-color: rgba(0, 0, 0, 0.1);
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
       overflow: hidden;
     }
 
     .app-tiles-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-      gap: 20px;
-      padding: 20px;
-      overflow-y: auto; /* Используем 'auto', чтобы показывать полосу прокрутки по мере необходимости */
-      -webkit-overflow-scrolling: touch; /* Для более плавной прокрутки на мобильных устройствах */
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Три колонки в ряду */
+  gap: 20px; /* Промежуток между ячейками */
+  max-height: 500px;
+  background-color: black;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+    .app-tiles-container::-webkit-scrollbar {
+      width: 0;
     }
 
     .app-tile {
-      border-radius: 10px; /* Закругленные углы */
-/*       background-color: #fff; */
+      border-radius: 10px;
+      background-color: black;
       text-align: center;
       padding: 10px;
-/*       box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); /* Тень для плитки */ */
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+      margin: 10px 0;
+      cursor: pointer; /* Добавляем стиль указателя при наведении */
     }
 
     .app-tile img {
-      width: 100%; /* Заполнить всю ширину контейнера */
-      height: 100px; /* Фиксированная высота для изображения */
-      object-fit: contain; /* Подгонка изображения в контейнер без искажений */
-      border-radius: 10px 10px 0 0; /* Закругленные углы только сверху */
+      width: 100%;
+      height: 100px;
+      object-fit: contain;
+      border-radius: 10px;
     }
   </style>
 </head>
 <body>
-  <section class="section-container">
-    <div class="container h-100">
-      <div class="row h-100">
-        <div class="col-md-12 text-center">
-          <div class="app-tiles-container" id="appTiles">
-            <!-- App tiles will be added here dynamically -->
-          </div>
-        </div>
-      </div>
+  <section class="phone-container">
+    <div class="app-tiles-container" id="appTiles">
+      <!-- App tiles will be added here dynamically -->
     </div>
   </section>
 
   <script>
-    fetch('https://intermediate-easy-ship.glitch.me/games')
+    // Обработчик клика по элементу
+    function handleTileClick(link) {
+      window.open(link, '_blank'); // Открываем ссылку в новой вкладке
+    }
+
+    fetch('https://intermediate-easy-ship.glitch.me/games') // Замените на URL вашего сервера
       .then(response => response.json())
       .then(data => {
         console.log('Received data:', data);
 
         const appTilesContainer = document.getElementById("appTiles");
 
-        data.forEach(imageUrl => {
+        data.forEach(game => {
           const appTile = document.createElement("div");
           appTile.classList.add("app-tile");
 
           const image = document.createElement("img");
-          image.src = imageUrl;
+          image.src = game.image;
+
+          // Добавляем обработчик клика и передаем ссылку для открытия
+          appTile.addEventListener('click', () => handleTileClick(game.link));
 
           appTile.appendChild(image);
           appTilesContainer.appendChild(appTile);

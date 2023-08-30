@@ -194,7 +194,88 @@ Sweety Kitty Games Studio также приветствует вас в мире
                 </div>
             </div>
         </div>
+    </div><!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>App Tiles</title>
+  <style>
+    /* Ваш CSS-код здесь */
+
+    .section-container {
+      background-color: black;
+      background-position: center;
+      background-size: cover;
+      backdrop-filter: blur(10px);
+      background-color: rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+
+    .app-tiles-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 20px;
+      padding: 20px;
+      overflow-y: auto; /* Используем 'auto', чтобы показывать полосу прокрутки по мере необходимости */
+      -webkit-overflow-scrolling: touch; /* Для более плавной прокрутки на мобильных устройствах */
+    }
+
+    .app-tile {
+      border-radius: 10px; /* Закругленные углы */
+/*       background-color: #fff; */
+      text-align: center;
+      padding: 10px;
+/*       box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); /* Тень для плитки */ */
+    }
+
+    .app-tile img {
+      width: 100%; /* Заполнить всю ширину контейнера */
+      height: 100px; /* Фиксированная высота для изображения */
+      object-fit: contain; /* Подгонка изображения в контейнер без искажений */
+      border-radius: 10px 10px 0 0; /* Закругленные углы только сверху */
+    }
+  </style>
+</head>
+<body>
+  <section class="section-container">
+    <div class="container h-100">
+      <div class="row h-100">
+        <div class="col-md-12 text-center">
+          <div class="app-tiles-container" id="appTiles">
+            <!-- App tiles will be added here dynamically -->
+          </div>
+        </div>
+      </div>
     </div>
+  </section>
+
+  <script>
+    fetch('https://intermediate-easy-ship.glitch.me/games')
+      .then(response => response.json())
+      .then(data => {
+        console.log('Received data:', data);
+
+        const appTilesContainer = document.getElementById("appTiles");
+
+        data.forEach(imageUrl => {
+          const appTile = document.createElement("div");
+          appTile.classList.add("app-tile");
+
+          const image = document.createElement("img");
+          image.src = imageUrl;
+
+          appTile.appendChild(image);
+          appTilesContainer.appendChild(appTile);
+        });
+      })
+      .catch(error => {
+        console.error('Error fetching app data:', error);
+      });
+  </script>
+</body>
+</html>
+
     <section class="py-4 py-xl-5" style="/*border-color: rgba(33,37,41,0.49);*/">
         <div class="container">
             <div class="text-white bg-dark border rounded border-0 border-light d-flex flex-column justify-content-between align-items-center flex-lg-row p-4 p-lg-5" style="/*color: rgba(255,255,255,0.48);*//*background: var(--bs-blue);*/">

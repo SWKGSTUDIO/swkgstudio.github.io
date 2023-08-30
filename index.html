@@ -26,6 +26,7 @@ Sweety Kitty Games Studio также приветствует вас в мире
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bowlby+One&amp;display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bowlby+One+SC&amp;display=swap">
     <link rel="stylesheet" href="assets/css/GamePanel.css">
+    <link rel="stylesheet" href="assets/css/GooglePlayGames.css">
 </head>
 
 <body style="background: rgba(255,255,255,0);height: 100vh;width: 100%;overflow-x: hidden;">
@@ -200,56 +201,11 @@ Sweety Kitty Games Studio также приветствует вас в мире
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Game Tiles</title>
-  <style>
-    /* Ваш CSS-код здесь */
-
-    .phone-container {
-      width: 375px;
-      height: 600px;
-      margin: 0 auto;
-      padding: 20px;
-      background-color: black;
-      border-radius: 20px;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-      overflow: hidden;
-    }
-
-    .app-tiles-container {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr); /* Три колонки в ряду */
-  gap: 20px; /* Промежуток между ячейками */
-  max-height: 500px;
-  background-color: black;
-  overflow-y: auto;
-  scrollbar-width: none;
-}
-
-    .app-tiles-container::-webkit-scrollbar {
-      width: 0;
-    }
-
-    .app-tile {
-      border-radius: 10px;
-      background-color: black;
-      text-align: center;
-      padding: 10px;
-      box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-      margin: 10px 0;
-      cursor: pointer; /* Добавляем стиль указателя при наведении */
-    }
-
-    .app-tile img {
-      width: 100%;
-      height: 100px;
-      object-fit: contain;
-      border-radius: 10px;
-    }
-  </style>
+  <link rel="stylesheet" href="assets/css/GooglePlayGames.css">
 </head>
 <body>
   <section class="phone-container">
     <div class="app-tiles-container" id="appTiles">
-      <!-- App tiles will be added here dynamically -->
     </div>
   </section>
 
@@ -273,10 +229,15 @@ Sweety Kitty Games Studio также приветствует вас в мире
           const image = document.createElement("img");
           image.src = game.image;
 
+          const title = document.createElement("div");
+          title.textContent = game.title;
+          title.classList.add("app-title");
+
           // Добавляем обработчик клика и передаем ссылку для открытия
           appTile.addEventListener('click', () => handleTileClick(game.link));
 
           appTile.appendChild(image);
+          appTile.appendChild(title);
           appTilesContainer.appendChild(appTile);
         });
       })

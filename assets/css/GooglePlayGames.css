@@ -3,7 +3,7 @@
 .phone-container {
   width: 100vw;
   height: 600px;
-  margin: 0 auto;
+  margin: 10px auto;
   padding: 20px;
   background-color: rgba(0, 0, 0, 0.47);
   overflow: hidden;
@@ -12,7 +12,8 @@
 .app-tiles-container {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 20px;
+  gap: 40px;
+  /*margin: 10px 50px;*/
   max-height: 100%;
   background-color: rgba(0, 0, 0, 0);
   overflow-y: auto;
@@ -26,8 +27,8 @@
 .app-tile {
   background-color: rgba(0, 0, 0, 0);
   text-align: center;
-  padding: 10px;
-  margin: 10px 0;
+  padding: 5px;
+  margin: 5px 5px;
   cursor: pointer;
   color: #ffffff;
   display: flex;
@@ -39,9 +40,27 @@
 .app-tile img {
   width: 180px;
   height: 180px;
-  padding: 10px;
+  margin: 10px 5px;
+  padding: 0;
   object-fit: cover;
+  border: 3px solid rebeccapurple;
   border-radius: 25px;
+  /*background-clip: padding-box;*/
+  /*box-sizing: border-box;*/
+  animation: pulse 3s ease infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    border-image-slice: 1;
+    box-shadow: 0 0 5px rgba(128, 0, 128, 1);
+    border-radius: 70px;
+  }
+  50% {
+    border-image-slice: 1;
+    box-shadow: 0 0 50px rgba(128, 0, 128, 1);
+    border-radius: 30px;
+  }
 }
 
 .app-tile-title {
@@ -56,14 +75,14 @@
 @media screen and (max-width: 800px) {
   .app-tiles-container {
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 15px;
+    gap: 30px;
   }
 }
 
 @media screen and (max-width: 600px) {
   .app-tiles-container {
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 10px;
+    gap: 30px;
   }
 }
 

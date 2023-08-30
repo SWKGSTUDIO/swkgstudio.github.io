@@ -43,11 +43,26 @@
   margin: 10px 5px;
   padding: 0;
   object-fit: cover;
-  border: 3px solid rebeccapurple;
+  border: 5px solid rebeccapurple;
   border-radius: 25px;
   /*background-clip: padding-box;*/
   /*box-sizing: border-box;*/
   animation: pulse 3s ease infinite;
+  transition: transform 0.3s ease;
+}
+
+.app-tile:hover img {
+  animation: breathe 3s ease infinite, pulse 3s ease infinite;
+  transform: scale(1);
+}
+
+@keyframes breathe {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
 }
 
 @keyframes pulse {

@@ -11,6 +11,7 @@
 
 .app-tiles-container {
   display: grid;
+  width: 100vw;
   grid-template-columns: repeat(4, 1fr);
   gap: 40px;
   max-height: 100%;

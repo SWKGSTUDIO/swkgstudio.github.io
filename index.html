@@ -57,14 +57,34 @@ Sweety Kitty Games Studio также приветствует вас в мире
     <div class="row" style="overflow: hidden;overflow-y: auto;z-index: 3;">
         <div class="col" style="z-index: 2;"><strong style="color: rgb(255,255,255);font-size: 45px;margin: 10px;font-family: 'Bowlby One', serif;z-index: 2;"><img src="assets/img/logo.webp" width="38" height="61" style="margin: 13px;z-index: 2;">SWKG</strong></div>
     </div>
-    <div class="row" style="overflow: hidden;">
-<script>window.yaContextCb=window.yaContextCb||[]</script>
-<script src="https://yandex.ru/ads/system/context.js" async></script>
+    <div class="row" style="overflow: hidden;"><!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Game Tiles</title>
+  <link rel="stylesheet" href="assets/css/GooglePlayGames.css">
+</head>
+<body>
+  <section class="phone-container">
+    <div class="app-tiles-container" id="appTiles">
+    </div>
+  </section>
 
-<div class="button-list-container">
+  <div class="button-list-container">
+    <div id="list-widget" style="display: none;"></div>
+  </div>
+
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  <div id="list-widget" style="display: none;"></div>
+  <script src="https://yandex.ru/ads/system/context.js" async></script>
   <script>
+
+    function handleTileClick(link) {
+      window.open(link, '_blank');
+    }
+
+    window.yaContextCb = window.yaContextCb || [];
+
     const apiKey = 'key9kpLHqsdRFXvS2';
     const baseId = 'appaePimTt1Ji6hSr';
     const tableName = 'tblivWUpxtGbTszm3';
@@ -72,115 +92,123 @@ Sweety Kitty Games Studio также приветствует вас в мире
     fetch(`https://api.airtable.com/v0/${baseId}/${tableName}?api_key=${apiKey}`)
       .then(response => response.json())
       .then(data => {
-        const listWidget = document.getElementById('list-widget');
-        const ul = document.createElement('ul');
-        ul.classList.add('button-list', 'horizontal');
+        console.log('Received data:', data);
 
-        // Сортировка данных по полю "Num"
-        data.records.sort((a, b) => a.fields.Num - b.fields.Num);
+        const appTilesContainer = document.getElementById("appTiles");
 
         data.records.forEach(record => {
           const fields = record.fields;
-          const imageUrl = fields.Image;
-          const url = fields.URL;
-          const power = fields.Power;
+          const appTile = document.createElement("div");
+          appTile.classList.add("app-tile");
 
-          const button = document.createElement('button');
-          const img = document.createElement('img');
-          img.src = imageUrl;
-          img.alt = "";
-          button.appendChild(img);
+          const image = document.createElement("img");
+          image.src = fields.Image;
 
-          console.log("Adding button-animation class");
-          button.classList.add('button-animation');
+          const title = document.createElement("div");
+          title.textContent = fields.Title;
+          title.classList.add("app-title");
 
-          const li = document.createElement('li');
+          appTile.addEventListener('click', () => handleTileClick(fields.URL));
 
-          if (power === "ON") {
-            button.classList.add('button-on');
-            button.addEventListener('click', () => {
-              if (!isMobileDevice()) {
-                Ya.Context.AdvManager.render({
-                  "blockId": "R-A-2697791-1", // Десктопная фуллскрин реклама
-                  "type": "fullscreen",
-                  "platform": "desktop"
-                });
-              } else {
-                Ya.Context.AdvManager.render({
-                  "blockId": "R-A-2697791-3", // Мобильная фуллскрин реклама
-                  "type": "fullscreen",
-                  "platform": "touch"
-                });
-              }
-              
-              setTimeout(() => {
-                console.log("Redirecting to URL");
-                window.open(url, '_blank');
-              }, 2000);
-            });
-          } else if (power === "OFF") {
-            button.classList.add('button-off');
-            button.disabled = true;
-          }
-
-          li.classList.add('hide');
-          li.appendChild(button);
-          ul.appendChild(li);
+          appTile.appendChild(image);
+          appTile.appendChild(title);
+          appTilesContainer.appendChild(appTile);
         });
 
-        listWidget.appendChild(ul);
-
-       // Inside the window.yaContextCb.push() function
-        window.yaContextCb.push(() => {
-        const bannerContainer = document.createElement('div');
-        bannerContainer.id = 'yandex_rtb_R-A-2697791-2';
-
-        const bannerListItem = document.createElement('li');
-        bannerListItem.classList.add('hide');
-        bannerListItem.appendChild(bannerContainer);
-
-        const randomIndex = Math.floor(Math.random() * ul.children.length); // Calculate a random index
-
-        if (randomIndex === 0) {
-        ul.insertBefore(bannerListItem, ul.firstChild);
-        } else if (randomIndex === ul.children.length) {
-        ul.appendChild(bannerListItem);
-        } else {
-        ul.insertBefore(bannerListItem, ul.children[randomIndex]);
-        }
-
-        Ya.Context.AdvManager.render({
-        "blockId": "R-A-2697791-2",
-        "type": "banner",
-        "platform": isMobileDevice() ? "touch" : "desktop",
-        "renderTo": "yandex_rtb_R-A-2697791-2"
-        });
-      });
-
-        setTimeout(function() {
+        setTimeout(() => {
           document.getElementById('list-widget').style.display = 'block';
-          const listItems = ul.querySelectorAll('li');
-          listItems.forEach((item, index) => {
-            setTimeout(function() {
-              item.classList.add('show');
-            }, index * 50);
-          });
         }, 100);
       })
       .catch(error => {
         console.error(error);
       });
 
+    // Здесь продолжайте создание кнопок из парсинга
+    fetch('https://intermediate-easy-ship.glitch.me/games')
+      .then(response => response.json())
+      .then(data => {
+        console.log('Received data:', data);
+
+        const appTilesContainer = document.getElementById("appTiles");
+
+        data.forEach(game => {
+          const appTile = document.createElement("div");
+          appTile.classList.add("app-tile");
+
+          const image = document.createElement("img");
+          image.src = game.image;
+
+          const title = document.createElement("div");
+          title.textContent = game.title;
+          title.classList.add("app-title");
+
+          appTile.addEventListener('click', () => handleTileClick(game.link));
+
+          appTile.appendChild(image);
+          appTile.appendChild(title);
+          appTilesContainer.appendChild(appTile);
+
+          if (game.power === "ON") {
+            const button = document.createElement('button');
+            const img = document.createElement('img');
+            img.src = game.image;
+            img.alt = '';
+            button.appendChild(img);
+
+            button.classList.add('button-on');
+            button.addEventListener('click', () => {
+              if (!isMobileDevice()) {
+                Ya.Context.AdvManager.render({
+                  blockId: 'R-A-2697791-1', // Десктопная фуллскрин реклама
+                  type: 'fullscreen',
+                  platform: 'desktop'
+                });
+              } else {
+                Ya.Context.AdvManager.render({
+                  blockId: 'R-A-2697791-3', // Мобильная фуллскрин реклама
+                  type: 'fullscreen',
+                  platform: 'touch'
+                });
+              }
+
+              setTimeout(() => {
+                window.open(game.link, '_blank');
+              }, 2000);
+            });
+
+            const li = document.createElement('li');
+            li.classList.add('hide');
+            li.appendChild(button);
+            list.appendChild(li);
+          } else if (game.power === "OFF") {
+            const button = document.createElement('button');
+            const img = document.createElement('img');
+            img.src = game.image;
+            img.alt = '';
+            button.appendChild(img);
+
+            button.classList.add('button-off');
+            button.disabled = true;
+
+            const li = document.createElement('li');
+            li.classList.add('hide');
+            li.appendChild(button);
+            list.appendChild(li);
+          }
+        });
+      })
+      .catch(error => {
+        console.error('Error fetching app data:', error);
+      });
+
+    // Ваш код для контекстных рекламных блоков и анимаций здесь
+
     function isMobileDevice() {
       return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     }
   </script>
-</div>
-
-
-
-
-
+</body>
+</html>
 </div>
     <div class="container" style="height: 25vh;"></div>
     <div data-bss-parallax-bg="true" style="/*height: 600px;*//*z-index: 2;*//*background: url(&quot;assets/img/background.webp&quot;) center / cover, rgba(255,255,255,0);*//*opacity: 50%;*/margin-left: 5vw;">

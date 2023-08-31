@@ -2,7 +2,7 @@
 
 .phone-container {
   width: 100vw;
-  height: 600px;
+  height: 100vh;
   margin: 10px auto;
   padding: 20px;
   background-color: rgba(0, 0, 0, 0.47);

@@ -207,12 +207,12 @@ Sweety Kitty Games Studio также приветствует вас в мире
   </section>
 
   <script>
-    // Обработчик клика по элементу
+
     function handleTileClick(link) {
-      window.open(link, '_blank'); // Открываем ссылку в новой вкладке
+      window.open(link, '_blank');
     }
 
-    fetch('https://intermediate-easy-ship.glitch.me/games') // Замените на URL вашего сервера
+    fetch('https://intermediate-easy-ship.glitch.me/games')
       .then(response => response.json())
       .then(data => {
         console.log('Received data:', data);
@@ -230,7 +230,6 @@ Sweety Kitty Games Studio также приветствует вас в мире
           title.textContent = game.title;
           title.classList.add("app-title");
 
-          // Добавляем обработчик клика и передаем ссылку для открытия
           appTile.addEventListener('click', () => handleTileClick(game.link));
 
           appTile.appendChild(image);

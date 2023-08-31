@@ -11,7 +11,7 @@
 
 .app-tiles-container {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 40px;
   max-height: 100%;
   background-color: rgba(0, 0, 0, 0);
@@ -86,17 +86,33 @@
   white-space: normal;
 }
 
+@media screen and (max-width: 1000px) {
+  .app-tiles-container {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .app-tile img {
+    width: 120px;
+    height: 120px;
+    border-radius: 10px;
+    margin: 5px 5px;
+  }
+}
+
 @media screen and (max-width: 800px) {
   .app-tiles-container {
     grid-template-columns: repeat(3, 1fr);
-    gap: 30px;
+    gap: 20px;
   }
 }
 
 @media screen and (max-width: 800px) {
   .app-tile img {
-    width: 100px;
-    height: 100px;
+    width: 110px;
+    height: 110px;
     border-radius: 10px;
     margin: 5px 5px;
   }

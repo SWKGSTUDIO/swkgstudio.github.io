@@ -5,15 +5,15 @@
   height: 100vh;
   margin: 10px auto;
   padding: 20px;
-  background-color: rgba(0, 0, 0, 0.47);
+  background-color: rgba(0, 0, 0, 0);
   overflow: hidden;
 }
 
 .app-tiles-container {
   display: grid;
   width: 100vw;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 40px;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
   max-height: 100%;
   background-color: rgba(0, 0, 0, 0);
   overflow-y: auto;
@@ -85,6 +85,22 @@
   color: #ffffff;
   margin-top: 5px;
   white-space: normal;
+}
+
+@media screen and (max-width: 1100px) {
+  .app-tiles-container {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+  }
+}
+
+@media screen and (max-width: 1100px) {
+  .app-tile img {
+    width: 150px;
+    height: 150px;
+    border-radius: 10px;
+    margin: 5px 5px;
+  }
 }
 
 @media screen and (max-width: 1000px) {

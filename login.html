@@ -6,7 +6,7 @@
 </head>
 <body>
     <h2>Вход в Админ Панель</h2>
-    <form action="https://intermediate-easy-ship.glitch.me/process_login" method="post">
+    <form id="loginForm" action="https://intermediate-easy-ship.glitch.me/process_login" method="post">
         <label for="login">Логин:</label>
         <input type="text" id="login" name="login" required><br><br>
 
@@ -15,5 +15,29 @@
 
         <input type="submit" value="Войти">
     </form>
+
+    <script>
+        document.getElementById("loginForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Предотвращаем отправку формы по умолчанию
+            // Отправляем запрос на сервер для проверки логина и пароля
+            fetch("https://intermediate-easy-ship.glitch.me/process_login", {
+                method: "POST",
+                body: new FormData(document.getElementById("loginForm"))
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message === "Вход выполнен успешно") {
+                    // Если вход успешен, перенаправляем пользователя на админ-панель
+                    window.location.href = "https://intermediate-easy-ship.glitch.me/adminpanel.html";
+                } else {
+                    // Если вход неуспешен, можно вывести сообщение об ошибке
+                    alert("Неверный логин или пароль");
+                }
+            })
+            .catch(error => {
+                console.error("Произошла ошибка:", error);
+            });
+        });
+    </script>
 </body>
 </html>

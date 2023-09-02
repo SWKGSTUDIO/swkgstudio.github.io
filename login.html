@@ -27,8 +27,8 @@
             .then(response => response.json())
             .then(data => {
                 if (data.message === "Вход выполнен успешно") {
-                    // Если вход успешен, перенаправляем пользователя на админ-панель
-                    window.location.href = "https://intermediate-easy-ship.glitch.me/adminpanel.html";
+                    // Если вход успешен, перенаправляем пользователя на админ-панель на клиентской стороне
+                    window.location.href = "adminpanel.html";
                 } else {
                     // Если вход неуспешен, можно вывести сообщение об ошибке
                     alert("Неверный логин или пароль");

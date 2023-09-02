@@ -1,0 +1,48 @@
+/* Стили для страницы */
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    background-color: #333;
+    color: white;
+    padding: 10px;
+}
+
+/* Стили для формы входа */
+#login-form {
+    margin: 20px auto;
+    max-width: 300px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#login-form label,
+#login-form input,
+#login-form button {
+    display: block;
+    margin: 10px 0;
+    width: 100%;
+}
+
+#login-button {
+    background-color: #333;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
+
+/* Стили для содержимого админ-панели */
+#admin-content {
+    margin: 20px auto;
+    max-width: 800px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}

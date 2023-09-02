@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
                 const closeIcon = document.createElement('button');
                 closeIcon.classList.add('close-tab', 'close-tab-button');
-                closeIcon.textContent = 'X';
+                closeIcon.textContent = '';
                 tabElement.appendChild(closeIcon);
     
                 tabElement.addEventListener('click', () => {
@@ -195,7 +195,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     addTabButton.addEventListener('click', async () => {
-        // Создаем новую вкладку с ID на единицу больше максимального
+
         const newTab = {
             name: 'Новая вкладка',
             content: '',
@@ -203,7 +203,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     
         try {
-            // Отправляем новую вкладку на сервер
+
             const response = await fetch('https://intermediate-easy-ship.glitch.me/adminpaneldata', {
                 method: 'POST',
                 headers: {
@@ -216,7 +216,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 throw new Error(`Ошибка добавления вкладки: ${response.statusText}`);
             }
     
-            // После успешного добавления перезагружаем страницу
             location.reload();
         } catch (error) {
             console.error('Произошла ошибка при добавлении вкладки на сервере:', error);

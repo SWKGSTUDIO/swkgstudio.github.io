@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Админ Панель</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Админ Панель</h1>
+    
+    <!-- Форма входа -->
+    <div id="login-form">
+        <label for="username">Логин:</label>
+        <input type="text" id="username" required>
+        <br>
+        <label for="password">Пароль:</label>
+        <input type="password" id="password" required>
+        <br>
+        <button id="login-button">Войти</button>
+    </div>
+    
+    <!-- Содержимое админ-панели -->
+    <div id="admin-content" style="display: none;">
+        <!-- Здесь размещается содержимое вашей админ-панели -->
+        <p>Добро пожаловать, администратор!</p>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

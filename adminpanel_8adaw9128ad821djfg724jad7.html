@@ -16,8 +16,30 @@
         <!-- Добавьте здесь настройки и другой контент вашей админ-панели -->
     </div>
 
+    <div id="game-tabs">
+        <button class="tab-button" data-game="game1">Игра 1</button>
+        <button class="tab-button" data-game="game2">Игра 2</button>
+        <!-- Добавьте кнопки для других игр по аналогии -->
+    </div>
+    
     <div id="admin-panel-data">
         <!-- Здесь будут отображаться данные с сервера -->
+    </div>
+
+    <div id="game-panels">
+        <div class="game-panel" id="game1-panel">
+            <!-- Здесь будут отображаться данные для Игры 1 -->
+            <input type="text" id="game1-google-id" placeholder="РЕКЛАМНЫЕ ID Google">
+            <!-- Добавьте другие поля и элементы для редактирования данных для Игры 1 -->
+            <button class="save-button" data-game="game1">Сохранить</button>
+        </div>
+        <div class="game-panel" id="game2-panel">
+            <!-- Здесь будут отображаться данные для Игры 2 -->
+            <input type="text" id="game2-google-id" placeholder="РЕКЛАМНЫЕ ID Google">
+            <!-- Добавьте другие поля и элементы для редактирования данных для Игры 2 -->
+            <button class="save-button" data-game="game2">Сохранить</button>
+        </div>
+        <!-- Добавьте другие панели для других игр по аналогии -->
     </div>
     
 
@@ -43,7 +65,79 @@
             });
     </script>
     
+    <script>
+      // Настройка обработчиков для кнопок вкладок
+const tabButtons = document.querySelectorAll('.tab-button');
+tabButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        // Скрыть все панели
+        document.querySelectorAll('.game-panel').forEach(panel => {
+            panel.style.display = 'none';
+        });
+        // Показать панель выбранной игры
+        const gameName = button.getAttribute('data-game');
+        const gamePanel = document.getElementById(`${gameName}-panel`);
+        gamePanel.style.display = 'block';
+    });
+});
 
+// Обработчик кнопок "Сохранить"
+const saveButtons = document.querySelectorAll('.save-button');
+saveButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        // Получить имя игры
+        const gameName = button.getAttribute('data-game');
+        // Получить данные для сохранения, например:
+        const googleId = document.getElementById(`${gameName}-google-id`).value;
+
+        // Создать объект данных для отправки на сервер
+        const gameData = {
+            gameName: gameName,
+            googleId: googleId,
+            // Добавьте другие данные для сохранения
+        };
+
+        // Отправить данные на сервер для сохранения
+        fetch('https://intermediate-easy-ship.glitch.me/adminpaneldata.php', {
+            method: 'POST',
+            body: JSON.stringify(gameData),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Обработка ответа от сервера (например, вывод сообщения об успешном сохранении)
+            alert(data.message);
+        })
+        .catch(error => {
+            console.error('Произошла ошибка при сохранении данных:', error);
+        });
+    });
+});
+
+// Загрузка данных с сервера
+fetch('https://intermediate-easy-ship.glitch.me/adminpaneldata.php')
+    .then(response => response.json())
+    .then(data => {
+        // Обработка полученных данных
+        if (data && data.length > 0) {
+            const adminPanelDataElement = document.getElementById('admin-panel-data');
+            // Пример отображения данных (вы можете настроить это под свои нужды)
+            adminPanelDataElement.innerHTML = '<h2>Данные с сервера:</h2>';
+            data.forEach(item => {
+                adminPanelDataElement.innerHTML += `<p>${item.gameName}: ${item.googleId}</p>`;
+            });
+        } else {
+            console.error('Получены пустые данные с сервера.');
+        }
+    })
+    .catch(error => {
+        console.error('Произошла ошибка при загрузке данных с сервера:', error);
+    });
+
+
+    </script>
 
 </body>
 </html>

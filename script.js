@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const tabContent = document.querySelector('.tab-content');
     const addTabButton = document.getElementById('add-tab-button');
     
-    let maxTabId = 0; // Определяем переменную для хранения максимального ID вкладки
+    let maxTabId = 0;
 
     async function loadTabs() {
         try {
@@ -15,7 +15,6 @@ document.addEventListener('DOMContentLoaded', () => {
     
             tabContainer.innerHTML = '';
     
-            // Если сервер вернул пустой список вкладок или не вернул данные, добавим пустую вкладку на клиенте
             if (!data.games || data.games.length === 0) {
                 const emptyTab = {
                     name: 'Пустая вкладка',
@@ -28,12 +27,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 const tabElement = document.createElement('div');
                 tabElement.classList.add('tab');
     
-                // Устанавливаем data-tab-id для вкладки
                 tabElement.setAttribute('data-tab-id', game.id);
     
                 const tabName = document.createElement('span');
                 tabName.classList.add('tab-name');
-                tabName.textContent = game.name;
+                tabName.textContent = truncateText(game.name, 15); // Устанавливаем лимит на 15 символов
                 tabElement.appendChild(tabName);
     
                 const closeIcon = document.createElement('button');
@@ -48,7 +46,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 closeIcon.addEventListener('click', async (event) => {
                     event.stopPropagation();
                 
-                    // Выводим подтверждающее окно
                     const confirmed = confirm('Вы уверены, что хотите удалить эту вкладку?');
                 
                     if (confirmed) {
@@ -71,7 +68,13 @@ document.addEventListener('DOMContentLoaded', () => {
                         }
                     }
                 });
-                
+
+                 function truncateText(text, maxLength) {
+                if (text.length > maxLength) {
+                return text.slice(0, maxLength - 3) + '...';
+            }
+        return text;
+    }
     
                 tabContainer.appendChild(tabElement);
     
@@ -183,6 +186,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 const tabElement = document.querySelector(`[data-tab-id="${game.id}"]`);
                 const tabNameElement = tabElement.querySelector('.tab-name');
                 tabNameElement.textContent = newGameName;
+
+                location.reload();
     
             } catch (error) {
                 console.error('Произошла ошибка при обновлении игры на сервере:', error);
@@ -190,7 +195,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     
-    function removeTab(tabElement) {
+        function removeTab(tabElement) {
         tabElement.remove();
     }
     

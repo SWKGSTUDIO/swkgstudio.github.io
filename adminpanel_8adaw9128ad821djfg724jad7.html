@@ -16,6 +16,34 @@
         <!-- Добавьте здесь настройки и другой контент вашей админ-панели -->
     </div>
 
+    <div id="admin-panel-data">
+        <!-- Здесь будут отображаться данные с сервера -->
+    </div>
+    
+
+    <script>
+        // Загрузка данных с сервера
+        fetch('https://intermediate-easy-ship.glitch.me/adminpaneldata.php')
+            .then(response => response.json())
+            .then(data => {
+                // Обработка полученных данных
+                if (data && data.length > 0) {
+                    const adminPanelDataElement = document.getElementById('admin-panel-data');
+                    // Пример отображения данных (вы можете настроить это под свои нужды)
+                    adminPanelDataElement.innerHTML = '<h2>Данные с сервера:</h2>';
+                    data.forEach(item => {
+                        adminPanelDataElement.innerHTML += `<p>${item}</p>`;
+                    });
+                } else {
+                    console.error('Получены пустые данные с сервера.');
+                }
+            })
+            .catch(error => {
+                console.error('Произошла ошибка при загрузке данных с сервера:', error);
+            });
+    </script>
+    
+
 
 </body>
 </html>

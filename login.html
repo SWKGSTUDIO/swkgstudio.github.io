@@ -6,15 +6,17 @@
 </head>
 <body>
     <h2>Вход в Админ Панель</h2>
-    <form id="loginForm" action="https://intermediate-easy-ship.glitch.me/process_login" method="post">
+    
+    <form action="https://intermediate-easy-ship.glitch.me/process_login" method="post">
         <label for="login">Логин:</label>
         <input type="text" id="login" name="login" required><br><br>
-
+    
         <label for="password">Пароль:</label>
         <input type="password" id="password" name="password" required><br><br>
-
+    
         <input type="submit" value="Войти">
     </form>
+    
 
     <script>
         document.getElementById("loginForm").addEventListener("submit", function(event) {

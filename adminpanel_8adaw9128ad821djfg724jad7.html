@@ -7,7 +7,10 @@
     <link rel="stylesheet" href="adminpanel.css">
 </head>
 <body>
-    <h1>Админ Панель</h1>
+    <div class="admin-header">
+        <h1>Админ Панель</h1>
+        <button id="add-game-button">+</button>
+    </div>
     
     <!-- Содержимое админ-панели -->
     <div id="admin-content">
@@ -16,31 +19,14 @@
         <!-- Добавьте здесь настройки и другой контент вашей админ-панели -->
     </div>
 
-    <div id="game-tabs">
-        <button class="tab-button" data-game="game1">Игра 1</button>
-        <button class="tab-button" data-game="game2">Игра 2</button>
-        <!-- Добавьте кнопки для других игр по аналогии -->
-    </div>
-    
     <div id="admin-panel-data">
         <!-- Здесь будут отображаться данные с сервера -->
     </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
 
-    <div id="game-panels">
-        <div class="game-panel" id="game1-panel">
-            <!-- Здесь будут отображаться данные для Игры 1 -->
-            <input type="text" id="game1-google-id" placeholder="РЕКЛАМНЫЕ ID Google">
-            <!-- Добавьте другие поля и элементы для редактирования данных для Игры 1 -->
-            <button class="save-button" data-game="game1">Сохранить</button>
-        </div>
-        <div class="game-panel" id="game2-panel">
-            <!-- Здесь будут отображаться данные для Игры 2 -->
-            <input type="text" id="game2-google-id" placeholder="РЕКЛАМНЫЕ ID Google">
-            <!-- Добавьте другие поля и элементы для редактирования данных для Игры 2 -->
-            <button class="save-button" data-game="game2">Сохранить</button>
-        </div>
-        <!-- Добавьте другие панели для других игр по аналогии -->
-    </div>
     
 
     <script>

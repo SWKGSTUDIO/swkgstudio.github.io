@@ -1,21 +1,60 @@
-/* Стили для полосы вкладок и кнопок */
-.admin-header {
-    background-color: #007BFF;
+/* Стили для всего сайта */
+body {
+    background-color: #343a40;
     color: white;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.game-panel {
+    display: flex;
+    align-items: center;
+    margin: 10px;
+}
+
+.game-name {
+    flex: 1;
+    margin-right: 10px;
+}
+
+.edit-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+
+/* Стили для контейнера браузера */
+.browser-container {
+    background-color: #212529;
+    width: 80%;
+    margin: 20px auto;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+}
+
+/* Стили для заголовка и кнопки добавления вкладки */
+.browser-header {
+    background-color: #343a40;
+    padding: 10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 20px;
 }
 
-.admin-header h1 {
-    margin: 0;
+.browser-title {
+    color: white;
+    font-weight: bold;
 }
 
-#add-game-button {
+#add-tab-button {
     background-color: #28A745;
     color: white;
-    font-size: 24px;
+    font-size: 20px;
     border: none;
     cursor: pointer;
     padding: 5px 10px;
@@ -23,33 +62,78 @@
     outline: none;
 }
 
-#add-game-button:hover {
+#add-tab-button:hover {
     background-color: #218838;
 }
 
-/* Стили для панелей с играми и кнопки "Сохранить" */
-.game-panel {
-    border: 1px solid #ddd;
-    padding: 20px;
-    margin-bottom: 20px;
-    background-color: #fff;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+/* Стили для вкладок */
+.tab-container {
+    display: flex;
+    background-color: #343a40;
+    padding: 5px;
+    overflow-x: auto;
 }
 
-.save-button {
+.tab {
     background-color: #007BFF;
     color: white;
-    border: none;
-    padding: 10px 20px;
     font-size: 16px;
+    padding: 10px 20px;
     cursor: pointer;
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    border-radius: 5px;
-    outline: none;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    margin-right: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.save-button:hover {
+.tab.active {
+    background-color: #17a2b8;
+}
+.tab-content {
+    background-color: rgba(255, 255, 255, 0.113);
+    padding: 20px;
+}
+.tab-panel {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+.close-tab-button {
+    background-color: #523e3e;
+    color: white;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 50%;
+    margin-left: 5px;
+    outline: none;
+}
+.close-tab-button:hover {
+    background-color: #d43939;
+}
+#save-button {
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+}
+
+#save-button:hover {
     background-color: #0056b3;
+}
+
+#save-icon {
+    margin-right: 8px;
 }

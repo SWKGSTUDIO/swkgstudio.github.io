@@ -7,24 +7,25 @@
     <link rel="stylesheet" href="adminpanel.css">
 </head>
 <body>
-    <div class="admin-header">
-        <h1>Админ Панель</h1>
-        <button id="add-game-button">+</button>
-    </div>
-    
-    <!-- Содержимое админ-панели -->
-    <div id="admin-content">
-        <!-- Здесь размещается содержимое вашей админ-панели -->
-        <p>Добро пожаловать, администратор!</p>
-        <!-- Добавьте здесь настройки и другой контент вашей админ-панели -->
-    </div>
 
-    <div id="game-panels">
-        <!-- Здесь будут отображаться панели для каждой игры -->
+    <div class="browser-container">
+        <div class="browser-header">
+            <div class="browser-title">Admin Panel</div>
+            <button id="add-tab-button">+</button>
+        </div>
+
+        <div class="tab-container" id="tab-container">
+
+            <!-- Ваши вкладки будут динамически создаваться здесь -->
+
+        </div>
+        
+        <div class="tab-content">
+
+            <!-- Ваша панель для каждой игры будет динамически создаваться здесь -->
+
+        </div>
     </div>
-
-    <button id="save-button" class="save-button">Сохранить</button>
-
     <script src="script.js"></script>
 </body>
 </html>

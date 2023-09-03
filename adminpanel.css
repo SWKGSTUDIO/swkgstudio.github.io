@@ -158,15 +158,21 @@ input[type="url"] {
 }
 
 #avatar-preview {
-    width: 50px; 
-    height: 50px; 
-    margin-top: 10px; 
+    width: 50px;
+    height: 50px;
+    margin-top: 10px;
     margin-bottom: 10px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 #banner-preview {
     width: 100px;
-    height: 50px; 
+    height: 50px;
     margin-top: 10px;
     margin-bottom: 10px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
 }

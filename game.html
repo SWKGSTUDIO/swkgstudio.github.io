@@ -6,15 +6,14 @@
 </head>
 <body>
     <div id="scene-container"></div>
-    <script type="module">
-        import * as THREE from 'three';
-        import Cannon from 'cannon';
-        import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cannon.js/0.6.2/cannon.min.js"></script>
+    <script src="node_modules/three/examples/jsm/controls/OrbitControls.js"></script>
+    <script>
         const scene = new THREE.Scene();
         const clock = new THREE.Clock();
 
-        const world = new Cannon.World();
+        const world = new CANNON.World();
         world.gravity.set(0, -9.8, 0);
 
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -36,90 +35,74 @@
         directionalLight.position.set(1, 1, 1);
         scene.add(directionalLight);
 
-        // Создайте материал для плоскости с цветом и светом
-const planeMaterial = new THREE.MeshStandardMaterial({
-    color: 0x00ff00,    // Зеленый цвет
-    emissive: 0x004400, // Светло-зеленое сияние (свет)
-    metalness: 0.2,    // Параметры металличности и шероховатости
-    roughness: 0.7
-});
+        const planeMaterial = new THREE.MeshStandardMaterial({
+            color: 0x00ff00,
+            emissive: 0x004400,
+            metalness: 0.2,
+            roughness: 0.7
+        });
 
-const planeGeometry = new THREE.PlaneGeometry(100, 100, 1, 1);
-const plane = new THREE.Mesh(planeGeometry, planeMaterial);
-plane.rotation.x = -Math.PI / 2;
-scene.add(plane);
+        const planeGeometry = new THREE.PlaneGeometry(100, 100, 1, 1);
+        const plane = new THREE.Mesh(planeGeometry, planeMaterial);
+        plane.rotation.x = -Math.PI / 2;
+        scene.add(plane);
 
-
-        // Создаем физическое тело для плоскости (поля)
-        const groundShape = new Cannon.Plane();
-        const groundBody = new Cannon.Body({ mass: 0 });
+        const groundShape = new CANNON.Plane();
+        const groundBody = new CANNON.Body({ mass: 0 });
         groundBody.addShape(groundShape);
-        groundBody.quaternion.setFromAxisAngle(new Cannon.Vec3(1, 0, 0), -Math.PI / 2);
+        groundBody.quaternion.setFromAxisAngle(new CANNON.Vec3(1, 0, 0), -Math.PI / 2);
         world.addBody(groundBody);
 
-        // Создаем физическое тело для куба
-        const cubeShape = new Cannon.Box(new Cannon.Vec3(1, 1, 1));
-        const cubeBody = new Cannon.Body({ mass: 5, shape: cubeShape });
-        cubeBody.position.set(0, 10, 0); // Позиция в воздухе
+        const cubeShape = new CANNON.Box(new CANNON.Vec3(1, 1, 1));
+        const cubeBody = new CANNON.Body({ mass: 5, shape: cubeShape });
+        cubeBody.position.set(0, 10, 0);
         world.addBody(cubeBody);
 
-        // Создаем управление для камеры
-        const controls = new OrbitControls(camera, renderer.domElement);
-
-        // Начальное смещение камеры относительно кубика (взади и немного выше)
+        const controls = new THREE.OrbitControls(camera, renderer.domElement);
         const cameraOffset = new THREE.Vector3(0, 3, -5);
 
-        // Функция для применения силы к кубу в зависимости от направления движения
         const applyForce = () => {
-            const force = new Cannon.Vec3(); // Создаем вектор силы
+            const force = new CANNON.Vec3();
 
-            // Слушаем события клавиш
             window.addEventListener('keydown', (event) => {
                 switch (event.key) {
-                    case 'w': // Вперед
-                        force.set(0, 0, 1000); // Например, применяем силу вперед по оси Z
+                    case 'w':
+                        force.set(0, 0, 1000);
                         break;
-                    case 's': // Назад
-                        force.set(0, 0, -1000); // Применяем силу назад по оси Z
+                    case 's':
+                        force.set(0, 0, -1000);
                         break;
-                    case 'a': // Влево
-                        force.set(1000, 0, 0); // Применяем силу влево по оси X
+                    case 'a':
+                        force.set(1000, 0, 0);
                         break;
-                    case 'd': // Вправо
-                        force.set(-1000, 0, 0); // Применяем силу вправо по оси X
+                    case 'd':
+                        force.set(-1000, 0, 0);
                         break;
                 }
 
-                // Применяем силу к физическому телу куба
-                cubeBody.applyLocalForce(force, new Cannon.Vec3(0, 0, 0)); // Второй вектор - точка, в которой применяется сила (в данном случае, в центре куба)
+                cubeBody.applyLocalForce(force, new CANNON.Vec3(0, 0, 0));
             });
 
-            // Слушаем событие отпускания клавиши для остановки движения
             window.addEventListener('keyup', () => {
-                force.set(0, 0, 0); // Обнуляем силу при отпускании клавиши
+                force.set(0, 0, 0);
             });
         };
 
-        // Вызываем функцию для управления кубом
         applyForce();
 
         const animate = () => {
             requestAnimationFrame(animate);
 
-            // Шаг симуляции физики
             const deltaTime = clock.getDelta();
             world.step(deltaTime);
 
-            // Обновляем позицию куба с учетом физики
             cube.position.copy(cubeBody.position);
             cube.quaternion.copy(cubeBody.quaternion);
 
-            // Устанавливаем положение камеры так, чтобы она следила за кубом
             camera.position.copy(cube.position);
-            camera.position.add(cameraOffset); // Добавляем смещение
+            camera.position.add(cameraOffset);
             camera.lookAt(cube.position);
 
-            // Обновляем управление для камеры
             controls.update();
 
             renderer.render(scene, camera);

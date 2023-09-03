@@ -162,9 +162,10 @@ input[type="url"] {
     height: 50px;
     margin-top: 10px;
     margin-bottom: 10px;
-    background-size: contain;
+    background-size: cover;
     background-repeat: no-repeat;
-    background-position: center;
+    background-position: center center;
+    object-fit: cover;
 }
 
 #banner-preview {
@@ -172,7 +173,8 @@ input[type="url"] {
     height: 50px;
     margin-top: 10px;
     margin-bottom: 10px;
-    background-size: contain;
+    background-size: cover;
     background-repeat: no-repeat;
-    background-position: center;
+    background-position: center center;
+    object-fit: cover;
 }

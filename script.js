@@ -166,9 +166,8 @@ avatarPreview.src = game.avatar || ''; // Устанавливаем URL изо�
 const bannerPreview = document.createElement('img');
 bannerPreview.classList.add('image-preview');
 bannerPreview.id = 'banner-preview';
-bannerPreview.src = game.banner || ''; // Устанавливаем URL изображения
+bannerPreview.src = game.banner || '';
 
- // Обработчики изменений для аватара и баннера
  avatarInput.addEventListener('input', () => {
     const newAvatarUrl = avatarInput.value;
     game.avatar = newAvatarUrl;
@@ -178,6 +177,19 @@ bannerInput.addEventListener('input', () => {
     const newBannerUrl = bannerInput.value;
     game.banner = newBannerUrl;
 });
+
+const codeLabel = document.createElement('label');
+codeLabel.textContent = 'код викторины:';
+
+const codeTextarea = document.createElement('textarea');
+codeTextarea.value = game.special_code || '';
+codeTextarea.id = 'special-code-input';
+
+codeTextarea.addEventListener('input', () => {
+    const newSpecialCode = codeTextarea.value;
+    game.special_code = newSpecialCode;
+});
+
 
 
     
@@ -199,6 +211,8 @@ tabPanel.appendChild(interstitialIdLabel);
 tabPanel.appendChild(interstitialIdInput);
 tabPanel.appendChild(rewardIdLabel);
 tabPanel.appendChild(rewardIdInput);
+tabPanel.appendChild(codeLabel);
+tabPanel.appendChild(codeTextarea);
 
     
         tabContent.appendChild(tabPanel);
@@ -209,13 +223,15 @@ tabPanel.appendChild(rewardIdInput);
             const newBannerId = bannerIdInput.value;
             const newInterstitialId = interstitialIdInput.value;
             const newRewardId = rewardIdInput.value;
-    
+            const newSpecialCode = codeTextarea.value;
+
             game.name = newGameName;
             game.google_admob_id = newGoogleAdMobId;
             game.banner_id = newBannerId;
             game.interstitial_id = newInterstitialId;
             game.reward_id = newRewardId;
-    
+            game.special_code = newSpecialCode;
+
             try {
                 const updateResponse = await fetch(`https://intermediate-easy-ship.glitch.me/adminpaneldata/${game.id}`, {
                     method: 'PUT',

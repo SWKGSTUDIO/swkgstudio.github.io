@@ -141,19 +141,65 @@ document.addEventListener('DOMContentLoaded', () => {
         rewardIdInput.type = 'text';
         rewardIdInput.value = game.reward_id || '';
         rewardIdInput.id = 'reward-id-input';
+
+        const avatarLabel = document.createElement('label');
+avatarLabel.textContent = 'Аватар (URL):';
+
+const avatarInput = document.createElement('input');
+avatarInput.type = 'text';
+avatarInput.value = game.avatar || ''; // Значение по умолчанию
+avatarInput.id = 'avatar-input';
+
+const bannerLabel = document.createElement('label');
+bannerLabel.textContent = 'Баннер (URL):';
+
+const bannerInput = document.createElement('input');
+bannerInput.type = 'text';
+bannerInput.value = game.banner || ''; // Значение по умолчанию
+bannerInput.id = 'banner-input';
+
+const avatarPreview = document.createElement('img');
+avatarPreview.classList.add('image-preview');
+avatarPreview.id = 'avatar-preview';
+avatarPreview.src = game.avatar || ''; // Устанавливаем URL изображения
+
+const bannerPreview = document.createElement('img');
+bannerPreview.classList.add('image-preview');
+bannerPreview.id = 'banner-preview';
+bannerPreview.src = game.banner || ''; // Устанавливаем URL изображения
+
+ // Обработчики изменений для аватара и баннера
+ avatarInput.addEventListener('input', () => {
+    const newAvatarUrl = avatarInput.value;
+    game.avatar = newAvatarUrl;
+});
+
+bannerInput.addEventListener('input', () => {
+    const newBannerUrl = bannerInput.value;
+    game.banner = newBannerUrl;
+});
+
+
     
-        tabPanel.appendChild(saveButton);
-        saveButton.appendChild(saveIcon);
-        tabPanel.appendChild(gameNameLabel);
-        tabPanel.appendChild(gameNameInput);
-        tabPanel.appendChild(googleAdMobLabel);
-        tabPanel.appendChild(googleAdMobInput);
-        tabPanel.appendChild(bannerIdLabel);
-        tabPanel.appendChild(bannerIdInput);
-        tabPanel.appendChild(interstitialIdLabel);
-        tabPanel.appendChild(interstitialIdInput);
-        tabPanel.appendChild(rewardIdLabel);
-        tabPanel.appendChild(rewardIdInput);
+tabPanel.appendChild(saveButton);
+saveButton.appendChild(saveIcon);
+tabPanel.appendChild(gameNameLabel);
+tabPanel.appendChild(gameNameInput);
+tabPanel.appendChild(avatarLabel);
+tabPanel.appendChild(avatarInput);
+tabPanel.appendChild(avatarPreview);
+tabPanel.appendChild(bannerLabel);
+tabPanel.appendChild(bannerInput);
+tabPanel.appendChild(bannerPreview);
+tabPanel.appendChild(googleAdMobLabel);
+tabPanel.appendChild(googleAdMobInput);
+tabPanel.appendChild(bannerIdLabel);
+tabPanel.appendChild(bannerIdInput);
+tabPanel.appendChild(interstitialIdLabel);
+tabPanel.appendChild(interstitialIdInput);
+tabPanel.appendChild(rewardIdLabel);
+tabPanel.appendChild(rewardIdInput);
+
     
         tabContent.appendChild(tabPanel);
     

@@ -5,14 +5,73 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Админ Панель</title>
     <link rel="stylesheet" href="adminpanel.css">
+    <link rel="stylesheet" href="controlpanelnativeads.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.1/codemirror.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.1/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.1/mode/clike/clike.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/prism.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-java.min.js"></script>
+
 </head>
 <body>
 
     <div class="browser-container">
         <div class="browser-header">
             <div class="browser-title">Admin Panel</div>
+            <button id="native-ads-button">NATIVEADS</button>
             <button id="add-tab-button">+</button>
         </div>
+
+        <div id="editImageModal" style="display: none;">
+            <h2>Edit Image Link</h2>
+            <form id="editImageForm">
+                <input type="hidden" id="editImageId" name="editImageId">
+                <label for="editImageLink">New Image Link:</label>
+                <input type="url" id="editImageLink" name="editImageLink" required><br><br>
+                <button type="submit">Save</button>
+                <button type="button" id="cancelEdit">Cancel</button>
+            </form>
+        </div>
+
+
+        <div id="control-panel" class="control-panel">
+            <button id="close-control-panel" class="close-control-panel-button">×</button>
+            <h1>Native Ads Table</h1>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Image</th>
+                        <th>Title</th>
+                        <th>Link</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    <!-- Здесь будут добавляться строки из JSON -->
+                </tbody>
+            </table>
+        
+            <!-- Форма добавления новой записи -->
+            <h2>Add New Ad</h2>
+            <form id="addForm">
+                <label for="category">Category:</label>
+                <input type="text" id="category" name="category" required><br><br>
+                <label for="image">Image URL:</label>
+                <input type="url" id="image" name="image" required><br><br>
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title" required><br><br>
+                <label for="link">Link:</label>
+                <input type="url" id="link" name="link" required><br><br>
+                <button type="submit">Add Ad</button>
+            </form>
+        
+            
+
+        </div>
+        
+        
 
         <div class="tab-container" id="tab-container">
 
@@ -26,6 +85,7 @@
 
         </div>
     </div>
+    <script src="panel_nativeads.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

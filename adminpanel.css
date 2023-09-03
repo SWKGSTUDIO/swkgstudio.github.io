@@ -192,3 +192,22 @@ textarea {
     resize: vertical; /* Разрешить изменение высоты текстовой области */
 }
 
+.highlighted {
+    background-color: orange; /* или другой желаемый цвет подсветки */
+}
+
+/* Добавляем стили для кнопки NATIVEADS */
+#native-ads-button {
+    background-color: #FF5733; /* Цвет фона кнопки NATIVEADS */
+    color: white;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin-right: 10px; /* Добавляем отступ справа от кнопки Admin Panel */
+}
+
+#native-ads-button:hover {
+    background-color: #D04133; /* Изменяем цвет фона при наведении курсора */
+}

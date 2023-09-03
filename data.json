@@ -1,0 +1,16 @@
+[
+    {
+        "gameName": "Игра 1",
+        "googleAdsID": "ID_1",
+        "bannerAds": "URL_1",
+        "interstitialAds": "URL_2",
+        "rewardAds": "URL_3"
+    },
+    {
+        "gameName": "Игра 2",
+        "googleAdsID": "ID_2",
+        "bannerAds": "URL_4",
+        "interstitialAds": "URL_5",
+        "rewardAds": "URL_6"
+    }
+]

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Three.js Game</title>
+</head>
+<body>
+    <!-- Создаем контейнер для рендера Three.js -->
+    <div id="scene-container"></div>
+
+    <!-- Подключаем Three.js из node_modules -->
+    <script src="node_modules/three/build/three.js"></script>
+
+    <script>
+        // Создаем сцену
+        const scene = new THREE.Scene();
+
+        // Создаем камеру
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+        // Создаем рендерер и добавляем его в контейнер
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.getElementById('scene-container').appendChild(renderer.domElement);
+
+        // Создаем куб и добавляем его на сцену
+        const geometry = new THREE.BoxGeometry();
+        const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+        const cube = new THREE.Mesh(geometry, material);
+        scene.add(cube);
+
+        // Устанавливаем начальную позицию камеры
+        camera.position.z = 5;
+
+        // Создаем анимацию
+        const animate = () => {
+            requestAnimationFrame(animate);
+            cube.rotation.x += 0.01;
+            cube.rotation.y += 0.01;
+            renderer.render(scene, camera);
+        };
+
+        animate();
+    </script>
+</body>
+</html>

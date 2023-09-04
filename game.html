@@ -100,7 +100,7 @@
                 setInterval(function () {
                     const zombie = createZombie(scene, box);
                     zombies.push(zombie);
-                }, 10000);
+                }, 500);
 
                 scene.onBeforeRenderObservable.add(() => {
                     if (box.intersectsMesh(ground, false) && !canControl) {
@@ -144,7 +144,7 @@
 
         function createZombie(scene, player) {
             const zombie = BABYLON.Mesh.CreateBox("zombie", 1, scene);
-            zombie.position = new BABYLON.Vector3(player.position.x + Math.random() * 10 - 5, 1, player.position.z + Math.random() * 10 - 5);
+            zombie.position = new BABYLON.Vector3(player.position.x + Math.random() * 100 - 50, 1, player.position.z + Math.random() * 100 - 50);
             zombie.physicsImpostor = new BABYLON.PhysicsImpostor(zombie, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 1, friction: 5 }, scene);
 
             const zombieMaterial = new BABYLON.StandardMaterial("zombieMaterial", scene);

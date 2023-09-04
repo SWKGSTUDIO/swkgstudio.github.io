@@ -225,18 +225,18 @@ function createExplosion(scene, position) {
     particleSystem.color2 = new BABYLON.Color4(1, 1, 1, 1);
     particleSystem.colorDead = new BABYLON.Color4(1, 1, 1, 0);
 
-    particleSystem.minSize = 0.1;
-    particleSystem.maxSize = 0.5;
+    particleSystem.minSize = 0.05;
+    particleSystem.maxSize = 0.2;
     particleSystem.minLifeTime = 0.5; // Уменьшим время жизни частиц
     particleSystem.maxLifeTime = 1.0;
-    particleSystem.emitRate = 500;
+    particleSystem.emitRate = 20000;
 
     // Гравитация для частиц (падают вниз)
-    particleSystem.gravity = new BABYLON.Vector3(0, -9.81, 0);
+    particleSystem.gravity = new BABYLON.Vector3(0, -100, 0);
 
     // Установка начальной скорости частиц
-    particleSystem.minInitialSpeed = 1;
-    particleSystem.maxInitialSpeed = 3;
+    particleSystem.minInitialSpeed = 300;
+    particleSystem.maxInitialSpeed = 600;
 
     // Установка радиального направления движения частиц
     particleSystem.direction1 = new BABYLON.Vector3(1, 1, 1);
@@ -247,10 +247,9 @@ function createExplosion(scene, position) {
     particleSystem.maxAngularSpeed = Math.PI;
 
     // Установка силы выпуска частиц для эффекта разлета
-    particleSystem.minEmitPower = 10;
-    particleSystem.maxEmitPower = 20;
+    particleSystem.minEmitPower = 100;
+    particleSystem.maxEmitPower = 150;
 
-    // Установка скорости обновления
     particleSystem.updateSpeed = 0.005;
 
     particleSystem.start();
@@ -258,12 +257,12 @@ function createExplosion(scene, position) {
     setTimeout(function () {
         particleSystem.stop();
         particleSystem.dispose();
-    }, 1000);
+    }, 100);
 }
 
 
 
-        
+
     </script>
 </body>
 </html>

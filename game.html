@@ -28,12 +28,12 @@
     <div id="pauseButton">Пауза</div>
     <script src="https://cdn.babylonjs.com/babylon.js"></script>
     <script src="https://cdn.babylonjs.com/cannon.js"></script>
-    <script src="babylon.objFileLoader.js"></script>
     <script src="https://cdn.babylonjs.com/loaders/babylonjs.loaders.min.js"></script>
 
     <script>
         const zombies = [];
         let isPaused = false;
+        let player; // Объявляем переменную player
 
         document.addEventListener("DOMContentLoaded", function () {
             const canvas = document.getElementById("renderCanvas");
@@ -69,7 +69,7 @@
 
                 // Загрузка и отображение 3D-модели игрока
                 BABYLON.SceneLoader.ImportMesh("", "gameassets/", "poo.obj", scene, function (meshes) {
-                    const player = meshes[0]; // Предполагается, что модель игрока находится в meshes[0]
+                    player = meshes[0]; // Присваиваем модель игрока переменной player
                     player.position = new BABYLON.Vector3(0, 1, 0); // Установка начальной позиции
                     player.scaling = new BABYLON.Vector3(0.1, 0.1, 0.1); // Установка масштаба модели
 

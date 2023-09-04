@@ -9,18 +9,28 @@
             margin: 0;
             overflow: hidden;
         }
-
         canvas {
             display: block;
+        }
+        #pauseButton {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: #333;
+            color: white;
+            padding: 10px 20px;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
     <canvas id="renderCanvas"></canvas>
+    <div id="pauseButton">Пауза</div>
     <script src="https://cdn.babylonjs.com/babylon.js"></script>
     <script src="https://cdn.babylonjs.com/cannon.js"></script>
     <script>
         const zombies = [];
+        let isPaused = false;
 
         document.addEventListener("DOMContentLoaded", function () {
             const canvas = document.getElementById("renderCanvas");
@@ -123,11 +133,10 @@
                         }
                     }
 
-                    // Обновляем позицию каждого зомби
                     for (const zombie of zombies) {
                         const direction = box.position.subtract(zombie.position);
                         direction.normalize();
-                        const force = direction.scale(50); // Настройте силу движения зомби
+                        const force = direction.scale(50); 
                         zombie.physicsImpostor.applyForce(force, zombie.getAbsolutePosition());
                     }
                 });
@@ -138,7 +147,19 @@
             const scene = createScene();
 
             engine.runRenderLoop(function () {
-                scene.render();
+                if (!isPaused) {
+                    scene.render();
+                }
+            });
+
+            const pauseButton = document.getElementById("pauseButton");
+            pauseButton.addEventListener("click", function () {
+                isPaused = !isPaused;
+                if (isPaused) {
+                    pauseButton.innerText = "Продолжить";
+                } else {
+                    pauseButton.innerText = "Пауза";
+                }
             });
         });
 
@@ -151,66 +172,55 @@
             zombieMaterial.diffuseColor = new BABYLON.Color3(0, 1, 0);
             zombie.material = zombieMaterial;
 
-            // Добавляем обработчик события клика мышью
             zombie.actionManager = new BABYLON.ActionManager(scene);
             zombie.actionManager.registerAction(
                 new BABYLON.ExecuteCodeAction(
                     BABYLON.ActionManager.OnPickTrigger,
                     function () {
-                        // Создаем эффект взрыва частиц
                         createExplosion(scene, zombie.position);
-
-                        // Удаляем зомби из массива
                         const index = zombies.indexOf(zombie);
                         if (index !== -1) {
                             zombies.splice(index, 1);
                         }
-
-                        // Удаляем зомби из сцены
                         zombie.dispose();
                     }
                 )
             );
-
             return zombie;
         }
-
         function createExplosion(scene, position) {
-    const particleSystem = new BABYLON.ParticleSystem("explosion", 2000, scene);
-    particleSystem.particleTexture = new BABYLON.Texture("https://www.babylonjs.com/assets/explosion.png", scene);
-    particleSystem.emitter = position;
-    particleSystem.minEmitBox = new BABYLON.Vector3(-0.5, -0.5, -0.5);
-    particleSystem.maxEmitBox = new BABYLON.Vector3(0.5, 0.5, 0.5);
-    particleSystem.color1 = new BABYLON.Color4(1, 0, 0, 1);
-    particleSystem.color2 = new BABYLON.Color4(1, 0.5, 0, 1);
-    particleSystem.colorDead = new BABYLON.Color4(0, 0, 0, 0);
-    particleSystem.minSize = 0.1;
-    particleSystem.maxSize = 0.5;
-    
-    // Устанавливаем время жизни частиц на 1 секунду
-    particleSystem.minLifeTime = 1.0;
-    particleSystem.maxLifeTime = 1.0;
-    
-    particleSystem.emitRate = 500;
-    particleSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
-    particleSystem.gravity = new BABYLON.Vector3(0, -9.81, 0);
-    particleSystem.direction1 = new BABYLON.Vector3(-1, 1, -1);
-    particleSystem.direction2 = new BABYLON.Vector3(1, 1, 1);
-    particleSystem.minAngularSpeed = 0;
-    particleSystem.maxAngularSpeed = Math.PI;
-    particleSystem.minEmitPower = 1;
-    particleSystem.maxEmitPower = 3;
-    particleSystem.updateSpeed = 0.005;
+            const particleSystem = new BABYLON.ParticleSystem("explosion", 2000, scene);
+            particleSystem.particleTexture = new BABYLON.Texture("https://www.babylonjs.com/assets/explosion.png", scene);
+            particleSystem.emitter = position;
+            particleSystem.minEmitBox = new BABYLON.Vector3(-0.5, -0.5, -0.5);
+            particleSystem.maxEmitBox = new BABYLON.Vector3(0.5, 0.5, 0.5);
+            particleSystem.color1 = new BABYLON.Color4(1, 0, 0, 1);
+            particleSystem.color2 = new BABYLON.Color4(1, 0.5, 0, 1);
+            particleSystem.colorDead = new BABYLON.Color4(0, 0, 0, 0);
+            particleSystem.minSize = 0.1;
+            particleSystem.maxSize = 0.5;
+            particleSystem.minLifeTime = 1.0;
+            particleSystem.maxLifeTime = 1.0;
+            particleSystem.emitRate = 500;
+            particleSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
+            particleSystem.gravity = new BABYLON.Vector3(0, -9.81, 0);
+            particleSystem.direction1 = new BABYLON.Vector3(-1, 1, -1);
+            particleSystem.direction2 = new BABYLON.Vector3(1, 1, 1);
+            particleSystem.minAngularSpeed = 0;
+            particleSystem.maxAngularSpeed = Math.PI;
+            particleSystem.minEmitPower = 1;
+            particleSystem.maxEmitPower = 3;
+            particleSystem.updateSpeed = 0.005;
 
-    particleSystem.start();
-    
-    // Удаляем систему частиц после 1 секунды
-    setTimeout(function () {
-        particleSystem.stop();
-        particleSystem.dispose();
-    }, 1000);
-}
+            particleSystem.start();
 
+            setTimeout(function () {
+                particleSystem.stop();
+                particleSystem.dispose();
+            }, 1000);
+        }
+
+        
     </script>
 </body>
 </html>

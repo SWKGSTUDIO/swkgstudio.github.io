@@ -20,8 +20,6 @@
     <script src="https://cdn.babylonjs.com/babylon.js"></script>
     <script src="https://cdn.babylonjs.com/cannon.js"></script>
     <script>
-
-        
         document.addEventListener("DOMContentLoaded", function () {
             const canvas = document.getElementById("renderCanvas");
             const engine = new BABYLON.Engine(canvas, true);
@@ -31,10 +29,8 @@
                 canvas.height = window.innerHeight;
             };
 
-            // Инициализация размеров холста
             resizeCanvas();
 
-            // Обработка изменения размеров окна
             window.addEventListener("resize", function () {
                 resizeCanvas();
                 engine.resize();
@@ -42,59 +38,37 @@
 
             const createScene = function () {
                 const scene = new BABYLON.Scene(engine);
-                scene.enablePhysics(); // Включаем физику для сцены
+                scene.enablePhysics();
 
-                // Создаем серую плоскость
-                const ground = BABYLON.Mesh.CreateGround("ground", 2000, 2000, 1, scene, false);
-                ground.position.y = -0.5; // Опустить плоскость на половину высоты кубика
-
-                // Настройка физики для плоскости
+                const ground = BABYLON.Mesh.CreateGround("ground", 20000, 20000, 1, scene, false);
+                ground.position.y = -0.5;
                 ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0, friction: 1 }, scene);
 
-
-                // Создаем текстуру песка
                 const sandTexture = new BABYLON.Texture("https://i.pinimg.com/originals/05/4f/99/054f997dd83de6e354560339c5b3c0de.jpg", scene);
-                // Создаем материал с текстурой песка
-                // Создаем материал с текстурой песка
                 const sandMaterial = new BABYLON.StandardMaterial("sandMaterial", scene);
                 sandMaterial.diffuseTexture = sandTexture;
-                // Настраиваем материал для матового отражения
-                sandMaterial.diffuseColor = new BABYLON.Color3(1, 1, 1); // Белый цвет
-                sandMaterial.specularColor = new BABYLON.Color3(0, 0, 0); // Отсутствие бликов
-                sandMaterial.ambientColor = new BABYLON.Color3(1, 1, 1); // Белый цвет для отражения окружающей среды
-                // Назначаем материал плоскости
+                sandMaterial.diffuseColor = new BABYLON.Color3(1, 1, 1);
+                sandMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
+                sandMaterial.ambientColor = new BABYLON.Color3(1, 1, 1);
                 ground.material = sandMaterial;
 
-
-                // Создаем красный кубик выше плоскости
                 const box = BABYLON.Mesh.CreateBox("box", 1, scene);
-                box.position.y = 10; // Поднять кубик выше плоскости
-
-                // Настройка физики для кубика
+                box.position.y = 10;
                 box.physicsImpostor = new BABYLON.PhysicsImpostor(box, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 1, friction: 5 }, scene);
 
-              // Создаем ArcRotateCamera для управления мышью и следования за кубиком
-const camera = new BABYLON.ArcRotateCamera("camera", 0, 0, 0, box.position, scene);
-camera.lowerRadiusLimit = 5; // Минимальное расстояние от цели
-camera.upperRadiusLimit = 20; // Максимальное расстояние от цели
-camera.attachControl(canvas, true);
+                const camera = new BABYLON.ArcRotateCamera("camera", 0, 0, 0, box.position, scene);
+                camera.lowerRadiusLimit = 5;
+                camera.upperRadiusLimit = 20;
+                camera.attachControl(canvas, true);
 
-// Настройка камеры для следования за кубиком
-scene.registerBeforeRender(function() {
-    camera.target = box.position.clone();
-});
+                scene.registerBeforeRender(function() {
+                    camera.target = box.position.clone();
+                });
 
-
-
-
-                // Добавляем направленный свет
                 const light = new BABYLON.DirectionalLight("light", new BABYLON.Vector3(0, -1, -0.5), scene);
-
-                // Настраиваем тени от света
                 light.castShadow = true;
 
-                let canControl = false; // Флаг для управления кубиком
-
+                let canControl = false;
                 const inputMap = {};
                 scene.actionManager = new BABYLON.ActionManager(scene);
                 scene.actionManager.registerAction(
@@ -103,8 +77,7 @@ scene.registerBeforeRender(function() {
                         function (evt) {
                             if (canControl) {
                                 inputMap[evt.sourceEvent.key] = evt.sourceEvent.type == "keydown";
-                                if (evt.sourceEvent.key == " ") { // Проверяем, нажата ли клавиша "пробел"
-                                    // Применяем импульс вверх кубику
+                                if (evt.sourceEvent.key == " ") {
                                     box.physicsImpostor.applyImpulse(new BABYLON.Vector3(0, 3, 0), box.getAbsolutePosition());
                                 }
                             }
@@ -122,28 +95,41 @@ scene.registerBeforeRender(function() {
                     )
                 );
 
+                const zombies = [];
+
+                setInterval(function () {
+                    const zombie = createZombie(scene, box);
+                    zombies.push(zombie);
+                }, 10000);
+
                 scene.onBeforeRenderObservable.add(() => {
                     if (box.intersectsMesh(ground, false) && !canControl) {
                         canControl = true;
-                        // Убираем кинематику у плоскости
                         ground.physicsImpostor.setLinearVelocity(new BABYLON.Vector3(0, 0, 0));
                     }
 
                     if (canControl) {
-    if (inputMap["w"]) {
-        box.physicsImpostor.applyImpulse(new BABYLON.Vector3(0, 0, 0.3), box.getAbsolutePosition());
-    }
-    if (inputMap["s"]) {
-        box.physicsImpostor.applyImpulse(new BABYLON.Vector3(0, 0, -0.3), box.getAbsolutePosition());
-    }
-    if (inputMap["a"]) {
-        box.physicsImpostor.applyImpulse(new BABYLON.Vector3(-0.3, 0, 0), box.getAbsolutePosition());
-    }
-    if (inputMap["d"]) {
-        box.physicsImpostor.applyImpulse(new BABYLON.Vector3(0.3, 0, 0), box.getAbsolutePosition());
-    }
-}
+                        if (inputMap["w"]) {
+                            box.physicsImpostor.applyImpulse(new BABYLON.Vector3(0, 0, 0.3), box.getAbsolutePosition());
+                        }
+                        if (inputMap["s"]) {
+                            box.physicsImpostor.applyImpulse(new BABYLON.Vector3(0, 0, -0.3), box.getAbsolutePosition());
+                        }
+                        if (inputMap["a"]) {
+                            box.physicsImpostor.applyImpulse(new BABYLON.Vector3(-0.3, 0, 0), box.getAbsolutePosition());
+                        }
+                        if (inputMap["d"]) {
+                            box.physicsImpostor.applyImpulse(new BABYLON.Vector3(0.3, 0, 0), box.getAbsolutePosition());
+                        }
+                    }
 
+                    // Обновляем позицию каждого зомби
+                    for (const zombie of zombies) {
+                        const direction = box.position.subtract(zombie.position);
+                        direction.normalize();
+                        const force = direction.scale(50); // Настройте силу движения зомби
+                        zombie.physicsImpostor.applyForce(force, zombie.getAbsolutePosition());
+                    }
                 });
 
                 return scene;
@@ -156,9 +142,17 @@ scene.registerBeforeRender(function() {
             });
         });
 
+        function createZombie(scene, player) {
+            const zombie = BABYLON.Mesh.CreateBox("zombie", 1, scene);
+            zombie.position = new BABYLON.Vector3(player.position.x + Math.random() * 10 - 5, 1, player.position.z + Math.random() * 10 - 5);
+            zombie.physicsImpostor = new BABYLON.PhysicsImpostor(zombie, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 1, friction: 5 }, scene);
 
+            const zombieMaterial = new BABYLON.StandardMaterial("zombieMaterial", scene);
+            zombieMaterial.diffuseColor = new BABYLON.Color3(0, 1, 0);
+            zombie.material = zombieMaterial;
+
+            return zombie;
+        }
     </script>
-
-
 </body>
 </html>

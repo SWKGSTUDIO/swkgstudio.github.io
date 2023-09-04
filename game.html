@@ -33,7 +33,7 @@
     <script>
         const zombies = [];
         let isPaused = false;
-        let player; // Объявляем переменную player
+        let player;
 
         document.addEventListener("DOMContentLoaded", function () {
             const canvas = document.getElementById("renderCanvas");
@@ -69,58 +69,17 @@
 
                 // Загрузка и отображение 3D-модели игрока
                 BABYLON.SceneLoader.ImportMesh("", "gameassets/", "poo.obj", scene, function (meshes) {
-                    player = meshes[0]; // Присваиваем модель игрока переменной player
-                    player.position = new BABYLON.Vector3(0, 1, 0); // Установка начальной позиции
-                    player.scaling = new BABYLON.Vector3(0.1, 0.1, 0.1); // Установка масштаба модели
-
-                    // Определение физического тела для модели игрока (если нужно)
+                    player = meshes[0];
+                    player.position = new BABYLON.Vector3(0, 1, 0);
+                    player.scaling = new BABYLON.Vector3(0.1, 0.1, 0.1);
                     player.physicsImpostor = new BABYLON.PhysicsImpostor(player, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 1, friction: 5 }, scene);
+
+                    // После успешной загрузки модели, создаем зомби
+                    setInterval(function () {
+                        const zombie = createZombie(scene, player, zombies);
+                        zombies.push(zombie);
+                    }, 999);
                 });
-
-                const camera = new BABYLON.ArcRotateCamera("camera", 0, 0, 0, new BABYLON.Vector3(0, 1, 0), scene);
-                camera.lowerRadiusLimit = 5;
-                camera.upperRadiusLimit = 20;
-                camera.attachControl(canvas, true);
-
-                scene.registerBeforeRender(function () {
-                    camera.target = player.position.clone(); // Устанавливаем цель камеры в позицию игрока
-                });
-
-                const light = new BABYLON.DirectionalLight("light", new BABYLON.Vector3(0, -1, -0.5), scene);
-                light.castShadow = true;
-
-                let canControl = false;
-
-                const inputMap = {};
-                scene.actionManager = new BABYLON.ActionManager(scene);
-                scene.actionManager.registerAction(
-                    new BABYLON.ExecuteCodeAction(
-                        BABYLON.ActionManager.OnKeyDownTrigger,
-                        function (evt) {
-                            if (canControl) {
-                                inputMap[evt.sourceEvent.key] = evt.sourceEvent.type == "keydown";
-                                if (evt.sourceEvent.key == " ") {
-                                    player.physicsImpostor.applyImpulse(new BABYLON.Vector3(0, 3, 0), player.getAbsolutePosition());
-                                }
-                            }
-                        }
-                    )
-                );
-                scene.actionManager.registerAction(
-                    new BABYLON.ExecuteCodeAction(
-                        BABYLON.ActionManager.OnKeyUpTrigger,
-                        function (evt) {
-                            if (canControl) {
-                                inputMap[evt.sourceEvent.key] = evt.sourceEvent.type == "keydown";
-                            }
-                        }
-                    )
-                );
-
-                setInterval(function () {
-                    const zombie = createZombie(scene, player, zombies);
-                    zombies.push(zombie);
-                }, 999);
 
                 scene.onBeforeRenderObservable.add(() => {
                     if (player.intersectsMesh(ground, false) && !canControl) {
@@ -188,7 +147,7 @@
             const zombie = BABYLON.Mesh.CreateBox("zombie", 1, scene);
             zombie.position = new BABYLON.Vector3(player.position.x + Math.random() * 100 - 50, 1, player.position.z + Math.random() * 100 - 50);
             zombie.physicsImpostor = new BABYLON.PhysicsImpostor(zombie, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0.1, friction: 5 }, scene);
-            zombie.scaling = new BABYLON.Vector3(0.5, 0.5, 0.5); // Установка масштаба 0.5 по всем осям
+            zombie.scaling = new BABYLON.Vector3(0.5, 0.5, 0.5);
 
             const zombieMaterial = new BABYLON.StandardMaterial("zombieMaterial", scene);
             zombieMaterial.diffuseColor = new BABYLON.Color3(0, 1, 0);

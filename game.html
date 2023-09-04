@@ -20,6 +20,8 @@
     <script src="https://cdn.babylonjs.com/babylon.js"></script>
     <script src="https://cdn.babylonjs.com/cannon.js"></script>
     <script>
+        const zombies = [];
+
         document.addEventListener("DOMContentLoaded", function () {
             const canvas = document.getElementById("renderCanvas");
             const engine = new BABYLON.Engine(canvas, true);
@@ -95,12 +97,10 @@
                     )
                 );
 
-                const zombies = [];
-
                 setInterval(function () {
-                    const zombie = createZombie(scene, box);
+                    const zombie = createZombie(scene, box, zombies);
                     zombies.push(zombie);
-                }, 500);
+                }, 999);
 
                 scene.onBeforeRenderObservable.add(() => {
                     if (box.intersectsMesh(ground, false) && !canControl) {
@@ -142,7 +142,7 @@
             });
         });
 
-        function createZombie(scene, player) {
+        function createZombie(scene, player, zombies) {
             const zombie = BABYLON.Mesh.CreateBox("zombie", 1, scene);
             zombie.position = new BABYLON.Vector3(player.position.x + Math.random() * 100 - 50, 1, player.position.z + Math.random() * 100 - 50);
             zombie.physicsImpostor = new BABYLON.PhysicsImpostor(zombie, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 1, friction: 5 }, scene);
@@ -151,8 +151,66 @@
             zombieMaterial.diffuseColor = new BABYLON.Color3(0, 1, 0);
             zombie.material = zombieMaterial;
 
+            // Добавляем обработчик события клика мышью
+            zombie.actionManager = new BABYLON.ActionManager(scene);
+            zombie.actionManager.registerAction(
+                new BABYLON.ExecuteCodeAction(
+                    BABYLON.ActionManager.OnPickTrigger,
+                    function () {
+                        // Создаем эффект взрыва частиц
+                        createExplosion(scene, zombie.position);
+
+                        // Удаляем зомби из массива
+                        const index = zombies.indexOf(zombie);
+                        if (index !== -1) {
+                            zombies.splice(index, 1);
+                        }
+
+                        // Удаляем зомби из сцены
+                        zombie.dispose();
+                    }
+                )
+            );
+
             return zombie;
         }
+
+        function createExplosion(scene, position) {
+    const particleSystem = new BABYLON.ParticleSystem("explosion", 2000, scene);
+    particleSystem.particleTexture = new BABYLON.Texture("https://www.babylonjs.com/assets/explosion.png", scene);
+    particleSystem.emitter = position;
+    particleSystem.minEmitBox = new BABYLON.Vector3(-0.5, -0.5, -0.5);
+    particleSystem.maxEmitBox = new BABYLON.Vector3(0.5, 0.5, 0.5);
+    particleSystem.color1 = new BABYLON.Color4(1, 0, 0, 1);
+    particleSystem.color2 = new BABYLON.Color4(1, 0.5, 0, 1);
+    particleSystem.colorDead = new BABYLON.Color4(0, 0, 0, 0);
+    particleSystem.minSize = 0.1;
+    particleSystem.maxSize = 0.5;
+    
+    // Устанавливаем время жизни частиц на 1 секунду
+    particleSystem.minLifeTime = 1.0;
+    particleSystem.maxLifeTime = 1.0;
+    
+    particleSystem.emitRate = 500;
+    particleSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
+    particleSystem.gravity = new BABYLON.Vector3(0, -9.81, 0);
+    particleSystem.direction1 = new BABYLON.Vector3(-1, 1, -1);
+    particleSystem.direction2 = new BABYLON.Vector3(1, 1, 1);
+    particleSystem.minAngularSpeed = 0;
+    particleSystem.maxAngularSpeed = Math.PI;
+    particleSystem.minEmitPower = 1;
+    particleSystem.maxEmitPower = 3;
+    particleSystem.updateSpeed = 0.005;
+
+    particleSystem.start();
+    
+    // Удаляем систему частиц после 1 секунды
+    setTimeout(function () {
+        particleSystem.stop();
+        particleSystem.dispose();
+    }, 1000);
+}
+
     </script>
 </body>
 </html>

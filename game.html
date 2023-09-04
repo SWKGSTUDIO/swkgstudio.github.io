@@ -154,7 +154,7 @@
         for (const zombie of zombies) {
         const direction = box.position.subtract(zombie.position);
         direction.normalize();
-        const force = direction.scale(10); 
+        const force = direction.scale(2); 
         zombie.physicsImpostor.applyForce(force, zombie.getAbsolutePosition());
     }
 });
@@ -184,7 +184,7 @@
         function createZombie(scene, player, zombies) {
     const zombie = BABYLON.Mesh.CreateBox("zombie", 1, scene);
     zombie.position = new BABYLON.Vector3(player.position.x + Math.random() * 100 - 50, 1, player.position.z + Math.random() * 100 - 50);
-    zombie.scaling = new BABYLON.Vector3(0.1, 0.1, 0.1); // Установка масштаба 0.5 по всем осям
+    zombie.scaling = new BABYLON.Vector3(0.25, 0.25, 0.25); // Установка масштаба 0.5 по всем осям
 
     // Создайте физическое тело зомби с учетом его нового размера
     const size = 0.5; // Новый размер зомби

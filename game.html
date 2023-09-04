@@ -28,12 +28,12 @@
     <div id="pauseButton">Пауза</div>
     <script src="https://cdn.babylonjs.com/babylon.js"></script>
     <script src="https://cdn.babylonjs.com/cannon.js"></script>
-    <script src="https://cdn.babylonjs.com/loaders/babylonjs.loaders.min.js"></script>
+
 
     <script>
+        
         const zombies = [];
         let isPaused = false;
-        let player;
 
         document.addEventListener("DOMContentLoaded", function () {
             const canvas = document.getElementById("renderCanvas");
@@ -67,59 +67,97 @@
                 sandMaterial.ambientColor = new BABYLON.Color3(1, 1, 1);
                 ground.material = sandMaterial;
 
-                // Загрузка и отображение 3D-модели игрока
-                BABYLON.SceneLoader.ImportMesh("", "gameassets/", "poo.obj", scene, function (meshes) {
-                    player = meshes[0];
-                    player.position = new BABYLON.Vector3(0, 1, 0);
-                    player.scaling = new BABYLON.Vector3(0.1, 0.1, 0.1);
-                    player.physicsImpostor = new BABYLON.PhysicsImpostor(player, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 1, friction: 5 }, scene);
+                const box = BABYLON.Mesh.CreateBox("box", 1, scene);
+                box.position.y = 10;
+                box.physicsImpostor = new BABYLON.PhysicsImpostor(box, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 1, friction: 5 }, scene);
 
-                    // После успешной загрузки модели, создаем зомби
-                    setInterval(function () {
-                        const zombie = createZombie(scene, player, zombies);
-                        zombies.push(zombie);
-                    }, 999);
+
+                const camera = new BABYLON.ArcRotateCamera("camera", 0, 0, 0, box.position, scene);
+                camera.lowerRadiusLimit = 5;
+                camera.upperRadiusLimit = 20;
+                camera.attachControl(canvas, true);
+
+
+                scene.registerBeforeRender(function() {
+                    camera.target = box.position.clone();
                 });
 
+                const light = new BABYLON.DirectionalLight("light", new BABYLON.Vector3(0, -1, -0.5), scene);
+                light.castShadow = true;
+
+                let canControl = false;
+
+                const inputMap = {};
+                scene.actionManager = new BABYLON.ActionManager(scene);
+                scene.actionManager.registerAction(
+                    new BABYLON.ExecuteCodeAction(
+                        BABYLON.ActionManager.OnKeyDownTrigger,
+                        function (evt) {
+                            if (canControl) {
+                                inputMap[evt.sourceEvent.key] = evt.sourceEvent.type == "keydown";
+                                if (evt.sourceEvent.key == " ") {
+                                    box.physicsImpostor.applyImpulse(new BABYLON.Vector3(0, 3, 0), box.getAbsolutePosition());
+                                }
+                            }
+                        }
+                    )
+                );
+                scene.actionManager.registerAction(
+                    new BABYLON.ExecuteCodeAction(
+                        BABYLON.ActionManager.OnKeyUpTrigger,
+                        function (evt) {
+                            if (canControl) {
+                                inputMap[evt.sourceEvent.key] = evt.sourceEvent.type == "keydown";
+                            }
+                        }
+                    )
+                );
+
+                setInterval(function () {
+                    const zombie = createZombie(scene, box, zombies);
+                    zombies.push(zombie);
+                }, 999);
+
                 scene.onBeforeRenderObservable.add(() => {
-                    if (player.intersectsMesh(ground, false) && !canControl) {
+                    if (box.intersectsMesh(ground, false) && !canControl) {
                         canControl = true;
                         ground.physicsImpostor.setLinearVelocity(new BABYLON.Vector3(0, 0, 0));
                     }
 
                     if (canControl) {
                         if (inputMap["w"]) {
-                            player.physicsImpostor.applyImpulse(new BABYLON.Vector3(0, 0, 0.3), player.getAbsolutePosition());
+                            box.physicsImpostor.applyImpulse(new BABYLON.Vector3(0, 0, 0.3), box.getAbsolutePosition());
                         }
                         if (inputMap["s"]) {
-                            player.physicsImpostor.applyImpulse(new BABYLON.Vector3(0, 0, -0.3), player.getAbsolutePosition());
+                            box.physicsImpostor.applyImpulse(new BABYLON.Vector3(0, 0, -0.3), box.getAbsolutePosition());
                         }
                         if (inputMap["a"]) {
-                            player.physicsImpostor.applyImpulse(new BABYLON.Vector3(-0.3, 0, 0), player.getAbsolutePosition());
+                            box.physicsImpostor.applyImpulse(new BABYLON.Vector3(-0.3, 0, 0), box.getAbsolutePosition());
                         }
                         if (inputMap["d"]) {
-                            player.physicsImpostor.applyImpulse(new BABYLON.Vector3(0.3, 0, 0), player.getAbsolutePosition());
+                            box.physicsImpostor.applyImpulse(new BABYLON.Vector3(0.3, 0, 0), box.getAbsolutePosition());
                         }
                     }
 
+                    
                     // Удаление зомби, находящихся ниже определенной высоты (например, -10)
                     for (let i = zombies.length - 1; i >= 0; i--) {
-                        const zombie = zombies[i];
-                        if (zombie.position.y < -10) {
-                            // Удаление зомби из массива и сцены
-                            zombies.splice(i, 1);
-                            zombie.dispose();
-                        }
-                    }
+                    const zombie = zombies[i];
+                    if (zombie.position.y < -10) {
+                    // Удаление зомби из массива и сцены
+                    zombies.splice(i, 1);
+                    zombie.dispose();
+        }
+    }
 
-                    // Код управления зомби
-                    for (const zombie of zombies) {
-                        const direction = player.position.subtract(zombie.position);
-                        direction.normalize();
-                        const force = direction.scale(50);
-                        zombie.physicsImpostor.applyForce(force, zombie.getAbsolutePosition());
-                    }
-                });
+    // Код управления зомби
+        for (const zombie of zombies) {
+        const direction = box.position.subtract(zombie.position);
+        direction.normalize();
+        const force = direction.scale(50); 
+        zombie.physicsImpostor.applyForce(force, zombie.getAbsolutePosition());
+    }
+});
 
                 return scene;
             };
@@ -147,7 +185,7 @@
             const zombie = BABYLON.Mesh.CreateBox("zombie", 1, scene);
             zombie.position = new BABYLON.Vector3(player.position.x + Math.random() * 100 - 50, 1, player.position.z + Math.random() * 100 - 50);
             zombie.physicsImpostor = new BABYLON.PhysicsImpostor(zombie, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0.1, friction: 5 }, scene);
-            zombie.scaling = new BABYLON.Vector3(0.5, 0.5, 0.5);
+            zombie.scaling = new BABYLON.Vector3(0.5, 0.5, 0.5); // Установка масштаба 0.5 по всем осям
 
             const zombieMaterial = new BABYLON.StandardMaterial("zombieMaterial", scene);
             zombieMaterial.diffuseColor = new BABYLON.Color3(0, 1, 0);
@@ -169,7 +207,6 @@
             );
             return zombie;
         }
-
         function createExplosion(scene, position) {
             const particleSystem = new BABYLON.ParticleSystem("explosion", 2000, scene);
             particleSystem.particleTexture = new BABYLON.Texture("gameassets/particle.png", scene);
@@ -201,6 +238,8 @@
                 particleSystem.dispose();
             }, 1000);
         }
+
+        
     </script>
 </body>
 </html>

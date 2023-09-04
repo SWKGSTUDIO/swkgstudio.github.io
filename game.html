@@ -73,17 +73,19 @@
                 // Настройка физики для кубика
                 box.physicsImpostor = new BABYLON.PhysicsImpostor(box, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 1, friction: 5 }, scene);
 
-                // Создаем камеру следа
-                const camera = new BABYLON.FollowCamera("camera", new BABYLON.Vector3(0, 5, -10), scene);
-                camera.lockedTarget = box; // Устанавливаем цель для камеры
-                camera.radius = 10; // Расстояние до цели
-                camera.heightOffset = 3; // Высота относительно цели
-                camera.rotationOffset = 0; // Угол поворота
-                camera.cameraAcceleration = 0.01; // Ускорение камеры
-                camera.maxCameraSpeed = 1; // Максимальная скорость камеры
+              // Создаем ArcRotateCamera для управления мышью и следования за кубиком
+const camera = new BABYLON.ArcRotateCamera("camera", 0, 0, 0, box.position, scene);
+camera.lowerRadiusLimit = 5; // Минимальное расстояние от цели
+camera.upperRadiusLimit = 20; // Максимальное расстояние от цели
+camera.attachControl(canvas, true);
 
-                // Управление камерой мышью
-                camera.attachControl(canvas, true);
+// Настройка камеры для следования за кубиком
+scene.registerBeforeRender(function() {
+    camera.target = box.position.clone();
+});
+
+
+
 
                 // Добавляем направленный свет
                 const light = new BABYLON.DirectionalLight("light", new BABYLON.Vector3(0, -1, -0.5), scene);
@@ -128,19 +130,20 @@
                     }
 
                     if (canControl) {
-                        if (inputMap["w"]) {
-                            box.physicsImpostor.applyImpulse(new BABYLON.Vector3(0, 0, 0.3), box.getAbsolutePosition());
-                        }
-                        if (inputMap["s"]) {
-                            box.physicsImpostor.applyImpulse(new BABYLON.Vector3(0, 0, -0.3), box.getAbsolutePosition());
-                        }
-                        if (inputMap["a"]) {
-                            box.physicsImpostor.applyImpulse(new BABYLON.Vector3(-0.3, 0, 0), box.getAbsolutePosition());
-                        }
-                        if (inputMap["d"]) {
-                            box.physicsImpostor.applyImpulse(new BABYLON.Vector3(0.3, 0, 0), box.getAbsolutePosition());
-                        }
-                    }
+    if (inputMap["w"]) {
+        box.physicsImpostor.applyImpulse(new BABYLON.Vector3(0, 0, 0.3), box.getAbsolutePosition());
+    }
+    if (inputMap["s"]) {
+        box.physicsImpostor.applyImpulse(new BABYLON.Vector3(0, 0, -0.3), box.getAbsolutePosition());
+    }
+    if (inputMap["a"]) {
+        box.physicsImpostor.applyImpulse(new BABYLON.Vector3(-0.3, 0, 0), box.getAbsolutePosition());
+    }
+    if (inputMap["d"]) {
+        box.physicsImpostor.applyImpulse(new BABYLON.Vector3(0.3, 0, 0), box.getAbsolutePosition());
+    }
+}
+
                 });
 
                 return scene;

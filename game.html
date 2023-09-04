@@ -56,7 +56,7 @@
                 ground.position.y = -0.5;
                 ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0, friction: 1 }, scene);
 
-                const sandTexture = new BABYLON.Texture("gameassets/054f997dd83de6e354560339c5b3c0de.jpg", scene);
+                const sandTexture = new BABYLON.Texture("gameassets/sand.png", scene);
                 const sandMaterial = new BABYLON.StandardMaterial("sandMaterial", scene);
                 sandMaterial.diffuseTexture = sandTexture;
                 sandMaterial.diffuseColor = new BABYLON.Color3(1, 1, 1);

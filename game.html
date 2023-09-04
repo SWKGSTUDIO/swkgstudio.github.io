@@ -225,8 +225,8 @@ function createExplosion(scene, position) {
     particleSystem.color2 = new BABYLON.Color4(1, 1, 1, 1);
     particleSystem.colorDead = new BABYLON.Color4(1, 1, 1, 0);
 
-    particleSystem.minSize = 0.05;
-    particleSystem.maxSize = 0.2;
+    particleSystem.minSize = 0.1;
+    particleSystem.maxSize = 1;
     particleSystem.minLifeTime = 0.5; // Уменьшим время жизни частиц
     particleSystem.maxLifeTime = 1.0;
     particleSystem.emitRate = 20000;

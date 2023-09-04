@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Управляемый кубик</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+
+        canvas {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="renderCanvas"></canvas>
+    <script src="https://cdn.babylonjs.com/babylon.js"></script>
+    <script src="https://cdn.babylonjs.com/cannon.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const canvas = document.getElementById("renderCanvas");
+            const engine = new BABYLON.Engine(canvas, true);
+
+            const resizeCanvas = function () {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            };
+
+            // Инициализация размеров холста
+            resizeCanvas();
+
+            // Обработка изменения размеров окна
+            window.addEventListener("resize", function () {
+                resizeCanvas();
+                engine.resize();
+            });
+
+            const createScene = function () {
+                const scene = new BABYLON.Scene(engine);
+                scene.enablePhysics(); // Включаем физику для сцены
+
+                const camera = new BABYLON.ArcRotateCamera("camera", 0, 0, 10, BABYLON.Vector3.Zero(), scene);
+                camera.attachControl(canvas, true);
+
+                // Добавляем направленный свет
+                const light = new BABYLON.DirectionalLight("light", new BABYLON.Vector3(10, -1, 20), scene);
+
+                // Создаем серую плоскость
+                const ground = BABYLON.Mesh.CreateGround("ground", 20, 20, 1, scene, false);
+                ground.position.y = -0.5; // Опустить плоскость на половину высоты кубика
+
+                // Настройка физики для плоскости
+                ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0, friction: 1 }, scene);
+
+                // Создаем красный кубик выше плоскости
+                const box = BABYLON.Mesh.CreateBox("box", 1, scene);
+                box.position.y = 10; // Поднять кубик выше плоскости
+
+                // Настройка физики для кубика
+                box.physicsImpostor = new BABYLON.PhysicsImpostor(box, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 1, friction: 5 }, scene);
+
+                let canControl = false; // Флаг для управления кубиком
+
+                const inputMap = {};
+                scene.actionManager = new BABYLON.ActionManager(scene);
+                scene.actionManager.registerAction(
+                    new BABYLON.ExecuteCodeAction(
+                        BABYLON.ActionManager.OnKeyDownTrigger,
+                        function (evt) {
+                            if (canControl) {
+                                inputMap[evt.sourceEvent.key] = evt.sourceEvent.type == "keydown";
+                            }
+                        }
+                    )
+                );
+                scene.actionManager.registerAction(
+                    new BABYLON.ExecuteCodeAction(
+                        BABYLON.ActionManager.OnKeyUpTrigger,
+                        function (evt) {
+                            if (canControl) {
+                                inputMap[evt.sourceEvent.key] = evt.sourceEvent.type == "keydown";
+                            }
+                        }
+                    )
+                );
+
+                scene.onBeforeRenderObservable.add(() => {
+                    if (box.intersectsMesh(ground, false) && !canControl) {
+                        canControl = true;
+                        // Убираем кинематику у плоскости
+                        ground.physicsImpostor.setLinearVelocity(new BABYLON.Vector3(0, 0, 0));
+                    }
+
+                    if (canControl) {
+                        if (inputMap["w"]) {
+                            box.physicsImpostor.applyImpulse(new BABYLON.Vector3(0, 0, 0.3), box.getAbsolutePosition());
+                        }
+                        if (inputMap["s"]) {
+                            box.physicsImpostor.applyImpulse(new BABYLON.Vector3(0, 0, -0.3), box.getAbsolutePosition());
+                        }
+                        if (inputMap["a"]) {
+                            box.physicsImpostor.applyImpulse(new BABYLON.Vector3(-0.3, 0, 0), box.getAbsolutePosition());
+                        }
+                        if (inputMap["d"]) {
+                            box.physicsImpostor.applyImpulse(new BABYLON.Vector3(0.3, 0, 0), box.getAbsolutePosition());
+                        }
+                    }
+                });
+
+                return scene;
+            };
+
+            const scene = createScene();
+
+            engine.runRenderLoop(function () {
+                scene.render();
+            });
+        });
+    </script>
+</body>
+</html>

@@ -184,7 +184,7 @@
         function createZombie(scene, player, zombies) {
     const zombie = BABYLON.Mesh.CreateBox("zombie", 1, scene);
     zombie.position = new BABYLON.Vector3(player.position.x + Math.random() * 100 - 50, 1, player.position.z + Math.random() * 100 - 50);
-    zombie.scaling = new BABYLON.Vector3(0.5, 0.5, 0.5); // Установка масштаба 0.5 по всем осям
+    zombie.scaling = new BABYLON.Vector3(0.1, 0.1, 0.1); // Установка масштаба 0.5 по всем осям
 
     // Создайте физическое тело зомби с учетом его нового размера
     const size = 0.5; // Новый размер зомби

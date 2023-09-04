@@ -213,37 +213,55 @@
 }
 
 
-        function createExplosion(scene, position) {
-            const particleSystem = new BABYLON.ParticleSystem("explosion", 2000, scene);
-            particleSystem.particleTexture = new BABYLON.Texture("gameassets/particle.png", scene);
-            particleSystem.emitter = position;
-            particleSystem.minEmitBox = new BABYLON.Vector3(-0.5, -0.5, -0.5);
-            particleSystem.maxEmitBox = new BABYLON.Vector3(0.5, 0.5, 0.5);
-            particleSystem.color1 = new BABYLON.Color4(1, 0, 0, 1);
-            particleSystem.color2 = new BABYLON.Color4(1, 0.5, 0, 1);
-            particleSystem.colorDead = new BABYLON.Color4(0, 0, 0, 0);
-            particleSystem.minSize = 0.1;
-            particleSystem.maxSize = 0.5;
-            particleSystem.minLifeTime = 1.0;
-            particleSystem.maxLifeTime = 1.0;
-            particleSystem.emitRate = 500;
-            particleSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
-            particleSystem.gravity = new BABYLON.Vector3(0, -9.81, 0);
-            particleSystem.direction1 = new BABYLON.Vector3(-1, 1, -1);
-            particleSystem.direction2 = new BABYLON.Vector3(1, 1, 1);
-            particleSystem.minAngularSpeed = 0;
-            particleSystem.maxAngularSpeed = Math.PI;
-            particleSystem.minEmitPower = 1;
-            particleSystem.maxEmitPower = 3;
-            particleSystem.updateSpeed = 0.005;
+function createExplosion(scene, position) {
+    const particleSystem = new BABYLON.ParticleSystem("explosion", 2000, scene);
+    particleSystem.particleTexture = new BABYLON.Texture("gameassets/particle.png", scene);
+    particleSystem.emitter = position;
+    particleSystem.minEmitBox = new BABYLON.Vector3(0, 0, 0);
+    particleSystem.maxEmitBox = new BABYLON.Vector3(0, 0, 0);
 
-            particleSystem.start();
+    // Установка цвета частиц (белый)
+    particleSystem.color1 = new BABYLON.Color4(1, 1, 1, 1);
+    particleSystem.color2 = new BABYLON.Color4(1, 1, 1, 1);
+    particleSystem.colorDead = new BABYLON.Color4(1, 1, 1, 0);
 
-            setTimeout(function () {
-                particleSystem.stop();
-                particleSystem.dispose();
-            }, 1000);
-        }
+    particleSystem.minSize = 0.1;
+    particleSystem.maxSize = 0.5;
+    particleSystem.minLifeTime = 0.5; // Уменьшим время жизни частиц
+    particleSystem.maxLifeTime = 1.0;
+    particleSystem.emitRate = 500;
+
+    // Гравитация для частиц (падают вниз)
+    particleSystem.gravity = new BABYLON.Vector3(0, -9.81, 0);
+
+    // Установка начальной скорости частиц
+    particleSystem.minInitialSpeed = 1;
+    particleSystem.maxInitialSpeed = 3;
+
+    // Установка радиального направления движения частиц
+    particleSystem.direction1 = new BABYLON.Vector3(1, 1, 1);
+    particleSystem.direction2 = new BABYLON.Vector3(-1, -1, -1);
+
+    // Установка угловой скорости для реалистичного разлета
+    particleSystem.minAngularSpeed = -Math.PI;
+    particleSystem.maxAngularSpeed = Math.PI;
+
+    // Установка силы выпуска частиц для эффекта разлета
+    particleSystem.minEmitPower = 10;
+    particleSystem.maxEmitPower = 20;
+
+    // Установка скорости обновления
+    particleSystem.updateSpeed = 0.005;
+
+    particleSystem.start();
+
+    setTimeout(function () {
+        particleSystem.stop();
+        particleSystem.dispose();
+    }, 1000);
+}
+
+
 
         
     </script>

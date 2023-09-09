@@ -51,44 +51,6 @@
   opacity: 1;
 }
 
-@media (max-width: 768px) {
-  .button-list.horizontal {
-      flex-wrap: wrap;
-      gap: 10px;
-      justify-content: space-between;
-  }
-  
-  .button-list li, #yandex_rtb_R-A-2697791-2 {
-      flex: 1 1 calc(50% - 10px);
-      margin: 5px;
-  }
-}
-
-@media (min-width: 769px) {
-  .button-list.horizontal {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-      max-width: 1200px;
-      margin: 0 auto;
-  }
-  
-  .button-list li, #yandex_rtb_R-A-2697791-2 {
-      flex: 1 1 auto;
-      margin: 0;
-  }
-}
-
-/* Добавляем анимацию для кнопок */
-@keyframes buttonBreathing {
-  0%, 100% {
-      transform: scale(1);
-  }
-  50% {
-      transform: scale(1.01);
-  }
-}
-
 .phone-container {
   width: 100vw;
   height: 100vh;
@@ -163,12 +125,12 @@
 @keyframes pulse {
   0%, 100% {
       border-image-slice: 1;
-      box-shadow: 0 0 5px rgba(128, 0, 128, 1);
-      border-radius: 70%;
+      box-shadow: 0 0 10px rgba(128, 0, 128, 1);
+      border-radius: 40%;
   }
   50% {
       border-image-slice: 1;
-      box-shadow: 0 0 50px rgba(128, 0, 128, 1);
+      box-shadow: 0 0 30px rgb(189, 36, 255);
       border-radius: 30%;
   }
 }
@@ -236,5 +198,44 @@
       border-radius: 1px;
       margin: 1px 1px;
       border: 2px solid rebeccapurple;
+  }
+}
+
+
+@media (max-width: 768px) {
+  .button-list.horizontal {
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: space-between;
+  }
+  
+  .button-list li, #yandex_rtb_R-A-2697791-2 {
+      flex: 1 1 calc(50% - 10px);
+      margin: 5px;
+  }
+}
+
+@media (min-width: 769px) {
+  .button-list.horizontal {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+  }
+  
+  .button-list li, #yandex_rtb_R-A-2697791-2 {
+      flex: 1 1 auto;
+      margin: 0;
+  }
+}
+
+/* Добавляем анимацию для кнопок */
+@keyframes buttonBreathing {
+  0%, 100% {
+      transform: scale(1);
+  }
+  50% {
+      transform: scale(1.01);
   }
 }

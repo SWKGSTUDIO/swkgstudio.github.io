@@ -3,21 +3,32 @@
 <head>
     <title>Админ Панель</title>
     <link rel="stylesheet" type="text/css" href="assets/css/adminlogin.css">
+    <!-- Add a link to a CSS library that provides icons, such as Font Awesome or Material Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Style the icon */
+        .music-icon {
+            font-size: 24px; /* Adjust the size as needed */
+            cursor: pointer;
+            color: rgb(245, 245, 248); /* Adjust the color as needed */
+        }
+    </style>
 </head>
 <body>
 
-    <audio autoplay loop>
+    <audio id="backgroundAudio">
         <source src="assets/music/music1.mp3" type="audio/mpeg">
-        <!-- Добавьте дополнительные источники для других форматов аудио, таких как .ogg, для обеспечения совместимости с разными браузерами -->
     </audio>
     
     <video autoplay loop muted playsinline poster="путь_к_постеру.jpg">
         <source src="assets/video/SWKG5.webm" type="video/webm">
-        <!-- Добавьте дополнительные источники для других форматов, например, .mp4 и .ogg, для обеспечения совместимости с разными браузерами -->
-      </video>
+    </video>
 
     <div class="login-container">
         <h2>Вход в Админ Панель</h2>
+        
+        <i id="playAudioIcon" class="music-icon fas fa-play"></i>
+
         <form id="loginForm">
             <label for="login">Логин:</label>
             <input type="text" id="login" name="login" required><br><br>
@@ -29,11 +40,24 @@
         </form>
     </div>
 
+    <!-- Use the icon to control the audio -->
     
-      
-    
-
     <script>
+        var backgroundAudio = document.getElementById("backgroundAudio");
+        var playAudioIcon = document.getElementById("playAudioIcon");
+
+        playAudioIcon.addEventListener("click", function() {
+            if (backgroundAudio.paused) {
+                backgroundAudio.play();
+                playAudioIcon.classList.remove("fa-play");
+                playAudioIcon.classList.add("fa-pause");
+            } else {
+                backgroundAudio.pause();
+                playAudioIcon.classList.remove("fa-pause");
+                playAudioIcon.classList.add("fa-play");
+            }
+        });
+
         document.getElementById("loginForm").addEventListener("submit", function(event) {
             event.preventDefault(); // Предотвращаем отправку формы по умолчанию
             // Отправляем запрос на сервер для проверки логина и пароля

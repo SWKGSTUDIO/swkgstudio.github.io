@@ -22,6 +22,21 @@ html, body {
 }
 
 
+.music-icon {
+
+    font-size: 50px !important;
+    color: #fff; 
+    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.5); /* Тень текста */
+    transform: translateZ(4px);
+}
+.music-icon:active {
+    text-shadow: none;
+    transform: translateZ(1px);
+
+}
+
+
+
 video {
     position: fixed;
     top: 50%;
@@ -43,42 +58,80 @@ video {
     transform: translate(-50%, -50%);
     text-align: center;
     color: rgb(255, 255, 255);
-    background-color: rgba(255, 255, 255, 0.124); /* Добавляем прозрачность фона */
+    background-color: rgba(255, 255, 255, 0.124);
     padding: 50px;
     border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 4px 0px 2px rgba(0, 0, 0, 0.5);
     backdrop-filter: blur(10px);
+    
 }
 
 
+#loginForm {
+    background-color: #572c92;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 -3px 0px 1px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+  }
+
+  
 h2 {
     font-size: 24px;
     margin-bottom: 20px;
 }
 
+/* Стиль для текста меток */
 label {
-    font-size: 18px;
+    position: relative;
+    font-size: 20px;
+    color: #ffffff8c;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: -35px;
+    top: -8px;
+    transform: translateZ(4px);
+    /* text-shadow: 0px -2px 0px #7a39b4; */
 }
+
+
 
 input[type="text"],
 input[type="password"] {
     /* width: 100%; */
     padding: 10px;
+    background-color: #432273;
     display: block;
+    color: #fff;
     margin: 0 auto;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    border: none;
+    box-shadow: 0 -3px 0px #7a39b4;
+    /* border: 1px solid #ccc; */
+    border-radius: 10px;
 }
 
 input[type="submit"] {
     width: 100%;
     padding: 10px;
-    background-color: #007AFF;
-    color: #fff;
+    font-size: 20px;
+    background-color: #9b59b6;
+    color: #432273;
     border: none;
-    border-radius: 5px;
+    font-weight: bold;
+    border-radius: 10px;
+    box-shadow: 0 3px 0px rgb(202, 105, 228);
     cursor: pointer;
 }
+
+input[type="submit"]:active {
+    box-shadow: 0 -3px 3px #552862;
+    box-shadow: inset 0 3px 0px #4e225a;
+    background-color: #723c9f;
+    color: #9f75dd;
+
+  }
+
 
 .logo {
     margin-top: 20px;

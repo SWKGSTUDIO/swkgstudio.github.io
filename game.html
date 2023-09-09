@@ -59,16 +59,50 @@
 }
 
     </style>
+
+ <!-- Yandex.RTB -->
+ <script>window.yaContextCb=window.yaContextCb||[]</script>
+ <script src="https://yandex.ru/ads/system/context.js" async></script> 
+
 </head>
+
 <body>
+
     <div id="startScreen" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center;">
         <!-- <h1>ATTACK CUBE</h1> -->
         <button id="playButton">PLAY</button>
     </div>
     <canvas id="renderCanvas"></canvas>
     <div id="pauseButton">Pause</div>
+
+<!-- Yandex.RTB R-A-2938411-1 -->
+
+<script>window.yaContextCb.push(()=>{
+	Ya.Context.AdvManager.render({
+		"blockId": "R-A-2938411-1",
+		"type": "fullscreen",
+		"platform": "touch"
+	})
+})
+</script>
+
+<!-- Yandex.RTB R-A-2938411-5 -->
+
+<script>window.yaContextCb.push(()=>{
+	Ya.Context.AdvManager.render({
+		"blockId": "R-A-2938411-5",
+		"type": "fullscreen",
+		"platform": "desktop"
+	})
+})
+</script>
+
+
     <script src="https://cdn.babylonjs.com/babylon.js"></script>
     <script src="https://cdn.babylonjs.com/cannon.js"></script>
+
+
+
     <script>
         const zombies = [];
         let isPaused = false;

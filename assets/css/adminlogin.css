@@ -28,6 +28,7 @@ html, body {
     color: #fff; 
     text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.5); /* Тень текста */
     transform: translateZ(4px);
+    margin-top: 30px;
 }
 .music-icon:active {
     text-shadow: none;
@@ -72,7 +73,7 @@ html, body {
     transform: translate(-50%, -50%);
     text-align: center;
     color: rgb(255, 255, 255);
-    background-color: rgba(255, 255, 255, 0.124);
+    background-color: #b867ff64;
     padding: 15px;
     border-radius: 35px;
     box-shadow: 0px 4px 0px 2px rgba(0, 0, 0, 0.5);

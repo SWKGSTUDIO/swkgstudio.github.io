@@ -101,20 +101,19 @@
     <script src="https://cdn.babylonjs.com/babylon.js"></script>
     <script src="https://cdn.babylonjs.com/cannon.js"></script>
 
-
-
-    <script>
-
-
-    const socket = io.connect('https://intermediate-easy-ship.glitch.me'); // Замените на реальный URL сервера
-
+<script>
+    const socket = io.connect('https://intermediate-easy-ship.glitch.me');
     // Обработка события подключения
     socket.on('connect', () => {
     console.log('Connected to server');
     // Здесь можно инициализировать игру
     });
+</script>
 
 
+
+
+    <script>
         const zombies = [];
         let isPaused = false;
         let scene = null;

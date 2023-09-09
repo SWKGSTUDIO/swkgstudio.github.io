@@ -26,7 +26,6 @@
     </video>
 
     <div class="login-container">
-        <!-- <h2>LOG IN</h2> -->
 
         <i id="playAudioIcon" class="music-icon fas fa-play"></i>
 
@@ -59,21 +58,33 @@
                 playAudioIcon.classList.add("fa-play");
             }
         });
+    </script>
 
+    <script>
         document.getElementById("loginForm").addEventListener("submit", function(event) {
             event.preventDefault(); // Предотвращаем отправку формы по умолчанию
-            // Отправляем запрос на сервер для проверки логина и пароля
-            fetch("https://intermediate-easy-ship.glitch.me/process_login", {
+
+            // Получаем данные из формы
+            const login = document.getElementById("login").value;
+            const password = document.getElementById("password").value;
+
+            // Отправляем данные на сервер для аутентификации
+            fetch("https://intermediate-easy-ship.glitch.me/login", {
                 method: "POST",
-                body: new FormData(document.getElementById("loginForm"))
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ login, password })
             })
             .then(response => response.json())
             .then(data => {
-                if (data.message === "Вход выполнен успешно") {
-                    // Если вход успешен, перенаправляем пользователя на админ-панель на клиентской стороне
+                if (data.token) {
+                    // Если аутентификация успешна, сохраняем токен в локальном хранилище
+                    localStorage.setItem("token", data.token);
+                    // Перенаправляем пользователя на админ-панель
                     window.location.href = "adminpanel.html";
                 } else {
-                    // Если вход неуспешен, можно вывести сообщение об ошибке
+                    // Если аутентификация неуспешна, вывести сообщение об ошибке
                     alert("Неверный логин или пароль");
                 }
             })

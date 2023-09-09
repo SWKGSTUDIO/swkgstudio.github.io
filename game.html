@@ -101,21 +101,28 @@
     <script src="https://cdn.babylonjs.com/babylon.js"></script>
     <script src="https://cdn.babylonjs.com/cannon.js"></script>
 
-<script>
-    const socket = io.connect('https://intermediate-easy-ship.glitch.me');
-
-// Обработка ошибок подключения
-socket.on('connect_error', (error) => {
-  console.error('Connection error:', error.message);
-});
-
-// Обработка события подключения
-socket.on('connect', () => {
-  console.log('Connected to server');
-  // Здесь можно инициализировать игру
-});
-
-</script>
+    <script>
+        const socket = io.connect('https://intermediate-easy-ship.glitch.me');
+    
+        // Обработка ошибок подключения
+        socket.on('connect_error', (error) => {
+            console.error('Connection error:', error.message);
+        });
+    
+        // Обработка события подключения
+        socket.on('connect', () => {
+            console.log('Connected to server');
+            // Здесь можно инициализировать игру
+        });
+    
+        // Обработчик события клика на кнопку "Play"
+        const playButton = document.getElementById("playButton");
+        playButton.addEventListener("click", function () {
+            // Вызываем соединение с сервером при клике на кнопку "Play"
+            socket.connect();
+        });
+    </script>
+    
 
 
 

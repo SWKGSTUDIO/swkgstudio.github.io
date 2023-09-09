@@ -4,6 +4,7 @@
   background: rgb(0, 0, 0);
   margin: 0;
   padding: 0;
+  overflow: hidden;
 }
 
 .custom-body {
@@ -44,38 +45,34 @@
   background: url("assets/img/tile.webp"), var(--bs-border-color-translucent);
 }
 
-@keyframes slideAnima {
-  0% {
-    background-position: 0 0;
-  }
-  100% {
-    background-position: -100% 0; /* Изменено значение для плавного плывущего эффекта */
-  }
-}
-
-
 
 /* Стили для кнопки "ИГРА" */
 .game-button {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    background-color: #7a22ff; /* Цвет фона кнопки */
-    color: white; /* Цвет текста */
-    font-size: 18px;
-    padding: 10px 20px;
-    border-radius: 11px;
-    text-decoration: none; /* Убираем подчеркивание */
-    transition: transform 0.2s ease-in-out; /* Анимация при наведении */
-    z-index: 999; /* Высокий z-index, чтобы кнопка была поверх всего */
+  position: fixed;
+  top: 20px;
+  right: 40px;
+  left: auto;
+  background-color: #542eae;
+  color: white;
+  font-size: 23px;
+  padding: 10px 20px;
+  border-radius: 11px;
+  text-decoration: none;
+  transition: transform 0.2s ease-in-out;
+  z-index: 999;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  background-image: linear-gradient(to bottom, #7a22ff, #5511cc);
+}
 
-  }
-  
-  .game-button:hover {
-    transform: scale(1.05); /* Увеличение при наведении */
-    color: white; /* Цвет текста */
+.game-button::before {
+  margin-right: 10px;
+}
 
-  }
+.game-button:hover {
+  transform: scale(1.05); /* Увеличение при наведении */
+  color: white; /* Цвет текста */
+}
+
   
   .logo-container {
     z-index: 2;
@@ -127,6 +124,15 @@
     }
     50% {
       transform: translateY(-10px);
+    }
+  }
+
+  @keyframes slideAnima {
+    0% {
+      background-position: 0 0;
+    }
+    100% {
+      background-position: -100% 0; /* Изменено значение для плавного плывущего эффекта */
     }
   }
   

@@ -29,6 +29,7 @@ html, body {
     text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.5); /* Тень текста */
     transform: translateZ(4px);
     margin-top: 30px;
+    
 }
 .music-icon:active {
     text-shadow: none;

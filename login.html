@@ -2,20 +2,30 @@
 <html>
 <head>
     <title>Админ Панель</title>
-    <link rel="stylesheet" type="text/css" href="adminpanel.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/adminlogin.css">
 </head>
 <body>
-    <h2>Вход в Админ Панель</h2>
+
+    <video autoplay loop muted playsinline poster="путь_к_постеру.jpg">
+        <source src="assets/video/SWKG4.webm" type="video/webm">
+        <!-- Добавьте дополнительные источники для других форматов, например, .mp4 и .ogg, для обеспечения совместимости с разными браузерами -->
+      </video>
+
+    <div class="login-container">
+        <h2>Вход в Админ Панель</h2>
+        <form id="loginForm">
+            <label for="login">Логин:</label>
+            <input type="text" id="login" name="login" required><br><br>
+        
+            <label for="password">Пароль:</label>
+            <input type="password" id="password" name="password" required><br><br>
+        
+            <input type="submit" value="Войти">
+        </form>
+    </div>
+
     
-    <form action="https://intermediate-easy-ship.glitch.me/process_login" method="post">
-        <label for="login">Логин:</label>
-        <input type="text" id="login" name="login" required><br><br>
-    
-        <label for="password">Пароль:</label>
-        <input type="password" id="password" name="password" required><br><br>
-    
-        <input type="submit" value="Войти">
-    </form>
+      
     
 
     <script>

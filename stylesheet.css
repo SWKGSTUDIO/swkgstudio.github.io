@@ -14,6 +14,20 @@
   overflow-x: hidden;
 }
 
+.video {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-47%, -50%);
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: cover;
+  opacity: .6;
+  filter: blur(10px);
+}
+
 .custom-container {
   position: fixed;
   padding: 0px;

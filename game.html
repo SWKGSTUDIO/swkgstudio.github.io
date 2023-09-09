@@ -241,7 +241,7 @@
                 }
 
                 // Подключение к серверу WebSocket
-                const socket = io.connect('ws://intermediate-easy-ship.glitch.me');
+                const socket = io.connect('wss://intermediate-easy-ship.glitch.me');
 
                 // Обработка ошибок подключения
                 socket.on('connect_error', (error) => {

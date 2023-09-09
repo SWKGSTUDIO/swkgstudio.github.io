@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="en" style="width: 100%;height: 100vh;background: rgb(0,0,0);margin: 0;padding: 0;">
+<html lang="en" class="custom-html">
 
 <head>
+  <title>SWKG - Sweety Kitty Games</title>
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>SWKG - Sweety Kitty Games</title>
     <link rel="canonical" href="https://swkgstudio.github.io/">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta property="og:url" content="https://swkgstudio.github.io/">
@@ -27,36 +28,43 @@ Sweety Kitty Games Studio также приветствует вас в мире
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bowlby+One&amp;display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bowlby+One+SC&amp;display=swap">
     <link rel="stylesheet" href="stylesheet.css">
-    <!-- <link rel="stylesheet" href="assets/css/GamePanel.css"> -->
     <link rel="stylesheet" href="assets/css/GooglePlayGames.css">
-
     <!-- Yandex.RTB -->
   <script>window.yaContextCb=window.yaContextCb||[]</script>
   <script src="https://yandex.ru/ads/system/context.js" async></script>  
 
+  <script type="module">
+
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.2.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.2.0/firebase-analytics.js";
+  
+    const firebaseConfig = {
+      apiKey: "AIzaSyBkqcs5Y-PBT0ar28KUysYIlwcCzoAOFao",
+      authDomain: "swkg-595fe.firebaseapp.com",
+      projectId: "swkg-595fe",
+      storageBucket: "swkg-595fe.appspot.com",
+      messagingSenderId: "991144151960",
+      appId: "1:991144151960:web:95f0dd7861af2d9f4b39ed",
+      measurementId: "G-Z1KC8WW6Y3"
+    };
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+
+  </script>
+
 </head>
 
-<body style="background: rgba(255,255,255,0);height: 100vh;width: 100%;overflow-x: hidden;">
-    <div class="container" style="position: fixed;padding: 0px;color: rgba(33,37,41,0);overflow: hidden;z-index: -1;"><img style="position: fixed;overflow: auto;opacity: 1;text-align: left;/*z-index: 1;*/animation: slideAnima 190000s linear infinite;height: 100vh;width: 100%;background: linear-gradient(130deg, #141137, #2f204d 100%), #1f0b43;"><img style="position: fixed;overflow: auto;opacity: 0.09;text-align: left;/*z-index: 1;*/animation: slideAnima 190000s linear infinite;height: 100vh;width: 100%;background: url(&quot;assets/img/tile.webp&quot;), var(--bs-border-color-translucent);">    <meta name="google-site-verification" content="I_RTFSeKJvvHtJ5YmwNENy5Dqrstl8kFA8VQdmj6p9I" />
+<body class="custom-body">
+  <div class="container custom-container">
+    <img class="background-image" src="assets/img/background.webp" alt="Background Image">
 
-<script type="module">
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.2.0/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.2.0/firebase-analytics.js";
+    <img class="background-tile">
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyBkqcs5Y-PBT0ar28KUysYIlwcCzoAOFao",
-    authDomain: "swkg-595fe.firebaseapp.com",
-    projectId: "swkg-595fe",
-    storageBucket: "swkg-595fe.appspot.com",
-    messagingSenderId: "991144151960",
-    appId: "1:991144151960:web:95f0dd7861af2d9f4b39ed",
-    measurementId: "G-Z1KC8WW6Y3"
-  };
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
-</script>
+    <meta name="google-site-verification" content="I_RTFSeKJvvHtJ5YmwNENy5Dqrstl8kFA8VQdmj6p9I" />
+  </div>
+</body>
+
 
 </div>
 
@@ -72,14 +80,12 @@ Sweety Kitty Games Studio также приветствует вас в мире
   </div>
 </div>
 
-
-
-        
     </div>
 
-
     <div class="row" style="overflow: hidden;"><!DOCTYPE html>
+
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">

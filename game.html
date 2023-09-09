@@ -105,33 +105,11 @@
 })
 </script>
 
-
     <script src="https://cdn.babylonjs.com/babylon.js"></script>
     <script src="https://cdn.babylonjs.com/cannon.js"></script>
 
-    <script>
-        const socket = io.connect('wss://intermediate-easy-ship.glitch.me');
     
-        // Обработка ошибок подключения
-        socket.on('connect_error', (error) => {
-            console.error('Connection error:', error.message);
-        });
     
-        // Обработка события подключения
-        socket.on('connect', () => {
-            console.log('Connected to server');
-            // Здесь можно инициализировать игру
-        });
-    
-        // Обработчик события клика на кнопку "Play"
-        const playButton = document.getElementById("playButton");
-        playButton.addEventListener("click", function () {
-            // Вызываем соединение с сервером при клике на кнопку "Play"
-            socket.connect();
-        });
-    </script>
-    
-
 
 
 
@@ -249,14 +227,34 @@
             const startScreen = document.getElementById("startScreen");
             const playButton = document.getElementById("playButton");
             playButton.addEventListener("click", function () {
-                scene = createScene();
-                startScreen.style.display = "none";
-                engine.runRenderLoop(function () {
-                    if (!isPaused) {
-                        scene.render();
-                    }
+                if (!scene) {
+                    // Создание сцены происходит только при первом нажатии "PLAY"
+                    scene = createScene();
+                    startScreen.style.display = "none";
+                    engine.runRenderLoop(function () {
+                        if (!isPaused) {
+                            scene.render();
+                        }
+                    });
+                }
+
+                // Подключение к серверу WebSocket
+                const socket = io.connect('ws://intermediate-easy-ship.glitch.me');
+
+                // Обработка ошибок подключения
+                socket.on('connect_error', (error) => {
+                    console.error('Connection error:', error.message);
+                });
+
+                // Обработка события подключения
+                socket.on('connect', () => {
+                    console.log('Connected to server');
+                    // Здесь можно инициализировать игру
                 });
             });
+
+
+            
             function createZombie(scene, player, zombies) {
                 const zombie = BABYLON.Mesh.CreateBox("zombie", 1, scene);
                 zombie.position = new BABYLON.Vector3(player.position.x + Math.random() * 100 - 50, 1, player.position.z + Math.random() * 100 - 50);

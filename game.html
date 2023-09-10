@@ -99,7 +99,7 @@
     </script>
 
 <script>
-    const players = [];
+    const players = {}; // Use an object to store player meshes with player IDs as keys
     let isPaused = false;
     let scene = null;
     let playerMesh; // Variable to hold the player's mesh
@@ -115,18 +115,15 @@
         const data = JSON.parse(event.data);
 
         if (data.type === 'playerInfo') {
-            // Create a new player mesh
-            createPlayer(data);
+            // Create a new player mesh or update an existing one
+            createOrUpdatePlayer(data);
         } else if (data.type === 'playerUpdate') {
             // Update an existing player's position
             updatePlayerInfo(data);
         } else if (data.type === 'playerDisconnect') {
             const playerId = data.id;
-            const playerIndex = players.findIndex((p) => p.id === playerId);
-            if (playerIndex !== -1) {
-                // Handle player disconnection (e.g., remove player from the scene)
-                players.splice(playerIndex, 1);
-            }
+            // Handle player disconnection by removing the player's mesh
+            removePlayer(playerId);
         }
     });
 
@@ -228,7 +225,7 @@
                     }
                 }
             });
-            
+
             return scene;
         };
 
@@ -246,22 +243,43 @@
             }
         });
 
-        function createPlayer(playerInfo) {
-            if (!playerMesh) {
-                playerMesh = BABYLON.Mesh.CreateBox("player", 1, scene);
+        function createOrUpdatePlayer(playerInfo) {
+            // Check if the player already exists
+            if (players[playerInfo.id]) {
+                // Update the existing player's position based on playerInfo
+                const player = players[playerInfo.id];
+                player.position.x = playerInfo.x;
+                player.position.y = playerInfo.y;
+                player.position.z = playerInfo.z;
+            } else {
+                // Create a new player mesh
+                const player = BABYLON.Mesh.CreateBox("player_" + playerInfo.id, 1, scene);
                 // Customize player appearance, position, etc. based on playerInfo
-                // For example, you can set the player's color, position, and other properties here
-                // Example: playerMesh.material = new BABYLON.StandardMaterial("playerMaterial", scene);
-                // Example: playerMesh.material.diffuseColor = new BABYLON.Color3(1, 0, 0); // Red color
+                // Example: player.material = new BABYLON.StandardMaterial("playerMaterial", scene);
+                // Example: player.material.diffuseColor = new BABYLON.Color3(1, 0, 0); // Red color
+                player.position.x = playerInfo.x;
+                player.position.y = playerInfo.y;
+                player.position.z = playerInfo.z;
+                players[playerInfo.id] = player;
             }
         }
 
         function updatePlayerInfo(playerInfo) {
             // Update the player's position based on playerInfo
-            if (playerMesh) {
-                playerMesh.position.x = playerInfo.x;
-                playerMesh.position.y = playerInfo.y;
-                playerMesh.position.z = playerInfo.z;
+            const player = players[playerInfo.id];
+            if (player) {
+                player.position.x = playerInfo.x;
+                player.position.y = playerInfo.y;
+                player.position.z = playerInfo.z;
+            }
+        }
+
+        function removePlayer(playerId) {
+            // Remove the player's mesh from the scene
+            const player = players[playerId];
+            if (player) {
+                player.dispose();
+                delete players[playerId];
             }
         }
 

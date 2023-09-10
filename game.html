@@ -109,24 +109,29 @@ function updatePlayerPosition(playerData) {
     cameraY = currentPlayerY - canvas.height / 2;
 
     // Отобразим след игрока
-    trails.forEach((playerTrails, playerId) => {
-        ctx.strokeStyle = 'red'; // Цвет следа
-        ctx.lineWidth = 2; // Ширина линии следа
+trails.forEach((playerTrails, playerId) => {
+    const player = players.get(playerId); // Получить игрока по ID
+    const playerColor = player.color || 'red'; // Использовать цвет игрока или установить красный цвет по умолчанию
 
-        playerTrails.forEach((trail, index) => {
-            const trailX = trail.x - cameraX;
-            const trailY = trail.y - cameraY; // Учитываем смещение камеры
+    ctx.strokeStyle = playerColor; // Установить цвет линии таким же, как цвет игрока
+    ctx.lineWidth = 10; // Ширина линии следа
+    ctx.lineCap = 'round'; // Закруглить концы линии
 
-            if (index === 0) {
-                ctx.beginPath();
-                ctx.moveTo(trailX, trailY);
-            } else {
-                ctx.lineTo(trailX, trailY);
-            }
-        });
+    playerTrails.forEach((trail, index) => {
+        const trailX = trail.x - cameraX;
+        const trailY = trail.y - cameraY; // Учитываем смещение камеры
 
-        ctx.stroke();
+        if (index === 0) {
+            ctx.beginPath();
+            ctx.moveTo(trailX, trailY);
+        } else {
+            ctx.lineTo(trailX, trailY);
+        }
     });
+
+    ctx.stroke();
+});
+
 
     // Рисуем всех игроков
     players.forEach((player, playerId) => {

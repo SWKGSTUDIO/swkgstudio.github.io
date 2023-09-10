@@ -238,3 +238,35 @@
         border: 2px solid rebeccapurple;
     }
 }
+
+
+
+/* Стили для центрированной кнопки */
+.center-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .button-3d {
+    background-color: #542eae;
+    color: white;
+    font-size: 23px;
+    padding: 10px 20px;
+    border-radius: 11px;
+    text-decoration: none;
+    transition: transform 0.2s ease-in-out;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    background-image: linear-gradient(to bottom, #7a22ff, #5511cc);
+  }
+  
+  .button-3d::before {
+    margin-right: 10px;
+  }
+  
+  .button-3d:hover {
+    transform: scale(1.05); /* Увеличение при наведении */
+    color: white; /* Цвет текста */
+  }
+  

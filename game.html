@@ -79,7 +79,7 @@ function updatePlayerPosition(playerData) {
     const player = players.get(playerData.id);
     
     // Добавляем след при обновлении позиции игрока
-    trails.set(playerData.id, { x: playerData.x, y: playerData.y, alpha: 1.0, color: player.color });
+    trails.set(playerData.id, { x: playerData.x, y: playerData.y, alpha: 1.0 });
 }
 
 // В функции drawPlayers() установите цвет следа из объекта trail

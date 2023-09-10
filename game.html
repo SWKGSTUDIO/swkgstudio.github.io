@@ -244,15 +244,11 @@
         });
 
         function createOrUpdatePlayer(playerInfo) {
-            // Check if the player already exists
+            // Check if the player already exists in the scene
             if (players[playerInfo.id]) {
-                // Update the existing player's position based on playerInfo
-                const player = players[playerInfo.id];
-                player.position.x = playerInfo.x;
-                player.position.y = playerInfo.y;
-                player.position.z = playerInfo.z;
+                updatePlayerInfo(playerInfo);
             } else {
-                // Create a new player mesh
+                // Create a new player mesh if it doesn't exist
                 const player = BABYLON.Mesh.CreateBox("player_" + playerInfo.id, 1, scene);
                 // Customize player appearance, position, etc. based on playerInfo
                 // Example: player.material = new BABYLON.StandardMaterial("playerMaterial", scene);
@@ -310,5 +306,7 @@
         }
     });
 </script>
+
+
 </body>
 </html>

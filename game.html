@@ -89,32 +89,35 @@
         }
 
         function drawPlayers() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            // Пересчитываем положение камеры
-            cameraX = currentPlayerX - canvas.width / 2;
-            cameraY = currentPlayerY - canvas.height / 2;
+    // Пересчитываем положение камеры
+    cameraX = currentPlayerX - canvas.width / 2;
+    cameraY = currentPlayerY - canvas.height / 2;
 
-            for (const [playerId, player] of players) {
-                ctx.fillStyle = player.color || 'blue';
-                const x = player.x - cameraX; // Учитываем смещение камеры
-                const y = player.y - cameraY; // Учитываем смещение камеры
-                ctx.fillRect(x, y, 20, 20);
+    // Отобразим след игрока
+    trails.forEach((trail, playerId) => {
+        ctx.fillStyle = 'rgba(255, 0, 0, ' + trail.alpha + ')';
+        const trailX = trail.x - cameraX; // Учитываем смещение камеры
+        const trailY = trail.y - cameraY; // Учитываем смещение камеры
+        ctx.fillRect(trailX, trailY, 20, 20);
 
-                // Отобразим след игрока
-                const trail = trails.get(playerId);
-                if (trail) {
-                    ctx.fillStyle = 'rgba(255, 0, 0, ' + trail.alpha + ')';
-                    const trailX = trail.x - cameraX; // Учитываем смещение камеры
-                    const trailY = trail.y - cameraY; // Учитываем смещение камеры
-                    ctx.fillRect(trailX, trailY, 20, 20);
-                    trail.alpha -= 0.01; // Уменьшаем прозрачность следа
-                    if (trail.alpha <= 0) {
-                        trails.delete(playerId); // Удаляем след, когда прозрачность достигает 0
-                    }
-                }
-            }
+        if (trail.alpha > 0) {
+            trail.alpha -= 0.002; // Уменьшаем прозрачность следа
+        } else {
+            trails.delete(playerId); // Удаляем след, когда прозрачность достигает 0
         }
+    });
+
+    // Рисуем всех игроков
+    players.forEach((player, playerId) => {
+        ctx.fillStyle = player.color || 'blue';
+        const x = player.x - cameraX; // Учитываем смещение камеры
+        const y = player.y - cameraY; // Учитываем смещение камеры
+        ctx.fillRect(x, y, 20, 20);
+    });
+}
+
 
         // Обработчик клика для установки целевой позиции
         canvas.addEventListener('click', (event) => {

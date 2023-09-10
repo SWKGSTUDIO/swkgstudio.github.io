@@ -219,13 +219,6 @@
                     }
                 });
 
-                // Добавление 2D-элемента для никнейма
-                advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
-                const playerNickname = new BABYLON.GUI.TextBlock();
-                playerNickname.text = "Player";
-                playerNickname.color = "white";
-                playerNickname.fontSize = 24;
-                advancedTexture.addControl(playerNickname);
 
                 // Функция для обновления информации о каждом игроке
                 function updatePlayerInfo(playerInfo) {

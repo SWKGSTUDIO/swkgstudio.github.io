@@ -33,7 +33,7 @@
 
         const ws = new WebSocket('wss://intermediate-easy-ship.glitch.me');
         const players = new Map();
-        const trails = new Map(); // Массив для следов
+        const trails = new Map(); // Мап для следов
 
         // Текущая позиция игрока
         let currentPlayerX = canvas.width / 2;
@@ -73,14 +73,27 @@
             drawPlayers();
         }
 
-        // При создании или обновлении следа
-        function updatePlayerPosition(playerData) {
-            createOrUpdatePlayer(playerData);
-            const player = players.get(playerData.id);
+        // В функции updatePlayerPosition измените добавление следа следующим образом:
+function updatePlayerPosition(playerData) {
+    createOrUpdatePlayer(playerData);
+    const player = players.get(playerData.id);
 
-            // Добавляем след при обновлении позиции игрока
-            trails.set(playerData.id, { x: playerData.x, y: playerData.y, alpha: 1.0 });
-        }
+    // Получите след текущего игрока
+    const playerTrail = trails.get(playerData.id);
+
+    // Проверьте, существует ли массив следов для этого игрока
+    if (!playerTrail) {
+        trails.set(playerData.id, []);
+    }
+
+    // Получите обновленный след текущего игрока
+    const updatedTrail = trails.get(playerData.id);
+
+    // Добавьте след к текущему игроку
+    updatedTrail.push({ x: playerData.x, y: playerData.y, alpha: 1.0 });
+}
+
+
 
         function removePlayer(playerId) {
             players.delete(playerId);
@@ -96,17 +109,23 @@
     cameraY = currentPlayerY - canvas.height / 2;
 
     // Отобразим след игрока
-    trails.forEach((trail, playerId) => {
-        ctx.fillStyle = 'rgba(255, 0, 0, ' + trail.alpha + ')';
-        const trailX = trail.x - cameraX; // Учитываем смещение камеры
-        const trailY = trail.y - cameraY; // Учитываем смещение камеры
-        ctx.fillRect(trailX, trailY, 20, 20);
+    trails.forEach((playerTrails, playerId) => {
+        ctx.strokeStyle = 'red'; // Цвет следа
+        ctx.lineWidth = 2; // Ширина линии следа
 
-        if (trail.alpha > 0) {
-            trail.alpha -= 0.002; // Уменьшаем прозрачность следа
-        } else {
-            trails.delete(playerId); // Удаляем след, когда прозрачность достигает 0
-        }
+        playerTrails.forEach((trail, index) => {
+            const trailX = trail.x - cameraX;
+            const trailY = trail.y - cameraY; // Учитываем смещение камеры
+
+            if (index === 0) {
+                ctx.beginPath();
+                ctx.moveTo(trailX, trailY);
+            } else {
+                ctx.lineTo(trailX, trailY);
+            }
+        });
+
+        ctx.stroke();
     });
 
     // Рисуем всех игроков
@@ -157,6 +176,7 @@
 
             requestAnimationFrame(moveCurrentPlayer);
         }
+
         moveCurrentPlayer();
     </script>
 </body>

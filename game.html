@@ -70,7 +70,7 @@
  <script>window.yaContextCb=window.yaContextCb||[]</script>
  <script src="https://yandex.ru/ads/system/context.js" async></script> 
 
- <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.2.0/socket.io.js"></script>
+ <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.2.0/socket.io.js"></script> -->
 
 </head>
 
@@ -109,14 +109,14 @@
 
     <script src="https://cdn.babylonjs.com/babylon.js"></script>
     <script src="https://cdn.babylonjs.com/cannon.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/babylonjs-gui@4.2.0/babylon.gui.min.js"></script>
+    <script src="https://cdn.babylonjs.com/loaders/babylonjs.loaders.min.js"></script>
+    
     
     
 
 
 
     <script>
-        const zombies = [];
         const players = []; // Хранение информации о каждом игроке
         let isPaused = false;
         let scene = null;
@@ -216,8 +216,8 @@
               )
             );
             setInterval(function () {
-              const zombie = createZombie(scene, box, zombies);
-              zombies.push(zombie);
+              // Создание зомби
+              const zombie = createZombie(scene, box);
             }, 999);
             scene.onBeforeRenderObservable.add(() => {
               if (box.intersectsMesh(ground, false) && !canControl) {
@@ -237,19 +237,6 @@
                 if (inputMap["d"]) {
                   box.physicsImpostor.applyImpulse(new BABYLON.Vector3(0.3, 0, 0), box.getAbsolutePosition());
                 }
-              }
-              for (let i = zombies.length - 1; i >= 0; i--) {
-                const zombie = zombies[i];
-                if (zombie.position.y < -2) {
-                  zombies.splice(i, 1);
-                  zombie.dispose();
-                }
-              }
-              for (const zombie of zombies) {
-                const direction = box.position.subtract(zombie.position);
-                direction.normalize();
-                const force = direction.scale(2);
-                zombie.physicsImpostor.applyForce(force, zombie.getAbsolutePosition());
               }
             });
     
@@ -311,7 +298,7 @@
             }
           });
     
-          function createZombie(scene, player, zombies) {
+          function createZombie(scene, player) {
             const zombie = BABYLON.Mesh.CreateBox("zombie", 1, scene);
             zombie.position = new BABYLON.Vector3(player.position.x + Math.random() * 100 - 50, 1, player.position.z + Math.random() * 100 - 50);
             zombie.scaling = new BABYLON.Vector3(0.25, 0.25, 0.25);
@@ -326,7 +313,6 @@
               new BABYLON.ExecuteCodeAction(
                 BABYLON.ActionManager.OnPickTrigger,
                 function () {
-                  createExplosion(scene, zombie.position);
                   const index = zombies.indexOf(zombie);
                   if (index !== -1) {
                     zombies.splice(index, 1);
@@ -336,37 +322,6 @@
               )
             );
             return zombie;
-          }
-    
-          function createExplosion(scene, position) {
-            const particleSystem = new BABYLON.ParticleSystem("explosion", 2000, scene);
-            particleSystem.particleTexture = new BABYLON.Texture("gameassets/particle.png", scene);
-            particleSystem.emitter = position;
-            particleSystem.minEmitBox = new BABYLON.Vector3(0, 0, 0);
-            particleSystem.maxEmitBox = new BABYLON.Vector3(0, 0, 0);
-            particleSystem.color1 = new BABYLON.Color4(1, 1, 1, 1);
-            particleSystem.color2 = new BABYLON.Color4(1, 1, 1, 1);
-            particleSystem.colorDead = new BABYLON.Color4(1, 1, 1, 0);
-            particleSystem.minSize = 0.1;
-            particleSystem.maxSize = 1;
-            particleSystem.minLifeTime = 0.5;
-            particleSystem.maxLifeTime = 1.0;
-            particleSystem.emitRate = 20000;
-            particleSystem.gravity = new BABYLON.Vector3(0, -100, 0);
-            particleSystem.minInitialSpeed = 300;
-            particleSystem.maxInitialSpeed = 600;
-            particleSystem.direction1 = new BABYLON.Vector3(1, 1, 1);
-            particleSystem.direction2 = new BABYLON.Vector3(-1, -1, -1);
-            particleSystem.minAngularSpeed = -Math.PI;
-            particleSystem.maxAngularSpeed = Math.PI;
-            particleSystem.minEmitPower = 100;
-            particleSystem.maxEmitPower = 150;
-            particleSystem.updateSpeed = 0.005;
-            particleSystem.start();
-            setTimeout(function () {
-              particleSystem.stop();
-              particleSystem.dispose();
-            }, 100);
           }
         });
       </script>

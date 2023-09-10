@@ -102,7 +102,7 @@
     const players = [];
     let isPaused = false;
     let scene = null;
-    let advancedTexture;
+    let advancedTexture; // Remove this line
 
     const ws = new WebSocket('wss://intermediate-easy-ship.glitch.me');
 
@@ -226,10 +226,6 @@
                     }
                 }
             });
-
-            advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
-            
-            // Other GUI elements and player updates can be added here
             
             return scene;
         };

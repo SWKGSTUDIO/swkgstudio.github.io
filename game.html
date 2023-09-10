@@ -41,14 +41,12 @@
 
         #playButton:hover {
             background-color: #ff7043;
-            /* Замените цвет при наведении на нужный */
         }
 
         #playButton:focus {
             outline: none;
         }
 
-        /* Дополнительные стили для анимации */
         @keyframes pulse {
             0%, 100% {
                 transform: scale(1);
@@ -59,25 +57,20 @@
         }
 
         #statusMessage {
-            color: white; /* Устанавливаем цвет текста в белый */
+            color: white;
         }
     </style>
 
-    <!-- Yandex.RTB -->
     <script>window.yaContextCb=window.yaContextCb||[]</script>
     <script src="https://yandex.ru/ads/system/context.js" async></script>
 
     <script src="https://cdn.babylonjs.com/babylon.js"></script>
     <script src="https://cdn.babylonjs.com/cannon.js"></script>
     <script src="https://cdn.babylonjs.com/loaders/babylonjs.loaders.min.js"></script>
-
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.2.0/socket.io.js"></script> -->
-
 </head>
 
 <body>
     <div id="startScreen" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center;">
-        <!-- <h1>ATTACK CUBE</h1> -->
         <button id="playButton">PLAY</button>
     </div>
     <canvas id="renderCanvas"></canvas>
@@ -106,32 +99,23 @@
     </script>
 
     <script>
-        const players = []; // Хранение информации о каждом игроке
+        const players = [];
         let isPaused = false;
         let scene = null;
         const zombies = [];
+        let advancedTexture;
 
-        // Код для серверного взаимодействия
         const ws = new WebSocket('wss://intermediate-easy-ship.glitch.me');
 
-        // Обработка открытия соединения
         ws.addEventListener('open', (event) => {
             console.log('Connected to server');
-
-            // Отправка объекта JSON на сервер
             ws.send(JSON.stringify({ type: 'message', text: 'Hello, server!' }));
-
-            // Создаем сцену после успешного подключения
-            createScene();
         });
 
-        // Обработка приема сообщения от сервера
         ws.addEventListener('message', (event) => {
             console.log('Received message:', event.data);
-            // Обработка сообщений с информацией о игроках
             const playerInfo = JSON.parse(event.data);
             if (playerInfo.type === 'playerInfo') {
-                // Обновление информации о каждом игроке
                 updatePlayerInfo(playerInfo);
             }
         });
@@ -140,7 +124,6 @@
             console.error('WebSocket error:', error);
         });
 
-        // Обработка закрытия соединения
         ws.addEventListener('close', (event) => {
             console.log('Connection closed');
         });
@@ -162,7 +145,7 @@
             });
 
             const createScene = function () {
-                const scene = new BABYLON.Scene(engine);
+                scene = new BABYLON.Scene(engine);
                 scene.enablePhysics();
                 const ground = BABYLON.Mesh.CreateGround("ground", 20000, 20000, 1, scene, false);
                 ground.position.y = -0.5;
@@ -213,7 +196,6 @@
                     )
                 );
                 setInterval(function () {
-                    // Создание зомби
                     const zombie = createZombie(scene, box);
                 }, 999);
                 scene.onBeforeRenderObservable.add(() => {
@@ -238,7 +220,7 @@
                 });
 
                 // Добавление 2D-элемента для никнейма
-                const advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
+                advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
                 const playerNickname = new BABYLON.GUI.TextBlock();
                 playerNickname.text = "Player";
                 playerNickname.color = "white";
@@ -247,32 +229,26 @@
 
                 // Функция для обновления информации о каждом игроке
                 function updatePlayerInfo(playerInfo) {
-                    // Поиск игрока по его ID
                     let player = players.find((p) => p.id === playerInfo.id);
                     if (!player) {
-                        // Если игрок не найден, создаем нового игрока
                         player = {
                             id: playerInfo.id,
                             mesh: BABYLON.Mesh.CreateBox("playerBox", 1, scene),
                             nickname: new BABYLON.GUI.TextBlock()
                         };
-                        // Назначаем случайный цвет игроку
                         const playerColor = new BABYLON.Color3(Math.random(), Math.random(), Math.random());
                         player.mesh.material = new BABYLON.StandardMaterial("playerMaterial", scene);
                         player.mesh.material.diffuseColor = playerColor;
                         player.mesh.position = new BABYLON.Vector3(playerInfo.x, 1, playerInfo.z);
                         player.mesh.physicsImpostor = new BABYLON.PhysicsImpostor(player.mesh, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0.1, friction: 5 }, scene);
 
-                        // Настройка никнейма игрока
                         player.nickname.text = playerInfo.nickname;
                         player.nickname.color = "white";
                         player.nickname.fontSize = 24;
                         advancedTexture.addControl(player.nickname);
 
-                        // Добавляем игрока в список игроков
                         players.push(player);
                     } else {
-                        // Если игрок уже существует, обновляем его позицию
                         player.mesh.position = new BABYLON.Vector3(playerInfo.x, 1, playerInfo.z);
                     }
                 }
@@ -284,7 +260,6 @@
             const playButton = document.getElementById("playButton");
             playButton.addEventListener("click", function () {
                 if (!scene) {
-                    // Создание сцены происходит только при первом нажатии "PLAY"
                     scene = createScene();
                     startScreen.style.display = "none";
                     engine.runRenderLoop(function () {

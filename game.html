@@ -112,13 +112,38 @@
             ws.send(JSON.stringify({ type: 'message', text: 'Hello, server!' }));
         });
 
-        ws.addEventListener('message', (event) => {
-            console.log('Received message:', event.data);
-            const playerInfo = JSON.parse(event.data);
-            if (playerInfo.type === 'playerInfo') {
-                updatePlayerInfo(playerInfo);
-            }
-        });
+       // Обработка сообщений от сервера WebSocket
+ws.addEventListener('message', (event) => {
+    console.log('Received message:', event.data);
+    const data = JSON.parse(event.data);
+
+    if (data.type === 'playerInfo') {
+        // Обработка информации о новом игроке или обновлении существующего
+        updatePlayerInfo(data);
+    } else if (data.type === 'playerUpdate') {
+        // Обновление позиции существующего игрока
+        updatePlayerInfo(data);
+    } else if (data.type === 'playerDisconnect') {
+        // Обработка отключения игрока
+        const playerId = data.id;
+        const playerIndex = players.findIndex((p) => p.id === playerId);
+        if (playerIndex !== -1) {
+            players.splice(playerIndex, 1);
+        }
+        // Дополнительный код для удаления игрока из сцены, если необходимо
+    }
+});
+
+// Отправка позиции игрока на сервер
+scene.onBeforeRenderObservable.add(() => {
+    if (canControl) {
+        // Получите позицию игрока в сцене
+        const playerPosition = box.position.clone();
+
+        // Отправите позицию на сервер
+        ws.send(JSON.stringify({ type: 'playerPosition', x: playerPosition.x, z: playerPosition.z }));
+    }
+});
 
         ws.addEventListener('error', (error) => {
             console.error('WebSocket error:', error);

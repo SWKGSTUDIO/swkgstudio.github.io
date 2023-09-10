@@ -1,317 +1,122 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ATTACK CUBE</title>
+    <title>2D Online Game</title>
     <style>
         body {
             margin: 0;
             overflow: hidden;
-            background-color: black;
         }
-        canvas {
+
+        #gameCanvas {
+            width: 100%;
+            height: 100vh;
             display: block;
         }
-        #renderCanvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-        }
-        #pauseButton {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            opacity: 0;
-            background-color: #333;
-            color: white;
-            padding: 10px 20px;
-            cursor: pointer;
-        }
-
-        #playButton {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: #ff5722;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            padding: 15px 30px;
-            font-size: 24px;
-            cursor: pointer;
-            transition: background-color 0.3s ease-in-out;
-        }
-
-        #playButton:hover {
-            background-color: #ff7043;
-        }
-
-        #playButton:focus {
-            outline: none;
-        }
-
-        @keyframes pulse {
-            0%, 100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.1);
-            }
-        }
-
-        #statusMessage {
-            color: white;
-        }
     </style>
-
-    <script>window.yaContextCb=window.yaContextCb||[]</script>
-    <script src="https://yandex.ru/ads/system/context.js" async></script>
-
-    <script src="https://cdn.babylonjs.com/babylon.js"></script>
-    <script src="https://cdn.babylonjs.com/cannon.js"></script>
-    <script src="https://cdn.babylonjs.com/loaders/babylonjs.loaders.min.js"></script>
 </head>
-
 <body>
-    <div id="startScreen" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center;">
-        <button id="playButton">PLAY</button>
-    </div>
-    <canvas id="renderCanvas"></canvas>
-    <div id="pauseButton">Pause</div>
-    <div id="statusMessage"></div>
-    <canvas id="nicknameCanvas" width="800" height="600"></canvas>
-
-    <!-- Yandex.RTB R-A-2938411-1 -->
-    <script>window.yaContextCb.push(()=>{
-        Ya.Context.AdvManager.render({
-            "blockId": "R-A-2938411-1",
-            "type": "fullscreen",
-            "platform": "touch"
-        })
-    })
-    </script>
-
-    <!-- Yandex.RTB R-A-2938411-5 -->
-    <script>window.yaContextCb.push(()=>{
-        Ya.Context.AdvManager.render({
-            "blockId": "R-A-2938411-5",
-            "type": "fullscreen",
-            "platform": "desktop"
-        })
-    })
-    </script>
-
+    <canvas id="gameCanvas"></canvas>
     <script>
-        const players = {};
-        let isPaused = false;
-        let playerMesh;
-        let canvas = null; // Declare canvas globally
-        let engine = null; // Declare engine globally
-        let scene = null;  // Declare scene globally
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        // Устанавливаем размер холста на основе размера окна браузера
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        
+        // Вызываем функцию resizeCanvas при загрузке и изменении размера окна
+        window.addEventListener('resize', resizeCanvas);
+        window.addEventListener('load', resizeCanvas);
 
         const ws = new WebSocket('wss://intermediate-easy-ship.glitch.me');
+        const players = new Map();
 
-        function createOrUpdatePlayer(playerInfo) {
-            // Check if the player already exists
-            if (players[playerInfo.id]) {
-                updatePlayerInfo(playerInfo);
-            } else {
-                // Create a new player mesh if it doesn't exist
-                const player = BABYLON.Mesh.CreateBox("player_" + playerInfo.id, 1, scene);
-                // Customize player appearance, position, etc. based on playerInfo
-                // Example: player.material = new BABYLON.StandardMaterial("playerMaterial", scene);
-                // Example: player.material.diffuseColor = new BABYLON.Color3(1, 0, 0); // Red color
-                player.position.x = playerInfo.x;
-                player.position.y = playerInfo.y;
-                player.position.z = playerInfo.z;
-                players[playerInfo.id] = player;
+        // Текущая позиция игрока
+        let currentPlayerX = canvas.width / 2;
+        let currentPlayerY = canvas.height / 2;
+
+        // Целевая позиция для движения кубика
+        let targetX = currentPlayerX;
+        let targetY = currentPlayerY;
+
+        ws.onopen = () => {
+            console.log('Connected to server');
+        };
+
+        ws.onmessage = (event) => {
+            const data = JSON.parse(event.data);
+
+            if (data.type === 'playerInfo') {
+                createOrUpdatePlayer(data);
+            } else if (data.type === 'playerUpdate') {
+                updatePlayerPosition(data);
+            } else if (data.type === 'playerDisconnect') {
+                removePlayer(data.id);
             }
+        };
+
+        function createOrUpdatePlayer(playerData) {
+            if (!players.has(playerData.id)) {
+                players.set(playerData.id, playerData);
+            } else {
+                players.set(playerData.id, { ...players.get(playerData.id), ...playerData });
+            }
+
+            drawPlayers();
         }
 
-        function updatePlayerInfo(playerInfo) {
-            // Update the player's position based on playerInfo
-            const player = players[playerInfo.id];
-            if (player) {
-                player.position.x = playerInfo.x;
-                player.position.y = playerInfo.y;
-                player.position.z = playerInfo.z;
-            }
+        function updatePlayerPosition(playerData) {
+            createOrUpdatePlayer(playerData);
         }
 
         function removePlayer(playerId) {
-            // Remove the player's mesh from the scene
-            const player = players[playerId];
-            if (player) {
-                player.dispose();
-                delete players[playerId];
+            players.delete(playerId);
+            drawPlayers();
+        }
+
+        function drawPlayers() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (const player of players.values()) {
+                ctx.fillStyle = player.color || 'blue';
+                ctx.fillRect(player.x, player.y, 20, 20);
             }
         }
 
-        function createScene(canvas) { // Pass canvas as a parameter
-            engine = new BABYLON.Engine(canvas, true);
-            scene = new BABYLON.Scene(engine);
-            scene.enablePhysics();
-            const ground = BABYLON.Mesh.CreateGround("ground", 20000, 20000, 1, scene, false);
-            ground.position.y = -0.5;
-            ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0, friction: 1 }, scene);
-            const sandTexture = new BABYLON.Texture("gameassets/sand.png", scene);
-            const sandMaterial = new BABYLON.StandardMaterial("sandMaterial", scene);
-            sandMaterial.diffuseTexture = sandTexture;
-            sandMaterial.diffuseColor = new BABYLON.Color3(1, 1, 1);
-            sandMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
-            sandMaterial.ambientColor = new BABYLON.Color3(1, 1, 1);
-            ground.material = sandMaterial;
-            const box = BABYLON.Mesh.CreateBox("box", 1, scene);
-            box.position.y = 10;
-            box.physicsImpostor = new BABYLON.PhysicsImpostor(box, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 1, friction: 5 }, scene);
-            const camera = new BABYLON.ArcRotateCamera("camera", 0, 0, 0, box.position, scene);
-            camera.lowerRadiusLimit = 5;
-            camera.upperRadiusLimit = 20;
-            camera.attachControl(canvas, true);
-            scene.registerBeforeRender(function () {
-                camera.target = box.position.clone();
-            });
-            const light = new BABYLON.DirectionalLight("light", new BABYLON.Vector3(0, -1, -0.5), scene);
-            light.castShadow = true;
-            let canControl = false;
-            const inputMap = {};
-            scene.actionManager = new BABYLON.ActionManager(scene);
-            scene.actionManager.registerAction(
-                new BABYLON.ExecuteCodeAction(
-                    BABYLON.ActionManager.OnKeyDownTrigger,
-                    function (evt) {
-                        if (canControl) {
-                            inputMap[evt.sourceEvent.key] = evt.sourceEvent.type == "keydown";
-                            if (evt.sourceEvent.key == " ") {
-                                box.physicsImpostor.applyImpulse(new BABYLON.Vector3(0, 3, 0), box.getAbsolutePosition());
-                            }
-                        }
-                    }
-                )
-            );
-            scene.actionManager.registerAction(
-                new BABYLON.ExecuteCodeAction(
-                    BABYLON.ActionManager.OnKeyUpTrigger,
-                    function (evt) {
-                        if (canControl) {
-                            inputMap[evt.sourceEvent.key] = evt.sourceEvent.type == "keydown";
-                        }
-                    }
-                )
-            );
-            setInterval(function () {
-                const zombie = createZombie(scene, box);
-            }, 999);
-            scene.onBeforeRenderObservable.add(() => {
-                if (box.intersectsMesh(ground, false) && !canControl) {
-                    canControl = true;
-                    ground.physicsImpostor.setLinearVelocity(new BABYLON.Vector3(0, 0, 0));
-                }
-                if (canControl) {
-                    if (inputMap["w"]) {
-                        box.physicsImpostor.applyImpulse(new BABYLON.Vector3(0, 0, 0.3), box.getAbsolutePosition());
-                    }
-                    if (inputMap["s"]) {
-                        box.physicsImpostor.applyImpulse(new BABYLON.Vector3(0, 0, -0.3), box.getAbsolutePosition());
-                    }
-                    if (inputMap["a"]) {
-                        box.physicsImpostor.applyImpulse(new BABYLON.Vector3(-0.3, 0, 0), box.getAbsolutePosition());
-                    }
-                    if (inputMap["d"]) {
-                        box.physicsImpostor.applyImpulse(new BABYLON.Vector3(0.3, 0, 0), box.getAbsolutePosition());
-                    }
-                }
-            });
-
-            return scene;
-        }
-
-        const startScreen = document.getElementById("startScreen");
-        const playButton = document.getElementById("playButton");
-
-        playButton.addEventListener("click", function () {
-            if (!scene) {
-                canvas = document.getElementById("renderCanvas"); // Get the canvas element
-                engine = new BABYLON.Engine(canvas, true);
-                scene = createScene(canvas); // Pass canvas as a parameter
-                startScreen.style.display = "none";
-
-                // Connect to the server after creating the scene
-                ws.addEventListener('open', (event) => {
-                    console.log('Connected to server');
-                    ws.send(JSON.stringify({ type: 'message', text: 'Hello, server!' }));
-                });
-
-                ws.addEventListener('message', (event) => {
-                    console.log('Received message:', event.data);
-                    const data = JSON.parse(event.data);
-
-                    if (data.type === 'playerInfo') {
-                        // Create a new player mesh or update an existing one
-                        createOrUpdatePlayer(data);
-                    } else if (data.type === 'playerUpdate') {
-                        // Update an existing player's position
-                        updatePlayerInfo(data);
-                    } else if (data.type === 'playerDisconnect') {
-                        const playerId = data.id;
-                        // Handle player disconnection by removing the player's mesh
-                        removePlayer(playerId);
-                    }
-                });
-
-                ws.addEventListener('error', (error) => {
-                    console.error('WebSocket error:', error);
-                });
-
-                ws.addEventListener('close', (event) => {
-                    console.log('Connection closed');
-                });
-
-                // Run the render loop
-                engine.runRenderLoop(function () {
-                    if (!isPaused) {
-                        scene.render();
-                    }
-                });
-            }
+        // Обработчик клика для установки целевой позиции
+        canvas.addEventListener('click', (event) => {
+            const rect = canvas.getBoundingClientRect();
+            targetX = event.clientX - rect.left;
+            targetY = event.clientY - rect.top;
         });
 
-        // Resize the canvas when the window is resized
-        window.addEventListener("resize", function () {
-            if (engine) {
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
-                engine.resize();
-            }
-        });
+        // Анимация движения кубика к целевой позиции
+        function moveCurrentPlayer() {
+            const dx = targetX - currentPlayerX;
+            const dy = targetY - currentPlayerY;
+            const speed = 2; // Скорость движения
 
-        function createZombie(scene, player) {
-            const zombie = BABYLON.Mesh.CreateBox("zombie", 1, scene);
-            zombie.position = new BABYLON.Vector3(player.position.x + Math.random() * 100 - 50, 1, player.position.z + Math.random() * 100 - 50);
-            zombie.scaling = new BABYLON.Vector3(0.25, 0.25, 0.25);
-            const size = 0.5;
-            const boundingBox = new BABYLON.Vector3(size, size, size);
-            zombie.physicsImpostor = new BABYLON.PhysicsImpostor(zombie, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0.1, friction: 5, size: boundingBox }, scene);
-            const zombieMaterial = new BABYLON.StandardMaterial("zombieMaterial", scene);
-            zombieMaterial.diffuseColor = new BABYLON.Color3(0, 1, 0);
-            zombie.material = zombieMaterial;
-            zombie.actionManager = new BABYLON.ActionManager(scene);
-            zombie.actionManager.registerAction(
-                new BABYLON.ExecuteCodeAction(
-                    BABYLON.ActionManager.OnPickTrigger,
-                    function () {
-                        const index = zombies.indexOf(zombie);
-                        if (index !== -1) {
-                            zombies.splice(index, 1);
-                        }
-                        zombie.dispose();
-                    }
-                )
-            );
-            return zombie;
+            if (Math.abs(dx) > speed || Math.abs(dy) > speed) {
+                const angle = Math.atan2(dy, dx);
+                currentPlayerX += Math.cos(angle) * speed;
+                currentPlayerY += Math.sin(angle) * speed;
+            } else {
+                currentPlayerX = targetX;
+                currentPlayerY = targetY;
+            }
+
+            // Отправляем информацию о позиции на сервер
+            if (ws.readyState === WebSocket.OPEN) {
+                ws.send(JSON.stringify({ type: 'playerPosition', x: currentPlayerX, y: currentPlayerY }));
+            }
+
+            ctx.fillStyle = 'red';
+            ctx.fillRect(currentPlayerX, currentPlayerY, 20, 20);
+            requestAnimationFrame(moveCurrentPlayer);
         }
+        moveCurrentPlayer();
     </script>
 </body>
 </html>

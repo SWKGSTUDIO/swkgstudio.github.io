@@ -70,6 +70,10 @@
  <script>window.yaContextCb=window.yaContextCb||[]</script>
  <script src="https://yandex.ru/ads/system/context.js" async></script> 
 
+ <script src="https://cdn.babylonjs.com/babylon.js"></script>
+ <script src="https://cdn.babylonjs.com/cannon.js"></script>
+ <script src="https://cdn.babylonjs.com/loaders/babylonjs.loaders.min.js"></script>
+ 
  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.2.0/socket.io.js"></script> -->
 
 </head>
@@ -83,6 +87,7 @@
     <canvas id="renderCanvas"></canvas>
     <div id="pauseButton">Pause</div>
     <div id="statusMessage"></div>
+    <canvas id="nicknameCanvas" width="800" height="600"></canvas>
 
 
 <!-- Yandex.RTB R-A-2938411-1 -->
@@ -107,29 +112,32 @@
 })
 </script>
 
-    <script src="https://cdn.babylonjs.com/babylon.js"></script>
-    <script src="https://cdn.babylonjs.com/cannon.js"></script>
-    <script src="https://cdn.babylonjs.com/loaders/babylonjs.loaders.min.js"></script>
-    
-    
-    
+
+
+
 
 
 
     <script>
-        const players = []; // Хранение информации о каждом игроке
+
+       const players = []; // Хранение информации о каждом игроке
         let isPaused = false;
         let scene = null;
-    
-       // Код для серверного взаимодействия
+        const zombies = [];
+
+
+// Код для серверного взаимодействия
 const ws = new WebSocket('wss://intermediate-easy-ship.glitch.me');
 
 // Обработка открытия соединения
 ws.addEventListener('open', (event) => {
   console.log('Connected to server');
   
-  // Отправка сообщения на сервер после успешного соединения
-  ws.send('Привет, сервер!');
+  // Отправка объекта JSON на сервер
+  ws.send(JSON.stringify({ type: 'message', text: 'Hello, server!' }));
+
+  // Создаем сцену после успешного подключения
+  createScene();
 });
 
 // Обработка приема сообщения от сервера
@@ -143,10 +151,15 @@ ws.addEventListener('message', (event) => {
   }
 });
 
+ws.addEventListener('error', (error) => {
+  console.error('WebSocket error:', error);
+});
+
 // Обработка закрытия соединения
 ws.addEventListener('close', (event) => {
   console.log('Connection closed');
 });
+
 
         document.addEventListener("DOMContentLoaded", function () {
           const canvas = document.getElementById("renderCanvas");

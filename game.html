@@ -20,19 +20,20 @@
     <script>
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
-        
+
         // Устанавливаем размер холста на основе размера окна браузера
         function resizeCanvas() {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
         }
-        
+
         // Вызываем функцию resizeCanvas при загрузке и изменении размера окна
         window.addEventListener('resize', resizeCanvas);
         window.addEventListener('load', resizeCanvas);
 
         const ws = new WebSocket('wss://intermediate-easy-ship.glitch.me');
         const players = new Map();
+        const trails = []; // Массив для следов
 
         // Текущая позиция игрока
         let currentPlayerX = canvas.width / 2;
@@ -60,6 +61,8 @@
 
         function createOrUpdatePlayer(playerData) {
             if (!players.has(playerData.id)) {
+                // Генерируем случайный цвет
+                playerData.color = getRandomColor();
                 players.set(playerData.id, playerData);
             } else {
                 players.set(playerData.id, { ...players.get(playerData.id), ...playerData });
@@ -70,6 +73,8 @@
 
         function updatePlayerPosition(playerData) {
             createOrUpdatePlayer(playerData);
+            // Добавляем след при обновлении позиции игрока
+            trails.push({ x: playerData.x, y: playerData.y, alpha: 1.0 });
         }
 
         function removePlayer(playerId) {
@@ -83,6 +88,16 @@
                 ctx.fillStyle = player.color || 'blue';
                 ctx.fillRect(player.x, player.y, 20, 20);
             }
+        }
+
+        // Генерация случайного цвета
+        function getRandomColor() {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
         }
 
         // Обработчик клика для установки целевой позиции
@@ -112,8 +127,20 @@
                 ws.send(JSON.stringify({ type: 'playerPosition', x: currentPlayerX, y: currentPlayerY }));
             }
 
+            // Рисуем текущего игрока
             ctx.fillStyle = 'red';
             ctx.fillRect(currentPlayerX, currentPlayerY, 20, 20);
+
+            // Рисуем и обновляем следы
+            for (let i = 0; i < trails.length; i++) {
+                ctx.fillStyle = 'rgba(255, 0, 0, ' + trails[i].alpha + ')';
+                ctx.fillRect(trails[i].x, trails[i].y, 20, 20);
+                trails[i].alpha -= 0.01; // Уменьшаем прозрачность следа
+                if (trails[i].alpha <= 0) {
+                    trails.splice(i, 1); // Удаляем след, когда прозрачность достигает 0
+                }
+            }
+
             requestAnimationFrame(moveCurrentPlayer);
         }
         moveCurrentPlayer();

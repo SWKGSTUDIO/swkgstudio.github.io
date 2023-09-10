@@ -35,20 +35,13 @@
         const players = new Map();
         const trails = new Map(); // Массив для следов
 
-        // Границы игровой области
-        const gameBounds = {
-            left: 0,
-            top: 0,
-            right: canvas.width,
-            bottom: canvas.height
-        };
+        // Текущая позиция игрока
+        let currentPlayerX = canvas.width / 2;
+        let currentPlayerY = canvas.height / 2;
 
-        // Управление для каждого игрока
-        const playerControls = new Map();
-
-        // Объявление переменных для камеры
-        let cameraOffsetX = 0;
-        let cameraOffsetY = 0;
+        // Целевая позиция для движения кубика
+        let targetX = currentPlayerX;
+        let targetY = currentPlayerY;
 
         ws.onopen = () => {
             console.log('Connected to server');
@@ -71,8 +64,6 @@
                 // Генерируем случайный цвет
                 playerData.color = getRandomColor();
                 players.set(playerData.id, playerData);
-                trails.set(playerData.id, []);
-                playerControls.set(playerData.id, { up: false, down: false, left: false, right: false });
             } else {
                 players.set(playerData.id, { ...players.get(playerData.id), ...playerData });
             }
@@ -83,59 +74,22 @@
         function updatePlayerPosition(playerData) {
             createOrUpdatePlayer(playerData);
             // Добавляем след при обновлении позиции игрока
-            trails.get(playerData.id).push({ x: playerData.x, y: playerData.y, alpha: 1.0 });
+            trails.set(playerData.id, { x: playerData.x, y: playerData.y, alpha: 1.0 });
         }
 
         function removePlayer(playerId) {
             players.delete(playerId);
             trails.delete(playerId);
-            playerControls.delete(playerId);
             drawPlayers();
         }
 
         function drawPlayers() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            // Рассчитываем смещение для камеры каждого игрока
-            for (const [playerId, player] of players.entries()) {
-                const currentPlayerX = player.x;
-                const currentPlayerY = player.y;
-
-                const cameraOffsetX = currentPlayerX - canvas.width / 2;
-                const cameraOffsetY = currentPlayerY - canvas.height / 2;
-
-                // Проверяем, чтобы камера не выходила за границы игровой области
-                let cameraX = cameraOffsetX;
-                let cameraY = cameraOffsetY;
-
-                if (cameraX < gameBounds.left) {
-                    cameraX = gameBounds.left;
-                } else if (cameraX + canvas.width > gameBounds.right) {
-                    cameraX = gameBounds.right - canvas.width;
-                }
-
-                if (cameraY < gameBounds.top) {
-                    cameraY = gameBounds.top;
-                } else if (cameraY + canvas.height > gameBounds.bottom) {
-                    cameraY = gameBounds.bottom - canvas.height;
-                }
-
-                canvas.style.transform = `translate(${-cameraX}px, ${-cameraY}px)`;
-
-                // Рисуем игрока
+            for (const player of players.values()) {
                 ctx.fillStyle = player.color || 'blue';
-                ctx.fillRect(currentPlayerX - cameraX, currentPlayerY - cameraY, 20, 20);
-
-                // Рисуем и обновляем следы
-                const playerTrails = trails.get(playerId);
-                for (let i = 0; i < playerTrails.length; i++) {
-                    ctx.fillStyle = 'rgba(255, 0, 0, ' + playerTrails[i].alpha + ')';
-                    ctx.fillRect(playerTrails[i].x - cameraX, playerTrails[i].y - cameraY, 20, 20);
-                    playerTrails[i].alpha -= 0.01; // Уменьшаем прозрачность следа
-                    if (playerTrails[i].alpha <= 0) {
-                        playerTrails.splice(i, 1); // Удаляем след, когда прозрачность достигает 0
-                    }
-                }
+                const x = player.x - (canvas.width / 2); // Центрируем игрока относительно экрана
+                const y = player.y - (canvas.height / 2); // Центрируем игрока относительно экрана
+                ctx.fillRect(x, y, 20, 20);
             }
         }
 
@@ -149,68 +103,54 @@
             return color;
         }
 
-        // Обработчики событий для управления каждым игроком
-        function handleControls() {
-            window.addEventListener('keydown', (event) => {
-                const playerId = getPlayerId();
-                if (playerId && playerControls.has(playerId)) {
-                    const controls = playerControls.get(playerId);
-                    switch (event.key) {
-                        case 'ArrowUp':
-                            controls.up = true;
-                            break;
-                        case 'ArrowDown':
-                            controls.down = true;
-                            break;
-                        case 'ArrowLeft':
-                            controls.left = true;
-                            break;
-                        case 'ArrowRight':
-                            controls.right = true;
-                            break;
-                    }
+        // Обработчик клика для установки целевой позиции
+        canvas.addEventListener('click', (event) => {
+            const rect = canvas.getBoundingClientRect();
+            targetX = event.clientX - rect.left + canvas.width / 2; // Центрируем цель относительно экрана
+            targetY = event.clientY - rect.top + canvas.height / 2; // Центрируем цель относительно экрана
+        });
+
+        // Анимация движения кубика к целевой позиции
+        function moveCurrentPlayer() {
+            const dx = targetX - currentPlayerX;
+            const dy = targetY - currentPlayerY;
+            const speed = 2; // Скорость движения
+
+            if (Math.abs(dx) > speed || Math.abs(dy) > speed) {
+                const angle = Math.atan2(dy, dx);
+                currentPlayerX += Math.cos(angle) * speed;
+                currentPlayerY += Math.sin(angle) * speed;
+            } else {
+                currentPlayerX = targetX;
+                currentPlayerY = targetY;
+            }
+
+            // Отправляем информацию о позиции на сервер
+            if (ws.readyState === WebSocket.OPEN) {
+                ws.send(JSON.stringify({ type: 'playerPosition', x: currentPlayerX, y: currentPlayerY }));
+            }
+
+            // Рисуем текущего игрока
+            ctx.fillStyle = 'red';
+            const x = currentPlayerX - (canvas.width / 2); // Центрируем игрока относительно экрана
+            const y = currentPlayerY - (canvas.height / 2); // Центрируем игрока относительно экрана
+            ctx.fillRect(x, y, 20, 20);
+
+            // Рисуем и обновляем следы
+            for (const [playerId, trail] of trails) {
+                ctx.fillStyle = 'rgba(255, 0, 0, ' + trail.alpha + ')';
+                const trailX = trail.x - (canvas.width / 2); // Центрируем след относительно экрана
+                const trailY = trail.y - (canvas.height / 2); // Центрируем след относительно экрана
+                ctx.fillRect(trailX, trailY, 20, 20);
+                trail.alpha -= 0.01; // Уменьшаем прозрачность следа
+                if (trail.alpha <= 0) {
+                    trails.delete(playerId); // Удаляем след, когда прозрачность достигает 0
                 }
-            });
+            }
 
-            window.addEventListener('keyup', (event) => {
-                const playerId = getPlayerId();
-                if (playerId && playerControls.has(playerId)) {
-                    const controls = playerControls.get(playerId);
-                    switch (event.key) {
-                        case 'ArrowUp':
-                            controls.up = false;
-                            break;
-                        case 'ArrowDown':
-                            controls.down = false;
-                            break;
-                        case 'ArrowLeft':
-                            controls.left = false;
-                            break;
-                        case 'ArrowRight':
-                            controls.right = false;
-                            break;
-                    }
-                }
-            });
-
-            // Обработчик клика для установки целевой позиции
-            canvas.addEventListener('click', (event) => {
-                const rect = canvas.getBoundingClientRect();
-                targetX = event.clientX - rect.left + cameraOffsetX;
-                targetY = event.clientY - rect.top + cameraOffsetY;
-            });
+            requestAnimationFrame(moveCurrentPlayer);
         }
-        handleControls();
-
-        // Инициализация начальной целевой позиции
-        let targetX = canvas.width / 2;
-        let targetY = canvas.height / 2;
-
-        // Получение ID текущего игрока
-        function getPlayerId() {
-            const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get('playerId');
-        }
+        moveCurrentPlayer();
     </script>
 </body>
 </html>

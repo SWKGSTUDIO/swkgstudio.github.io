@@ -99,57 +99,95 @@
     </script>
 
 <script>
-    const players = {}; // Use an object to store player meshes with player IDs as keys
-    let isPaused = false;
-    let scene = null;
-    let playerMesh; // Variable to hold the player's mesh
-    const ws = new WebSocket('wss://intermediate-easy-ship.glitch.me');
+     const players = {}; // Use an object to store player meshes with player IDs as keys
+        let isPaused = false;
+        let scene = null;
+        let playerMesh; // Variable to hold the player's mesh
+        const ws = new WebSocket('wss://intermediate-easy-ship.glitch.me');
 
-    ws.addEventListener('open', (event) => {
-        console.log('Connected to server');
-        ws.send(JSON.stringify({ type: 'message', text: 'Hello, server!' }));
-    });
-
-    ws.addEventListener('message', (event) => {
-        console.log('Received message:', event.data);
-        const data = JSON.parse(event.data);
-
-        if (data.type === 'playerInfo') {
-            // Create a new player mesh or update an existing one
-            createOrUpdatePlayer(data);
-        } else if (data.type === 'playerUpdate') {
-            // Update an existing player's position
-            updatePlayerInfo(data);
-        } else if (data.type === 'playerDisconnect') {
-            const playerId = data.id;
-            // Handle player disconnection by removing the player's mesh
-            removePlayer(playerId);
-        }
-    });
-
-    ws.addEventListener('error', (error) => {
-        console.error('WebSocket error:', error);
-    });
-
-    ws.addEventListener('close', (event) => {
-        console.log('Connection closed');
-    });
-
-    document.addEventListener("DOMContentLoaded", function () {
-        const canvas = document.getElementById("renderCanvas");
-        const engine = new BABYLON.Engine(canvas, true);
-
-        const resizeCanvas = function () {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        };
-
-        resizeCanvas();
-
-        window.addEventListener("resize", function () {
-            resizeCanvas();
-            engine.resize();
+        ws.addEventListener('open', (event) => {
+            console.log('Connected to server');
+            ws.send(JSON.stringify({ type: 'message', text: 'Hello, server!' }));
         });
+
+        ws.addEventListener('message', (event) => {
+            console.log('Received message:', event.data);
+            const data = JSON.parse(event.data);
+
+            if (data.type === 'playerInfo') {
+                // Create a new player mesh or update an existing one
+                createOrUpdatePlayer(data);
+            } else if (data.type === 'playerUpdate') {
+                // Update an existing player's position
+                updatePlayerInfo(data);
+            } else if (data.type === 'playerDisconnect') {
+                const playerId = data.id;
+                // Handle player disconnection by removing the player's mesh
+                removePlayer(playerId);
+            }
+        });
+
+        ws.addEventListener('error', (error) => {
+            console.error('WebSocket error:', error);
+        });
+
+        ws.addEventListener('close', (event) => {
+            console.log('Connection closed');
+        });
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const canvas = document.getElementById("renderCanvas");
+            const engine = new BABYLON.Engine(canvas, true);
+
+            const resizeCanvas = function () {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            };
+
+            resizeCanvas();
+
+            window.addEventListener("resize", function () {
+                resizeCanvas();
+                engine.resize();
+            });
+
+            // Define createOrUpdatePlayer, updatePlayerInfo, and removePlayer functions here
+
+            function createOrUpdatePlayer(playerInfo) {
+                // Check if the player already exists
+                if (players[playerInfo.id]) {
+                    updatePlayerInfo(playerInfo);
+                } else {
+                    // Create a new player mesh if it doesn't exist
+                    const player = BABYLON.Mesh.CreateBox("player_" + playerInfo.id, 1, scene);
+                    // Customize player appearance, position, etc. based on playerInfo
+                    // Example: player.material = new BABYLON.StandardMaterial("playerMaterial", scene);
+                    // Example: player.material.diffuseColor = new BABYLON.Color3(1, 0, 0); // Red color
+                    player.position.x = playerInfo.x;
+                    player.position.y = playerInfo.y;
+                    player.position.z = playerInfo.z;
+                    players[playerInfo.id] = player;
+                }
+            }
+
+            function updatePlayerInfo(playerInfo) {
+                // Update the player's position based on playerInfo
+                const player = players[playerInfo.id];
+                if (player) {
+                    player.position.x = playerInfo.x;
+                    player.position.y = playerInfo.y;
+                    player.position.z = playerInfo.z;
+                }
+            }
+
+            function removePlayer(playerId) {
+                // Remove the player's mesh from the scene
+                const player = players[playerId];
+                if (player) {
+                    player.dispose();
+                    delete players[playerId];
+                }
+            }
 
         const createScene = function () {
             scene = new BABYLON.Scene(engine);
@@ -243,41 +281,7 @@
             }
         });
 
-        function createOrUpdatePlayer(playerInfo) {
-            // Check if the player already exists in the scene
-            if (players[playerInfo.id]) {
-                updatePlayerInfo(playerInfo);
-            } else {
-                // Create a new player mesh if it doesn't exist
-                const player = BABYLON.Mesh.CreateBox("player_" + playerInfo.id, 1, scene);
-                // Customize player appearance, position, etc. based on playerInfo
-                // Example: player.material = new BABYLON.StandardMaterial("playerMaterial", scene);
-                // Example: player.material.diffuseColor = new BABYLON.Color3(1, 0, 0); // Red color
-                player.position.x = playerInfo.x;
-                player.position.y = playerInfo.y;
-                player.position.z = playerInfo.z;
-                players[playerInfo.id] = player;
-            }
-        }
-
-        function updatePlayerInfo(playerInfo) {
-            // Update the player's position based on playerInfo
-            const player = players[playerInfo.id];
-            if (player) {
-                player.position.x = playerInfo.x;
-                player.position.y = playerInfo.y;
-                player.position.z = playerInfo.z;
-            }
-        }
-
-        function removePlayer(playerId) {
-            // Remove the player's mesh from the scene
-            const player = players[playerId];
-            if (player) {
-                player.dispose();
-                delete players[playerId];
-            }
-        }
+       
 
         function createZombie(scene, player) {
             const zombie = BABYLON.Mesh.CreateBox("zombie", 1, scene);

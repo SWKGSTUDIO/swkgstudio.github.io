@@ -73,11 +73,27 @@
             drawPlayers();
         }
 
-        function updatePlayerPosition(playerData) {
-            createOrUpdatePlayer(playerData);
-            // Добавляем след при обновлении позиции игрока
-            trails.set(playerData.id, { x: playerData.x, y: playerData.y, alpha: 1.0 });
-        }
+        // При создании или обновлении следа
+function updatePlayerPosition(playerData) {
+    createOrUpdatePlayer(playerData);
+    const player = players.get(playerData.id);
+    
+    // Добавляем след при обновлении позиции игрока
+    trails.set(playerData.id, { x: playerData.x, y: playerData.y, alpha: 1.0, color: player.color });
+}
+
+// В функции drawPlayers() установите цвет следа из объекта trail
+for (const [playerId, trail] of trails) {
+    ctx.fillStyle = 'rgba(255, 0, 0, ' + trail.alpha + ')';
+    const trailX = trail.x - cameraX; // Учитываем смещение камеры
+    const trailY = trail.y - cameraY; // Учитываем смещение камеры
+    ctx.fillRect(trailX, trailY, 20, 20);
+    trail.alpha -= 0.01; // Уменьшаем прозрачность следа
+    if (trail.alpha <= 0) {
+        trails.delete(playerId); // Удаляем след, когда прозрачность достигает 0
+    }
+}
+
 
         function removePlayer(playerId) {
             players.delete(playerId);

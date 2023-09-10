@@ -74,26 +74,13 @@
         }
 
         // При создании или обновлении следа
-function updatePlayerPosition(playerData) {
-    createOrUpdatePlayer(playerData);
-    const player = players.get(playerData.id);
-    
-    // Добавляем след при обновлении позиции игрока
-    trails.set(playerData.id, { x: playerData.x, y: playerData.y, alpha: 1.0 });
-}
+        function updatePlayerPosition(playerData) {
+            createOrUpdatePlayer(playerData);
+            const player = players.get(playerData.id);
 
-// В функции drawPlayers() установите цвет следа из объекта trail
-for (const [playerId, trail] of trails) {
-    ctx.fillStyle = 'rgba(255, 0, 0, ' + trail.alpha + ')';
-    const trailX = trail.x - cameraX; // Учитываем смещение камеры
-    const trailY = trail.y - cameraY; // Учитываем смещение камеры
-    ctx.fillRect(trailX, trailY, 20, 20);
-    trail.alpha -= 0.01; // Уменьшаем прозрачность следа
-    if (trail.alpha <= 0) {
-        trails.delete(playerId); // Удаляем след, когда прозрачность достигает 0
-    }
-}
-
+            // Добавляем след при обновлении позиции игрока
+            trails.set(playerData.id, { x: playerData.x, y: playerData.y, alpha: 1.0 });
+        }
 
         function removePlayer(playerId) {
             players.delete(playerId);
@@ -113,6 +100,19 @@ for (const [playerId, trail] of trails) {
                 const x = player.x - cameraX; // Учитываем смещение камеры
                 const y = player.y - cameraY; // Учитываем смещение камеры
                 ctx.fillRect(x, y, 20, 20);
+
+                // Отобразим след игрока
+                const trail = trails.get(playerId);
+                if (trail) {
+                    ctx.fillStyle = 'rgba(255, 0, 0, ' + trail.alpha + ')';
+                    const trailX = trail.x - cameraX; // Учитываем смещение камеры
+                    const trailY = trail.y - cameraY; // Учитываем смещение камеры
+                    ctx.fillRect(trailX, trailY, 20, 20);
+                    trail.alpha -= 0.01; // Уменьшаем прозрачность следа
+                    if (trail.alpha <= 0) {
+                        trails.delete(playerId); // Удаляем след, когда прозрачность достигает 0
+                    }
+                }
             }
         }
 
@@ -140,23 +140,17 @@ for (const [playerId, trail] of trails) {
 
             // Отправляем информацию о позиции на сервер
             if (ws.readyState === WebSocket.OPEN) {
-                ws.send(JSON.stringify({ type: 'playerPosition', x: currentPlayerX, y: currentPlayerY }));
+                // Отправляем как объект, включая данные о следе
+                ws.send(JSON.stringify({
+                    type: 'playerPosition',
+                    x: currentPlayerX,
+                    y: currentPlayerY,
+                    trail: { x: currentPlayerX, y: currentPlayerY, alpha: 1.0 }, // Добавляем информацию о следе
+                }));
             }
 
             // Рисуем текущего игрока и его след змейки
             drawPlayers();
-
-            // Рисуем и обновляем следы змейки
-            for (const [playerId, trail] of trails) {
-                ctx.fillStyle = 'rgba(255, 0, 0, ' + trail.alpha + ')';
-                const trailX = trail.x - cameraX; // Учитываем смещение камеры
-                const trailY = trail.y - cameraY; // Учитываем смещение камеры
-                ctx.fillRect(trailX, trailY, 20, 20);
-                trail.alpha -= 0.01; // Уменьшаем прозрачность следа
-                if (trail.alpha <= 0) {
-                    trails.delete(playerId); // Удаляем след, когда прозрачность достигает 0
-                }
-            }
 
             requestAnimationFrame(moveCurrentPlayer);
         }

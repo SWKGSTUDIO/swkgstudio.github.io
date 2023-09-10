@@ -102,8 +102,7 @@
     const players = [];
     let isPaused = false;
     let scene = null;
-    let advancedTexture; // Remove this line
-
+    let playerMesh; // Variable to hold the player's mesh
     const ws = new WebSocket('wss://intermediate-easy-ship.glitch.me');
 
     ws.addEventListener('open', (event) => {
@@ -116,13 +115,16 @@
         const data = JSON.parse(event.data);
 
         if (data.type === 'playerInfo') {
-            updatePlayerInfo(data);
+            // Create a new player mesh
+            createPlayer(data);
         } else if (data.type === 'playerUpdate') {
+            // Update an existing player's position
             updatePlayerInfo(data);
         } else if (data.type === 'playerDisconnect') {
             const playerId = data.id;
             const playerIndex = players.findIndex((p) => p.id === playerId);
             if (playerIndex !== -1) {
+                // Handle player disconnection (e.g., remove player from the scene)
                 players.splice(playerIndex, 1);
             }
         }
@@ -243,6 +245,25 @@
                 });
             }
         });
+
+        function createPlayer(playerInfo) {
+            if (!playerMesh) {
+                playerMesh = BABYLON.Mesh.CreateBox("player", 1, scene);
+                // Customize player appearance, position, etc. based on playerInfo
+                // For example, you can set the player's color, position, and other properties here
+                // Example: playerMesh.material = new BABYLON.StandardMaterial("playerMaterial", scene);
+                // Example: playerMesh.material.diffuseColor = new BABYLON.Color3(1, 0, 0); // Red color
+            }
+        }
+
+        function updatePlayerInfo(playerInfo) {
+            // Update the player's position based on playerInfo
+            if (playerMesh) {
+                playerMesh.position.x = playerInfo.x;
+                playerMesh.position.y = playerInfo.y;
+                playerMesh.position.z = playerInfo.z;
+            }
+        }
 
         function createZombie(scene, player) {
             const zombie = BABYLON.Mesh.CreateBox("zombie", 1, scene);

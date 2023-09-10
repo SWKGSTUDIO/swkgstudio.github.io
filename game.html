@@ -121,33 +121,33 @@
         let isPaused = false;
         let scene = null;
     
-        // Код для серверного взаимодействия
-        const ws = new WebSocket('wss://intermediate-easy-ship.glitch.me');
-    
-        // Обработка открытия соединения
-        ws.addEventListener('open', (event) => {
-          console.log('Connected to server');
-        });
-    
-        // Обработка приема сообщения от сервера
-        ws.addEventListener('message', (event) => {
-          console.log('Received message:', event.data);
-          // Обработка сообщений с информацией о игроках
-          const playerInfo = JSON.parse(event.data);
-          if (playerInfo.type === 'playerInfo') {
-            // Обновление информации о каждом игроке
-            updatePlayerInfo(playerInfo);
-          }
-        });
-    
-        // Обработка закрытия соединения
-        ws.addEventListener('close', (event) => {
-          console.log('Connection closed');
-        });
-    
-        // Отправка сообщения на сервер
-        ws.send('Привет, сервер!');
-    
+       // Код для серверного взаимодействия
+const ws = new WebSocket('wss://intermediate-easy-ship.glitch.me');
+
+// Обработка открытия соединения
+ws.addEventListener('open', (event) => {
+  console.log('Connected to server');
+  
+  // Отправка сообщения на сервер после успешного соединения
+  ws.send('Привет, сервер!');
+});
+
+// Обработка приема сообщения от сервера
+ws.addEventListener('message', (event) => {
+  console.log('Received message:', event.data);
+  // Обработка сообщений с информацией о игроках
+  const playerInfo = JSON.parse(event.data);
+  if (playerInfo.type === 'playerInfo') {
+    // Обновление информации о каждом игроке
+    updatePlayerInfo(playerInfo);
+  }
+});
+
+// Обработка закрытия соединения
+ws.addEventListener('close', (event) => {
+  console.log('Connection closed');
+});
+
         document.addEventListener("DOMContentLoaded", function () {
           const canvas = document.getElementById("renderCanvas");
           const engine = new BABYLON.Engine(canvas, true);

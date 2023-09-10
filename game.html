@@ -43,6 +43,10 @@
         let targetX = currentPlayerX;
         let targetY = currentPlayerY;
 
+        // Определение переменных для камеры
+        let cameraX = canvas.width / 2;
+        let cameraY = canvas.height / 2;
+
         ws.onopen = () => {
             console.log('Connected to server');
         };
@@ -83,10 +87,15 @@
 
         function drawPlayers() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Пересчитываем положение камеры
+            cameraX = currentPlayerX - canvas.width / 2;
+            cameraY = currentPlayerY - canvas.height / 2;
+
             for (const [playerId, player] of players) {
                 ctx.fillStyle = player.color || 'blue';
-                const x = player.x - (canvas.width / 2); // Центрируем игрока относительно экрана
-                const y = player.y - (canvas.height / 2); // Центрируем игрока относительно экрана
+                const x = player.x - cameraX; // Учитываем смещение камеры
+                const y = player.y - cameraY; // Учитываем смещение камеры
                 ctx.fillRect(x, y, 20, 20);
             }
         }
@@ -94,8 +103,8 @@
         // Обработчик клика для установки целевой позиции
         canvas.addEventListener('click', (event) => {
             const rect = canvas.getBoundingClientRect();
-            targetX = event.clientX - rect.left + canvas.width / 2; // Центрируем цель относительно экрана
-            targetY = event.clientY - rect.top + canvas.height / 2; // Центрируем цель относительно экрана
+            targetX = event.clientX - rect.left + cameraX; // Учитываем смещение камеры
+            targetY = event.clientY - rect.top + cameraY; // Учитываем смещение камеры
         });
 
         // Анимация движения кубика к целевой позиции
@@ -118,17 +127,14 @@
                 ws.send(JSON.stringify({ type: 'playerPosition', x: currentPlayerX, y: currentPlayerY }));
             }
 
-            // Рисуем текущего игрока
-            ctx.fillStyle = 'red';
-            const x = currentPlayerX - (canvas.width / 2); // Центрируем игрока относительно экрана
-            const y = currentPlayerY - (canvas.height / 2); // Центрируем игрока относительно экрана
-            ctx.fillRect(x, y, 20, 20);
+            // Рисуем текущего игрока и его след змейки
+            drawPlayers();
 
-            // Рисуем и обновляем следы
+            // Рисуем и обновляем следы змейки
             for (const [playerId, trail] of trails) {
                 ctx.fillStyle = 'rgba(255, 0, 0, ' + trail.alpha + ')';
-                const trailX = trail.x - (canvas.width / 2); // Центрируем след относительно экрана
-                const trailY = trail.y - (canvas.height / 2); // Центрируем след относительно экрана
+                const trailX = trail.x - cameraX; // Учитываем смещение камеры
+                const trailY = trail.y - cameraY; // Учитываем смещение камеры
                 ctx.fillRect(trailX, trailY, 20, 20);
                 trail.alpha -= 0.01; // Уменьшаем прозрачность следа
                 if (trail.alpha <= 0) {

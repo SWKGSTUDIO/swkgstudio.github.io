@@ -61,8 +61,6 @@
 
         function createOrUpdatePlayer(playerData) {
             if (!players.has(playerData.id)) {
-                // Генерируем случайный цвет
-                playerData.color = getRandomColor();
                 players.set(playerData.id, playerData);
             } else {
                 players.set(playerData.id, { ...players.get(playerData.id), ...playerData });
@@ -91,16 +89,6 @@
                 const y = player.y - (canvas.height / 2); // Центрируем игрока относительно экрана
                 ctx.fillRect(x, y, 20, 20);
             }
-        }
-
-        // Генерация случайного цвета
-        function getRandomColor() {
-            const letters = '0123456789ABCDEF';
-            let color = '#';
-            for (let i = 0; i < 6; i++) {
-                color += letters[Math.floor(Math.random() * 16)];
-            }
-            return color;
         }
 
         // Обработчик клика для установки целевой позиции

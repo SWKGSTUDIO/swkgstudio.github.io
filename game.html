@@ -2,6 +2,11 @@
 <html>
 <head>
     <title>2D Online Game</title>
+
+    <!-- Yandex.RTB -->
+<script>window.yaContextCb=window.yaContextCb||[]</script>
+<script src="https://yandex.ru/ads/system/context.js" async></script>
+
     <style>
         body {
             margin: 0;
@@ -18,6 +23,27 @@
 </head>
 <body>
     <canvas id="gameCanvas"></canvas>
+
+    <!-- Yandex.RTB R-A-2938411-1 -->
+<script>window.yaContextCb.push(()=>{
+	Ya.Context.AdvManager.render({
+		"blockId": "R-A-2938411-1",
+		"type": "fullscreen",
+		"platform": "touch"
+	})
+})
+</script>
+
+<!-- Yandex.RTB R-A-2938411-5 -->
+<script>window.yaContextCb.push(()=>{
+	Ya.Context.AdvManager.render({
+		"blockId": "R-A-2938411-5",
+		"type": "fullscreen",
+		"platform": "desktop"
+	})
+})
+</script>
+
     <script>
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
@@ -40,7 +66,7 @@
         let currentPlayerX = canvas.width / 2;
         let currentPlayerY = canvas.height / 2;
 
-        // Целевая позиция для движения кубика
+        // Целевая позиция для движения игрока
         let targetX = currentPlayerX;
         let targetY = currentPlayerY;
 
@@ -96,48 +122,47 @@
         }
 
         function drawPlayers() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    cameraX = currentPlayerX - canvas.width / 2;
-    cameraY = currentPlayerY - canvas.height / 2;
+            cameraX = currentPlayerX - canvas.width / 2;
+            cameraY = currentPlayerY - canvas.height / 2;
 
-    trails.forEach((playerTrails, playerId) => {
-        const player = players.get(playerId);
-        const playerColor = player.color || 'red';
+            trails.forEach((playerTrails, playerId) => {
+                const player = players.get(playerId);
+                const playerColor = player.color || 'red';
 
-        ctx.strokeStyle = playerColor;
-        ctx.lineWidth = 10;
-        ctx.lineCap = 'round';
+                ctx.strokeStyle = playerColor;
+                ctx.lineWidth = 10;
+                ctx.lineCap = 'round';
 
-        playerTrails.forEach((trail, index) => {
-            const trailX = trail.x - cameraX;
-            const trailY = trail.y - cameraY;
+                playerTrails.forEach((trail, index) => {
+                    const trailX = trail.x - cameraX;
+                    const trailY = trail.y - cameraY;
 
-            if (index === 0) {
+                    if (index === 0) {
+                        ctx.beginPath();
+                        ctx.moveTo(trailX, trailY);
+                    } else {
+                        ctx.lineTo(trailX, trailY);
+                    }
+                });
+
+                ctx.stroke();
+            });
+
+            players.forEach((player, playerId) => {
+                ctx.fillStyle = player.color || 'blue';
+                const x = player.x - cameraX;
+                const y = player.y - cameraY;
+                const radius = 10; // Радиус игрока (можете настроить подходящий размер)
+                
+                // Рисуем игрока как круг
                 ctx.beginPath();
-                ctx.moveTo(trailX, trailY);
-            } else {
-                ctx.lineTo(trailX, trailY);
-            }
-        });
-
-        ctx.stroke();
-    });
-
-    players.forEach((player, playerId) => {
-        ctx.fillStyle = player.color || 'blue';
-        const x = player.x - cameraX;
-        const y = player.y - cameraY;
-        const radius = 10; // Радиус игрока (можете настроить подходящий размер)
-        
-        // Рисуем игрока как круг
-        ctx.beginPath();
-        ctx.arc(x, y, radius, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.closePath();
-    });
-}
-
+                ctx.arc(x, y, radius, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.closePath();
+            });
+        }
 
         canvas.addEventListener('click', (event) => {
             const rect = canvas.getBoundingClientRect();
@@ -145,7 +170,6 @@
             targetY = event.clientY - rect.top + cameraY;
         });
 
-        // Используем setInterval для более плавного движения
         const updateInterval = 16; // Примерно 60 кадров в секунду
         let playerSpeed = 2.5; // Начальная скорость игрока
 
@@ -186,7 +210,12 @@
             drawPlayers();
         }
 
-        setInterval(moveCurrentPlayer, updateInterval);
+        function animate() {
+            moveCurrentPlayer();
+            requestAnimationFrame(animate);
+        }
+
+        animate();
     </script>
 </body>
 </html>

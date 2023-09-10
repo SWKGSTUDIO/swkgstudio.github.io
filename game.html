@@ -98,222 +98,182 @@
     })
     </script>
 
-    <script>
-        const players = [];
-        let isPaused = false;
-        let scene = null;
-        const zombies = [];
-        let advancedTexture;
+<script>
+    const players = [];
+    let isPaused = false;
+    let scene = null;
+    let advancedTexture;
 
-        const ws = new WebSocket('wss://intermediate-easy-ship.glitch.me');
+    const ws = new WebSocket('wss://intermediate-easy-ship.glitch.me');
 
-        ws.addEventListener('open', (event) => {
-            console.log('Connected to server');
-            ws.send(JSON.stringify({ type: 'message', text: 'Hello, server!' }));
-        });
+    ws.addEventListener('open', (event) => {
+        console.log('Connected to server');
+        ws.send(JSON.stringify({ type: 'message', text: 'Hello, server!' }));
+    });
 
-       // Обработка сообщений от сервера WebSocket
-ws.addEventListener('message', (event) => {
-    console.log('Received message:', event.data);
-    const data = JSON.parse(event.data);
+    ws.addEventListener('message', (event) => {
+        console.log('Received message:', event.data);
+        const data = JSON.parse(event.data);
 
-    if (data.type === 'playerInfo') {
-        // Обработка информации о новом игроке или обновлении существующего
-        updatePlayerInfo(data);
-    } else if (data.type === 'playerUpdate') {
-        // Обновление позиции существующего игрока
-        updatePlayerInfo(data);
-    } else if (data.type === 'playerDisconnect') {
-        // Обработка отключения игрока
-        const playerId = data.id;
-        const playerIndex = players.findIndex((p) => p.id === playerId);
-        if (playerIndex !== -1) {
-            players.splice(playerIndex, 1);
+        if (data.type === 'playerInfo') {
+            updatePlayerInfo(data);
+        } else if (data.type === 'playerUpdate') {
+            updatePlayerInfo(data);
+        } else if (data.type === 'playerDisconnect') {
+            const playerId = data.id;
+            const playerIndex = players.findIndex((p) => p.id === playerId);
+            if (playerIndex !== -1) {
+                players.splice(playerIndex, 1);
+            }
         }
-        // Дополнительный код для удаления игрока из сцены, если необходимо
-    }
-});
+    });
 
-// Отправка позиции игрока на сервер
-scene.onBeforeRenderObservable.add(() => {
-    if (canControl) {
-        // Получите позицию игрока в сцене
-        const playerPosition = box.position.clone();
+    ws.addEventListener('error', (error) => {
+        console.error('WebSocket error:', error);
+    });
 
-        // Отправите позицию на сервер
-        ws.send(JSON.stringify({ type: 'playerPosition', x: playerPosition.x, z: playerPosition.z }));
-    }
-});
+    ws.addEventListener('close', (event) => {
+        console.log('Connection closed');
+    });
 
-        ws.addEventListener('error', (error) => {
-            console.error('WebSocket error:', error);
-        });
+    document.addEventListener("DOMContentLoaded", function () {
+        const canvas = document.getElementById("renderCanvas");
+        const engine = new BABYLON.Engine(canvas, true);
 
-        ws.addEventListener('close', (event) => {
-            console.log('Connection closed');
-        });
+        const resizeCanvas = function () {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        };
 
-        document.addEventListener("DOMContentLoaded", function () {
-            const canvas = document.getElementById("renderCanvas");
-            const engine = new BABYLON.Engine(canvas, true);
+        resizeCanvas();
 
-            const resizeCanvas = function () {
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
-            };
-
+        window.addEventListener("resize", function () {
             resizeCanvas();
+            engine.resize();
+        });
 
-            window.addEventListener("resize", function () {
-                resizeCanvas();
-                engine.resize();
+        const createScene = function () {
+            scene = new BABYLON.Scene(engine);
+            scene.enablePhysics();
+            const ground = BABYLON.Mesh.CreateGround("ground", 20000, 20000, 1, scene, false);
+            ground.position.y = -0.5;
+            ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0, friction: 1 }, scene);
+            const sandTexture = new BABYLON.Texture("gameassets/sand.png", scene);
+            const sandMaterial = new BABYLON.StandardMaterial("sandMaterial", scene);
+            sandMaterial.diffuseTexture = sandTexture;
+            sandMaterial.diffuseColor = new BABYLON.Color3(1, 1, 1);
+            sandMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
+            sandMaterial.ambientColor = new BABYLON.Color3(1, 1, 1);
+            ground.material = sandMaterial;
+            const box = BABYLON.Mesh.CreateBox("box", 1, scene);
+            box.position.y = 10;
+            box.physicsImpostor = new BABYLON.PhysicsImpostor(box, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 1, friction: 5 }, scene);
+            const camera = new BABYLON.ArcRotateCamera("camera", 0, 0, 0, box.position, scene);
+            camera.lowerRadiusLimit = 5;
+            camera.upperRadiusLimit = 20;
+            camera.attachControl(canvas, true);
+            scene.registerBeforeRender(function () {
+                camera.target = box.position.clone();
             });
-
-            const createScene = function () {
-                scene = new BABYLON.Scene(engine);
-                scene.enablePhysics();
-                const ground = BABYLON.Mesh.CreateGround("ground", 20000, 20000, 1, scene, false);
-                ground.position.y = -0.5;
-                ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0, friction: 1 }, scene);
-                const sandTexture = new BABYLON.Texture("gameassets/sand.png", scene);
-                const sandMaterial = new BABYLON.StandardMaterial("sandMaterial", scene);
-                sandMaterial.diffuseTexture = sandTexture;
-                sandMaterial.diffuseColor = new BABYLON.Color3(1, 1, 1);
-                sandMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
-                sandMaterial.ambientColor = new BABYLON.Color3(1, 1, 1);
-                ground.material = sandMaterial;
-                const box = BABYLON.Mesh.CreateBox("box", 1, scene);
-                box.position.y = 10;
-                box.physicsImpostor = new BABYLON.PhysicsImpostor(box, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 1, friction: 5 }, scene);
-                const camera = new BABYLON.ArcRotateCamera("camera", 0, 0, 0, box.position, scene);
-                camera.lowerRadiusLimit = 5;
-                camera.upperRadiusLimit = 20;
-                camera.attachControl(canvas, true);
-                scene.registerBeforeRender(function () {
-                    camera.target = box.position.clone();
-                });
-                const light = new BABYLON.DirectionalLight("light", new BABYLON.Vector3(0, -1, -0.5), scene);
-                light.castShadow = true;
-                let canControl = false;
-                const inputMap = {};
-                scene.actionManager = new BABYLON.ActionManager(scene);
-                scene.actionManager.registerAction(
-                    new BABYLON.ExecuteCodeAction(
-                        BABYLON.ActionManager.OnKeyDownTrigger,
-                        function (evt) {
-                            if (canControl) {
-                                inputMap[evt.sourceEvent.key] = evt.sourceEvent.type == "keydown";
-                                if (evt.sourceEvent.key == " ") {
-                                    box.physicsImpostor.applyImpulse(new BABYLON.Vector3(0, 3, 0), box.getAbsolutePosition());
-                                }
+            const light = new BABYLON.DirectionalLight("light", new BABYLON.Vector3(0, -1, -0.5), scene);
+            light.castShadow = true;
+            let canControl = false;
+            const inputMap = {};
+            scene.actionManager = new BABYLON.ActionManager(scene);
+            scene.actionManager.registerAction(
+                new BABYLON.ExecuteCodeAction(
+                    BABYLON.ActionManager.OnKeyDownTrigger,
+                    function (evt) {
+                        if (canControl) {
+                            inputMap[evt.sourceEvent.key] = evt.sourceEvent.type == "keydown";
+                            if (evt.sourceEvent.key == " ") {
+                                box.physicsImpostor.applyImpulse(new BABYLON.Vector3(0, 3, 0), box.getAbsolutePosition());
                             }
                         }
-                    )
-                );
-                scene.actionManager.registerAction(
-                    new BABYLON.ExecuteCodeAction(
-                        BABYLON.ActionManager.OnKeyUpTrigger,
-                        function (evt) {
-                            if (canControl) {
-                                inputMap[evt.sourceEvent.key] = evt.sourceEvent.type == "keydown";
-                            }
-                        }
-                    )
-                );
-                setInterval(function () {
-                    const zombie = createZombie(scene, box);
-                }, 999);
-                scene.onBeforeRenderObservable.add(() => {
-                    if (box.intersectsMesh(ground, false) && !canControl) {
-                        canControl = true;
-                        ground.physicsImpostor.setLinearVelocity(new BABYLON.Vector3(0, 0, 0));
                     }
-                    if (canControl) {
-                        if (inputMap["w"]) {
-                            box.physicsImpostor.applyImpulse(new BABYLON.Vector3(0, 0, 0.3), box.getAbsolutePosition());
-                        }
-                        if (inputMap["s"]) {
-                            box.physicsImpostor.applyImpulse(new BABYLON.Vector3(0, 0, -0.3), box.getAbsolutePosition());
-                        }
-                        if (inputMap["a"]) {
-                            box.physicsImpostor.applyImpulse(new BABYLON.Vector3(-0.3, 0, 0), box.getAbsolutePosition());
-                        }
-                        if (inputMap["d"]) {
-                            box.physicsImpostor.applyImpulse(new BABYLON.Vector3(0.3, 0, 0), box.getAbsolutePosition());
+                )
+            );
+            scene.actionManager.registerAction(
+                new BABYLON.ExecuteCodeAction(
+                    BABYLON.ActionManager.OnKeyUpTrigger,
+                    function (evt) {
+                        if (canControl) {
+                            inputMap[evt.sourceEvent.key] = evt.sourceEvent.type == "keydown";
                         }
                     }
-                });
-
-
-                // Функция для обновления информации о каждом игроке
-                function updatePlayerInfo(playerInfo) {
-                    let player = players.find((p) => p.id === playerInfo.id);
-                    if (!player) {
-                        player = {
-                            id: playerInfo.id,
-                            mesh: BABYLON.Mesh.CreateBox("playerBox", 1, scene),
-                            nickname: new BABYLON.GUI.TextBlock()
-                        };
-                        const playerColor = new BABYLON.Color3(Math.random(), Math.random(), Math.random());
-                        player.mesh.material = new BABYLON.StandardMaterial("playerMaterial", scene);
-                        player.mesh.material.diffuseColor = playerColor;
-                        player.mesh.position = new BABYLON.Vector3(playerInfo.x, 1, playerInfo.z);
-                        player.mesh.physicsImpostor = new BABYLON.PhysicsImpostor(player.mesh, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0.1, friction: 5 }, scene);
-
-                        player.nickname.text = playerInfo.nickname;
-                        player.nickname.color = "white";
-                        player.nickname.fontSize = 24;
-                        advancedTexture.addControl(player.nickname);
-
-                        players.push(player);
-                    } else {
-                        player.mesh.position = new BABYLON.Vector3(playerInfo.x, 1, playerInfo.z);
-                    }
+                )
+            );
+            setInterval(function () {
+                const zombie = createZombie(scene, box);
+            }, 999);
+            scene.onBeforeRenderObservable.add(() => {
+                if (box.intersectsMesh(ground, false) && !canControl) {
+                    canControl = true;
+                    ground.physicsImpostor.setLinearVelocity(new BABYLON.Vector3(0, 0, 0));
                 }
-
-                return scene;
-            };
-
-            const startScreen = document.getElementById("startScreen");
-            const playButton = document.getElementById("playButton");
-            playButton.addEventListener("click", function () {
-                if (!scene) {
-                    scene = createScene();
-                    startScreen.style.display = "none";
-                    engine.runRenderLoop(function () {
-                        if (!isPaused) {
-                            scene.render();
-                        }
-                    });
+                if (canControl) {
+                    if (inputMap["w"]) {
+                        box.physicsImpostor.applyImpulse(new BABYLON.Vector3(0, 0, 0.3), box.getAbsolutePosition());
+                    }
+                    if (inputMap["s"]) {
+                        box.physicsImpostor.applyImpulse(new BABYLON.Vector3(0, 0, -0.3), box.getAbsolutePosition());
+                    }
+                    if (inputMap["a"]) {
+                        box.physicsImpostor.applyImpulse(new BABYLON.Vector3(-0.3, 0, 0), box.getAbsolutePosition());
+                    }
+                    if (inputMap["d"]) {
+                        box.physicsImpostor.applyImpulse(new BABYLON.Vector3(0.3, 0, 0), box.getAbsolutePosition());
+                    }
                 }
             });
 
-            function createZombie(scene, player) {
-                const zombie = BABYLON.Mesh.CreateBox("zombie", 1, scene);
-                zombie.position = new BABYLON.Vector3(player.position.x + Math.random() * 100 - 50, 1, player.position.z + Math.random() * 100 - 50);
-                zombie.scaling = new BABYLON.Vector3(0.25, 0.25, 0.25);
-                const size = 0.5;
-                const boundingBox = new BABYLON.Vector3(size, size, size);
-                zombie.physicsImpostor = new BABYLON.PhysicsImpostor(zombie, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0.1, friction: 5, size: boundingBox }, scene);
-                const zombieMaterial = new BABYLON.StandardMaterial("zombieMaterial", scene);
-                zombieMaterial.diffuseColor = new BABYLON.Color3(0, 1, 0);
-                zombie.material = zombieMaterial;
-                zombie.actionManager = new BABYLON.ActionManager(scene);
-                zombie.actionManager.registerAction(
-                    new BABYLON.ExecuteCodeAction(
-                        BABYLON.ActionManager.OnPickTrigger,
-                        function () {
-                            const index = zombies.indexOf(zombie);
-                            if (index !== -1) {
-                                zombies.splice(index, 1);
-                            }
-                            zombie.dispose();
-                        }
-                    )
-                );
-                return zombie;
+            advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
+            
+            // Other GUI elements and player updates can be added here
+            
+            return scene;
+        };
+
+        const startScreen = document.getElementById("startScreen");
+        const playButton = document.getElementById("playButton");
+        playButton.addEventListener("click", function () {
+            if (!scene) {
+                scene = createScene();
+                startScreen.style.display = "none";
+                engine.runRenderLoop(function () {
+                    if (!isPaused) {
+                        scene.render();
+                    }
+                });
             }
         });
-    </script>
+
+        function createZombie(scene, player) {
+            const zombie = BABYLON.Mesh.CreateBox("zombie", 1, scene);
+            zombie.position = new BABYLON.Vector3(player.position.x + Math.random() * 100 - 50, 1, player.position.z + Math.random() * 100 - 50);
+            zombie.scaling = new BABYLON.Vector3(0.25, 0.25, 0.25);
+            const size = 0.5;
+            const boundingBox = new BABYLON.Vector3(size, size, size);
+            zombie.physicsImpostor = new BABYLON.PhysicsImpostor(zombie, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0.1, friction: 5, size: boundingBox }, scene);
+            const zombieMaterial = new BABYLON.StandardMaterial("zombieMaterial", scene);
+            zombieMaterial.diffuseColor = new BABYLON.Color3(0, 1, 0);
+            zombie.material = zombieMaterial;
+            zombie.actionManager = new BABYLON.ActionManager(scene);
+            zombie.actionManager.registerAction(
+                new BABYLON.ExecuteCodeAction(
+                    BABYLON.ActionManager.OnPickTrigger,
+                    function () {
+                        const index = zombies.indexOf(zombie);
+                        if (index !== -1) {
+                            zombies.splice(index, 1);
+                        }
+                        zombie.dispose();
+                    }
+                )
+            );
+            return zombie;
+        }
+    });
+</script>
 </body>
 </html>

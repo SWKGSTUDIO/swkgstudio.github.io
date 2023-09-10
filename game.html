@@ -83,7 +83,7 @@
 
         function drawPlayers() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            for (const player of players.values()) {
+            for (const [playerId, player] of players) {
                 ctx.fillStyle = player.color || 'blue';
                 const x = player.x - (canvas.width / 2); // Центрируем игрока относительно экрана
                 const y = player.y - (canvas.height / 2); // Центрируем игрока относительно экрана

@@ -4,8 +4,8 @@
     <title>2D Online Game</title>
 
     <!-- Yandex.RTB -->
-<script>window.yaContextCb=window.yaContextCb||[]</script>
-<script src="https://yandex.ru/ads/system/context.js" async></script>
+    <script>window.yaContextCb=window.yaContextCb||[]</script>
+    <script src="https://yandex.ru/ads/system/context.js" async></script>
 
     <style>
         body {
@@ -25,24 +25,24 @@
     <canvas id="gameCanvas"></canvas>
 
     <!-- Yandex.RTB R-A-2938411-1 -->
-<script>window.yaContextCb.push(()=>{
-	Ya.Context.AdvManager.render({
-		"blockId": "R-A-2938411-1",
-		"type": "fullscreen",
-		"platform": "touch"
-	})
-})
-</script>
+    <script>window.yaContextCb.push(()=>{
+        Ya.Context.AdvManager.render({
+            "blockId": "R-A-2938411-1",
+            "type": "fullscreen",
+            "platform": "touch"
+        })
+    })
+    </script>
 
-<!-- Yandex.RTB R-A-2938411-5 -->
-<script>window.yaContextCb.push(()=>{
-	Ya.Context.AdvManager.render({
-		"blockId": "R-A-2938411-5",
-		"type": "fullscreen",
-		"platform": "desktop"
-	})
-})
-</script>
+    <!-- Yandex.RTB R-A-2938411-5 -->
+    <script>window.yaContextCb.push(()=>{
+        Ya.Context.AdvManager.render({
+            "blockId": "R-A-2938411-5",
+            "type": "fullscreen",
+            "platform": "desktop"
+        })
+    })
+    </script>
 
     <script>
         const canvas = document.getElementById('gameCanvas');
@@ -65,6 +65,9 @@
         // Текущая позиция игрока
         let currentPlayerX = canvas.width / 2;
         let currentPlayerY = canvas.height / 2;
+
+        // Текущий угол поворота игрока
+        let currentAngle = 0;
 
         // Целевая позиция для движения игрока
         let targetX = currentPlayerX;
@@ -143,7 +146,11 @@
                         ctx.beginPath();
                         ctx.moveTo(trailX, trailY);
                     } else {
-                        ctx.lineTo(trailX, trailY);
+                        // Рисуем кривую Безье между предыдущей точкой и текущей
+                        const prevTrail = playerTrails[index - 1];
+                        const cpX = (trailX + prevTrail.x - cameraX) / 2;
+                        const cpY = (trailY + prevTrail.y - cameraY) / 2;
+                        ctx.quadraticCurveTo(prevTrail.x - cameraX, prevTrail.y - cameraY, cpX, cpY);
                     }
                 });
 
@@ -172,6 +179,7 @@
 
         const updateInterval = 16; // Примерно 60 кадров в секунду
         let playerSpeed = 2.5; // Начальная скорость игрока
+        const turnSpeed = 0.03; // Скорость поворота игрока (меньше значение = медленнее поворот)
 
         window.addEventListener('wheel', (event) => {
             // Изменяем скорость игрока в зависимости от направления прокрутки колесика мыши
@@ -185,30 +193,48 @@
             }
         });
 
-        function moveCurrentPlayer() {
-            const dx = targetX - currentPlayerX;
-            const dy = targetY - currentPlayerY;
+        // Минимальная дистанция, на которую игрок будет замедляться и останавливаться
+const minDistance = 25;
 
-            if (Math.abs(dx) > playerSpeed || Math.abs(dy) > playerSpeed) {
-                const angle = Math.atan2(dy, dx);
-                currentPlayerX += Math.cos(angle) * playerSpeed;
-                currentPlayerY += Math.sin(angle) * playerSpeed;
-            } else {
-                currentPlayerX = targetX;
-                currentPlayerY = targetY;
-            }
+function moveCurrentPlayer() {
+    const dx = targetX - currentPlayerX;
+    const dy = targetY - currentPlayerY;
+    const distance = Math.sqrt(dx * dx + dy * dy); // Расстояние до цели
 
-            if (ws.readyState === WebSocket.OPEN) {
-                ws.send(JSON.stringify({
-                    type: 'playerPosition',
-                    x: currentPlayerX,
-                    y: currentPlayerY,
-                    trail: { x: currentPlayerX, y: currentPlayerY, alpha: 1.0 },
-                }));
-            }
+    if (distance > minDistance) {
+        const angle = Math.atan2(dy, dx);
+        const angleDiff = angle - currentAngle;
 
-            drawPlayers();
+        // Плавное изменение угла
+        if (angleDiff > Math.PI) {
+            currentAngle += 2 * Math.PI;
+        } else if (angleDiff < -Math.PI) {
+            currentAngle -= 2 * Math.PI;
         }
+
+        currentAngle += angleDiff * turnSpeed;
+
+        // Ограничиваем скорость, чтобы игрок мог замедлиться и остановиться
+        if (distance < playerSpeed) {
+            currentPlayerX = targetX;
+            currentPlayerY = targetY;
+        } else {
+            currentPlayerX += Math.cos(currentAngle) * playerSpeed;
+            currentPlayerY += Math.sin(currentAngle) * playerSpeed;
+        }
+    }
+
+    if (ws.readyState === WebSocket.OPEN) {
+        ws.send(JSON.stringify({
+            type: 'playerPosition',
+            x: currentPlayerX,
+            y: currentPlayerY,
+            trail: { x: currentPlayerX, y: currentPlayerY, alpha: 1.0 },
+        }));
+    }
+
+    drawPlayers();
+}
 
         function animate() {
             moveCurrentPlayer();

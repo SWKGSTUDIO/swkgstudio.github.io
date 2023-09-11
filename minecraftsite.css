@@ -1,7 +1,7 @@
 .html {
   width: 100%;
   height: 100vh;
-  background: rgb(0, 0, 0);
+  background-color: transparent; /* Установим фон как прозрачный */
   margin: 0;
   padding: 0;
   overflow: hidden;
@@ -10,9 +10,12 @@
 
 body {
   background-size: cover;
+  background-color: transparent; /* Установим фон как прозрачный */
   background: linear-gradient(0deg, #191310, #1a250e);
   background-repeat: no-repeat;
   background-attachment: fixed;
+  height: 100%; /* Установите высоту на 100% */
+  overflow: visible; /* Уберите overflow: hidden */
 }
 
   .custom-container {
@@ -25,11 +28,11 @@ body {
 
   .background-tile {
     position: fixed;
-    overflow: auto;
+    overflow: hidden;
     opacity: 0.09;
     text-align: left;
-    animation: slideAnima 190s linear infinite;
-    height: 100vh;
+    animation: slideAnima 50s linear infinite;
+    height: 100%;
     width: 100%;
     z-index: 10;
     background: url("assets/img/tile.webp"), var(--bs-border-color-translucent);
@@ -37,7 +40,7 @@ body {
   
 @keyframes slideAnima {
     0% {
-        background-position: 0 0;
+        background-position: 0 100%;
     }
     100% {
         background-position: 100% 0;

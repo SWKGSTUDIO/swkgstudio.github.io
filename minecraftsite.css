@@ -68,6 +68,7 @@ body {
 .btn-primary:last-child {
   margin-right: 0; /* Убираем отступ справа у последней кнопки */
 }
+
     .center-swkg {
       display: inline-block; /* Сделать блоком внутри контейнера */
       color: #ffffff; /* Цвет текста (белый) */
@@ -86,11 +87,7 @@ body {
       text-transform: uppercase; /* Преобразование текста в заглавные буквы */
       font-family: Arial, sans-serif; /* Шрифт */
     }
-    
-    .logo-img {
-      margin-left: 13px;
-    }
-    
+  
     #p-element {
       color: rgb(232, 236, 241);
       font-size: 12px;
@@ -98,18 +95,26 @@ body {
       margin-bottom: 0px;
     }
 
-.container.logo-block{
-  background: linear-gradient(90deg, #2c211a, #2e4416);
-  padding: 20px;
-  border-radius: 25px;
-  color: white;
-  margin-top: 20px;
-  margin-right: 20px;
-  margin-left: 20px;
-  overflow: auto;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
+    .container.logo-block {
+      background: linear-gradient(90deg, #2c211a, #2e4416);
+      padding: 20px;
+      border-radius: 25px;
+      color: white;
+      text-align: center; /* Выравнивание по центру */
+    }
+    
+    .logo-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center; /* Выравнивание по центру по горизонтали */
+      margin-bottom: 20px; /* Отступ снизу для разделения с кнопками */
+    }
+    
+    .logo-img {
+      width: 38px;
+      height: 61px;
+    }
+    
 
 .container.mod-block{
   background: linear-gradient(90deg, #2c211a, #2e4416);
@@ -141,3 +146,5 @@ body {
 .container.mod-block::-webkit-scrollbar-thumb {
   background-color: rgba(169, 169, 169, 0);
 }
+
+

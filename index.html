@@ -338,6 +338,33 @@ function handleTileClick(link, imageSrc, isMobile) {
   </script>
 
 
+<script>
+  var bab = new BlockAdBlock({
+    checkOnLoad: true,
+    resetOnEnd: true,
+  });
+
+  bab.onDetected(function() {
+    // Обнаружен AdBlocker или AdGuard
+    var adBlockerDetected = document.createElement("div");
+    adBlockerDetected.innerHTML = "AdBlocker or AdGuard detected. Please disable it to continue.";
+    adBlockerDetected.style.color = "red";
+    adBlockerDetected.style.fontSize = "20px";
+    adBlockerDetected.style.textAlign = "center";
+    adBlockerDetected.style.padding = "20px";
+    adBlockerDetected.style.position = "fixed"; // Добавляем фиксированное позиционирование
+    adBlockerDetected.style.top = "50%"; // Положение по вертикали в середине
+    adBlockerDetected.style.left = "50%"; // Положение по горизонтали в середине
+    adBlockerDetected.style.transform = "translate(-50%, -50%)"; // Центрирование
+    document.body.appendChild(adBlockerDetected);
+  });
+
+  bab.onNotDetected(function() {
+    // AdBlocker или AdGuard не обнаружены
+  });
+</script>
+
+
 
 
 <script type="text/javascript"  charset="utf-8">

@@ -326,6 +326,40 @@ function handleTileClick(link, imageSrc, isMobile) {
       return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     }
   </script>
+
+<script>
+  // Функция для проверки наличия AdBlocker
+  function checkAdBlocker() {
+    const adBlockerDetected = document.createElement("div");
+    adBlockerDetected.innerHTML = "AdBlock detected. Please disable it to continue.";
+    adBlockerDetected.style.color = "red";
+    adBlockerDetected.style.fontSize = "20px";
+    adBlockerDetected.style.textAlign = "center";
+    adBlockerDetected.style.padding = "20px";
+
+    // Проверяем наличие элемента, который обычно блокируется AdBlocker'ом
+    const adBlockedElement = document.createElement("div");
+    adBlockedElement.className = "ad";
+    adBlockedElement.style.display = "none";
+
+    document.body.appendChild(adBlockedElement);
+
+    setTimeout(() => {
+      if (getComputedStyle(adBlockedElement).display === "none") {
+        // Если элемент скрыт, то AdBlocker заблокировал его
+        document.body.appendChild(adBlockerDetected);
+      }
+
+      // Удаляем временный элемент
+      document.body.removeChild(adBlockedElement);
+    }, 100);
+  }
+
+  // Вызываем функцию проверки AdBlocker при загрузке страницы
+  window.addEventListener("load", checkAdBlocker);
+</script>
+
+
 </body>
 </html>
 </div>

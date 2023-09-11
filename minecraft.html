@@ -1,193 +1,146 @@
 <!DOCTYPE html>
 <html lang="en" class="custom-html">
-
 <head>
-
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
   <title>SWKG - Minecraft</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <link rel="canonical" href="https://swkgstudio.github.io/">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta property="og:url" content="https://swkgstudio.github.io/">
-    <meta name="google-site-verification" content="I_RTFSeKJvvHtJ5YmwNENy5Dqrstl8kFA8VQdmj6p9I" />
-    <meta name="description" content="Only Minecraft">
-    <link rel="icon" type="image/png" sizes="512x512" href="assets/img/icon_logo.png">
-    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Anton&amp;display=swap">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Black+Han+Sans&amp;display=swap">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Black+Ops+One&amp;display=swap">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bowlby+One&amp;display=swap">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bowlby+One+SC&amp;display=swap">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <link rel="stylesheet" href="minecraftsite.css">
-    
-    <!-- Yandex.RTB -->
-  <script>window.yaContextCb=window.yaContextCb||[]</script>
-  <script src="https://yandex.ru/ads/system/context.js" async></script>  
-
-  <script type="module">
-
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.2.0/firebase-app.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.2.0/firebase-analytics.js";
+  <link rel="canonical" href="https://swkgstudio.github.io/">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:url" content="https://swkgstudio.github.io/">
+  <meta name="google-site-verification" content="I_RTFSeKJvvHtJ5YmwNENy5Dqrstl8kFA8VQdmj6p9I">
+  <meta name="description" content="Only Minecraft">
+  <link rel="icon" type="image/png" sizes="512x512" href="assets/img/icon_logo.png">
+  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Anton&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Black+Han+Sans&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Black+Ops+One&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bowlby+One&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bowlby+One+SC&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="minecraftsite.css">
   
-    const firebaseConfig = {
-      apiKey: "AIzaSyBkqcs5Y-PBT0ar28KUysYIlwcCzoAOFao",
-      authDomain: "swkg-595fe.firebaseapp.com",
-      projectId: "swkg-595fe",
-      storageBucket: "swkg-595fe.appspot.com",
-      messagingSenderId: "991144151960",
-      appId: "1:991144151960:web:95f0dd7861af2d9f4b39ed",
-      measurementId: "G-Z1KC8WW6Y3"
-    };
+  <!-- Yandex.RTB -->
+  <script>window.yaContextCb=window.yaContextCb||[]</script>
+  <script src="https://yandex.ru/ads/system/context.js" async></script>
 
-    const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
-
-  </script>
+  <script src="assets/js/firebase-config.js"></script>
 
 </head>
-
 <body class="custom-body">
+  <div class="container custom-container">
+    <img class="background-image" src="assets/img/mineback.webp" alt="Background Image">
+    <img class="background-tile">
+  </div>
+
+  <!-- Блок 1: Логотип и текст -->
+  <div class="container logo-container my-4">
+    <div class="row align-items-center">
+      <div class="col-md-2">
+        <a href="/index.html" class="logo-link">
+          <div class="logo-wrapper">
+            <img src="assets/img/logo.webp" width="38" height="61" class="logo-img" alt="SWKG Logo">
+            <span class="logo-text">SWKG</span>
+          </div>
+        </a>
+      </div>
+      <div class="col-md-10">
+        <div class="text-container">
+          <h1 class="text-uppercase fw-bold" id="h1-element">MINECRAFT</h1>
+          <p id="p-element" class="my-3">SWKG Mods for minecraft google play</p>
+        </div>
+      </div>
+      <div class="col-md-12 mt-3">
+        <a href="index.html" class="btn btn-primary btn-block">1</a>
+        <a href="index.html" class="btn btn-primary btn-block">2</a>
+        <a href="index.html" class="btn btn-primary btn-block">3</a>
+      </div>
+      
+    </div>
+  </div>
+  
+  
+  
+  
+
+  <div class="container my-4">
+    <div class="row">
+      <!-- Блок 2: Информация -->
+      <div class="col-md-8"> <!-- Увеличили ширину блока информации с 6 на 8 -->
+        <div class="container information-block">
+          <!-- Здесь будет ваша информация -->
+          <h1 class="text-uppercase fw-bold" id="h1-element">INFO</h1>
+          <p id="p-element" class="my-3">test</p>
+        </div>
+      </div>
+  
+      <!-- Блоки 3 и 4: Моды (справа) и Скины (под модами) -->
+      <div class="col-md-4"> <!-- Уменьшили ширину виджетов с 6 на 4 -->
+        <div class="row">
+          <!-- Блок 3: Моды (справа) -->
+          <div class="col-md-12">
+            <div class="container mod-block">
+              <div class="app-tiles-container" id="appTiles">
+                <!-- Здесь будут ваши моды -->
+              </div>
+            </div>
+          </div>
+  
+          <!-- Блок 4: Скины (под модами) -->
+          <div class="col-md-12">
+            <div class="container mod-block">
+              <!-- Здесь будет информация о скинах -->
+              <h1 class="text-uppercase fw-bold">Skins</h1>
+              <p>Skins Content</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+  <div class="container my-4">
+    <div class="row">
+      <!-- Блок 2: Информация -->
+      <div class="col-md-8"> <!-- Увеличили ширину блока информации с 6 на 8 -->
+        <div class="container information-block">
+          <!-- Здесь будет ваша информация -->
+          <h1 class="text-uppercase fw-bold" id="h1-element">1</h1>
+          <p id="p-element" class="my-3">1</p>
+        </div>
+      </div>
+  
+      <div class="container my-4">
+        <div class="row">
+          <!-- Блок 2: Информация -->
+          <div class="col-md-8"> <!-- Увеличили ширину блока информации с 6 на 8 -->
+            <div class="container information-block">
+              <!-- Здесь будет ваша информация -->
+              <h1 class="text-uppercase fw-bold" id="h1-element">2</h1>
+              <p id="p-element" class="my-3">2</p>
+            </div>
+          </div>
+
+          <div class="container my-4">
+            <div class="row">
+              <!-- Блок 2: Информация -->
+              <div class="col-md-8"> <!-- Увеличили ширину блока информации с 6 на 8 -->
+                <div class="container information-block">
+                  <!-- Здесь будет ваша информация -->
+                  <h1 class="text-uppercase fw-bold" id="h1-element">3</h1>
+                  <p id="p-element" class="my-3">3</p>
+                </div>
+              </div>
+  
 
 </body>
 
-</div>
-
-<a href="index.html" class="game-button">
-  <i class="fas fa-arrow-left"></i> <!-- Иконка "назад" -->
-</a>
-
-
-<div class="container custom-container">
-
-  <img class="background-image" src="assets/img/mineback.webp" alt="Background Image">
-
-  <img class="background-tile">
-
-</div>
-
-<div class="col logo-container">
-  <a href="/index.html" class="logo-link">
-    <strong class="logo-text">
-      <img src="assets/img/logo.webp" width="38" height="61" class="logo-img">SWKG
-    </strong>
-  </a>
-  <div class="text-container">
-    <h1 class="text-uppercase fw-bold" id="h1-element"></h1>
-    <p id="p-element" class="my-3"></p>
-  </div>
-</div>
-
-    </div>
-
-    <div class="row" style="overflow: hidden;"><!DOCTYPE html>
-
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Game Tiles</title>
-  <link rel="stylesheet" href="assets/css/minecraftsite.css">
-</head>
-
-<body>
-  <section class="phone-container">
-    <div class="app-tiles-container" id="appTiles">
-    </div>
-  </section>
-
-  <div class="button-list-container">
-    <div id="list-widget" style="display: none;"></div>
-    <ul class="button-list horizontal" id="list">
-    </ul>
-  </div>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
-  <script>
-    function handleTileClick(link, imageSrc, isMobile) {
-      showYandexAd(isMobile, () => {
-        setTimeout(() => {
-          window.open(link, '_blank');
-        }, 2000);
-      });
-    }
-  
-    function showYandexAd(isMobile, callback) {
-      const mobileBlockId = 'R-A-2697791-3';
-      const desktopBlockId = 'R-A-2697791-1';
-  
-      if (isMobile) {
-        Ya.Context.AdvManager.render({
-          blockId: mobileBlockId,
-          type: 'fullscreen',
-          platform: 'touch'
-        });
-      } else {
-        Ya.Context.AdvManager.render({
-          blockId: desktopBlockId,
-          type: 'fullscreen',
-          platform: 'desktop'
-        });
-      }
-  
-      if (callback && typeof callback === 'function') {
-        callback();
-      }
-    }
-  
-    function isMobileDevice() {
-      return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-    }
-  
-    window.yaContextCb = window.yaContextCb || [];
-  
-    const apiKey = 'key9kpLHqsdRFXvS2';
-    const baseId = 'appaePimTt1Ji6hSr';
-    const tableName = 'tbl4Q3aHOdskWF9aR';
-  
-    fetch(`https://api.airtable.com/v0/${baseId}/${tableName}?api_key=${apiKey}`)
-      .then(response => response.json())
-      .then(data => {
-        console.log('Received data:', data);
-  
-        const appTilesContainer = document.getElementById("appTiles");
-  
-        data.records.forEach(record => {
-          const fields = record.fields;
-          const appTile = document.createElement("div");
-          appTile.classList.add("app-tile");
-  
-          const image = document.createElement("img");
-          image.src = fields.Image;
-  
-          const title = document.createElement("div");
-          title.textContent = fields.Title;
-          title.classList.add("app-title");
-  
-          appTile.addEventListener('click', () => handleTileClick(fields.URL, fields.Image, isMobileDevice()));
-  
-          appTile.appendChild(image);
-          appTile.appendChild(title);
-          appTilesContainer.appendChild(appTile);
-        });
-  
-        setTimeout(() => {
-          document.getElementById('list-widget').style.display = 'block';
-        }, 100);
-      })
-      .catch(error => {
-        console.error(error);
-      });
-  </script>
-  
+  <script src="assets/js/MinecraftModPanel.js"></script>
   <script src="assets/js/jquery.min.js"></script>
   <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-  <script src="assets/js/localization.js"></script>
+  <!-- <script src="assets/js/localization.js"></script> -->
   <script src="assets/js/promocode.js"></script>
-  
 </body>
-
 </html>
-

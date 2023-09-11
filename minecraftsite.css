@@ -23,7 +23,7 @@
     z-index: -100;
 
   }
-  
+
   .background-image {
     position: fixed;
     overflow: auto;
@@ -33,7 +33,7 @@
     animation: slideAnima 190000s linear infinite;
     height: 100vh;
     width: 100%;
-    filter: blur(5px); /* Размытие на 5 пикселей (настройте по вашему желанию) */
+    filter: blur(5px);
     background: linear-gradient(130deg, #141137, #2f204d 100%), #1f0b43;
   }
 
@@ -42,7 +42,7 @@
     overflow: auto;
     opacity: 0.09;
     text-align: left;
-    animation: slideAnima 190s linear infinite; /* Уменьшил значение времени анимации */
+    animation: slideAnima 190s linear infinite;
     height: 100vh;
     width: 100%;
     background: url("assets/img/tile.webp"), var(--bs-border-color-translucent);
@@ -57,22 +57,31 @@
     }
 }
 
-  .game-button {
-    position: fixed;
-    top: 20px;
-    right: 40px;
-    left: auto;
-    background-color: #542eae00;
-    color: white;
-    font-size: 23px;
-    padding: 10px 20px;
-    border-radius: 11px;
-    text-decoration: none;
-    transition: transform 0.2s ease-in-out;
-    z-index: 999;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    background-image: linear-gradient(to bottom, #7a22ff, #5511cc);
-  }
+.col-md-12.mt-3 {
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn-primary {
+  flex-grow: 1;
+  background-color: #542eae00;
+  color: white;
+  font-size: 23px;
+  padding: 10px 20px;
+  border-radius: 11px;
+  text-decoration: none;
+  transition: transform 0.2s ease-in-out;
+  z-index: 999;
+  border: none;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(0deg, #2a2623, #494536); /* Градиентный фон */
+  margin-right: 5px; /* Расстояние между кнопками */
+}
+
+.btn-primary:last-child {
+  margin-right: 0; /* Убираем отступ справа у последней кнопки */
+}
+
   
   .game-button::before {
     margin-right: 10px;
@@ -96,17 +105,16 @@
     .logo-text {
       color: rgb(255, 255, 255);
       font-size: 45px;
-      margin: 10px;
       font-family: 'Bowlby One', serif;
       z-index: 2;
     }
     
     .logo-img {
-      margin: 13px;
+      margin-left: 13px;
     }
     
+    
     .text-container {
-      /*max-width: 350px;*/
       margin: 0px;
       margin-top: 0px;
       margin-left: 5%;
@@ -125,117 +133,114 @@
       margin-top: 0px;
       margin-bottom: 0px;
     }
+
+ /* Стили для блоков с одинаковым дизайном */
+.container.logo-container {
+  background: linear-gradient(90deg, #2c211a, #2e4416); /* Градиентный фон */
+  padding: 20px; /* Внутренний отступ блоков */
+  border-radius: 25px; /* Закругление углов блоков */
+  color: white;
+}
+
+.container.information-block{
+  background: linear-gradient(90deg, #2c211a, #2e4416); /* Градиентный фон */
+  height: 100%;
+  padding: 20px;
+  border-radius: 25px;
+  color: white;
+  margin-top: 20px; /* Расстояние между блоками по высоте */
+}
+.container.widgets {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%; /* Занимаем всю доступную высоту */
+  width: 100%; /* Занимаем всю доступную ширину */
+}
+.container.mod-block,
+.container.skin-block {
+  background: linear-gradient(90deg, #2c211a, #2e4416);
+  padding: 20px;
+  border-radius: 25px;
+  color: white;
+  margin-top: 20px;
+  height: 100%;
+  flex-grow: 1;
+}
+
+
+.text-container {
+  text-align: left; /* Выравнивание текста внутри блока */
+}
+
+.text-uppercase {
+  text-transform: uppercase; /* Преобразование текста в заглавные буквы */
+}
     
-    .button-list li {
-        height: 150px;
-        border-radius: 10px;
-        overflow: hidden;
-        transition: transform 0.3s ease;
-        position: relative;
-        padding: 10px;
-        box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
-        animation: buttonBreathing 3s infinite ease-in-out;
-      }
-      
-      .button-list li button {
-        width: 100%;
-        height: 100%;
-        padding: 0;
-        border: none;
-        background-color: transparent;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        overflow: hidden;
-        transition: transform 0.3s ease;
-        position: relative;
-        animation: buttonBreathing 3s infinite ease-in-out;
-      }
-      
-      .button-list li img, #yandex_rtb_R-A-2697791-2 iframe {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        transition: transform 0.3s ease;
-      }
-      
-      .button-list li:hover {
-        transform: scale(1.05);
-      }
-      
-      .image-text {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        background-color: rgba(0, 0, 0, 0.7);
-        color: white;
-        font-size: 10px;
-        transition: opacity 0.3s ease;
-        pointer-events: none;
-      }
-      
-      .button-list li:hover .image-text {
-        opacity: 1;
-      }
-      
-      .app-tiles-container {
-        display: grid;
-        grid-template-columns: repeat(5, 1fr);
-        gap: 10px;
-        padding: 25px;
-        max-height: 100%;
-        background-color: rgba(0, 0, 0, 0);
-        overflow-y: auto;
-        scrollbar-width: none;
-        width: fit-content;
-        margin: 0 auto;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-      }
-      
-      .app-tiles-container::-webkit-scrollbar {
-        width: 0;
-        margin-left: 10px;
-      }
-      
-      .app-title {
-        font-size: 16px;
-        font-weight: bold;
-        color: #fff;
-        text-align: center;
-        margin-top: 5px;
-      
-      }
-      
-      .app-tile {
-        background-color: rgba(0, 0, 0, 0);
-        text-align: center;
-        padding: 5px;
-        margin: 5px;
-        cursor: pointer;
-        color: #ffffff;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-      }
-      
-      .app-tile img {
-        width: 180px;
-        height: 180px;
-        object-fit: cover;
-        border: 5px solid rgb(65, 137, 21);
-        border-radius: 25px;
-        animation: pulse 3s ease infinite;
-        transition: transform 0.3s ease;
-      }
-      
-      .app-tile:hover img {
-        animation: breathe 3s ease infinite, pulse 3s ease infinite;
-        transform: scale(1);
-      }
+.mod-block {
+  /* Стили для блока модов */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: auto; /* Добавляем возможность прокручивать содержимое */
+  max-height: 400px; /* Устанавливаем максимальную высоту блока, чтобы он не растягивался бесконечно */
+  overflow: auto; /* Добавляем полосу прокрутки при необходимости */
+  scrollbar-width: none; /* Скрываем стандартную полосу прокрутки */
+  -ms-overflow-style: none; /* Скрываем стандартную полосу прокрутки для Internet Explorer */
+}
+
+.mod-block::-webkit-scrollbar {
+  width: 0; /* Скрываем полосу прокрутки в Chrome и Safari */
+}
+
+.app-tiles-container {
+  /* Стили для контейнера модов */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px; /* Расстояние между модами */
+}
+
+.app-tile {
+  border-radius: 10px;
+  padding: 25px;
+  overflow: hidden;
+  color: white;
+  transition: transform 0.3s ease;
+  position: relative;
+  animation: buttonBreathing 3s infinite ease-in-out;
+  text-align: center;
+  cursor: pointer;
+  width: 100%; /* Ширина зависит от размера .mod-block */
+  max-width: 150px; /* Максимальная ширина .app-tile */
+}
+
+.app-title {
+  margin-top: 10px;
+  font-size: 12px;
+}
+
+.app-tile img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border: 5px solid rgb(65, 137, 21);
+  border-radius: 25px;
+  animation: pulse 3s ease infinite;
+  transition: transform 0.3s ease;
+}
+
+.app-tile:hover {
+  transform: scale(1.05);
+}
+
+.app-tile:hover img {
+  animation: breathe 3s ease infinite, pulse 3s ease infinite;
+  transform: scale(1);
+}
+
+
+
       
       @keyframes breathe {
         0%, 100% {
@@ -249,12 +254,12 @@
       @keyframes pulse {
         0%, 100% {
             border-image-slice: 1;
-            box-shadow: 0 0 10px rgb(64, 128, 0);
-            border-radius: 40%;
+            box-shadow: 0 0 5px rgb(64, 128, 0);
+            border-radius: 20%;
         }
         50% {
             border-image-slice: 1;
-            box-shadow: 0 0 30px rgb(164, 255, 36);
+            box-shadow: 0 0 15px rgb(164, 255, 36);
             border-radius: 30%;
         }
       }
@@ -352,7 +357,6 @@
         }
       }
       
-      /* Добавляем анимацию для кнопок */
       @keyframes buttonBreathing {
         0%, 100% {
             transform: scale(1);

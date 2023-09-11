@@ -183,17 +183,19 @@
 
 /* Стили для кнопки */
 .custom-dialog button {
+  display: block;
+  cursor: pointer;
   background-color: #542eae;
   color: white;
   font-size: 23px;
+  margin: 10px auto;
   padding: 10px 20px;
-  margin: 0 auto;
   border-radius: 11px;
   text-decoration: none;
   transition: transform 0.2s ease-in-out;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   background-image: linear-gradient(to bottom, #7a22ff, #5511cc);
-  width: auto; /* Добавьте это свойство */
+  width: 100%;
 }
 
 

@@ -132,7 +132,7 @@ Sweety Kitty Games Studio также приветствует вас в мире
 
   <script>
 
-        function checkAdBlockError() {
+          function checkAdBlockError() {
             var script = document.createElement('script');
             script.src = 'https://yandex.ru/ads/system/context.js';
             script.onerror = function() {
@@ -153,6 +153,10 @@ Sweety Kitty Games Studio также приветствует вас в мире
                 dialog.appendChild(closeButton);
                 
                 document.body.appendChild(dialog);
+
+                // Показать невидимую панель, блокирующую взаимодействие
+                var overlay = document.querySelector('.overlay');
+                overlay.style.display = 'block';
             };
             document.body.appendChild(script);
         }

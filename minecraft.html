@@ -37,29 +37,36 @@
 </head>
 
 <body>
+
+
   <div class="container custom-container">
     <!-- <img class="background-image" src="assets/img/mineback.webp" alt="Background Image"> -->
     <img class="background-tile">
   </div>
 
-  <!-- Блок: Логотип и текст -->
-  <div class="container my-4 logo-block mx-auto">
-    <div class="row align-items-center">
-      <a href="/index.html" class="logo-link">
-        <div class="logo-wrapper">
-          <img src="assets/img/logo.webp" width="38" height="61" class="logo-img" alt="SWKG Logo">
-          <div class="center-swkg">SWKG</div>
-        </div>
-      </a>
-    </div>
-    <div class="row mt-3">
-      <div class="col-md-12 d-flex justify-content-between">
-        <a href="index.html" class="btn btn-primary">INFO</a>
-        <a href="index.html" class="btn btn-primary">MODS</a>
-        <a href="index.html" class="btn btn-primary">GAME</a>
+  <div class="container logo-block mx-auto">
+  <div class="row align-items-center">
+    <a href="/index.html" class="logo-link">
+      <div class="logo-wrapper">
+        <img src="assets/img/logo.webp" width="38" height="61" class="logo-img" alt="SWKG Logo">
+        <div class="center-swkg">SWKG</div>
       </div>
+    </a>
+  </div>
+  <div class="row mt-3">
+    <div class="col-md-12 d-flex justify-content-between">
+      <a href="index.html" class="btn btn-primary">HOME</a>
+      <a class="btn btn-primary scroll-to-app-tiles">MODS</a>
+      <a href="index.html" class="btn btn-primary scroll-to-app-tiles">GAME</a>
     </div>
   </div>
+</div>
+
+
+
+
+
+
 
   <!-- Блок: Информация 1 -->
   <div class="container my-4 content-block mx-auto">
@@ -111,9 +118,14 @@
 
   
 
+
+
+
+
+
+
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script src="assets/js/MinecraftModPanel.js"></script>
-
   <script src="assets/bootstrap/js/bootstrap.min.js"></script>
 
   <script>
@@ -146,6 +158,20 @@ function toggleContent(block) {
     block.classList.add('show-content');
   }
 }
+
+// Находим кнопку
+const scrollToAppTilesButton = document.querySelector('.scroll-to-app-tiles');
+
+// Находим блок с app-tiles
+const appTilesBlock = document.querySelector('.app-tiles-container');
+
+// Добавляем обработчик события на кнопку
+scrollToAppTilesButton.addEventListener('click', (e) => {
+  e.preventDefault(); // Предотвращаем переход по ссылке
+
+  // Прокручиваем до блока с app-tiles с плавной анимацией
+  appTilesBlock.scrollIntoView({ behavior: 'smooth' });
+});
 
 
   </script>

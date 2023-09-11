@@ -105,7 +105,7 @@
   transition: transform 0.2s ease-in-out;
   z-index: 999;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  background-image: linear-gradient(to bottom, #a3ff22, #49cc11);
+  background-image: linear-gradient(to bottom, #7abf19, #2d810a);
   margin-right: 10px; /* Отступ между кнопками */
 }
 

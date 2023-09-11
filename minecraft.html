@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en" class="custom-html">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
   <title>SWKG - Minecraft</title>
   <link rel="canonical" href="https://swkgstudio.github.io/">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <meta property="og:url" content="https://swkgstudio.github.io/">
   <meta name="google-site-verification" content="I_RTFSeKJvvHtJ5YmwNENy5Dqrstl8kFA8VQdmj6p9I">
   <meta name="description" content="Only Minecraft">
@@ -17,121 +17,67 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bowlby+One&display=swap">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bowlby+One+SC&display=swap">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/mineGamePanel.css">
   <link rel="stylesheet" href="minecraftsite.css">
+
   
   <!-- Yandex.RTB -->
   <script>window.yaContextCb=window.yaContextCb||[]</script>
   <script src="https://yandex.ru/ads/system/context.js" async></script>
 
-  <script src="assets/js/firebase-config.js"></script>
+  <!-- <script src="assets/js/firebase-config.js"></script> -->
 
 </head>
-<body class="custom-body">
+
+<body>
   <div class="container custom-container">
-    <img class="background-image" src="assets/img/mineback.webp" alt="Background Image">
+    <!-- <img class="background-image" src="assets/img/mineback.webp" alt="Background Image"> -->
     <img class="background-tile">
   </div>
 
-  <!-- Блок 1: Логотип и текст -->
-<div class="container logo-container my-4">
+<!-- Блок 1: Логотип и текст -->
+<div class="container my-4 logo-block mx-auto">
   <div class="row align-items-center">
-    <div class="col-md-2">
-      <a href="/index.html" class="logo-link">
-        <div class="logo-wrapper">
-          <img src="assets/img/logo.webp" width="38" height="61" class="logo-img" alt="SWKG Logo">
-        </div>
-      </a>
-    </div>
-
-    <div class="col-md-6 d-flex align-items-center justify-content-center">
-      <div class="text-container text-center">
+    <a href="/index.html" class="logo-link">
+      <div class="logo-wrapper">
+        <img src="assets/img/logo.webp" width="38" height="61" class="logo-img" alt="SWKG Logo">
         <div class="center-swkg">SWKG</div>
       </div>
-    </div>    
-
-    <div class="col-md-4">
-      <div class="text-container text-end">
-        <h1 class="text-uppercase fw-bold minecraftText">MINECRAFT</h1>
-      </div>
-    </div>
-    
-
-    <div class="col-md-12 mt-3">
-      <a href="index.html" class="btn btn-primary btn-block">SWKG SITE</a>
-      <a href="index.html" class="btn btn-primary btn-block">MODS</a>
-      <a href="index.html" class="btn btn-primary btn-block">SKIN</a>
+    </a>
+  </div>
+  <div class="row mt-3">
+    <div class="col-md-12 d-flex justify-content-between">
+      <a href="index.html" class="btn btn-primary">SWKG</a>
+      <a href="index.html" class="btn btn-primary">MODS</a>
     </div>
   </div>
 </div>
-  
 
-  <div class="container my-4">
-    <div class="row">
-      <!-- Блок 2: Информация -->
-      <div class="col-md-8"> 
-        <div class="container information-block">
-
-          <h1 class="text-uppercase fw-bold" id="h1-element">INFO</h1>
-          <p id="p-element" class="my-3">test</p>
-          
-        </div>
-      </div>
-  
-      <!-- Блоки 3 и 4: Моды (справа) и Скины (под модами) -->
-      <div class="col-md-4"> <!-- Уменьшили ширину виджетов с 6 на 4 -->
-        <div class="row">
-          <!-- Блок 3: Моды (справа) -->
-          <div class="col-md-12">
-            <div class="container mod-block">
-              <div class="app-tiles-container" id="appTiles">
-                <!-- Здесь будут ваши моды -->
-              </div>
-            </div>
-          </div>
-
+<!-- Блок 2: Информация -->
+<div class="container my-4 logo-block mx-auto">
+  <div class="row">
+    <div class="col-md-12">
+      <h1 class="text-uppercase fw-bold" id="h1-element">INFO</h1>
+      <p id="p-element" class="my-3">test</p>
     </div>
   </div>
+</div>
 
-  <div class="container my-4">
-    <div class="row">
-      <!-- Блок 2: Информация -->
-      <div class="col-md-8"> <!-- Увеличили ширину блока информации с 6 на 8 -->
-        <div class="container information-block">
-          <!-- Здесь будет ваша информация -->
-          <h1 class="text-uppercase fw-bold" id="h1-element">1</h1>
-          <p id="p-element" class="my-3">1</p>
-        </div>
+<!-- Блок 3: Моды (справа) -->
+<div class="container my-4 logo-block mx-auto">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="app-tiles-container" id="appTiles">
+        <div id="list-widget"></div>
       </div>
-  
-      <div class="container my-4">
-        <div class="row">
-          <!-- Блок 2: Информация -->
-          <div class="col-md-8"> <!-- Увеличили ширину блока информации с 6 на 8 -->
-            <div class="container information-block">
-              <!-- Здесь будет ваша информация -->
-              <h1 class="text-uppercase fw-bold" id="h1-element">2</h1>
-              <p id="p-element" class="my-3">2</p>
-            </div>
-          </div>
-
-          <div class="container my-4">
-            <div class="row">
-              <!-- Блок 2: Информация -->
-              <div class="col-md-8"> <!-- Увеличили ширину блока информации с 6 на 8 -->
-                <div class="container information-block">
-                  <!-- Здесь будет ваша информация -->
-                  <h1 class="text-uppercase fw-bold" id="h1-element">3</h1>
-                  <p id="p-element" class="my-3">3</p>
-                </div>
-              </div>
-
-</body>
+    </div>
+  </div>
+</div>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script src="assets/js/MinecraftModPanel.js"></script>
   <script src="assets/js/jquery.min.js"></script>
   <script src="assets/bootstrap/js/bootstrap.min.js"></script>
   <!-- <script src="assets/js/localization.js"></script> -->
-  <script src="assets/js/promocode.js"></script>
 </body>
 </html>

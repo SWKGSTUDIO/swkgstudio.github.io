@@ -1,18 +1,17 @@
-.custom-html {
+body {
+  background-size: cover;
+  background: linear-gradient(0deg, #191310, #1a250e);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+.html {
     width: 100%;
     height: 100vh;
     background: rgb(0, 0, 0);
     margin: 0;
     padding: 0;
     overflow: hidden;
-  }
-  
-  .custom-body {
-    background: rgba(255, 255, 255, 0);
-    height: 100vh;
-    width: 100%;
-    overflow-x: hidden;
-
   }
 
   .custom-container {
@@ -21,20 +20,6 @@
     color: rgba(33, 37, 41, 0);
     overflow: hidden;
     z-index: -100;
-
-  }
-
-  .background-image {
-    position: fixed;
-    overflow: auto;
-    opacity: .5;
-    text-align: left;
-    z-index: -99;
-    animation: slideAnima 190000s linear infinite;
-    height: 100vh;
-    width: 100%;
-    filter: blur(5px);
-    background: linear-gradient(130deg, #141137, #2f204d 100%), #1f0b43;
   }
 
   .background-tile {
@@ -45,6 +30,7 @@
     animation: slideAnima 190s linear infinite;
     height: 100vh;
     width: 100%;
+    z-index: 10;
     background: url("assets/img/tile.webp"), var(--bs-border-color-translucent);
   }
   
@@ -66,7 +52,7 @@
   flex-grow: 1;
   background-color: #542eae00;
   color: white;
-  font-size: 23px;
+  font-size: 15px;
   padding: 10px 20px;
   border-radius: 11px;
   text-decoration: none;
@@ -81,27 +67,6 @@
 .btn-primary:last-child {
   margin-right: 0; /* Убираем отступ справа у последней кнопки */
 }
-
-  
-  .game-button::before {
-    margin-right: 10px;
-  }
-  
-  .game-button:hover {
-    transform: scale(1.05); /* Увеличение при наведении */
-    color: white; /* Цвет текста */
-  }
-  
-
-    .logo-container {
-      z-index: 2;
-    }
-    
-    .logo-link {
-      text-decoration: none;
-      color: inherit;
-    }
-    
     .center-swkg {
       display: inline-block; /* Сделать блоком внутри контейнера */
       color: #ffffff; /* Цвет текста (белый) */
@@ -125,20 +90,6 @@
       margin-left: 13px;
     }
     
-    
-    .text-container {
-      margin: 0px;
-      margin-top: 0px;
-      margin-left: 5%;
-    }
-    
-    #h1-element {
-      color: rgb(234, 237, 241);
-      font-size: 17.455px;
-      margin-top: 0px;
-      margin-bottom: 0px;
-    }
-    
     #p-element {
       color: rgb(232, 236, 241);
       font-size: 12px;
@@ -146,256 +97,24 @@
       margin-bottom: 0px;
     }
 
- /* Стили для блоков с одинаковым дизайном */
-.container.logo-container {
-  background: linear-gradient(90deg, #2c211a, #2e4416); /* Градиентный фон */
-  padding: 20px; /* Внутренний отступ блоков */
-  border-radius: 25px; /* Закругление углов блоков */
-  color: white;
-}
-
-.container.information-block{
-  background: linear-gradient(90deg, #2c211a, #2e4416); /* Градиентный фон */
-  height: 100%;
-  padding: 20px;
-  border-radius: 25px;
-  max-height: 400px;
-  color: white;
-  margin-top: 20px; /* Расстояние между блоками по высоте */
-}
-.container.widgets {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 100%; /* Занимаем всю доступную высоту */
-  max-height: 400px;
-  width: 100%; /* Занимаем всю доступную ширину */
-}
+.container.logo-block,
 .container.mod-block,
-.container.skin-block {
+.container.info-block {
   background: linear-gradient(90deg, #2c211a, #2e4416);
   padding: 20px;
   border-radius: 25px;
   color: white;
   margin-top: 20px;
-  height: 100%;
-  max-height: 400px;
-  flex-grow: 1;
+  margin-right: 20px; /* Отступ справа */
+  margin-left: 20px;  /* Отступ слева */
   overflow: auto;
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
-.container.mod-block::-webkit-scrollbar,
-.container.skin-block::-webkit-scrollbar {
+
+.container.info-block::-webkit-scrollbar,
+.container.mod-block::-webkit-scrollbar {
   width: 0px;
   background: transparent;
 }
 
-
-.app-tiles-container {
-  /* Стили для контейнера модов */
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px; /* Расстояние между модами */
-}
-
-.app-tile {
-  border-radius: 10px;
-  padding: 25px;
-  overflow: hidden;
-  color: white;
-  transition: transform 0.3s ease;
-  position: relative;
-  animation: buttonBreathing 3s infinite ease-in-out;
-  text-align: center;
-  cursor: pointer;
-  width: 100%; /* Ширина зависит от размера .mod-block */
-  max-width: 150px; /* Максимальная ширина .app-tile */
-}
-
-.app-title {
-  margin-top: 10px;
-  font-size: 12px;
-}
-
-.app-tile img {
-  width: 100%;
-  height: auto;
-  object-fit: cover;
-  border: 5px solid rgb(65, 137, 21);
-  border-radius: 25px;
-  animation: pulse 3s ease infinite;
-  transition: transform 0.3s ease;
-}
-
-.app-tile:hover {
-  transform: scale(1.05);
-}
-
-.app-tile:hover img {
-  animation: breathe 3s ease infinite, pulse 3s ease infinite;
-  transform: scale(1);
-}
-
-@media screen and (max-width: 768px) {
-  .col-md-6 {
-    text-align: center; /* Центрировать содержимое на мобильных устройствах */
-  }
-
-  .logo-img {
-    display: none;
-    margin: 0 auto 10px; /* Центрировать изображение и добавить небольшой отступ снизу */
-  }
-
-  .center-swkg,
-  .minecraftText,
-  .btn-primary {
-    text-align: center; /* Центрировать текст по центру */
-    margin: 5px 0; /* Добавить отступы сверху и снизу между элементами */
-  }
-
-  .center-swkg {
-    font-size: 30px; /* Уменьшить размер шрифта на мобильных устройствах */
-  }
-
-  .minecraftText {
-    font-size: 24px; /* Уменьшить размер шрифта на мобильных устройствах */
-  }
-
-  .btn-primary {
-    font-size: 18px; /* Уменьшить размер кнопок на мобильных устройствах */
-  }
-}
-      
-      @keyframes breathe {
-        0%, 100% {
-            transform: scale(1);
-        }
-        50% {
-            transform: scale(1.05);
-        }
-      }
-      
-      @keyframes pulse {
-        0%, 100% {
-            border-image-slice: 1;
-            box-shadow: 0 0 5px rgb(64, 128, 0);
-            border-radius: 20%;
-        }
-        50% {
-            border-image-slice: 1;
-            box-shadow: 0 0 15px rgb(164, 255, 36);
-            border-radius: 30%;
-        }
-      }
-      
-      @media screen and (max-width: 1100px) {
-        .app-tiles-container {
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-        }
-      }
-      
-      @media screen and (max-width: 1100px) {
-        .app-tile img {
-            width: 150px;
-            height: 150px;
-            border-radius: 10px;
-            margin: 5px 5px;
-        }
-      }
-      
-      @media screen and (max-width: 1000px) {
-        .app-tiles-container {
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-        }
-      }
-      
-      @media screen and (max-width: 1000px) {
-        .app-tile img {
-            width: 120px;
-            height: 120px;
-            border-radius: 10px;
-            margin: 5px 5px;
-        }
-      }
-      
-      @media screen and (max-width: 800px) {
-        .app-tiles-container {
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-        }
-      }
-      
-      @media screen and (max-width: 800px) {
-        .app-tile img {
-            width: 110px;
-            height: 110px;
-            border-radius: 10px;
-            margin: 5px 5px;
-        }
-      }
-      
-      @media screen and (max-width: 600px) {
-        .app-tiles-container {
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1px;
-        }
-      }
-      
-      @media screen and (max-width: 600px) {
-        .app-tile img {
-            width: 70px;
-            height: 70px;
-            border-radius: 1px;
-            margin: 1px 1px;
-        }
-      }
-      
-      @media (max-width: 768px) {
-        .button-list.horizontal {
-            flex-wrap: wrap;
-            gap: 10px;
-            justify-content: space-between;
-        }
-        
-        .button-list li, #yandex_rtb_R-A-2697791-2 {
-            flex: 1 1 calc(50% - 10px);
-            margin: 5px;
-        }
-      }
-      
-      @media (min-width: 769px) {
-        .button-list.horizontal {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        .button-list li, #yandex_rtb_R-A-2697791-2 {
-            flex: 1 1 auto;
-            margin: 0;
-        }
-      }
-      
-      @keyframes buttonBreathing {
-        0%, 100% {
-            transform: scale(1);
-        }
-        50% {
-            transform: scale(1.01);
-        }
-      }
-      
-    @keyframes jump {
-      0%, 100% {
-        transform: translateY(0);
-      }
-      50% {
-        transform: translateY(-10px);
-      }
-    }

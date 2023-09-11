@@ -186,6 +186,7 @@
   color: white;
   font-size: 23px;
   padding: 10px 20px;
+  margin: 0 auto;
   border-radius: 11px;
   text-decoration: none;
   transition: transform 0.2s ease-in-out;

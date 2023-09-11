@@ -132,33 +132,32 @@ Sweety Kitty Games Studio также приветствует вас в мире
 
   <script>
 
+        function checkAdBlockError() {
+            var script = document.createElement('script');
+            script.src = 'https://yandex.ru/ads/system/context.js';
+            script.onerror = function() {
+                // Создание кастомного диалога
+                var dialog = document.createElement('div');
+                dialog.classList.add('custom-dialog');
+                
+                var message = document.createElement('p');
+                message.textContent = 'You are using an ad blocker. Please disable it to continue using the website.';
+                dialog.appendChild(message);
+                
+                var closeButton = document.createElement('button');
+                closeButton.textContent = 'ЗАКРЫТЬ';
+                closeButton.addEventListener('click', function() {
+                    // Перезагрузка страницы
+                    location.reload();
+                });
+                dialog.appendChild(closeButton);
+                
+                document.body.appendChild(dialog);
+            };
+            document.body.appendChild(script);
+        }
 
-    function checkAdBlockError() {
-        var script = document.createElement('script');
-        script.src = 'https://yandex.ru/ads/system/context.js';
-        script.onerror = function() {
-            // Create a custom dialog
-            var dialog = document.createElement('div');
-            dialog.classList.add('custom-dialog');
-            
-            var message = document.createElement('p');
-            message.textContent = 'You are using an ad blocker. Please disable it to continue using the website.';
-            dialog.appendChild(message);
-            
-            var closeButton = document.createElement('button');
-            closeButton.textContent = 'CLOSE';
-            closeButton.addEventListener('click', function() {
-                // Reload the page
-                location.reload();
-            });
-            dialog.appendChild(closeButton);
-            
-            document.body.appendChild(dialog);
-        };
-        document.body.appendChild(script);
-    }
-
-    window.onload = checkAdBlockError;
+        window.onload = checkAdBlockError;
   
 
     function handleTileClick(link, imageSrc, isMobile) {

@@ -29,9 +29,12 @@ Sweety Kitty Games Studio также приветствует вас в мире
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bowlby+One&amp;display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bowlby+One+SC&amp;display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    
     <link rel="stylesheet" href="stylesheet.css">
     <link rel="stylesheet" href="assets/css/GooglePlayGames.css">
     
+    
+
     <!-- Yandex.RTB -->
   <script>window.yaContextCb=window.yaContextCb||[]</script>
   <script src="https://yandex.ru/ads/system/context.js" async></script>  
@@ -127,7 +130,31 @@ Sweety Kitty Games Studio также приветствует вас в мире
   </div>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/blockadblock/3.2.0/blockadblock.js"></script>
 
+  <script>
+    // Функция для обработки обнаружения AdBlocker'а
+    function handleAdBlockerDetected() {
+      const adBlockerDetected = document.createElement("div");
+      adBlockerDetected.innerHTML = "AdBlock detected. Please disable it to continue.";
+      adBlockerDetected.style.color = "red";
+      adBlockerDetected.style.fontSize = "20px";
+      adBlockerDetected.style.textAlign = "center";
+      adBlockerDetected.style.padding = "20px";
+      adBlockerDetected.style.position = "fixed"; // Добавляем фиксированное позиционирование
+      adBlockerDetected.style.top = "50%"; // Положение по вертикали в середине
+      adBlockerDetected.style.left = "50%"; // Положение по горизонтали в середине
+      adBlockerDetected.style.transform = "translate(-50%, -50%)"; // Центрирование
+  
+      document.body.appendChild(adBlockerDetected);
+    }
+  
+    // Проверяем наличие AdBlocker'а
+    blockAdBlock.onDetected(handleAdBlockerDetected);
+  </script>
+  
+  
+  
 
   <!-- Yandex Native Ads C-A-2938411-4 -->
 
@@ -327,37 +354,8 @@ function handleTileClick(link, imageSrc, isMobile) {
     }
   </script>
 
-<script>
-  // Функция для проверки наличия AdBlocker
-  function checkAdBlocker() {
-    const adBlockerDetected = document.createElement("div");
-    adBlockerDetected.innerHTML = "AdBlock detected. Please disable it to continue.";
-    adBlockerDetected.style.color = "red";
-    adBlockerDetected.style.fontSize = "20px";
-    adBlockerDetected.style.textAlign = "center";
-    adBlockerDetected.style.padding = "20px";
 
-    // Проверяем наличие элемента, который обычно блокируется AdBlocker'ом
-    const adBlockedElement = document.createElement("div");
-    adBlockedElement.className = "ad";
-    adBlockedElement.style.display = "none";
 
-    document.body.appendChild(adBlockedElement);
-
-    setTimeout(() => {
-      if (getComputedStyle(adBlockedElement).display === "none") {
-        // Если элемент скрыт, то AdBlocker заблокировал его
-        document.body.appendChild(adBlockerDetected);
-      }
-
-      // Удаляем временный элемент
-      document.body.removeChild(adBlockedElement);
-    }, 100);
-  }
-
-  // Вызываем функцию проверки AdBlocker при загрузке страницы
-  window.addEventListener("load", checkAdBlocker);
-</script>
 
 
 </body>

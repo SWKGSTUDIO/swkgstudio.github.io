@@ -32,40 +32,7 @@ Sweety Kitty Games Studio также приветствует вас в мире
     
     <link rel="stylesheet" href="stylesheet.css">
     <link rel="stylesheet" href="assets/css/GooglePlayGames.css">
-    
-    
-    <script>
-      function checkAdBlockError() {
-          var script = document.createElement('script');
-          script.src = 'https://yandex.ru/ads/system/context.js';
-          script.onerror = function() {
-              // Create a custom dialog
-              var dialog = document.createElement('div');
-              dialog.classList.add('custom-dialog');
-              
-              var message = document.createElement('p');
-              message.textContent = 'You are using an ad blocker. Please disable it to continue using the website.';
-              dialog.appendChild(message);
-              
-              var closeButton = document.createElement('button');
-              closeButton.textContent = 'CLOSE';
-              closeButton.addEventListener('click', function() {
-                  // Reload the page
-                  location.reload();
-              });
-              dialog.appendChild(closeButton);
-              
-              // Add the dialog to the body
-              document.body.appendChild(dialog);
-          };
-          document.body.appendChild(script);
-      }
   
-      window.onload = checkAdBlockError;
-  </script>
-  
-  
-
     <!-- Yandex.RTB -->
   <script>window.yaContextCb=window.yaContextCb||[]</script>
   <script src="https://yandex.ru/ads/system/context.js" async></script>  
@@ -165,23 +132,34 @@ Sweety Kitty Games Studio также приветствует вас в мире
 
   <script>
 
- // Function to check for the ERR_BLOCKED_BY_CLIENT error when loading a script
- function checkAdBlockError() {
+
+    function checkAdBlockError() {
         var script = document.createElement('script');
         script.src = 'https://yandex.ru/ads/system/context.js';
         script.onerror = function() {
-            var confirmation = window.confirm('You are using an ad blocker. Please disable it to continue using the website.');
-            if (confirmation) {
-                // The user agreed to disable the ad blocker
-                // You can perform additional actions here if needed
-                location.reload(); // Reload the page
-            }
+            // Create a custom dialog
+            var dialog = document.createElement('div');
+            dialog.classList.add('custom-dialog');
+            
+            var message = document.createElement('p');
+            message.textContent = 'You are using an ad blocker. Please disable it to continue using the website.';
+            dialog.appendChild(message);
+            
+            var closeButton = document.createElement('button');
+            closeButton.textContent = 'CLOSE';
+            closeButton.addEventListener('click', function() {
+                // Reload the page
+                location.reload();
+            });
+            dialog.appendChild(closeButton);
+            
+            document.body.appendChild(dialog);
         };
         document.body.appendChild(script);
     }
 
-    // Call the check function when the page loads
     window.onload = checkAdBlockError;
+  
 
     function handleTileClick(link, imageSrc, isMobile) {
         if (typeof Ya === "undefined") {

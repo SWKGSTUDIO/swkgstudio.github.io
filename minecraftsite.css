@@ -98,9 +98,7 @@ body {
       margin-bottom: 0px;
     }
 
-.container.logo-block,
-.container.mod-block,
-.container.info-block {
+.container.logo-block{
   background: linear-gradient(90deg, #2c211a, #2e4416);
   padding: 20px;
   border-radius: 25px;
@@ -113,9 +111,27 @@ body {
   scrollbar-width: none;
 }
 
-.container.info-block::-webkit-scrollbar,
-.container.mod-block::-webkit-scrollbar {
-  width: 0px;
-  background: transparent;
+.container.content-block {
+  background: linear-gradient(90deg, #2c211a, #2e4416);
+  padding: 20px;
+  border-radius: 25px;
+  color: white;
+  margin-top: 20px;
+  margin-right: 20px; /* Отступ справа */
+  margin-left: 20px;  /* Отступ слева */
+  overflow: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
+
+
+.content-block {
+  max-height: 300px;
+  overflow: hidden;
+  transition: max-height 0.3s ease-in-out;
+}
+
+.show-content {
+  max-height: none;
+}

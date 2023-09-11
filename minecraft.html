@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
   <title>SWKG - Minecraft</title>
   <link rel="canonical" href="https://swkgstudio.github.io/">
-
   <meta property="og:url" content="https://swkgstudio.github.io/">
   <meta name="google-site-verification" content="I_RTFSeKJvvHtJ5YmwNENy5Dqrstl8kFA8VQdmj6p9I">
   <meta name="description" content="Only Minecraft">
@@ -19,13 +18,22 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <link rel="stylesheet" href="assets/css/mineGamePanel.css">
   <link rel="stylesheet" href="minecraftsite.css">
-
-  
   <!-- Yandex.RTB -->
   <script>window.yaContextCb=window.yaContextCb||[]</script>
   <script src="https://yandex.ru/ads/system/context.js" async></script>
-
-
+  <style>
+    .content-block {
+      cursor: pointer;
+    }
+    .toggle-content {
+      max-height: 40px;
+      overflow: hidden;
+      transition: max-height 0.3s ease-in-out;
+    }
+    .show-content {
+      max-height: 1000px; /* Выберите желаемую максимальную высоту */
+    }
+  </style>
 </head>
 
 <body>
@@ -34,49 +42,96 @@
     <img class="background-tile">
   </div>
 
-<!-- Блок 1: Логотип и текст -->
-<div class="container my-4 logo-block mx-auto">
-  <div class="row align-items-center">
-    <a href="/index.html" class="logo-link">
-      <div class="logo-wrapper">
-        <img src="assets/img/logo.webp" width="38" height="61" class="logo-img" alt="SWKG Logo">
-        <div class="center-swkg">SWKG</div>
-      </div>
-    </a>
-  </div>
-  <div class="row mt-3">
-    <div class="col-md-12 d-flex justify-content-between">
-      <a href="index.html" class="btn btn-primary">SWKG</a>
-      <a href="index.html" class="btn btn-primary">MODS</a>
+  <!-- Блок: Логотип и текст -->
+  <div class="container my-4 logo-block mx-auto">
+    <div class="row align-items-center">
+      <a href="/index.html" class="logo-link">
+        <div class="logo-wrapper">
+          <img src="assets/img/logo.webp" width="38" height="61" class="logo-img" alt="SWKG Logo">
+          <div class="center-swkg">SWKG</div>
+        </div>
+      </a>
     </div>
-  </div>
-</div>
-
-<!-- Блок 2: Информация -->
-<div class="container my-4 logo-block mx-auto">
-  <div class="row">
-    <div class="col-md-12">
-      <h1 class="text-uppercase fw-bold" id="h1-element">INFO</h1>
-      <p id="p-element" class="my-3">test</p>
-    </div>
-  </div>
-</div>
-
-<!-- Блок 3: Моды (справа) -->
-<div class="container my-4 logo-block mx-auto">
-  <div class="row">
-    <div class="col-md-12">
-      <div class="app-tiles-container" id="appTiles">
-        <div id="list-widget"></div>
+    <div class="row mt-3">
+      <div class="col-md-12 d-flex justify-content-between">
+        <a href="index.html" class="btn btn-primary">INFO</a>
+        <a href="index.html" class="btn btn-primary">MODS</a>
+        <a href="index.html" class="btn btn-primary">GAME</a>
       </div>
     </div>
   </div>
-</div>
+
+  <!-- Блок: Информация 1 -->
+  <div class="container my-4 content-block mx-auto">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="toggle-content" id="info-content-1">
+          <h1 class="text-uppercase fw-bold">How to install</h1>
+          <p class="my-3">Lorem ipsum dolor sit amet...</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Блок: Информация 2 -->
+  <div class="container my-4 content-block mx-auto">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="toggle-content" id="info-content-2">
+          <h1 class="text-uppercase fw-bold">Download Game</h1>
+          <p class="my-3">Lorem ipsum dolor sit amet...</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Блок: Информация 3 -->
+  <div class="container my-4 content-block mx-auto">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="toggle-content" id="info-content-3">
+          <h1 class="text-uppercase fw-bold">Mods</h1>
+          <p class="my-3">Lorem ipsum dolor sit amet...</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container my-4 content-block mx-auto">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="app-tiles-container" id="appTiles">
+          <div id="list-widget">
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script src="assets/js/MinecraftModPanel.js"></script>
-  <script src="assets/js/jquery.min.js"></script>
+
   <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-  <!-- <script src="assets/js/localization.js"></script> -->
+
+  <script>
+    // Получаем все элементы с классом "content-block"
+    const contentBlocks = document.querySelectorAll('.content-block');
+
+    // Добавляем обработчик клика к каждому блоку
+    contentBlocks.forEach((block, index) => {
+      block.addEventListener('click', () => {
+        // Вызываем функцию toggleContent() с уникальным id
+        toggleContent(`info-content-${index + 1}`);
+      });
+    });
+
+    function toggleContent(id) {
+      const content = document.getElementById(id);
+      content.classList.toggle('show-content');
+    }
+  </script>
 </body>
 </html>

@@ -102,9 +102,10 @@
 @media screen and (max-width: 600px) {
   .game-button,
   .minecraft-button {
-    font-size: 18px; /* Уменьшите размер кнопок для мобильных устройств */
-    padding: 8px 16px; /* Уменьшите отступы кнопок */
-    margin-right: 5px; /* Уменьшите отступ между кнопками для мобильных устройств */
+    font-size: 14px;
+    padding: 3px 5px;
+    /* margin-right: 2px; */
+    margin: 5px;
   }
 }
 

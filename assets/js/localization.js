@@ -1,11 +1,11 @@
 const texts = {
   en: {
     h1: "Minecraft, Sandbox, Survival, Crafting, Building, Adventure, Blocks, Exploration, Creative, Multiplayer, Crafting, Mining, Redstone, World, Mods",
-    p: "SpongeBob, Cartoon, Adventure, Underwater, Bikini Bottom, Krusty Krab, Patrick Star, Sandy Cheeks, Nickelodeon, Animation, Jellyfish, Pineapple, Comedy, Sea Creatures, Fun"
+    // p: "SpongeBob, Cartoon, Adventure, Underwater, Bikini Bottom, Krusty Krab, Patrick Star, Sandy Cheeks, Nickelodeon, Animation, Jellyfish, Pineapple, Comedy, Sea Creatures, Fun"
   },
   ru: {
     h1: "Minecraft, Sandbox, Survival, Crafting, Building, Adventure, Blocks, Exploration, Creative, Multiplayer, Crafting, Mining, Redstone, World, Mods",
-    p: "SpongeBob, Cartoon, Adventure, Underwater, Bikini Bottom, Krusty Krab, Patrick Star, Sandy Cheeks, Nickelodeon, Animation, Jellyfish, Pineapple, Comedy, Sea Creatures, Fun"
+    // p: "SpongeBob, Cartoon, Adventure, Underwater, Bikini Bottom, Krusty Krab, Patrick Star, Sandy Cheeks, Nickelodeon, Animation, Jellyfish, Pineapple, Comedy, Sea Creatures, Fun"
   }
 };
 

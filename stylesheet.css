@@ -14,6 +14,8 @@
   overflow-x: hidden;
 }
 
+
+
 .video {
   position: fixed;
   top: 50%;
@@ -59,13 +61,17 @@
   background: url("assets/img/tile.webp"), var(--bs-border-color-translucent);
 }
 
+/* Стили для контейнера кнопок */
+.button-container {
+  display: flex;
+  align-items: center;
+  position: fixed;
+  top: 20px; /* Расположение сверху страницы */
+  right: 40px; /* Расположение справа */
+}
 
 /* Стили для кнопки "ИГРА" */
 .game-button {
-  position: fixed;
-  top: 20px;
-  right: 40px;
-  left: auto;
   background-color: #542eae;
   color: white;
   font-size: 23px;
@@ -76,6 +82,7 @@
   z-index: 999;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   background-image: linear-gradient(to bottom, #7a22ff, #5511cc);
+  margin-right: 10px; /* Отступ между кнопками */
 }
 
 .game-button::before {
@@ -83,6 +90,30 @@
 }
 
 .game-button:hover {
+  transform: scale(1.05); /* Увеличение при наведении */
+  color: white; /* Цвет текста */
+}
+
+/* Стили для кнопки "Minecraft" */
+.minecraft-button {
+  background-color: #2eae4c;
+  color: white;
+  font-size: 23px;
+  padding: 10px 20px;
+  border-radius: 11px;
+  text-decoration: none;
+  transition: transform 0.2s ease-in-out;
+  z-index: 999;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  background-image: linear-gradient(to bottom, #a3ff22, #49cc11);
+  margin-right: 10px; /* Отступ между кнопками */
+}
+
+.minecraft-button::before {
+  margin-right: 10px;
+}
+
+.minecraft-button:hover {
   transform: scale(1.05); /* Увеличение при наведении */
   color: white; /* Цвет текста */
 }

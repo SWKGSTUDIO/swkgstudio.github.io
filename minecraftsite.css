@@ -98,7 +98,7 @@ body {
     .container.logo-block {
       background: linear-gradient(90deg, #2c211a, #2e4416);
       padding: 20px;
-      border-radius: 25px;
+      border-radius: 0 0 25px 25px; /* Закругленные углы внизу блока */
       color: white;
       text-align: center; /* Выравнивание по центру */
     }
@@ -107,7 +107,6 @@ body {
       display: flex;
       flex-direction: column;
       align-items: center; /* Выравнивание по центру по горизонтали */
-      margin-bottom: 20px; /* Отступ снизу для разделения с кнопками */
     }
     
     .logo-img {

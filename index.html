@@ -39,16 +39,31 @@ Sweety Kitty Games Studio также приветствует вас в мире
           var script = document.createElement('script');
           script.src = 'https://yandex.ru/ads/system/context.js';
           script.onerror = function() {
-              var confirmation = window.confirm('You are using an ad blocker. Please disable it to continue using the website.');
-              if (confirmation) {
-                  location.reload(); // Reload the page
-              }
+              // Create a custom dialog
+              var dialog = document.createElement('div');
+              dialog.classList.add('custom-dialog');
+              
+              var message = document.createElement('p');
+              message.textContent = 'You are using an ad blocker. Please disable it to continue using the website.';
+              dialog.appendChild(message);
+              
+              var closeButton = document.createElement('button');
+              closeButton.textContent = 'CLOSE';
+              closeButton.addEventListener('click', function() {
+                  // Reload the page
+                  location.reload();
+              });
+              dialog.appendChild(closeButton);
+              
+              // Add the dialog to the body
+              document.body.appendChild(dialog);
           };
           document.body.appendChild(script);
       }
   
       window.onload = checkAdBlockError;
   </script>
+  
   
 
     <!-- Yandex.RTB -->

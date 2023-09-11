@@ -179,29 +179,34 @@ Sweety Kitty Games Studio также приветствует вас в мире
     }
 
     function showYandexAd(isMobile, callback) {
-      const blockId = isMobile ? 'R-A-2697791-3' : 'R-A-2697791-1';
+        if (typeof Ya === "undefined") {
+            window.alert('You are using an ad blocker. Please disable it to continue using the website.');
+            return;
+        }
 
-      if (!isMobile) {
-        Ya.Context.AdvManager.render({
-          blockId: blockId,
-          type: 'fullscreen',
-          platform: 'desktop'
-        });
-      } else {
-        Ya.Context.AdvManager.render({
-          blockId: blockId,
-          type: 'fullscreen',
-          platform: 'touch'
-        });
-      }
+        const blockId = isMobile ? 'R-A-2697791-3' : 'R-A-2697791-1';
 
-      if (callback && typeof callback === 'function') {
-        callback();
-      }
+        if (!isMobile) {
+            Ya.Context.AdvManager.render({
+                blockId: blockId,
+                type: 'fullscreen',
+                platform: 'desktop'
+            });
+        } else {
+            Ya.Context.AdvManager.render({
+                blockId: blockId,
+                type: 'fullscreen',
+                platform: 'touch'
+            });
+        }
+
+        if (callback && typeof callback === 'function') {
+            callback();
+        }
     }
 
     function isMobileDevice() {
-
+        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     }
 
     window.yaContextCb = window.yaContextCb || [];
@@ -323,9 +328,6 @@ Sweety Kitty Games Studio также приветствует вас в мире
         console.error('Error fetching app data:', error);
       });
 
-    function isMobileDevice() {
-      return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-    }
   </script>
 
 </body>

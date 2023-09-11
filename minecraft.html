@@ -117,21 +117,37 @@
   <script src="assets/bootstrap/js/bootstrap.min.js"></script>
 
   <script>
-    // Получаем все элементы с классом "content-block"
-    const contentBlocks = document.querySelectorAll('.content-block');
 
-    // Добавляем обработчик клика к каждому блоку
-    contentBlocks.forEach((block, index) => {
-      block.addEventListener('click', () => {
-        // Вызываем функцию toggleContent() с уникальным id
-        toggleContent(`info-content-${index + 1}`);
-      });
-    });
+// Получаем все элементы с классом "content-block"
+const contentBlocks = document.querySelectorAll('.content-block');
 
-    function toggleContent(id) {
-      const content = document.getElementById(id);
-      content.classList.toggle('show-content');
-    }
+// Устанавливаем начальную высоту для всех блоков
+contentBlocks.forEach((block) => {
+  const content = block.querySelector('.toggle-content');
+  content.style.maxHeight = '40px'; // Начальная высота
+  block.addEventListener('click', () => {
+    toggleContent(block);
+  });
+});
+
+function toggleContent(block) {
+  // Получаем высоту контента внутри блока
+  const content = block.querySelector('.toggle-content');
+  const contentHeight = content.scrollHeight;
+
+  // Переключаем класс для анимации
+  if (block.classList.contains('show-content')) {
+    // Если блок уже раскрыт, скрываем его
+    content.style.maxHeight = '40px'; // Возвращаем к начальной высоте
+    block.classList.remove('show-content');
+  } else {
+    // Если блок закрыт, показываем его с рассчитанной высотой
+    content.style.maxHeight = contentHeight + 'px';
+    block.classList.add('show-content');
+  }
+}
+
+
   </script>
 </body>
 </html>

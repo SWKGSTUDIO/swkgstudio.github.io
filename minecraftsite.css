@@ -117,11 +117,19 @@ body {
   border-radius: 25px;
   color: white;
   margin-top: 20px;
-  margin-right: 20px; /* Отступ справа */
-  margin-left: 20px;  /* Отступ слева */
+  margin-right: 20px;
+  margin-left: 20px;
   overflow: auto;
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+.container.content-block::-webkit-scrollbar {
+  width: 0.5em; /* Ширина скроллбара (можете изменить) */
+}
+
+.container.content-block::-webkit-scrollbar-thumb {
+  background-color: rgba(169, 169, 169, 0); /* Цвет полосы скроллбара (можете изменить) */
 }
 
 

@@ -92,7 +92,7 @@
     color: white; /* Цвет текста */
   }
   
-    
+
     .logo-container {
       z-index: 2;
     }
@@ -102,11 +102,23 @@
       color: inherit;
     }
     
-    .logo-text {
-      color: rgb(255, 255, 255);
-      font-size: 45px;
+    .center-swkg {
+      display: inline-block; /* Сделать блоком внутри контейнера */
+      color: #ffffff; /* Цвет текста (белый) */
+      padding: 10px 20px; /* Внутренний отступ для центрирования текста */
+      border-radius: 5px; /* Закругление углов блока */
+      font-size: 24px; /* Размер шрифта */
+      font-size: 35px;
       font-family: 'Bowlby One', serif;
       z-index: 2;
+    }
+    
+    .minecraftText {
+      color: #ffffff; /* Цвет текста (в данном случае, красный) */
+      font-size: 36px; /* Размер шрифта */
+      font-weight: bold; /* Жирный текст */
+      text-transform: uppercase; /* Преобразование текста в заглавные буквы */
+      font-family: Arial, sans-serif; /* Шрифт */
     }
     
     .logo-img {
@@ -147,6 +159,7 @@
   height: 100%;
   padding: 20px;
   border-radius: 25px;
+  max-height: 400px;
   color: white;
   margin-top: 20px; /* Расстояние между блоками по высоте */
 }
@@ -155,6 +168,7 @@
   flex-direction: column;
   justify-content: space-between;
   height: 100%; /* Занимаем всю доступную высоту */
+  max-height: 400px;
   width: 100%; /* Занимаем всю доступную ширину */
 }
 .container.mod-block,
@@ -165,33 +179,18 @@
   color: white;
   margin-top: 20px;
   height: 100%;
+  max-height: 400px;
   flex-grow: 1;
+  overflow: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.container.mod-block::-webkit-scrollbar,
+.container.skin-block::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
 }
 
-
-.text-container {
-  text-align: left; /* Выравнивание текста внутри блока */
-}
-
-.text-uppercase {
-  text-transform: uppercase; /* Преобразование текста в заглавные буквы */
-}
-    
-.mod-block {
-  /* Стили для блока модов */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  overflow: auto; /* Добавляем возможность прокручивать содержимое */
-  max-height: 400px; /* Устанавливаем максимальную высоту блока, чтобы он не растягивался бесконечно */
-  overflow: auto; /* Добавляем полосу прокрутки при необходимости */
-  scrollbar-width: none; /* Скрываем стандартную полосу прокрутки */
-  -ms-overflow-style: none; /* Скрываем стандартную полосу прокрутки для Internet Explorer */
-}
-
-.mod-block::-webkit-scrollbar {
-  width: 0; /* Скрываем полосу прокрутки в Chrome и Safari */
-}
 
 .app-tiles-container {
   /* Стили для контейнера модов */
@@ -239,8 +238,35 @@
   transform: scale(1);
 }
 
+@media screen and (max-width: 768px) {
+  .col-md-6 {
+    text-align: center; /* Центрировать содержимое на мобильных устройствах */
+  }
 
+  .logo-img {
+    display: none;
+    margin: 0 auto 10px; /* Центрировать изображение и добавить небольшой отступ снизу */
+  }
 
+  .center-swkg,
+  .minecraftText,
+  .btn-primary {
+    text-align: center; /* Центрировать текст по центру */
+    margin: 5px 0; /* Добавить отступы сверху и снизу между элементами */
+  }
+
+  .center-swkg {
+    font-size: 30px; /* Уменьшить размер шрифта на мобильных устройствах */
+  }
+
+  .minecraftText {
+    font-size: 24px; /* Уменьшить размер шрифта на мобильных устройствах */
+  }
+
+  .btn-primary {
+    font-size: 18px; /* Уменьшить размер кнопок на мобильных устройствах */
+  }
+}
       
       @keyframes breathe {
         0%, 100% {
@@ -327,7 +353,6 @@
             margin: 1px 1px;
         }
       }
-      
       
       @media (max-width: 768px) {
         .button-list.horizontal {

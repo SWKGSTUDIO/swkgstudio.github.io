@@ -104,11 +104,22 @@ body {
   border-radius: 25px;
   color: white;
   margin-top: 20px;
-  margin-right: 20px; /* Отступ справа */
-  margin-left: 20px;  /* Отступ слева */
+  margin-right: 20px;
+  margin-left: 20px;
   overflow: auto;
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+.container.mod-block{
+  background: linear-gradient(90deg, #2c211a, #2e4416);
+  padding: 20px;
+  border-radius: 25px;
+  color: white;
+  margin-top: 20px;
+  margin-right: 20px; 
+  margin-left: 20px;
+  overflow: hidden;
 }
 
 .container.content-block {
@@ -125,11 +136,11 @@ body {
 }
 
 .container.content-block::-webkit-scrollbar {
-  width: 0.5em; /* Ширина скроллбара (можете изменить) */
+  width: 0.5em;
 }
 
 .container.content-block::-webkit-scrollbar-thumb {
-  background-color: rgba(169, 169, 169, 0); /* Цвет полосы скроллбара (можете изменить) */
+  background-color: rgba(169, 169, 169, 0);
 }
 
 

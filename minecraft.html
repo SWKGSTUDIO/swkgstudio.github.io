@@ -107,111 +107,74 @@
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-
-  <!-- Yandex Native Ads C-A-2938411-4 -->
-
-<!-- <div id="yandex_rtb_C-A-2938411-4"></div>
-<script>window.yaContextCb.push(()=>{
-  Ya.Context.AdvManager.renderWidget({
-    renderTo: 'yandex_rtb_C-A-2938411-4',
-    blockId: 'C-A-2938411-4'
-  })
-})</script> -->
-
-<!-- Yandex.RTB R-A-2938411-3 -->
-
-<!-- <script>window.yaContextCb.push(()=>{
-	Ya.Context.AdvManager.render({
-		"blockId": "R-A-2938411-3",
-		"type": "fullscreen",
-		"platform": "desktop"
-	})
-})
-</script> -->
-
-<!-- Yandex.RTB R-A-2938411-2 -->
-
-<!-- <div id="yandex_rtb_R-A-2938411-2"></div>
-<script>window.yaContextCb.push(()=>{
-	Ya.Context.AdvManager.render({
-		"blockId": "R-A-2938411-2",
-		"renderTo": "yandex_rtb_R-A-2938411-2"
-	})
-})
-</script> -->
-
-
   <script>
-
-function handleTileClick(link, imageSrc, isMobile) {
+    function handleTileClick(link, imageSrc, isMobile) {
       showYandexAd(isMobile, () => {
         setTimeout(() => {
           window.open(link, '_blank');
         }, 2000);
       });
     }
-
+  
     function showYandexAd(isMobile, callback) {
-      const blockId = isMobile ? 'R-A-2697791-3' : 'R-A-2697791-1';
-
-      if (!isMobile) {
+      const mobileBlockId = 'R-A-2697791-3';
+      const desktopBlockId = 'R-A-2697791-1';
+  
+      if (isMobile) {
         Ya.Context.AdvManager.render({
-          blockId: blockId,
-          type: 'fullscreen',
-          platform: 'desktop'
-        });
-      } else {
-        Ya.Context.AdvManager.render({
-          blockId: blockId,
+          blockId: mobileBlockId,
           type: 'fullscreen',
           platform: 'touch'
         });
+      } else {
+        Ya.Context.AdvManager.render({
+          blockId: desktopBlockId,
+          type: 'fullscreen',
+          platform: 'desktop'
+        });
       }
-
+  
       if (callback && typeof callback === 'function') {
         callback();
       }
     }
-
+  
     function isMobileDevice() {
+      return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     }
-
-    // function handleTileClick(link) {
-    //   window.open(link, '_blank');
-    // }
-
+  
     window.yaContextCb = window.yaContextCb || [];
-
+  
     const apiKey = 'key9kpLHqsdRFXvS2';
     const baseId = 'appaePimTt1Ji6hSr';
     const tableName = 'tbl4Q3aHOdskWF9aR';
-
+  
     fetch(`https://api.airtable.com/v0/${baseId}/${tableName}?api_key=${apiKey}`)
       .then(response => response.json())
       .then(data => {
         console.log('Received data:', data);
-
+  
         const appTilesContainer = document.getElementById("appTiles");
-
+  
         data.records.forEach(record => {
           const fields = record.fields;
           const appTile = document.createElement("div");
           appTile.classList.add("app-tile");
-
+  
           const image = document.createElement("img");
           image.src = fields.Image;
-
+  
           const title = document.createElement("div");
           title.textContent = fields.Title;
           title.classList.add("app-title");
-
-          appTile.addEventListener('click', () => handleTileClick(fields.URL));
-
+  
+          appTile.addEventListener('click', () => handleTileClick(fields.URL, fields.Image, isMobileDevice()));
+  
           appTile.appendChild(image);
           appTile.appendChild(title);
           appTilesContainer.appendChild(appTile);
         });
-
+  
         setTimeout(() => {
           document.getElementById('list-widget').style.display = 'block';
         }, 100);
@@ -219,100 +182,14 @@ function handleTileClick(link, imageSrc, isMobile) {
       .catch(error => {
         console.error(error);
       });
-
-
-    fetch('https://intermediate-easy-ship.glitch.me/minecraftgames')
-      .then(response => response.json())
-      .then(data => {
-        console.log('Received data:', data);
-
-        const appTilesContainer = document.getElementById("appTiles");
-
-        data.forEach(game => {
-          const appTile = document.createElement("div");
-          appTile.classList.add("app-tile");
-
-          const image = document.createElement("img");
-          image.src = game.image;
-
-          const title = document.createElement("div");
-          title.textContent = game.title;
-          title.classList.add("app-title");
-
-          appTile.addEventListener('click', () => handleTileClick(game.link));
-
-          appTile.appendChild(image);
-          appTile.appendChild(title);
-          appTilesContainer.appendChild(appTile);
-
-          if (game.power === "ON") {
-            const button = document.createElement('button');
-            const img = document.createElement('img');
-            img.src = game.image;
-            img.alt = '';
-            button.appendChild(img);
-
-            button.classList.add('button-on');
-            
-            button.addEventListener('click', () => {
-              if (!isMobileDevice()) {
-                Ya.Context.AdvManager.render({
-                  blockId: 'R-A-2697791-1',
-                  type: 'fullscreen',
-                  platform: 'desktop'
-                });
-              } else {
-                Ya.Context.AdvManager.render({
-                  blockId: 'R-A-2697791-3',
-                  type: 'fullscreen',
-                  platform: 'touch'
-                });
-              }
-
-              setTimeout(() => {
-                window.open(game.link, '_blank');
-              }, 500);
-            });
-
-            const li = document.createElement('li');
-            li.classList.add('hide');
-            li.appendChild(button);
-            list.appendChild(li);
-          } else if (game.power === "OFF") {
-            const button = document.createElement('button');
-            const img = document.createElement('img');
-            img.src = game.image;
-            img.alt = '';
-            button.appendChild(img);
-
-            button.classList.add('button-off');
-            button.disabled = true;
-
-            const li = document.createElement('li');
-            li.classList.add('hide');
-            li.appendChild(button);
-            list.appendChild(li);
-          }
-        });
-      })
-      .catch(error => {
-        console.error('Error fetching app data:', error);
-      });
-
-    function isMobileDevice() {
-      return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-    }
   </script>
-</body>
-</html>
-</div>
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-    <script src="assets/js/localization.js"></script>
-    <script src="assets/js/promocode.js"></script>
-
-    
-    
+  
+  <script src="assets/js/jquery.min.js"></script>
+  <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+  <script src="assets/js/localization.js"></script>
+  <script src="assets/js/promocode.js"></script>
+  
 </body>
 
 </html>
+

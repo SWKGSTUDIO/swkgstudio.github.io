@@ -352,23 +352,21 @@ function handleTileClick(link, imageSrc, isMobile) {
   
 
 <script>
-  // Функция для проверки наличия блокировщика рекламы
-  function checkAdBlocker() {
-      var testAd = document.createElement('div');
-      testAd.innerHTML = '&nbsp;';
-      testAd.className = 'adsbox';
-      document.body.appendChild(testAd);
-      window.setTimeout(function() {
-          if (testAd.offsetHeight === 0) {
-              // Блокировщик рекламы активен
-              alert('Пожалуйста, отключите блокировщик рекламы, чтобы продолжить использование сайта.');
+  // Функция для проверки наличия ошибки ERR_BLOCKED_BY_CLIENT при загрузке скрипта
+  function checkAdBlockError() {
+      var script = document.createElement('script');
+      script.src = 'https://yandex.ru/ads/system/context.js';
+      script.onerror = function() {
+          if (window.confirm('Вы используете блокировщик рекламы. Пожалуйста, отключите его, чтобы продолжить использование сайта.')) {
+              // Пользователь согласился отключить блокировщик рекламы
+              // Здесь можно выполнить дополнительные действия, если необходимо
           }
-          document.body.removeChild(testAd);
-      }, 100);
+      };
+      document.body.appendChild(script);
   }
 
   // Вызываем функцию проверки при загрузке страницы
-  window.onload = checkAdBlocker;
+  window.onload = checkAdBlockError;
 </script>
 
 <script>

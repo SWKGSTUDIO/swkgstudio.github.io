@@ -180,7 +180,6 @@
   z-index: 10000;
 }
 
-
 /* Стили для кнопки */
 .custom-dialog button {
   display: block;
@@ -195,9 +194,8 @@
   transition: transform 0.2s ease-in-out;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   background-image: linear-gradient(to bottom, #7a22ff, #5511cc);
-  width: 100%;
+  width: 50%;
 }
-
 
 .custom-dialog button:hover {
   transform: scale(1.05); /* Увеличение при наведении */

@@ -119,7 +119,9 @@ body {
   margin-top: 20px;
   margin-right: 20px; 
   margin-left: 20px;
-  overflow: hidden;
+  overflow: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 .container.content-block {
@@ -130,27 +132,16 @@ body {
   margin-top: 20px;
   margin-right: 20px;
   margin-left: 20px;
-  overflow: auto;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
 }
 
-.container.content-block::-webkit-scrollbar {
+.container.mod-block::-webkit-scrollbar {
   width: 0.5em;
 }
 
-.container.content-block::-webkit-scrollbar-thumb {
+.container.mod-block::-webkit-scrollbar-thumb {
   background-color: rgba(169, 169, 169, 0);
 }
 
 
 
-.content-block {
-  max-height: 300px;
-  overflow: hidden;
-  transition: max-height 0.3s ease-in-out;
-}
 
-.show-content {
-  max-height: none;
-}

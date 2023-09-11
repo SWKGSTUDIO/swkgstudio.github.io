@@ -71,7 +71,8 @@
 }
 
 /* Стили для кнопки "ИГРА" */
-.game-button {
+.game-button,
+.minecraft-button {
   background-color: #542eae;
   color: white;
   font-size: 23px;
@@ -85,38 +86,28 @@
   margin-right: 10px; /* Отступ между кнопками */
 }
 
-.game-button::before {
-  margin-right: 10px;
-}
-
-.game-button:hover {
-  transform: scale(1.05); /* Увеличение при наведении */
-  color: white; /* Цвет текста */
-}
-
-/* Стили для кнопки "Minecraft" */
-.minecraft-button {
-  background-color: #2eae4c;
-  color: white;
-  font-size: 23px;
-  padding: 10px 20px;
-  border-radius: 11px;
-  text-decoration: none;
-  transition: transform 0.2s ease-in-out;
-  z-index: 999;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  background-image: linear-gradient(to bottom, #7abf19, #2d810a);
-  margin-right: 10px; /* Отступ между кнопками */
-}
-
+.game-button::before,
 .minecraft-button::before {
   margin-right: 10px;
 }
 
+.game-button:hover,
 .minecraft-button:hover {
   transform: scale(1.05); /* Увеличение при наведении */
   color: white; /* Цвет текста */
 }
+
+
+/* Медиа-запрос для уменьшения кнопок на мобильных устройствах */
+@media screen and (max-width: 600px) {
+  .game-button,
+  .minecraft-button {
+    font-size: 18px; /* Уменьшите размер кнопок для мобильных устройств */
+    padding: 8px 16px; /* Уменьшите отступы кнопок */
+    margin-right: 5px; /* Уменьшите отступ между кнопками для мобильных устройств */
+  }
+}
+
 
   
   .logo-container {

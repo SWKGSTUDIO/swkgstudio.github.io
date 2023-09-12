@@ -197,7 +197,7 @@
         width: 70px;
         height: 70px;
         border-radius: 1px;
-        margin: 1px 1px;
+        /* margin: 1px 1px; */
         border: 2px solid rebeccapurple;
     }
   }
@@ -206,13 +206,12 @@
   @media (max-width: 768px) {
     .button-list.horizontal {
         flex-wrap: wrap;
-        gap: 10px;
         justify-content: space-between;
     }
     
     .button-list li, #yandex_rtb_R-A-2697791-2 {
         flex: 1 1 calc(50% - 10px);
-        margin: 5px;
+        /* margin: 5px; */
     }
   }
   

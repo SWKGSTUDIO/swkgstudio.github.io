@@ -38,13 +38,14 @@
 
 <body>
 
-
   <div class="container custom-container">
     <!-- <img class="background-image" src="assets/img/mineback.webp" alt="Background Image"> -->
     <img class="background-tile">
   </div>
 
 
+
+   <!-- БЛОК: ЛОГО И НАВИГАЦИЯ -->
   <div class="container logo-block mx-auto">
     <div class="row align-items-center">
       <div class="logo-wrapper">
@@ -52,7 +53,7 @@
         <div class="center-swkg">SWKG</div>
       </div>
     </div>
-    
+    <!-- --- -->
     <div class="row mt-3">
       <div class="col-md-12 d-flex justify-content-between">
         <a href="index.html" class="btn btn-primary">HOME</a>
@@ -68,20 +69,31 @@
 
 
 
+ <!-- Блок: Информация -->
+ <div class="container my-4 content-block mx-auto">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="toggle-content" id="info-content-2">
+        <h1 class="text-uppercase fw-bold">Download Minecraft PE</h1>
+        <p class="my-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      </div>
+    </div>
+  </div>
+</div>
 
-  <!-- Блок: Информация 1 -->
+
+  <!-- Блок: Информация -->
   <div class="container my-4 content-block mx-auto">
     <div class="row">
       <div class="col-md-12">
         <div class="toggle-content" id="info-content-1">
-          <h1 class="text-uppercase fw-bold">How to install</h1>
+          <h1 class="text-uppercase fw-bold">How to install Mod</h1>
 
           <p class="my-3">How to install mods:</p>
 
           <p class="my-3">Step 1: You need to have the official version of Minecraft installed. You can download it from the official mojang website or through the following link (LINK).</p>
 
-          <p class="my-3">Step 2: If you downloaded the mod through one of our official applications, you can run the auto-installer by clicking on the icon (ICON). In the popup window, select "Open with Minecraft PE". You can download our official applications by following this link (LINK).
-          </p>
+          <p class="my-3">Step 2: If you downloaded the mod through one of our official applications, you can run the auto-installer by clicking on the icon (ICON). In the popup window, select "Open with Minecraft PE". You can download our official applications by following this link (LINK).</p>
 
           <p class="my-3">If for some reason you were unable to install the mod using the automatic installation, you can do it manually. Follow the instructions below:</p>
 
@@ -96,19 +108,9 @@
     </div>
   </div>
 
-  <!-- Блок: Информация 2 -->
-  <div class="container my-4 content-block mx-auto">
-    <div class="row">
-      <div class="col-md-12">
-        <div class="toggle-content" id="info-content-2">
-          <h1 class="text-uppercase fw-bold">Download Game</h1>
-          <p class="my-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-        </div>
-      </div>
-    </div>
-  </div>
+ 
 
-  <!-- Блок: Информация 3 -->
+  <!-- Блок: Информация -->
   <div class="container my-4 content-block mx-auto">
     <div class="row">
       <div class="col-md-12">
@@ -120,37 +122,34 @@
     </div>
   </div>
 
-  <div class="container my-4 mod-block mx-auto">
-    <div class="row">
-      <div class="col-md-12">
-        <div class="app-tiles-container" id="appTiles">
+
+
+    <!-- БЛОК: НАШИ МОДЫ -->
+    <div class="container my-4 mod-block mx-auto">
+      <div class="row">
+        <div class="col-md-12">
+          <h1 class="text-uppercase fw-bold">Free MPCE Mods</h1>
+          <div class="app-tiles-container" id="appTiles"></div>
           <div id="list-widget">
-            
+            <!-- Ваш контент здесь -->
           </div>
         </div>
       </div>
     </div>
-  </div>
+    
 
-  
-
-
-
-
-
-
-
+  <!-- загружаемые скрипты -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script src="assets/js/MinecraftModPanel.js"></script>
   <script src="assets/bootstrap/js/bootstrap.min.js"></script>
 
+
+  <!-- логика сайта -->
   <script>
 
-// Получаем все элементы с классом "content-block"
-const contentBlocks = document.querySelectorAll('.content-block');
+  const contentBlocks = document.querySelectorAll('.content-block');
 
-// Устанавливаем начальную высоту для всех блоков
-contentBlocks.forEach((block) => {
+  contentBlocks.forEach((block) => {
   const content = block.querySelector('.toggle-content');
   content.style.maxHeight = '40px'; // Начальная высота
   block.addEventListener('click', () => {
@@ -159,34 +158,26 @@ contentBlocks.forEach((block) => {
 });
 
 function toggleContent(block) {
-  // Получаем высоту контента внутри блока
   const content = block.querySelector('.toggle-content');
   const contentHeight = content.scrollHeight;
 
-  // Переключаем класс для анимации
   if (block.classList.contains('show-content')) {
-    // Если блок уже раскрыт, скрываем его
-    content.style.maxHeight = '40px'; // Возвращаем к начальной высоте
+    content.style.maxHeight = '40px';
     block.classList.remove('show-content');
   } else {
-    // Если блок закрыт, показываем его с рассчитанной высотой
     content.style.maxHeight = contentHeight + 'px';
     block.classList.add('show-content');
   }
 }
 
-// Находим кнопку
-const scrollToAppTilesButton = document.querySelector('.scroll-to-app-tiles');
-// Находим блок с app-tiles
-const appTilesBlock = document.querySelector('.app-tiles-container');
-// Добавляем обработчик события на кнопку
-scrollToAppTilesButton.addEventListener('click', (e) => {
-  e.preventDefault(); // Предотвращаем переход по ссылке
-  // Прокручиваем до блока с app-tiles с плавной анимацией
+  const scrollToAppTilesButton = document.querySelector('.scroll-to-app-tiles');
+  const appTilesBlock = document.querySelector('.app-tiles-container');
+  scrollToAppTilesButton.addEventListener('click', (e) => {
+  e.preventDefault();
   appTilesBlock.scrollIntoView({ behavior: 'smooth' });
 });
 
-
   </script>
+
 </body>
 </html>

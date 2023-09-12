@@ -189,6 +189,8 @@
     .app-tiles-container {
         grid-template-columns: repeat(3, 1fr);
         gap: 1px;
+        margin-left: 10px;
+        margin-right: 10px;
     }
   }
   

@@ -14,8 +14,6 @@
   overflow-x: hidden;
 }
 
-
-
 .video {
   position: fixed;
   top: 50%;
@@ -108,10 +106,10 @@
 @media screen and (max-width: 600px) {
   .game-button,
   .minecraft-button {
-    font-size: 16px;
-    padding: 8px 10px;
-    /* margin-right: 2px; */
-    margin: 3px;
+    font-size: 12px;
+    padding: 8px 8px;
+    margin-right: none;
+    margin: 1px;
   }
 }
 

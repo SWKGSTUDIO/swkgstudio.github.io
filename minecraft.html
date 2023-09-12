@@ -67,18 +67,17 @@
   
 
    <!-- БЛОК: НАШИ МОДЫ -->
-   
    <div class="container my-4 mod-block mx-auto">
     <div class="row">
       <div class="col-md-12">
-        <!-- <h1 class="text-uppercase fw-bold">Free MPCE Mods</h1> -->
-        <div class="app-tiles-container" id="appTiles"></div>
+        <div class="app-tiles-container" id="appTiles">
+        </div>
         <div id="list-widget">
-          <!-- Ваш контент здесь -->
         </div>
       </div>
     </div>
   </div>
+  
 
 
    <!-- Блок: Информация -->
@@ -170,10 +169,9 @@
 
 
 
- 
- 
 
-  
+
+
 
    
     
@@ -210,12 +208,14 @@ function toggleContent(block) {
   }
 }
 
-  const scrollToAppTilesButton = document.querySelector('.scroll-to-app-tiles');
-  const appTilesBlock = document.querySelector('.app-tiles-container');
-  scrollToAppTilesButton.addEventListener('click', (e) => {
-  e.preventDefault();
-  appTilesBlock.scrollIntoView({ behavior: 'smooth' });
-});
+var appTilesElement = document.getElementById('appTiles');
+var appTilesHeight = appTilesElement.scrollHeight;
+var viewportHeight = appTilesElement.clientHeight;
+
+// Устанавливаем скролл в середину элемента appTiles
+appTilesElement.scrollTop = (appTilesHeight - viewportHeight) / 2;
+
+
 
   </script>
 

@@ -3,11 +3,25 @@
     flex-wrap: wrap;
     justify-content: center;
     gap: 10px;
-    width: 1000px; /* Пример фиксированной ширины */
-    overflow-x: auto; /* Горизонтальная прокрутка */
-    overflow-y: hidden; /* Уберите вертикальную прокрутку */
+    width: 1000px; 
+    overflow-x: auto;
+    overflow-y: hidden;
+    animation: scroll 50s linear infinite; /* Применение анимации к элементам */
   }
-  
+
+  @keyframes scroll {
+    0% {
+      transform: translateX(0);
+    }
+    50%{
+      transform: translateX(-50%);
+    }
+    100% {
+      transform: translateX(0%);
+    }
+  }
+
+
   .app-tile {
     border-radius: 10px;
     padding: 25px;
@@ -19,8 +33,13 @@
     text-align: center;
     cursor: pointer;
     width: 100%;
-    max-width: 150px;
+    max-width: 130px;
+
   }
+
+
+
+  
   
   .app-title {
     margin-top: 10px;

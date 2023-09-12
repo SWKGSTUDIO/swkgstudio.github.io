@@ -173,65 +173,6 @@
 
 
 
-
-
-
-
-<script>
-  var appTilesContainer = document.getElementById("appTiles");
-  var animationPaused = false;
-  var currentPosition = 0;
-  var direction = -1; // Направление анимации: -1 - влево, 1 - вправо
-  var step = 1; // Шаг смещения элемента (измените по вашему желанию)
-  var animationInterval = 20; // Интервал между кадрами анимации в миллисекундах (измените по желанию)
-
-  // Создаем функцию для анимации
-  function animate() {
-    if (!animationPaused) {
-      currentPosition += direction * step;
-      appTilesContainer.style.transform = "translateX(" + currentPosition + "px)";
-
-      // Проверяем, если элемент вышел за границу, возвращаем его обратно
-      var containerWidth = appTilesContainer.offsetWidth;
-      var contentWidth = appTilesContainer.scrollWidth;
-      if (currentPosition <= -contentWidth) {
-        currentPosition = containerWidth;
-      } else if (currentPosition >= containerWidth) {
-        currentPosition = -contentWidth;
-      }
-    }
-    setTimeout(animate, animationInterval);
-  }
-
-  // Запускаем анимацию
-  animate();
-
-  // Функция для остановки анимации
-  function stopAnimation() {
-    animationPaused = true;
-  }
-
-  // Функция для возобновления анимации
-  function resumeAnimation() {
-    animationPaused = false;
-  }
-
-  // Наведение курсора мыши на контейнер - остановить анимацию
-  appTilesContainer.addEventListener("mouseenter", stopAnimation);
-
-  // Удаление курсора мыши с контейнера - возобновить анимацию
-  appTilesContainer.addEventListener("mouseleave", resumeAnimation);
-
-  // Обработчик события для щелчка мыши на контейнере - начать анимацию заново
-  appTilesContainer.addEventListener("click", function() {
-    appTilesContainer.style.transform = "translateX(0)";
-    currentPosition = 0;
-    resumeAnimation();
-  });
-</script>
-
-
-
     
 
   <!-- загружаемые скрипты -->
@@ -242,6 +183,9 @@
 
   <!-- логика сайта -->
   <script>
+
+
+
 
   const contentBlocks = document.querySelectorAll('.content-block');
 
@@ -265,13 +209,6 @@ function toggleContent(block) {
     block.classList.add('show-content');
   }
 }
-
-var appTilesElement = document.getElementById('appTiles');
-var appTilesHeight = appTilesElement.scrollHeight;
-var viewportHeight = appTilesElement.clientHeight;
-
-// Устанавливаем скролл в середину элемента appTiles
-appTilesElement.scrollTop = (appTilesHeight - viewportHeight) / 2;
 
 
 

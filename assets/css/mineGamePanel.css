@@ -22,7 +22,22 @@
     cursor: pointer;
     width: 100%;
     max-width: 130px;
-
+  
+    animation: infinite-bounce 15s infinite;
+  }
+  
+  @keyframes infinite-bounce {
+    0% {
+      transform: translateX(0);
+    }
+  
+    50% {
+      transform: translateX(-100px);
+    }
+  
+    100% {
+      transform: translateX(0);
+    }
   }
 
 

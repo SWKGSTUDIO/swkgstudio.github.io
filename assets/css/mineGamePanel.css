@@ -3,6 +3,9 @@
     flex-wrap: wrap;
     justify-content: center;
     gap: 10px;
+    width: 1000px; /* Пример фиксированной ширины */
+    overflow-x: auto; /* Горизонтальная прокрутка */
+    overflow-y: hidden; /* Уберите вертикальную прокрутку */
   }
   
   .app-tile {

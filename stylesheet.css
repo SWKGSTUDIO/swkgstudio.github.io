@@ -102,17 +102,6 @@
 }
 
 
-@media screen and (max-width: 600px) {
-  .game-button,
-  .minecraft-button {
-    font-size: 15px;
-    padding: 8px 8px;
-    margin-right: none;
-    margin: 1px;
-  }
-}
-
-
   
   .logo-container {
     z-index: 2;

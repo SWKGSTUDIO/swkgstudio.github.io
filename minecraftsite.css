@@ -91,9 +91,17 @@ body {
       font-family: Arial, sans-serif; /* Шрифт */
     }
   
+    .my-3 {
+      font-size: 14px;
+    }
+
+    .text-uppercase {
+      font-size: 20px;
+    }
+
     #p-element {
       color: rgb(232, 236, 241);
-      font-size: 12px;
+      font-size: 10px;
       margin-top: 0px;
       margin-bottom: 0px;
     }

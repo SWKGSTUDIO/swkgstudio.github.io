@@ -151,7 +151,7 @@
 
   contentBlocks.forEach((block) => {
   const content = block.querySelector('.toggle-content');
-  content.style.maxHeight = '40px'; // Начальная высота
+  content.style.maxHeight = '30px'; // Начальная высота
   block.addEventListener('click', () => {
     toggleContent(block);
   });
@@ -162,7 +162,7 @@ function toggleContent(block) {
   const contentHeight = content.scrollHeight;
 
   if (block.classList.contains('show-content')) {
-    content.style.maxHeight = '40px';
+    content.style.maxHeight = '30px';
     block.classList.remove('show-content');
   } else {
     content.style.maxHeight = contentHeight + 'px';

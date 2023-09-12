@@ -55,6 +55,14 @@ Sweety Kitty Games Studio также приветствует вас в мире
     const app = initializeApp(firebaseConfig);
     const analytics = getAnalytics(app);
 
+    // Функция для обработки события при нажатии на кнопку
+    function handleMinecraftButtonClick() {
+            // Отправляем событие Firebase при нажатии на кнопку Minecraft
+            logEvent(analytics, "minecraft_button_click", {
+              button_name: "Minecraft"
+            });
+        }
+
   </script>
 
 </head>
@@ -83,7 +91,7 @@ Sweety Kitty Games Studio также приветствует вас в мире
     Minecraft
   </a> -->
   
-  <a href="minecraft.html" class="minecraft-button">Minecraft</a>
+  <a href="minecraft.html" class="minecraft-button" onclick="handleMinecraftButtonClick()">Minecraft</a>
 
 
   <a href="game.html" class="game-button">

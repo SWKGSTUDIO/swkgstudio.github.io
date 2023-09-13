@@ -52,19 +52,12 @@
 
 <body class="custom-body">
   <div class="container custom-container">
-    <!-- Replace with your background video or image -->
     <video class="video" autoplay loop muted playsinline poster="путь_к_постеру.jpg">
       <source src="assets/video/vid.webm" type="video/webm">
     </video>
     <img class="background-tile">
   </div>
   
-  <!-- <div class="button-container"> -->
-    <!-- <a href="minecraft.html" class="minecraft-button" onclick="handleMinecraftButtonClick()">Minecraft</a>
-    <a href="game.html" class="game-button">
-      <i class="fas fa-gamepad"></i>
-    </a> -->
-  <!-- </div> -->
 
   <div class="col logo-container mx-auto text-center">
     <a href="/login" class="logo-link">
@@ -72,29 +65,24 @@
         <img src="assets/img/logo.webp" width="38" height="61" class="logo-img">SWKG
       </strong>
     </a>
-    <div class="mt-3"> <!-- Add margin-top here -->
+    <div class="mt-2">
       <a href="minecraft.html" class="minecraft-button" onclick="handleMinecraftButtonClick()">Minecraft</a>
       <a href="game.html" class="game-button"><i class="fas fa-gamepad"></i></a>
     </div>
   </div>
   
   
-  
-  
 
 
   <div class="row" style="overflow: hidden;">
-    <section class="phone-container mx-auto">
-      <div class="app-tiles-container mx-auto" id="appTiles"></div>
-    </section>
+    <div class="app-tiles-container mx-auto" id="appTiles"></div>
     <div class="button-list-container">
       <div id="list-widget" style="display: none;"></div>
       <ul class="button-list horizontal" id="list"></ul>
     </div>
     <div class="overlay"></div>
   </div>
-</body>
-
+  
 
   <script>
     function checkAdBlockError() {

@@ -1,93 +1,103 @@
+.container.mod-block {
+  background: linear-gradient(90deg, #2c211a, #2e4416);
+  border-radius: 25px;
+  color: white;
+  margin-top: 20px;
+  margin-right: 20px;
+  margin-left: 20px;
+  margin-bottom: 20px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  height: 150px;
+  width: 100%;
+  white-space: nowrap;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  padding-bottom: 15px;
+}
+
+.container.mod-block::-webkit-scrollbar {
+  width: 0.5em;
+}
+
+.container.mod-block::-webkit-scrollbar-thumb {
+  background-color: rgba(169, 169, 169, 0);
+}
+
 .app-tiles-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-    width: 1000px; 
-    overflow-x: auto;
-    overflow-y: hidden;
+  display: grid;
+  grid-auto-flow: column;
+  gap: 10px;
+  width: max-content; /* Растягивает контейнер по содержимому */
+  white-space: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+  align-items: center; /* Центрирование по вертикали */
+}
 
-  }
+.app-tile {
+  border-radius: 10px;
+  padding: 25px 10px;
+  overflow: hidden;
+  color: white;
+  transition: transform 0.3s ease;
+  position: relative;
+  animation: buttonBreathing 3s infinite ease-in-out;
+  text-align: center;
+  cursor: pointer;
+  max-width: 130px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
+.app-title {
+  margin-top: 10px;
+  font-size: 13px;
+  word-wrap: break-word;
+  line-height: 1.2; /* Установите желаемую высоту строки */
+  height: 2.4em; /* Установите желаемую высоту для двух строк текста (1.2 * 2) */
+  overflow: hidden;
+}
 
-  .app-tile {
-    border-radius: 10px;
-    padding: 25px;
-    overflow: hidden;
-    color: white;
-    transition: transform 0.3s ease;
-    position: relative;
-    animation: buttonBreathing 3s infinite ease-in-out;
-    text-align: center;
-    cursor: pointer;
-    width: 100%;
-    max-width: 130px;
-  
-    /* animation: infinite-bounce 15s infinite; */
-  }
-  
-  @keyframes infinite-bounce {
-    0% {
-      transform: translateX(0);
-    }
-  
-    50% {
-      transform: translateX(-100px);
-    }
-  
-    100% {
-      transform: translateX(0);
-    }
-  }
+.app-tile img {
+  width: auto;
+  height: 80px;
+  object-fit: cover;
+  border: 5px solid rgb(65, 137, 21);
+  border-radius: 25px;
+  animation: pulse 3s ease infinite;
+  transition: transform 0.3s ease;
+}
 
+.app-tile:hover {
+  transform: scale(1.05);
+}
 
+.app-tile:hover img {
+  animation: breathe 3s ease infinite, pulse 3s ease infinite;
+  transform: scale(1);
+}
 
-  
-  
-  .app-title {
-    margin-top: 10px;
-    font-size: 12px;
-  }
-  
-  .app-tile img {
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-    border: 5px solid rgb(65, 137, 21);
-    border-radius: 25px;
-    animation: pulse 3s ease infinite;
-    transition: transform 0.3s ease;
-  }
-  
-  .app-tile:hover {
-    transform: scale(1.05);
-  }
-  
-  .app-tile:hover img {
-    animation: breathe 3s ease infinite, pulse 3s ease infinite;
+@keyframes breathe {
+  0%, 100% {
     transform: scale(1);
   }
-
-
-  @keyframes breathe {
-    0%, 100% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.05);
-    }
+  50% {
+    transform: scale(1.05);
   }
-  
-  @keyframes pulse {
-    0%, 100% {
-        border-image-slice: 1;
-        box-shadow: 0 0 5px rgb(64, 128, 0);
-        border-radius: 20%;
-    }
-    50% {
-        border-image-slice: 1;
-        box-shadow: 0 0 15px rgb(164, 255, 36);
-        border-radius: 30%;
-    }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    border-image-slice: 1;
+    box-shadow: 0 0 5px rgb(64, 128, 0);
+    border-radius: 20%;
   }
-  
+  50% {
+    border-image-slice: 1;
+    box-shadow: 0 0 15px rgb(164, 255, 36);
+    border-radius: 30%;
+  }
+}

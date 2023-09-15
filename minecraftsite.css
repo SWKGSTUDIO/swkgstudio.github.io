@@ -124,30 +124,7 @@ body {
       height: 61px;
     }
 
-    .container.mod-block {
-      background: linear-gradient(90deg, #2c211a, #2e4416);
-      padding: 10px;
-      border-radius: 25px;
-      color: white;
-      margin-top: 20px;
-      margin-right: 20px;
-      margin-left: 20px;
-      margin-bottom: 20px;
-      overflow-x: auto;
-      overflow-y: hidden;
-      height: 180px;
-      width: 100%;
-      -ms-overflow-style: none;
-      scrollbar-width: none;
-    }
-    
-    .container.mod-block::-webkit-scrollbar {
-      width: 0.5em;
-    }
-    
-    .container.mod-block::-webkit-scrollbar-thumb {
-      background-color: rgba(169, 169, 169, 0);
-    }
+   
 
 .container.content-block {
   background: linear-gradient(90deg, #2c211a, #2e4416);

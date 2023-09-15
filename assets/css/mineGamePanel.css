@@ -23,7 +23,7 @@
     width: 100%;
     max-width: 130px;
   
-    animation: infinite-bounce 15s infinite;
+    /* animation: infinite-bounce 15s infinite; */
   }
   
   @keyframes infinite-bounce {

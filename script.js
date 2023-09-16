@@ -23,41 +23,36 @@ document.addEventListener('DOMContentLoaded', () => {
                 data.games = [emptyTab];
             }
 
-
-            // ВКЛАДКА
             data.games.forEach((game) => {
-                const tabWrapper = document.createElement('div');
-                tabWrapper.classList.add('tab-wrapper');
-            
                 const tabElement = document.createElement('div');
                 tabElement.classList.add('tab');
-            
+
                 tabElement.setAttribute('data-tab-id', game.id);
-            
+
                 const tabName = document.createElement('span');
                 tabName.classList.add('tab-name');
                 tabName.textContent = truncateText(game.name, 15);
                 tabElement.appendChild(tabName);
-            
+
                 const closeIcon = document.createElement('button');
                 closeIcon.classList.add('close-tab', 'close-tab-button');
                 closeIcon.textContent = '';
                 tabElement.appendChild(closeIcon);
-            
+
                 tabElement.addEventListener('click', () => {
                     loadTabContent(game);
                 });
-            
+
                 closeIcon.addEventListener('click', async (event) => {
                     event.stopPropagation();
-            
+
                     const confirmed = confirm('Вы уверены, что хотите удалить эту вкладку?');
-            
+
                     if (confirmed) {
                         removeTab(tabElement);
-            
+
                         const tabId = tabElement.getAttribute('data-tab-id');
-            
+
                         try {
                             const deleteResponse = await fetch(`https://intermediate-easy-ship.glitch.me/adminpaneldata/${tabId}`, {
                                 method: 'DELETE'
@@ -65,9 +60,9 @@ document.addEventListener('DOMContentLoaded', () => {
                             if (!deleteResponse.ok) {
                                 throw new Error(`Ошибка удаления вкладки: ${deleteResponse.statusText}`);
                             }
-            
+
                             location.reload();
-            
+
                         } catch (error) {
                             console.error('Произошла ошибка при удалении вкладки на сервере:', error);
                         }
@@ -81,9 +76,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     return text;
                 }
 
-                tabWrapper.appendChild(tabElement);
-                tabContainer.appendChild(tabWrapper);
-            
+                tabContainer.appendChild(tabElement);
+
                 maxTabId = Math.max(maxTabId, game.id || 0);
             });
 

@@ -79,16 +79,12 @@ body {
 } */
 
 
-/* .tab-wrapper {
-    display: flex;
-    align-items: center;
-    max-width: 200px;
-} */
 
 
 .tab {
+    flex: 0 0 auto;
     background-color: #4b4b4b;
-    color: white;
+    width: 150px;
     height: 50px;
     padding: 10px;
     cursor: pointer;
@@ -96,15 +92,13 @@ body {
     border-top-right-radius: 5px;
     margin-right: 5px;
     display: flex;
-    flex-grow: 1; /* Растягиваем вкладку по ширине */
     justify-content: space-between;
     align-items: center;
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap; /* Этот стиль предотвращает перенос текста на новую строку */
+    white-space: nowrap; /* Предотвращаем перенос текста на новую строку */
     font-size: 15px;
 }
-
 
 .tab.active {
     background-color: #17a2b8;
@@ -123,17 +117,17 @@ body {
 }
 
 .close-tab-button {
-    background-color: rgb(111, 32, 32);
+    background-color: rgb(136, 36, 36);
     color: white;
     font-size: 10px;
     border: none;
     cursor: pointer;
     padding: 5px 5px;
     border-radius: 50%;
+    margin-left: 5px;
     outline: none;
-    flex-shrink: 0; /* Запрещаем кнопке уменьшать свой размер */
+    flex-shrink: 0;
 }
-
 .close-tab-button:hover {
     background-color: #d43939;
 }

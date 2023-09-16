@@ -44,42 +44,10 @@ body {
 }
 
 
-#tab-container {
+.tab-container {
     display: flex;
     overflow-x: auto;
-    border-bottom: 1px solid #ccc;
 }
-
-
-
-/* .tab-container {
-    display: flex;
-    background-color: #343a40;
-    padding: 5px;
-    overflow-x: auto;
-} */
-
-/* .tab {
-    background-color: #4b4b4b;
-    color: white;
-    max-width: 200px;
-    height: 50px;
-    padding: 10px;
-    cursor: pointer;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-    margin-right: 5px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    font-size: 15px;
-} */
-
-
-
 
 .tab {
     flex: 0 0 auto;
@@ -104,12 +72,13 @@ body {
     background-color: #17a2b8;
 }
 .tab-content {
-    background-color: rgba(255, 255, 255, 0.113);
+    background-color: #4b4b4b;
     padding: 20px;
 }
 .tab-panel {
     display: flex;
     flex-direction: column;
+    width: 100%;
 }
 
 .form-group {

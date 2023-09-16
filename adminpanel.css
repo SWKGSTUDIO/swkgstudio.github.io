@@ -131,10 +131,7 @@ form {
 
 label {
     align-self: flex-start;
-    margin-right: 10px;
-
     display: block;
-    margin-bottom: 5px;
     font-weight: bold;
 }
 
@@ -145,7 +142,6 @@ input[type="url"] {
     background-color: #212529;
     padding: 5px;
     margin-bottom: 10px; 
-    margin-left: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
 }

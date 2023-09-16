@@ -17,6 +17,16 @@ body {
   overflow: visible;
 }
 
+video {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  border: 5px solid rgb(65, 137, 21);
+  border-radius: 25px;
+}
+
+
   .custom-container {
     position: fixed;
     padding: 0px;

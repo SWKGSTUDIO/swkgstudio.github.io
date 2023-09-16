@@ -44,13 +44,20 @@ body {
 }
 
 
+#tab-container {
+    display: flex; /* Делаем контейнер гибким (flexbox) */
+    overflow-x: auto; /* Включаем горизонтальную прокрутку */
+    white-space: nowrap; /* Запрещаем перенос текста на новую строку */
+}
 
-.tab-container {
+
+
+/* .tab-container {
     display: flex;
     background-color: #343a40;
     padding: 5px;
     overflow-x: auto;
-}
+} */
 
 .tab {
     background-color: #4b4b4b;

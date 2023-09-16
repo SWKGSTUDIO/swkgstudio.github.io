@@ -87,38 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
             addButtonTab.textContent = 'ДОБАВИТЬ';
 
 
-
-            addTabButton.addEventListener('click', async () => {
-
-        const newTab = {
-            name: 'Новая вкладка',
-            content: '',
-            id: maxTabId + 1
-        };
-
-        try {
-
-            const response = await fetch('https://intermediate-easy-ship.glitch.me/adminpaneldata', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(newTab)
-            });
-
-            if (!response.ok) {
-                throw new Error(`Ошибка добавления вкладки: ${response.statusText}`);
-            }
-
-            location.reload();
-        } catch (error) {
-            console.error('Произошла ошибка при добавлении вкладки на сервере:', error);
-        }
-                
-
-            // Обработчик события при клике на кнопку "ДОБАВИТЬ"
-            // Здесь вы можете выполнить действия, связанные с добавлением новой вкладки
-            });
+            
 
             tabContainer.appendChild(addButtonTab);
 

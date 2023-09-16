@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Создаем кнопку "ДОБАВИТЬ" как последнюю вкладку
             const addButtonTab = document.createElement('div');
-            addButtonTab.classList.add('tab', 'add-tab-button'); // Добавляем класс "add-tab-button" для стилизации
+            addButtonTab.classList.add('tab', 'btn', 'btn-custom', 'add-tab-button');
             addButtonTab.textContent = 'ДОБАВИТЬ';
             addButtonTab.addEventListener('click', () => {
             // Обработчик события при клике на кнопку "ДОБАВИТЬ"

@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const tabContainer = document.getElementById('tab-container');
     const tabContent = document.querySelector('.tab-content');
-    const addTabButton = document.getElementById('add-tab-button');
+    // const addTabButton = document.getElementById('add-tab-button');
 
     let maxTabId = 0;
 

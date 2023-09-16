@@ -48,20 +48,6 @@ body {
     font-weight: bold;
 }
 
-#add-tab-button {
-    background-color: #28A745;
-    color: white;
-    font-size: 20px;
-    border: none;
-    cursor: pointer;
-    padding: 5px 10px;
-    border-radius: 50%;
-    outline: none;
-}
-
-#add-tab-button:hover {
-    background-color: #218838;
-}
 
 .tab-container {
     display: flex;
@@ -196,21 +182,7 @@ textarea {
     background-color: orange; /* или другой желаемый цвет подсветки */
 }
 
-/* Добавляем стили для кнопки NATIVEADS */
-#native-ads-button {
-    background-color: #FF5733; /* Цвет фона кнопки NATIVEADS */
-    color: white;
-    font-size: 16px;
-    border: none;
-    cursor: pointer;
-    padding: 5px 10px;
-    border-radius: 5px;
-    margin-right: 10px; /* Добавляем отступ справа от кнопки Admin Panel */
-}
 
-#native-ads-button:hover {
-    background-color: #D04133; /* Изменяем цвет фона при наведении курсора */
-}
 
 
 .btn-custom {

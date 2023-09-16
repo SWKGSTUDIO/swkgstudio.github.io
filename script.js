@@ -86,12 +86,38 @@ document.addEventListener('DOMContentLoaded', () => {
             addButtonTab.classList.add('tab', 'btn', 'btn-custom', 'add-tab-button');
             addButtonTab.textContent = 'ДОБАВИТЬ';
 
-
+            addButtonTab.addEventListener('click', async () => {
+                const newTab = {
+                    name: 'Новая вкладка',
+                    content: '',
+                    id: maxTabId + 1
+                };
+    
+                try {
+                    const response = await fetch('https://intermediate-easy-ship.glitch.me/adminpaneldata', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(newTab)
+                    });
+    
+                    if (!response.ok) {
+                        throw new Error(`Ошибка добавления вкладки: ${response.statusText}`);
+                    }
+    
+                    location.reload();
+                } catch (error) {
+                    console.error('Произошла ошибка при добавлении вкладки на сервере:', error);
+                }
+            });
+    
             tabContainer.appendChild(addButtonTab);
-
+        
             if (data.games.length > 0) {
                 loadTabContent(data.games[0]);
             }
+
         } catch (error) {
             console.error('Произошла ошибка при загрузке вкладок:', error);
         }
@@ -265,33 +291,33 @@ document.addEventListener('DOMContentLoaded', () => {
         tabElement.remove();
     }
 
-    addTabButton.addEventListener('click', async () => {
+    // addTabButton.addEventListener('click', async () => {
 
-        const newTab = {
-            name: 'Новая вкладка',
-            content: '',
-            id: maxTabId + 1
-        };
+    //     const newTab = {
+    //         name: 'Новая вкладка',
+    //         content: '',
+    //         id: maxTabId + 1
+    //     };
 
-        try {
+    //     try {
 
-            const response = await fetch('https://intermediate-easy-ship.glitch.me/adminpaneldata', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(newTab)
-            });
+    //         const response = await fetch('https://intermediate-easy-ship.glitch.me/adminpaneldata', {
+    //             method: 'POST',
+    //             headers: {
+    //                 'Content-Type': 'application/json'
+    //             },
+    //             body: JSON.stringify(newTab)
+    //         });
 
-            if (!response.ok) {
-                throw new Error(`Ошибка добавления вкладки: ${response.statusText}`);
-            }
+    //         if (!response.ok) {
+    //             throw new Error(`Ошибка добавления вкладки: ${response.statusText}`);
+    //         }
 
-            location.reload();
-        } catch (error) {
-            console.error('Произошла ошибка при добавлении вкладки на сервере:', error);
-        }
-    });
+    //         location.reload();
+    //     } catch (error) {
+    //         console.error('Произошла ошибка при добавлении вкладки на сервере:', error);
+    //     }
+    // });
 
     loadTabs();
 });

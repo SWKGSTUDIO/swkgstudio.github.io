@@ -81,6 +81,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 maxTabId = Math.max(maxTabId, game.id || 0);
             });
 
+            // Создаем кнопку "ДОБАВИТЬ" как последнюю вкладку
+            const addButtonTab = document.createElement('div');
+            addButtonTab.classList.add('tab', 'add-tab-button'); // Добавляем класс "add-tab-button" для стилизации
+            addButtonTab.textContent = 'ДОБАВИТЬ';
+            addButtonTab.addEventListener('click', () => {
+            // Обработчик события при клике на кнопку "ДОБАВИТЬ"
+            // Здесь вы можете выполнить действия, связанные с добавлением новой вкладки
+            });
+
+            tabContainer.appendChild(addButtonTab);
+
             if (data.games.length > 0) {
                 loadTabContent(data.games[0]);
             }

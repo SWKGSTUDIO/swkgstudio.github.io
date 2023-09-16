@@ -87,8 +87,6 @@ document.addEventListener('DOMContentLoaded', () => {
             addButtonTab.textContent = 'ДОБАВИТЬ';
 
 
-            
-
             tabContainer.appendChild(addButtonTab);
 
             if (data.games.length > 0) {

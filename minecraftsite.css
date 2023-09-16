@@ -17,14 +17,20 @@ body {
   overflow: visible;
 }
 
+.video-container {
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Центрирование по вертикали */
+}
+
 video {
   max-width: 100%;
-  height: auto;
+  max-height: 300px;
   display: block;
-  margin: 0 auto;
   border: 5px solid rgb(65, 137, 21);
   border-radius: 25px;
 }
+
 
 
   .custom-container {

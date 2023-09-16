@@ -114,6 +114,7 @@ body {
 .form-group {
     margin-bottom: 20px;
 }
+
 .close-tab-button {
     background-color: rgba(255, 255, 255, 0.113);
     color: white;
@@ -122,8 +123,9 @@ body {
     cursor: pointer;
     padding: 5px 5px;
     border-radius: 50%;
-    margin-left: 20px;
+    margin-left: 5px;
     outline: none;
+    flex-shrink: 0;
 }
 .close-tab-button:hover {
     background-color: #d43939;

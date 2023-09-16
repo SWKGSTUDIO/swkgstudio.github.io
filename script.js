@@ -85,7 +85,37 @@ document.addEventListener('DOMContentLoaded', () => {
             const addButtonTab = document.createElement('div');
             addButtonTab.classList.add('tab', 'btn', 'btn-custom', 'add-tab-button');
             addButtonTab.textContent = 'ДОБАВИТЬ';
-            addButtonTab.addEventListener('click', () => {
+
+
+
+            addTabButton.addEventListener('click', async () => {
+
+        const newTab = {
+            name: 'Новая вкладка',
+            content: '',
+            id: maxTabId + 1
+        };
+
+        try {
+
+            const response = await fetch('https://intermediate-easy-ship.glitch.me/adminpaneldata', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(newTab)
+            });
+
+            if (!response.ok) {
+                throw new Error(`Ошибка добавления вкладки: ${response.statusText}`);
+            }
+
+            location.reload();
+        } catch (error) {
+            console.error('Произошла ошибка при добавлении вкладки на сервере:', error);
+        }
+                
+
             // Обработчик события при клике на кнопку "ДОБАВИТЬ"
             // Здесь вы можете выполнить действия, связанные с добавлением новой вкладки
             });

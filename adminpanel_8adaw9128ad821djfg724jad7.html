@@ -12,6 +12,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/prism.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-java.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
 
 </head>
 <body>
@@ -41,10 +43,14 @@
     <div class="browser-container">
         <div class="browser-header">
             <div class="browser-title">АДМИН-ПАНЕЛЬ</div>
-            <button id="native-ads-button">NATIVEADS</button>
-            <button id="settings-button">Settings</button>
-            <button id="add-tab-button">+</button>
         </div>
+        <div class="btn-group" role="group" aria-label="Admin Panel Buttons">
+            <button id="native-ads-button" class="btn btn-primary">Nativeads</button>
+            <button id="settings-button" class="btn btn-primary">Settings</button>
+            <button id="add-tab-button" class="btn btn-primary">Add Game</button>
+        </div>
+    </div>
+    
 
         <div id="editImageModal" style="display: none;">
             <h2>Edit Image Link</h2>
@@ -110,5 +116,8 @@
     </div>
     <script src="panel_nativeads.js"></script>
     <script src="script.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

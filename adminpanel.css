@@ -79,11 +79,12 @@ body {
 } */
 
 
-.tab-wrapper {
+/* .tab-wrapper {
     display: flex;
     align-items: center;
-    width: 200px;
-}
+    max-width: 200px;
+} */
+
 
 .tab {
     background-color: #4b4b4b;
@@ -95,6 +96,7 @@ body {
     border-top-right-radius: 5px;
     margin-right: 5px;
     display: flex;
+    flex-grow: 1; /* Растягиваем вкладку по ширине */
     justify-content: space-between;
     align-items: center;
     overflow: hidden;
@@ -133,7 +135,7 @@ body {
 }
 
 .close-tab-button:hover {
-    background-color: #df1515;
+    background-color: #d43939;
 }
 #save-button {
     background-color: #6e6e6e;

@@ -23,6 +23,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 data.games = [emptyTab];
             }
 
+
+            // ВКЛАДКА
             data.games.forEach((game) => {
                 const tabWrapper = document.createElement('div');
                 tabWrapper.classList.add('tab-wrapper');

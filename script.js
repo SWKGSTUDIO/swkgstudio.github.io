@@ -23,8 +23,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 data.games = [emptyTab];
             }
 
-
-                // ВКЛАДКА
             data.games.forEach((game) => {
                 const tabWrapper = document.createElement('div');
                 tabWrapper.classList.add('tab-wrapper');
@@ -73,15 +71,19 @@ document.addEventListener('DOMContentLoaded', () => {
                         }
                     }
                 });
-            
+
+                function truncateText(text, maxLength) {
+                    if (text.length > maxLength) {
+                        return text.slice(0, maxLength - 3) + '...';
+                    }
+                    return text;
+                }
+
                 tabWrapper.appendChild(tabElement);
                 tabContainer.appendChild(tabWrapper);
             
                 maxTabId = Math.max(maxTabId, game.id || 0);
             });
-
-
-
 
             // Создаем кнопку "ДОБАВИТЬ" как последнюю вкладку
             const addButtonTab = document.createElement('div');

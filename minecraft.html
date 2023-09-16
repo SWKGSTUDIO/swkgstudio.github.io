@@ -18,6 +18,12 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <link rel="stylesheet" href="assets/css/mineGamePanel.css">
   <link rel="stylesheet" href="minecraftsite.css">
+  <link rel="stylesheet" type="text/css" href="node_modules/slick-carousel/slick/slick.css"/>
+  <link rel="stylesheet" type="text/css" href="node_modules/slick-carousel/slick/slick-theme.css"/>
+ 
+
+
+
   <!-- Yandex.RTB -->
   <script>window.yaContextCb=window.yaContextCb||[]</script>
   <script src="https://yandex.ru/ads/system/context.js" async></script>
@@ -49,19 +55,67 @@
   </script>
 
 
-  <style>
-    .content-block {
-      cursor: pointer;
-    }
-    .toggle-content {
-      max-height: 40px;
-      overflow: hidden;
-      transition: max-height 0.3s ease-in-out;
-    }
-    .show-content {
-      max-height: 100%; /* Выберите желаемую максимальную высоту */
-    }
-  </style>
+<style>
+  .carousel-container {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow: hidden;
+    max-width: 200px; /* Adjust as needed */
+    margin: 0 auto;
+    position: relative;
+}
+
+.carousel-images {
+    display: flex;
+    transition: transform 0.3s ease-in-out;
+}
+
+.carousel-image {
+    max-width: 200px; 
+    height: auto;
+}
+
+.carousel-button {
+    cursor: pointer;
+    position: absolute;
+    top: 0%;
+    background: linear-gradient(0deg, #2a2623, #494536);
+    border: none;
+    font-size: 15px;
+    padding: 2px 10px;
+    color: white;
+    z-index: 999;
+    text-align: center;
+    text-transform: uppercase;
+    transition: transform 0.2s;
+    border-radius: 5px;
+  }
+
+  .prev-button {
+    left: 0px;
+    transform-origin: left;
+  }
+
+  .next-button {
+    right: 0px;
+    transform-origin: right;
+  }
+
+/* Additional styles for content blocks */
+.content-block {
+    margin-bottom: 10px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.toggle-content {
+    overflow: hidden;
+    max-height: 30px;
+    transition: max-height 0.3s ease-in-out;
+}
+
+</style>
+
 </head>
 
 <body>
@@ -118,15 +172,67 @@
 
         <p class="my-3">How to install mods:</p>
 
-        <div class="video-container">
+        
+        <!-- <div class="video-container">
           <video autoplay muted loop>
             <source src="assets/video/manual2.webm" type="video/webm">
             not video.
           </video>
-        </div>
+        </div> -->
+
+
+        <div class="carousel-container">
+
+          <div class="carousel-images">
+
+     
+
+              <div class="carousel-slide">
+                <div class="carousel-text-top">STEP:1</div>
+                <div class="carousel-text-bottom">Click "Save Mod</div>
+                  <img src="assets/img/manualinstall/1.png" alt="Image 1" class="carousel-image">
+                  <!-- <div class="carousel-text-bottom">Attention!</div> -->
+                  <!-- <div class="carousel-text-bottom">You need to have the official version of Minecraft installed. You can download it from the official mojang website or through the following link.</div> -->
+
+              </div>
+              <div class="carousel-slide">
+                <div class="carousel-text-top">STEP:2</div>
+                <div class="carousel-text-bottom">Select the ../Downloads/SWKGMODS folder and click save</div>
+                  <img src="assets/img/manualinstall/2.png" alt="Image 2" class="carousel-image">
+              </div>
+              <div class="carousel-slide">
+                <div class="carousel-text-top">STEP:3</div>
+                <div class="carousel-text-bottom">Start auto-unpacking</div>
+                  <img src="assets/img/manualinstall/3.png" alt="Image 3" class="carousel-image">
+              </div>
+              <div class="carousel-slide">
+                <div class="carousel-text-top">STEP:4</div>
+                <div class="carousel-text-bottom">Select the folder where you downloaded the mod and click "Use this folder"</div>
+
+                  <img src="assets/img/manualinstall/4.png" alt="Image 4" class="carousel-image">
+              </div>
+              <div class="carousel-slide">
+                <div class="carousel-text-top">STEP:5</div>
+                <div class="carousel-text-bottom">Don't forget to check out other games & mods ;)</div>
+
+                  <img src="assets/img/manualinstall/5.png" alt="Image 5" class="carousel-image">
+              </div>
+              <div class="carousel-slide">
+                <div class="carousel-text-top">STEP:6</div>
+                <div class="carousel-text-bottom">Open files .mcworld using the Minecraft PE App. The mod import will start automatically</div>
+
+                <img src="assets/img/manualinstall/6.png" alt="Image 5" class="carousel-image">
+            </div>
+          </div>
+          <button class="carousel-button prev-button" onclick="prevSlide()">&#10094;</button>
+          <button class="carousel-button next-button" onclick="nextSlide()">&#10095;</button>
+      </div>
+      
+        
+        
         
 
-        <p class="my-3">Step 1: You need to have the official version of Minecraft installed. You can download it from the official mojang website or through the following link (LINK).</p>
+        <!-- <p class="my-3">Step 1: You need to have the official version of Minecraft installed. You can download it from the official mojang website or through the following link (LINK).</p>
 
         <p class="my-3">Step 2: If you downloaded the mod through one of our official applications, you can run the auto-installer by clicking on the icon (ICON).</p>
 
@@ -148,9 +254,11 @@
 
         <p class="my-3">Step 2. Open the file using the Minecraft PE application. Afterward, the game will open and the mod will be automatically imported.</p>
 
-        <p class="my-3">If none of the steps above helped or if you have any other questions, please write to us - </p>
+        <p class="my-3">If none of the steps above helped or if you have any other questions, please write to us - </p> -->
 
-        <button class="btn btn-primary">FEEDBACK</button>
+        
+
+        <!-- <button class="btn btn-primary">FEEDBACK</button> -->
       </div>
     </div>
   </div>
@@ -217,40 +325,79 @@
 </div>
 
     
-
-  <!-- загружаемые скрипты -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  <script src="assets/js/MinecraftModPanel.js"></script>
-  <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-
+<script src="assets/js/MinecraftModPanel.js"></script>
+<script src="assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="node_modules/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript" src="node_modules/slick-carousel/slick/slick.min.js"></script>
 
 
   
+
+
+
   <!-- логика сайта -->
+
   <script>
-  const contentBlocks = document.querySelectorAll('.content-block');
+    const container = document.querySelector('.carousel-container');
+    const images = document.querySelector('.carousel-images');
+    const imageWidth = document.querySelector('.carousel-image').offsetWidth;
+    const slideCount = images.children.length;
 
-  contentBlocks.forEach((block) => {
-  const content = block.querySelector('.toggle-content');
-  content.style.maxHeight = '30px'; // Начальная высота
-  block.addEventListener('click', () => {
-    toggleContent(block);
-  });
-});
+    let currentIndex = 0;
+    let isAnimating = false;
 
-function toggleContent(block) {
-  const content = block.querySelector('.toggle-content');
-  const contentHeight = content.scrollHeight;
+    function prevSlide() {
+        if (isAnimating) return;
+        currentIndex = (currentIndex - 1 + slideCount) % slideCount;
+        updateCarousel();
+    }
 
-  if (block.classList.contains('show-content')) {
-    content.style.maxHeight = '30px';
-    block.classList.remove('show-content');
-  } else {
-    content.style.maxHeight = contentHeight + 'px';
-    block.classList.add('show-content');
-  }
-}
-  </script>
+    function nextSlide() {
+        if (isAnimating) return;
+        currentIndex = (currentIndex + 1) % slideCount;
+        updateCarousel();
+    }
+
+    function updateCarousel() {
+        isAnimating = true;
+        const offset = -currentIndex * imageWidth;
+        images.style.transform = `translateX(${offset}px)`;
+        setTimeout(() => {
+            isAnimating = false;
+        }, 500);
+    }
+
+    document.querySelector('.prev-button').addEventListener('click', prevSlide);
+    document.querySelector('.next-button').addEventListener('click', nextSlide);
+
+    const contentBlocks = document.querySelectorAll('.content-block');
+
+    contentBlocks.forEach((block) => {
+        const content = block.querySelector('.toggle-content');
+        content.style.maxHeight = '30px';
+        block.addEventListener('click', (event) => {
+            if (event.target.classList.contains('carousel-button')) {
+                return;
+            }
+            toggleContent(block);
+        });
+    });
+
+    function toggleContent(block) {
+        const content = block.querySelector('.toggle-content');
+        const contentHeight = content.scrollHeight;
+
+        if (block.classList.contains('show-content')) {
+            content.style.maxHeight = '30px';
+            block.classList.remove('show-content');
+        } else {
+            content.style.maxHeight = contentHeight + 'px';
+            block.classList.add('show-content');
+        }
+    }
+</script>
+
+
 
 </body>
 </html>

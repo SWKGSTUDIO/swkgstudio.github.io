@@ -82,9 +82,8 @@ body {
 .tab-wrapper {
     display: flex;
     align-items: center;
-    max-width: 200px;
+    width: 200px;
 }
-
 
 .tab {
     background-color: #4b4b4b;
@@ -96,7 +95,6 @@ body {
     border-top-right-radius: 5px;
     margin-right: 5px;
     display: flex;
-    flex-grow: 1; /* Растягиваем вкладку по ширине */
     justify-content: space-between;
     align-items: center;
     overflow: hidden;

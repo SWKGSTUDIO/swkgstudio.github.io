@@ -258,7 +258,7 @@ textarea {
 }
 
 .btn-custom {
-    background-color: #007BFF;
+    background-color: #818181;
     color: #fff;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;    
@@ -267,8 +267,7 @@ textarea {
   }
   
   .btn-custom:hover {
-    background-color: #0056b3; /* Измените цвет фона при наведении на нужный вам */
-    border-color: #0056b3; /* Измените цвет границы при наведении на нужный вам */
+    background-color: #c8c8c8; /* Измените цвет фона при наведении на нужный вам */
   }
   
 

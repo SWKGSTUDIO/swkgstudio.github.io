@@ -65,7 +65,7 @@ body {
     align-items: center;
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap; /* Предотвращаем перенос текста на новую строку */
+    white-space: nowrap;
     font-size: 15px;
 }
 
@@ -107,7 +107,7 @@ body {
     align-items: center;
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap; /* Предотвращаем перенос текста на новую строку */
+    white-space: nowrap;
     font-size: 15px;
 }
 
@@ -138,17 +138,16 @@ body {
 
 
 .save-tab-button {
-    background-color: #4CAF50; /* Зеленый цвет */
-    color: white;
+    background-color: #6e6e6e;
+    color: #fff;
     border: none;
+    border-radius: 4px;
     padding: 10px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 5px;
     cursor: pointer;
-    border-radius: 5px;
+    font-size: 16px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
 }
 
 .save-tab-button:hover {
@@ -157,17 +156,16 @@ body {
 
 /* Стили для кнопки "Удалить вкладку" */
 .delete-tab-button {
-    background-color: #f44336; /* Красный цвет */
-    color: white;
+    background-color: #6e6e6e;
+    color: #fff;
     border: none;
+    border-radius: 4px;
     padding: 10px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 5px;
     cursor: pointer;
-    border-radius: 5px;
+    font-size: 16px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
 }
 
 .delete-tab-button:hover {

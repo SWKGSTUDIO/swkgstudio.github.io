@@ -89,12 +89,12 @@ async function createTabsAndContent() {
                         <p><input type="text" id="titleInput_${index}" value="${ad.title}"></p>
                         <p><input type="text" id="imageInput_${index}" value="${ad.image}"></p>
                         <p><input type="text" id="linkInput_${index}" value="${ad.link}"></p>
-                        <button class="save-tab-button_${index}">Сохранить</button>
-                        <button class="delete-tab-button_${index}">Удалить вкладку</button>
+                        <button class="save-tab-button">Сохранить</button>
+                        <button class="delete-tab-button">Удалить вкладку</button>
                     </div>
                 `;
-                const saveButton = nativeContentContainer.querySelector(`.save-tab-button_${index}`);
-                const deleteButton = nativeContentContainer.querySelector(`.delete-tab-button_${index}`);
+                const saveButton = nativeContentContainer.querySelector('.save-tab-button');
+                const deleteButton = nativeContentContainer.querySelector('.delete-tab-button');
                 saveButton.addEventListener('click', async () => {
                     const updatedCategory = document.getElementById(`categoryInput_${index}`).value;
                     const updatedTitle = document.getElementById(`titleInput_${index}`).value;
@@ -140,8 +140,8 @@ async function createTabsAndContent() {
         addTabButton.innerHTML = '<span>+</span> Добавить';
         addTabButton.addEventListener('click', () => {
             const newTabData = {
-                category: 'Новая категория',
-                title: 'Новая вкладка',
+                category: 'Категория',
+                title: 'Название Игры',
                 image: 'URL к изображению',
                 link: 'URL ссылки',
             };
@@ -158,13 +158,12 @@ async function createTabsAndContent() {
                         <p><input type="text" id="titleInput_${index}" value="${newTabData.title}"></p>
                         <p><input type="text" id="imageInput_${index}" value="${newTabData.image}"></p>
                         <p><input type="text" id="linkInput_${index}" value="${newTabData.link}"></p>
-                        <button class="save-tab-button_${index}">Сохранить</button>
-                        <button class="delete-tab-button_${index}">Удалить вкладку</button>
+                        <button class="save-tab-button">Сохранить</button>
+                        <button class="delete-tab-button">Удалить вкладку</button>
                     </div>
                 `;
-                const saveButton = nativeContentContainer.querySelector(`.save-tab-button_${index}`);
-                const deleteButton = nativeContentContainer.querySelector(`.delete-tab-button_${index}`);
-
+                const saveButton = nativeContentContainer.querySelector('.save-tab-button');
+                const deleteButton = nativeContentContainer.querySelector('.delete-tab-button');
                 saveButton.addEventListener('click', async () => {
                     const updatedCategory = document.getElementById(`categoryInput_${index}`).value;
                     const updatedTitle = document.getElementById(`titleInput_${index}`).value;
@@ -192,7 +191,6 @@ async function createTabsAndContent() {
                         console.error('Ошибка при сохранении вкладки:', error);
                     }
                 });
-
                 deleteButton.addEventListener('click', async () => {
                     try {
                         await deleteTabFromDatabase(newTabData.id);

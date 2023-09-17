@@ -34,8 +34,6 @@
         <div class="btn-group" role="group" aria-label="Admin Panel Buttons">
             <button id="games-tab-button" class="btn btn-custom">ИГРЫ</button>
             <div class="btn-divider"></div>
-            <!-- <button id="add-tab-button" class="btn btn-custom">ДОБАВИТЬ</button>
-            <div class="btn-divider"></div> -->
             <button id="native-ads-button" class="btn btn-custom">НАТИВКА</button>
             <div class="btn-divider"></div>
             <button id="settings-button" class="btn btn-custom">НАСТРОЙКИ</button>
@@ -54,7 +52,7 @@
         </form>
     </div>
 
-    <div id="control-panel" class="control-panel">
+    <div id="nativead-content" class="control-panel">
         <!-- Панель управления -->
         <button id="close-control-panel" class="close-control-panel-button">×</button>
         <h1>Native Ads Table</h1>
@@ -89,28 +87,91 @@
             <button type="submit">Add Ad</button>
         </form>
     </div>
-
     
 
-        <div class="browser-container text-center">
-
+    <div class="browser-container text-center">
         <div class="browser-tab-container text-center">
             <div class="tab-container" id="tab-container">
-        <!-- ВКЛАДКИ -->
+                <!-- ВКЛАДКИ -->
             </div>
         </div>
-
         <div class="tab-content mx-auto">
-        <!-- ПАНЕЛЬ -->
+            <!-- ПАНЕЛЬ -->
         </div>
-            
-        </div>
+    </div>
     
-    <!-- Скрипты -->
-    <script src="panel_nativeads.js"></script>
+    <div class="browser-container text-center">
+        <div class="browser-native-container text-center">
+            <div class="native-tab-container" id="native-tab-container">
+                <!-- ВКЛАДКИ -->
+            </div>
+        </div>
+        <div class="native-content mx-auto">
+            <!-- ТУТ ДАННЫЕ ИЗ ВКЛАДКИ -->
+
+        </div>
+    </div>
+    
+
+
+
+
+    <script>
+
+function switchToNative() {
+    const tabContainers = document.querySelectorAll(".tab-container");
+    const tabContent = document.querySelector(".tab-content");
+    const nativeTabContainers = document.querySelectorAll(".native-tab-container");
+    const nativeContent = document.querySelector(".native-content");
+
+    tabContainers.forEach(tab => {
+        tab.style.display = "none";
+    });
+
+    tabContent.style.display = "none";
+
+    nativeTabContainers.forEach(tab => {
+        tab.style.display = "flex";
+    });
+
+    nativeContent.style.display = "block";
+}
+
+function switchToGames() {
+    const tabContainers = document.querySelectorAll(".tab-container");
+    const tabContent = document.querySelector(".tab-content");
+    const nativeTabContainers = document.querySelectorAll(".native-tab-container");
+    const nativeContent = document.querySelector(".native-content");
+
+    tabContainers.forEach(tab => {
+        tab.style.display = "flex";
+    });
+
+    tabContent.style.display = "block";
+
+    nativeTabContainers.forEach(tab => {
+        tab.style.display = "none";
+    });
+
+    nativeContent.style.display = "none";
+}
+
+const nativeAdsButton = document.getElementById("native-ads-button");
+nativeAdsButton.addEventListener("click", switchToNative);
+
+const gamesTabButton = document.getElementById("games-tab-button");
+gamesTabButton.addEventListener("click", switchToGames);
+
+
+
+    </script>
+    
+    <!-- <script src="panel_nativeads.js"></script> -->
     <script src="script.js"></script>
+    <script src="nativepanel.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 </body>
 </html>

@@ -49,6 +49,7 @@ body {
     overflow-x: auto;
 }
 
+
 .tab {
     flex: 0 0 auto;
     background-color: #818181;
@@ -85,6 +86,40 @@ body {
     margin-bottom: 20px;
 }
 
+
+.native-tab-container {
+    display: flex;
+    overflow-x: auto;
+}
+
+.native-tab {
+    flex: 0 0 auto;
+    background-color: #818181;
+    width: 150px;
+    height: 50px;
+    padding: 10px;
+    cursor: pointer;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    margin-right: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap; /* Предотвращаем перенос текста на новую строку */
+    font-size: 15px;
+}
+
+.native-tab.active {
+    background-color: #17a2b8;
+}
+
+.native-content {
+    background-color: #4b4b4b;
+    padding: 20px;
+}
+
 .close-tab-button {
     background-color: rgb(136, 36, 36);
     color: white;
@@ -100,6 +135,7 @@ body {
 .close-tab-button:hover {
     background-color: #d43939;
 }
+
 #save-button {
     background-color: #6e6e6e;
     color: #fff;

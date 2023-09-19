@@ -185,7 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
         avatarInput.id = 'avatar-input';
 
         const bannerLabel = document.createElement('label');
-        bannerLabel.textContent = 'Баннер (URL):';
+        bannerLabel.textContent = 'Com. :';
 
         const bannerInput = document.createElement('input');
         bannerInput.type = 'text';

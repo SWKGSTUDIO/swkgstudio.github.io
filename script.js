@@ -197,10 +197,10 @@ document.addEventListener('DOMContentLoaded', () => {
         avatarPreview.id = 'avatar-preview';
         avatarPreview.src = game.avatar || '';
 
-        const bannerPreview = document.createElement('img');
-        bannerPreview.classList.add('image-preview');
-        bannerPreview.id = 'banner-preview';
-        bannerPreview.src = game.banner || '';
+        // const bannerPreview = document.createElement('img');
+        // bannerPreview.classList.add('image-preview');
+        // bannerPreview.id = 'banner-preview';
+        // bannerPreview.src = game.banner || '';
 
         avatarInput.addEventListener('input', () => {
             const newAvatarUrl = avatarInput.value;

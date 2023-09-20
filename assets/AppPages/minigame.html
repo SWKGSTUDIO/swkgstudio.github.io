@@ -12,7 +12,6 @@
             height: 100vh;
             margin: 0;
             overflow: hidden;
-
         }
 
         #addButton {
@@ -46,6 +45,14 @@
             opacity: 0;
         }
 
+        .button-piece {
+            position: absolute;
+            width: 20px; /* Размер кусочков */
+            height: 20px;
+            background-color: #ffffff;
+            border-radius: 50%;
+            transform-origin: center;
+        }
 
         @keyframes bounce {
             0%, 100% {
@@ -60,29 +67,29 @@
         }
 
         @keyframes slide {
-    0% {
-        transform: translate(0, 0);
-        opacity: 1;
-    }
-    100% {
-        transform: translate(calc(100vw - 50px), calc(-100vh + 50px)); 
-    }
-}
+            0% {
+                transform: translate(0, 0);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(calc(100vw - 50px), calc(-100vh + 50px)); 
+            }
+        }
 
-@keyframes jump {
-    0%, 100% {
-        transform: translateY(0); /* Начальное и конечное положение - не меняется */
-    }
-    25% {
-        transform: translateY(-30px); /* Здесь задается высота прыжка */
-    }
-    50% {
-        transform: translateY(0);
-    }
-    75% {
-        transform: translateY(-15px); /* Небольшая коррекция вниз */
-    }
-}
+        @keyframes jump {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            25% {
+                transform: translateY(-30px);
+            }
+            50% {
+                transform: translateY(0);
+            }
+            75% {
+                transform: translateY(-15px);
+            }
+        }
 
         @keyframes fadeOut {
             0% {
@@ -92,38 +99,59 @@
                 opacity: 0;
             }
         }
-
-
     </style>
-
 </head>
 <body>
     <button id="addButton">+10</button>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
     <script>
         var addButton = document.getElementById("addButton");
-        
 
         addButton.addEventListener("click", function() {
+            var scoreAnimation = document.createElement("div");
+            scoreAnimation.textContent = "+10";
+            scoreAnimation.className = "score-animation";
+            document.body.appendChild(scoreAnimation);
 
-    var scoreAnimation = document.createElement("div");
-    scoreAnimation.textContent = "+10";
-    scoreAnimation.className = "score-animation";
+            setScore(10);
 
-
-    document.body.appendChild(scoreAnimation);
-
-    setScore(10);
-});
-
+            // Анимация разлета кнопки на кусочки
+            animateButtonBreak(addButton);
+        });
 
         function setScore(scoreToAdd) {
-            Android.getScore();
-            Android.addScore(scoreToAdd);
+            // Здесь ваш код для установки счета
+        }
 
+        function animateButtonBreak(button) {
+            var buttonRect = button.getBoundingClientRect();
+            var buttonCenterX = buttonRect.left + buttonRect.width / 2;
+            var buttonCenterY = buttonRect.top + buttonRect.height / 2;
 
-            if (navigator.vibrate) {
-                navigator.vibrate(100);
+            for (var i = 0; i < 10; i++) {
+                var piece = document.createElement("div");
+                piece.className = "button-piece";
+                document.body.appendChild(piece);
+
+                var targetX = Math.random() * buttonRect.width + buttonRect.left;
+                var targetY = Math.random() * buttonRect.height + buttonRect.top;
+
+                anime({
+                    targets: piece,
+                    translateX: [buttonCenterX, targetX],
+                    translateY: [buttonCenterY, targetY],
+                    rotate: 360,
+                    scale: 0,
+                    opacity: 0,
+                    duration: 500,
+                    easing: 'easeOutQuad',
+                    complete: function(anim) {
+                        anim.animatables.forEach(function(animatable) {
+                            animatable.target.remove(); // Удаляем кусочек после анимации
+                        });
+                    }
+                });
             }
         }
     </script>

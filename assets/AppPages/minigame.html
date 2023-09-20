@@ -1,23 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-
-
     <title>Score Button</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan&display=swap">
-
-
     <style>
         body {
-    background: linear-gradient(to bottom, #151C0B, #13100E);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    margin: 0;
-}
+            background: linear-gradient(to bottom, #151C0B, #13100E);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
 
-#addButton {
+        #addButton {
             width: 200px;
             height: 100px;
             font-family: 'Baloo Bhaijaan', sans-serif;
@@ -31,46 +27,42 @@
             border-radius: 25px;
             border: none;
             outline: none;
-            animation: bounce 1s ease ; /* Добавляем анимацию bounce */
+            animation: bounce 1s ease infinite;
         }
 
         #addButton:active {
             background: linear-gradient(to bottom, #49642E, #444D1B);
         }
 
-        /* Анимация bounce */
         @keyframes bounce {
-            0% {
-                transform: scale(0.3);
+            0%, 100% {
+                transform: scale(1);
             }
             50% {
                 transform: scale(1.1);
             }
-            100% {
-                transform: scale(1.0);
-            }
         }
-
     </style>
 </head>
 <body>
     <button id="addButton">+10</button>
 
     <script>
-        // Находим элементы на веб-странице
         var addButton = document.getElementById("addButton");
 
-        // Обработчик нажатия на кнопку
         addButton.addEventListener("click", function() {
             // Вызываем функцию setScore с аргументом 10 для добавления 10 очков
             setScore(10);
         });
 
-       // JavaScript в веб-странице
-function setScore(scoreToAdd) {
-    Android.getScore();
-    Android.addScore(scoreToAdd);
+        function setScore(scoreToAdd) {
+            Android.getScore();
+            Android.addScore(scoreToAdd);
 
+            // Добавляем вибрацию при добавлении очков (если поддерживается)
+            if (navigator.vibrate) {
+                navigator.vibrate([100, 50, 100]); // Массив параметров задает паттерн вибрации
+            }
         }
     </script>
 </body>

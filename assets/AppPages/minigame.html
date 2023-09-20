@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Score Button</title>
+</head>
+<body>
+    <h1>Score: <span id="score">0</span></h1>
+    <button id="addButton">Add Score</button>
+
+    <script>
+        // Находим элементы на веб-странице
+        var scoreElement = document.getElementById("score");
+        var addButton = document.getElementById("addButton");
+
+        // Начальное значение счета
+        var score = 0;
+
+        // Обработчик нажатия на кнопку
+        addButton.addEventListener("click", function() {
+            // Увеличиваем счет на 10 очков при каждом нажатии
+            score += 10;
+
+            // Обновляем отображение счета на веб-странице
+            scoreElement.innerHTML = score;
+
+            // Отправляем событие с обновленным счетом в Android-приложение
+            Android.updateScore(score);
+        });
+    </script>
+</body>
+</html>

@@ -29,29 +29,27 @@
     </style>
 </head>
 <body>
-    <button id="addButton">Add Score: <span id="score">0</span></button>
+    <button id="addButton">Add 10 Score</button>
 
     <script>
         // Находим элементы на веб-странице
-        var scoreElement = document.getElementById("score");
         var addButton = document.getElementById("addButton");
 
         // Обработчик нажатия на кнопку
         addButton.addEventListener("click", function() {
-            // Отправляем запрос на получение текущего счета из Android-приложения
-            Android.getScore();
+            // Вызываем функцию setScore с аргументом 10 для добавления 10 очков
+            setScore(10);
         });
 
         // Функция для установки текущего счета из Android-приложения
-        function setScore(score) {
-            // Увеличиваем счет на 10
-            score += 10;
+        function setScore(scoreToAdd) {
+            // Отправляем запрос на получение текущего счета из Android-приложения
+            Android.getScore();
 
-            // Устанавливаем обновленный счет на веб-странице
-            scoreElement.innerHTML = score;
-
-            // Отправляем обновленный счет в Android-приложение
-            Android.updateScore(score);
+            // По получении счета выполняем добавление 10 очков
+            // Эта логика предполагает, что Android.updateScore будет вызван с текущим счетом из приложения
+            // и обновленным счетом, к которому уже будет добавлено 10
+            Android.updateScore(scoreToAdd);
         }
     </script>
 </body>

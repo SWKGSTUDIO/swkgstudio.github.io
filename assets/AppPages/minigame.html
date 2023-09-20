@@ -12,20 +12,23 @@
         var scoreElement = document.getElementById("score");
         var addButton = document.getElementById("addButton");
 
-        // Начальное значение счета
-        var score = 0;
-
         // Обработчик нажатия на кнопку
         addButton.addEventListener("click", function() {
-            // Увеличиваем счет на 10 очков при каждом нажатии
+            // Отправляем запрос на получение текущего счета из Android-приложения
+            Android.getScore();
+        });
+
+        // Функция для установки текущего счета из Android-приложения
+        function setScore(score) {
+            // Увеличиваем счет на 10
             score += 10;
 
-            // Обновляем отображение счета на веб-странице
+            // Устанавливаем обновленный счет на веб-странице
             scoreElement.innerHTML = score;
 
-            // Отправляем событие с обновленным счетом в Android-приложение
+            // Отправляем обновленный счет в Android-приложение
             Android.updateScore(score);
-        });
+        }
     </script>
 </body>
 </html>

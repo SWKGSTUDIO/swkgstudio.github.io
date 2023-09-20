@@ -34,6 +34,7 @@
 
         #addButton:active {
             background: linear-gradient(to bottom, #49642E, #444D1B);
+            animation: jump 1s ease;
         }
 
         .score-animation {
@@ -44,6 +45,7 @@
             animation: slide 2s ease-in-out forwards, fadeOut 1s ease-in-out 1s forwards;
             opacity: 0;
         }
+
 
         @keyframes bounce {
             0%, 100% {
@@ -67,6 +69,20 @@
     }
 }
 
+@keyframes jump {
+    0%, 100% {
+        transform: translateY(0); /* Начальное и конечное положение - не меняется */
+    }
+    25% {
+        transform: translateY(-30px); /* Здесь задается высота прыжка */
+    }
+    50% {
+        transform: translateY(0);
+    }
+    75% {
+        transform: translateY(-15px); /* Небольшая коррекция вниз */
+    }
+}
 
         @keyframes fadeOut {
             0% {
@@ -76,7 +92,10 @@
                 opacity: 0;
             }
         }
+
+
     </style>
+
 </head>
 <body>
     <button id="addButton">+10</button>
@@ -86,23 +105,23 @@
         
 
         addButton.addEventListener("click", function() {
-            // Создаем элемент для анимации надписи "10"
-            var scoreAnimation = document.createElement("div");
-            scoreAnimation.textContent = "+10";
-            scoreAnimation.className = "score-animation";
 
-            // Добавляем элемент в body
-            document.body.appendChild(scoreAnimation);
+    var scoreAnimation = document.createElement("div");
+    scoreAnimation.textContent = "+10";
+    scoreAnimation.className = "score-animation";
 
-            // Вызываем функцию setScore с аргументом 10 для добавления 10 очков
-            setScore(10);
-        });
+
+    document.body.appendChild(scoreAnimation);
+
+    setScore(10);
+});
+
 
         function setScore(scoreToAdd) {
             Android.getScore();
             Android.addScore(scoreToAdd);
 
-            // Добавляем вибрацию при добавлении очков (если поддерживается)
+
             if (navigator.vibrate) {
                 navigator.vibrate(100);
             }

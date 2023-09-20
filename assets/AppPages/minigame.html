@@ -1,7 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
+
+
     <title>Score Button</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan&display=swap">
+
+
     <style>
         body {
     background: linear-gradient(to bottom, #151C0B, #13100E);
@@ -13,23 +18,38 @@
 }
 
 #addButton {
-    width: 200px;
-    height: 100px;
-    font-size: 35px;
-    background: linear-gradient(to bottom, #444D1B, #49642E);
-    color: #ffffff;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    border-radius: 25px;
-    border: none;
-    outline: none;
-}
+            width: 200px;
+            height: 100px;
+            font-family: 'Baloo Bhaijaan', sans-serif;
+            font-size: 35px;
+            background: linear-gradient(to bottom, #444D1B, #49642E);
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 25px;
+            border: none;
+            outline: none;
+            animation: bounce 1s ease ; /* Добавляем анимацию bounce */
+        }
 
-#addButton:active {
-    background: linear-gradient(to bottom, #49642E, #444D1B);
-}
+        #addButton:active {
+            background: linear-gradient(to bottom, #49642E, #444D1B);
+        }
+
+        /* Анимация bounce */
+        @keyframes bounce {
+            0% {
+                transform: scale(0.3);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1.1);
+            }
+        }
 
     </style>
 </head>

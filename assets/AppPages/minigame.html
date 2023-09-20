@@ -43,15 +43,11 @@
             setScore(10);
         });
 
-        // Функция для установки текущего счета из Android-приложения
-        function setScore(scoreToAdd) {
-            // Отправляем запрос на получение текущего счета из Android-приложения
-            Android.getScore();
+       // JavaScript в веб-странице
+function setScore(scoreToAdd) {
+    Android.getScore();
+    Android.addScore(scoreToAdd);
 
-            // По получении счета выполняем добавление 10 очков
-            // Эта логика предполагает, что Android.updateScore будет вызван с текущим счетом из приложения
-            // и обновленным счетом, к которому уже будет добавлено 10
-            Android.updateScore(scoreToAdd);
         }
     </script>
 </body>

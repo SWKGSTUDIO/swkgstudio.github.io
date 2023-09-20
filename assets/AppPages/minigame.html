@@ -85,17 +85,24 @@
         var addButton = document.getElementById("addButton");
 
         addButton.addEventListener("click", function() {
-            // Создаем элемент для анимации надписи "10"
-            var scoreAnimation = document.createElement("div");
-            scoreAnimation.textContent = "+10";
-            scoreAnimation.className = "score-animation";
+    // Создаем элемент для анимации надписи "10"
+    var scoreAnimation = document.createElement("div");
+    scoreAnimation.textContent = "+10";
+    scoreAnimation.className = "score-animation";
 
-            // Добавляем элемент в body
-            document.body.appendChild(scoreAnimation);
+    // Добавляем элемент в body
+    document.body.appendChild(scoreAnimation);
 
-            // Вызываем функцию setScore с аргументом 10 для добавления 10 очков
-            setScore(10);
-        });
+    // Добавляем обработчик события окончания анимации
+    scoreAnimation.addEventListener("animationend", function() {
+        // Вызываем функцию setScore с аргументом 10 для добавления 10 очков
+        setScore(10);
+
+        // Удаляем элемент анимации после добавления очков
+        scoreAnimation.remove();
+    });
+});
+
 
         function setScore(scoreToAdd) {
             Android.getScore();

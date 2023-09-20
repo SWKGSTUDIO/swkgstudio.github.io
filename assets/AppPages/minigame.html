@@ -11,6 +11,8 @@
             justify-content: center;
             height: 100vh;
             margin: 0;
+            overflow: hidden;
+
         }
 
         #addButton {
@@ -34,6 +36,15 @@
             background: linear-gradient(to bottom, #49642E, #444D1B);
         }
 
+        .score-animation {
+            position: absolute;
+            font-family: 'Baloo Bhaijaan', sans-serif;
+            font-size: 35px;
+            color: #ffffff;
+            animation: slide 2s ease-in-out forwards, fadeOut 1s ease-in-out 1s forwards;
+            opacity: 0;
+        }
+
         @keyframes bounce {
             0%, 100% {
                 transform: scale(0.3);
@@ -41,8 +52,28 @@
             50% {
                 transform: scale(1.1);
             }
-            100%{
+            100% {
                 transform: scale(1);
+            }
+        }
+
+        @keyframes slide {
+    0% {
+        transform: translate(0, 0);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(calc(100vw - 50px), calc(-100vh + 50px)); 
+    }
+}
+
+
+        @keyframes fadeOut {
+            0% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
             }
         }
     </style>
@@ -54,6 +85,14 @@
         var addButton = document.getElementById("addButton");
 
         addButton.addEventListener("click", function() {
+            // Создаем элемент для анимации надписи "10"
+            var scoreAnimation = document.createElement("div");
+            scoreAnimation.textContent = "+10";
+            scoreAnimation.className = "score-animation";
+
+            // Добавляем элемент в body
+            document.body.appendChild(scoreAnimation);
+
             // Вызываем функцию setScore с аргументом 10 для добавления 10 очков
             setScore(10);
         });
@@ -64,7 +103,7 @@
 
             // Добавляем вибрацию при добавлении очков (если поддерживается)
             if (navigator.vibrate) {
-                navigator.vibrate([100, 50, 100]); // Массив параметров задает паттерн вибрации
+                navigator.vibrate(100);
             }
         }
     </script>

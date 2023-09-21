@@ -4,7 +4,8 @@
     <title>Minecraft Block</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan&display=swap">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+
+
     <style>
         html {
             overflow: hidden;
@@ -79,10 +80,14 @@
         }
     </style>
 </head>
+
 <body>
+
     <div id="minecraftContainer"></div>
 
-    <script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+
+    <script type="module">
 
         var blockCounter = 0;
 var currentCrackIndex = 0;
@@ -135,7 +140,7 @@ function createMinecraftBlock() {
     minecraftContainer.appendChild(minecraftBlock);
 
     var cracks = [];
-    for (var i = 0; i < 10; i++) {
+    for (var i = 0; i < 1; i++) {
         var crack = document.createElement("div");
         crack.className = "crack";
         if (i === 0) {
@@ -165,63 +170,61 @@ function createMinecraftBlock() {
 
 
 
-// Функция создания разлетающихся осколков
-function createShards(blockTop, minecraftContainer) {
-    for (let i = 0; i < shardsImages.length; i++) {
+function createShards(minecraftContainer) {
+    const shardCount = shardsImages.length;
+
+    // Получаем размеры окна браузера
+    const windowWidth = window.innerWidth;
+    const windowHeight = window.innerHeight;
+
+    // Минимальная и максимальная скорость осколков
+    const minSpeed = 1;
+    const maxSpeed = 5;
+
+    for (let i = 0; i < shardCount; i++) {
         let shard = document.createElement("div");
         shard.className = "shard";
         shard.style.backgroundImage = `url(${shardsImages[i]})`;
-        shard.style.left = "0px";
-        shard.style.top = "0px";
         minecraftContainer.appendChild(shard);
 
-        // Добавляем обработчик клика для осколка
-        shard.addEventListener("click", function (event) {
-            event.currentTarget.remove(); // Уничтожаем осколок при клике
-            console.log("Осколок был нажат."); // Логируем клик по осколку
-        });
+        // Генерируем случайные начальные координаты осколков в центре страницы
+        const randomInitialX = windowWidth / 2;
+        const randomInitialY = windowHeight / 2;
 
-        shard.style.cursor = "pointer"; // Делаем указатель курсора видом "pointer" при наведении на осколок
+        // Генерируем случайную скорость для осколка
+        const speed = Math.random() * (maxSpeed - minSpeed) + minSpeed;
 
+        // Генерируем случайный угол направления осколка
+        const angle = Math.random() * Math.PI * 2;
+
+        // Вычисляем компоненты скорости по x и y
+        const velocityX = Math.cos(angle) * speed;
+        const velocityY = Math.sin(angle) * speed;
+
+        shard.style.cursor = "pointer";
+
+        // Используем библиотеку anime.js для анимации перемещения осколков
         anime({
             targets: shard,
-            translateX: anime.random(-300, 300),
-            translateY: [
-                { value: anime.random(-10, -500), duration: 500 },
-                { value: window.innerHeight - blockTop - shard.offsetTop - shard.offsetHeight, duration: 10000 },
-            ],
-            rotate: anime.random(0, 90),
-            opacity: 1,
-            duration: 10000,
-            easing: "easeOutExpo",
+            translateX: [0, velocityX * 50], // Изменяем положение по X
+            translateY: [0, velocityY * 50], // Изменяем положение по Y
+            duration: 100, // Анимация разлета
+            easing: "linear",
             complete: function () {
-                shard.remove();
-                console.log("Осколок был удален.");
+                // После разлета, меняем анимацию на падение за пределы страницы
+                anime({
+                    targets: shard,
+                    translateY: [velocityY * 100, windowHeight + 100], // Падение за пределы страницы
+                    duration: 6000, // Длительность падения
+                    easing: "linear",
+                    complete: function () {
+                        shard.remove();
+                    },
+                });
             },
         });
-
-
-
-        
-        // Функция для удаления осколков за пределами видимой области
-        function removeShardIfOutOfViewport() {
-            if (shard.getBoundingClientRect().bottom < 0 || shard.getBoundingClientRect().top > window.innerHeight) {
-                shard.remove();
-                console.log("Осколок был удален, так как вышел за пределы страницы.");
-                // Останавливаем проверку после удаления
-                cancelAnimationFrame(animationFrameId);
-            } else {
-                // Продолжаем проверку
-                animationFrameId = requestAnimationFrame(removeShardIfOutOfViewport);
-            }
-        }
-
-        let animationFrameId = requestAnimationFrame(removeShardIfOutOfViewport);
     }
 }
-
-
-
 
 
 
@@ -284,7 +287,9 @@ function mineBlock(targetBlock, clientX, clientY, cracks) {
                 // Удаляем блок после завершения анимации трещин
                 targetBlock.remove();
                 cracks[currentCrackIndex].style.display = "none";
-                createShards(blockTop, minecraftContainer);
+                
+                createShards(minecraftContainer);
+                
 
                 // Подождите 1 секунду, а затем создайте новый блок и разлетающиеся осколки
                 setTimeout(function () {

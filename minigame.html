@@ -12,7 +12,6 @@
             justify-content: center;
             height: 100vh;
             margin: 0;
-            overflow: hidden;
         }
 
         #minecraftContainer {
@@ -30,6 +29,7 @@
             left: 50%;
             transform: translate(-50%, -50%);
             overflow: hidden;
+            transform-origin: center bottom;
         }
 
         .pickaxe {
@@ -50,7 +50,7 @@
             height: 300px;
             background-size: cover;
             pointer-events: none;
-            display: none; /* Начинаем с невидимой первой трещины */
+            display: none;
         }
 
         @keyframes swing {
@@ -68,9 +68,8 @@
 
     <script>
         var blockCounter = 0;
-        var currentCrackIndex = 0; // Индекс текущей картинки трещины
+        var currentCrackIndex = 0;
 
-        // Массив с путями к изображениям трещин
         var crackImages = [
             'assets/img/minecraft/d1.png',
             'assets/img/minecraft/d2.png',
@@ -87,13 +86,12 @@
             minecraftBlock.id = "block" + blockCounter;
             minecraftContainer.appendChild(minecraftBlock);
 
-            // Создаем массив трещин и устанавливаем им изображения
             var cracks = [];
             for (var i = 0; i < 6; i++) {
                 var crack = document.createElement("div");
                 crack.className = "crack";
                 if (i === 0) {
-                    crack.style.display = "none"; // Начинаем с невидимой первой трещины
+                    crack.style.display = "none";
                 }
                 crack.style.backgroundImage = `url(${crackImages[i]})`;
                 minecraftBlock.appendChild(crack);
@@ -117,18 +115,21 @@
             minecraftContainer.appendChild(pickaxe);
 
             var blockRect = targetBlock.getBoundingClientRect();
-            var offsetX = clientX - blockRect.left - window.scrollX - 150;
-            var offsetY = clientY - blockRect.top - window.scrollY - 240;
+            var blockLeft = blockRect.left + window.scrollX;
+            var blockTop = blockRect.top + window.scrollY;
+
+            var offsetX = clientX - blockLeft - targetBlock.offsetWidth / 2;
+            var offsetY = clientY - blockTop - targetBlock.offsetHeight / 2;
 
             pickaxe.style.left = offsetX + "px";
             pickaxe.style.top = offsetY + "px";
 
-            // Отображаем следующую картинку трещины и обновляем индекс
             cracks[currentCrackIndex].style.display = "none";
+
             currentCrackIndex = (currentCrackIndex + 1) % cracks.length;
+
             cracks[currentCrackIndex].style.display = "block";
 
-            // Удаляем кирку после анимации
             anime({
                 targets: pickaxe,
                 rotate: 10,
@@ -138,9 +139,27 @@
                     pickaxe.remove();
                 },
             });
+
+            // Добавляем анимацию shake к minecraftContainer
+            anime({
+                targets: minecraftContainer,
+                translateX: [
+                    { value: -5, duration: 50 },
+                    { value: 5, duration: 50 },
+                    { value: -5, duration: 50 },
+                    { value: 5, duration: 50 },
+                    { value: 0, duration: 50 }
+                ],
+                translateY: [
+                    { value: -5, duration: 50 },
+                    { value: 5, duration: 50 },
+                    { value: -5, duration: 50 },
+                    { value: 5, duration: 50 },
+                    { value: 0, duration: 50 }
+                ]
+            });
         }
 
-        // Создаем начальный блок Minecraft
         createMinecraftBlock();
     </script>
 </body>

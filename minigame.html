@@ -167,8 +167,8 @@ function createMinecraftBlock() {
 
 // Функция создания разлетающихся осколков
 function createShards(blockTop, minecraftContainer) {
-    for (var i = 0; i < shardsImages.length; i++) {
-        var shard = document.createElement("div");
+    for (let i = 0; i < shardsImages.length; i++) {
+        let shard = document.createElement("div");
         shard.className = "shard";
         shard.style.backgroundImage = `url(${shardsImages[i]})`;
         shard.style.left = "0px";
@@ -185,7 +185,7 @@ function createShards(blockTop, minecraftContainer) {
 
         anime({
             targets: shard,
-            translateX: anime.random(-200, 200),
+            translateX: anime.random(-300, 300),
             translateY: [
                 { value: anime.random(-10, -500), duration: 500 },
                 { value: window.innerHeight - blockTop - shard.offsetTop - shard.offsetHeight, duration: 20000 },
@@ -196,16 +196,28 @@ function createShards(blockTop, minecraftContainer) {
             easing: "easeOutExpo",
             complete: function () {
                 shard.remove();
-            },
-            update: function (anim) {
-                // Проверяем, достиг ли осколок края экрана и удаляем его
-                if (shard.offsetTop + shard.offsetHeight >= window.innerHeight) {
-                    shard.remove();
-                }
+                console.log("Осколок был удален.");
             },
         });
+
+        // Функция для удаления осколков за пределами видимой области
+        function removeShardIfOutOfViewport() {
+            if (shard.getBoundingClientRect().bottom < 0 || shard.getBoundingClientRect().top > window.innerHeight) {
+                shard.remove();
+                console.log("Осколок был удален, так как вышел за пределы страницы.");
+                // Останавливаем проверку после удаления
+                cancelAnimationFrame(animationFrameId);
+            } else {
+                // Продолжаем проверку
+                animationFrameId = requestAnimationFrame(removeShardIfOutOfViewport);
+            }
+        }
+
+        let animationFrameId = requestAnimationFrame(removeShardIfOutOfViewport);
     }
 }
+
+
 
 
 

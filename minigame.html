@@ -255,9 +255,15 @@ function createShards(minecraftContainer) {
 
 // Функция добычи блока
 function mineBlock(targetBlock, clientX, clientY, cracks) {
+    var minecraftContainer = document.getElementById("minecraftContainer");
+
+    // Удалить старую кирку, если она существует
+    if (minecraftContainer.querySelector(".pickaxe")) {
+        minecraftContainer.querySelector(".pickaxe").remove();
+    }
+
     var pickaxe = document.createElement("div");
     pickaxe.className = "pickaxe";
-    var minecraftContainer = document.getElementById("minecraftContainer");
     minecraftContainer.appendChild(pickaxe);
 
     var blockRect = targetBlock.getBoundingClientRect();
@@ -323,6 +329,7 @@ function mineBlock(targetBlock, clientX, clientY, cracks) {
         },
     });
 }
+
 
 // Инициализация
 createMinecraftBlock();

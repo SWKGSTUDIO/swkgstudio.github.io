@@ -65,7 +65,8 @@
             height: 80px;
             background-size: cover;
             pointer-events: none;
-            z-index: 20;
+            z-index: 999;
+
         }
 
         @keyframes swing {
@@ -82,173 +83,209 @@
     <div id="minecraftContainer"></div>
 
     <script>
+
         var blockCounter = 0;
-        var currentCrackIndex = 0;
-        var isMining = false;
+var currentCrackIndex = 0;
+var isMining = false;
+
+var crackImages = [
+    'assets/img/minecraft/d1.png',
+    'assets/img/minecraft/d2.png',
+    'assets/img/minecraft/d3.png',
+    'assets/img/minecraft/d4.png',
+    'assets/img/minecraft/d5.png',
+    'assets/img/minecraft/d6.png',
+    'assets/img/minecraft/d6.png',
+    'assets/img/minecraft/d6.png',
+    'assets/img/minecraft/d6.png',
+    'assets/img/minecraft/d6.png'
+];
+
+var shardsImages = [
+    'assets/img/minecraft/BlueGem.png',
+    'assets/img/minecraft/GreenGem.webp',
+    'assets/img/minecraft/RedGem.png',
+    'assets/img/minecraft/Coin.webp',
+    'assets/img/minecraft/BlueGem.png',
+    'assets/img/minecraft/GreenGem.webp',
+    'assets/img/minecraft/RedGem.png',
+    'assets/img/minecraft/Coin.webp',
+    'assets/img/minecraft/BlueGem.png',
+    'assets/img/minecraft/GreenGem.webp',
+    'assets/img/minecraft/RedGem.png',
+    'assets/img/minecraft/Coin.webp',
+    'assets/img/minecraft/BlueGem.png',
+    'assets/img/minecraft/GreenGem.webp',
+    'assets/img/minecraft/RedGem.png',
+    'assets/img/minecraft/Coin.webp',
+
     
-        var crackImages = [
-            'assets/img/minecraft/d1.png',
-            'assets/img/minecraft/d2.png',
-            'assets/img/minecraft/d3.png',
-            'assets/img/minecraft/d4.png',
-            'assets/img/minecraft/d5.png',
-            'assets/img/minecraft/d6.png',
-            'assets/img/minecraft/d6.png',
-            'assets/img/minecraft/d6.png',
-            'assets/img/minecraft/d6.png',
-            'assets/img/minecraft/d6.png'
-        ];
-    
-        var shardsImages = [
-            'assets/img/minecraft/block_earth.webp',
-            'assets/img/minecraft/block_earth.webp',
-            'assets/img/minecraft/block_earth.webp',
-            'assets/img/minecraft/block_earth.webp',
-            'assets/img/minecraft/block_earth.webp',
-            'assets/img/minecraft/block_earth.webp',
-            'assets/img/minecraft/block_earth.webp',
-            'assets/img/minecraft/block_earth.webp'
-        ];
-    
-        // Функция создания нового блока Minecraft
-        function createMinecraftBlock() {
-            if (isMining) {
-                return; // Не создаем новый блок, если уже идет добыча
-            }
-    
-            var minecraftContainer = document.getElementById("minecraftContainer");
-            var minecraftBlock = document.createElement("div");
-            minecraftBlock.className = "minecraftBlock";
-            minecraftBlock.id = "block" + blockCounter;
-            minecraftContainer.appendChild(minecraftBlock);
-    
-            var cracks = [];
-            for (var i = 0; i < 10; i++) {
-                var crack = document.createElement("div");
-                crack.className = "crack";
-                if (i === 0) {
-                    crack.style.display = "none";
+];
+
+// Функция создания нового блока Minecraft
+function createMinecraftBlock() {
+    if (isMining) {
+        return; // Не создаем новый блок, если уже идет добыча
+    }
+
+    var minecraftContainer = document.getElementById("minecraftContainer");
+    var minecraftBlock = document.createElement("div");
+    minecraftBlock.className = "minecraftBlock";
+    minecraftBlock.id = "block" + blockCounter;
+    minecraftContainer.appendChild(minecraftBlock);
+
+    var cracks = [];
+    for (var i = 0; i < 10; i++) {
+        var crack = document.createElement("div");
+        crack.className = "crack";
+        if (i === 0) {
+            crack.style.display = "none";
+        }
+        crack.style.backgroundImage = `url(${crackImages[i]})`;
+        minecraftBlock.appendChild(crack);
+        cracks.push(crack);
+    }
+
+    minecraftBlock.addEventListener("click", function (event) {
+        if (isMining) {
+            return; // Не реагируем на клики, если уже идет добыча
+        }
+
+        isMining = true; // Устанавливаем флаг добычи
+
+        var targetBlock = event.currentTarget;
+        var offsetX = event.clientX;
+        var offsetY = event.clientY;
+        mineBlock(targetBlock, offsetX, offsetY, cracks);
+    });
+
+    blockCounter++;
+}
+
+
+
+
+// Функция создания разлетающихся осколков
+function createShards(blockTop, minecraftContainer) {
+    for (var i = 0; i < shardsImages.length; i++) {
+        var shard = document.createElement("div");
+        shard.className = "shard";
+        shard.style.backgroundImage = `url(${shardsImages[i]})`;
+        shard.style.left = "0px";
+        shard.style.top = "0px";
+        minecraftContainer.appendChild(shard);
+
+        // Добавляем обработчик клика для осколка
+        shard.addEventListener("click", function (event) {
+            event.currentTarget.remove(); // Уничтожаем осколок при клике
+            console.log("Осколок был нажат."); // Логируем клик по осколку
+        });
+
+        shard.style.cursor = "pointer"; // Делаем указатель курсора видом "pointer" при наведении на осколок
+
+        anime({
+            targets: shard,
+            translateX: anime.random(-200, 200),
+            translateY: [
+                { value: anime.random(-10, -500), duration: 500 },
+                { value: window.innerHeight - blockTop - shard.offsetTop - shard.offsetHeight, duration: 20000 },
+            ],
+            rotate: anime.random(0, 90),
+            opacity: 1,
+            duration: 10000,
+            easing: "easeOutExpo",
+            complete: function () {
+                shard.remove();
+            },
+            update: function (anim) {
+                // Проверяем, достиг ли осколок края экрана и удаляем его
+                if (shard.offsetTop + shard.offsetHeight >= window.innerHeight) {
+                    shard.remove();
                 }
-                crack.style.backgroundImage = `url(${crackImages[i]})`;
-                minecraftBlock.appendChild(crack);
-                cracks.push(crack);
+            },
+        });
+    }
+}
+
+
+
+
+
+
+
+
+// Функция добычи блока
+function mineBlock(targetBlock, clientX, clientY, cracks) {
+    var pickaxe = document.createElement("div");
+    pickaxe.className = "pickaxe";
+    var minecraftContainer = document.getElementById("minecraftContainer");
+    minecraftContainer.appendChild(pickaxe);
+
+    var blockRect = targetBlock.getBoundingClientRect();
+    var blockLeft = blockRect.left + window.scrollX;
+    var blockTop = blockRect.top + window.scrollY;
+
+    var offsetX = clientX - blockLeft - targetBlock.offsetWidth / 2;
+    var offsetY = clientY - blockTop - targetBlock.offsetHeight / 2;
+
+    pickaxe.style.left = offsetX + "px";
+    pickaxe.style.top = offsetY + "px";
+
+    cracks[currentCrackIndex].style.display = "none";
+
+    currentCrackIndex = (currentCrackIndex + 1) % cracks.length;
+
+    cracks[currentCrackIndex].style.display = "block";
+
+    anime({
+        targets: pickaxe,
+        rotate: -20,
+        duration: 500,
+        easing: "easeInOutQuad",
+        complete: function () {
+            pickaxe.remove();
+        },
+    });
+
+    // Добавляем анимацию shake к minecraftContainer
+    anime({
+        targets: minecraftContainer,
+        translateX: [
+            { value: -2, duration: 50 },
+            { value: 2, duration: 50 },
+            { value: -2, duration: 50 },
+            { value: 2, duration: 50 },
+            { value: 0, duration: 50 }
+        ],
+        translateY: [
+            { value: -2, duration: 50 },
+            { value: 2, duration: 50 },
+            { value: -2, duration: 50 },
+            { value: 2, duration: 50 },
+            { value: 0, duration: 50 }
+        ],
+        complete: function () {
+            if (currentCrackIndex === cracks.length - 1) {
+                // Удаляем блок после завершения анимации трещин
+                targetBlock.remove();
+                cracks[currentCrackIndex].style.display = "none";
+                createShards(blockTop, minecraftContainer);
+
+                // Подождите 1 секунду, а затем создайте новый блок и разлетающиеся осколки
+                setTimeout(function () {
+                    isMining = false; // Сбрасываем флаг добычи
+                    createMinecraftBlock();
+                }, 1000);
+            } else {
+                isMining = false; // Сбрасываем флаг добычи, чтобы можно было кликнуть снова
             }
-    
-            minecraftBlock.addEventListener("click", function (event) {
-                if (isMining) {
-                    return; // Не реагируем на клики, если уже идет добыча
-                }
-    
-                isMining = true; // Устанавливаем флаг добычи
-    
-                var targetBlock = event.currentTarget;
-                var offsetX = event.clientX;
-                var offsetY = event.clientY;
-                mineBlock(targetBlock, offsetX, offsetY, cracks);
-            });
-    
-            blockCounter++;
-        }
-    
-        // Функция создания разлетающихся осколков
-        function createShards(blockTop, minecraftContainer) {
-            for (var i = 0; i < shardsImages.length; i++) {
-                var shard = document.createElement("div");
-                shard.className = "shard";
-                shard.style.backgroundImage = `url(${shardsImages[i]})`;
-                shard.style.left = "0px";
-                shard.style.top = "0px";
-                minecraftContainer.appendChild(shard);
-    
-                anime({
-                    targets: shard,
-                    translateX: anime.random(-300, 300),
-                    translateY: [
-                        { value: anime.random(-10, -500), duration: 500 },
-                        { value: window.innerHeight - blockTop - shard.offsetTop - shard.offsetHeight, duration: 20000 },
-                    ],
-                    rotate: anime.random(0, 90),
-                    opacity: 1,
-                    duration: 10000,
-                    easing: "easeOutExpo",
-                    complete: function () {
-                        shard.remove();
-                    },
-                });
-            }
-        }
-    
-        // Функция добычи блока
-        function mineBlock(targetBlock, clientX, clientY, cracks) {
-            var pickaxe = document.createElement("div");
-            pickaxe.className = "pickaxe";
-            var minecraftContainer = document.getElementById("minecraftContainer");
-            minecraftContainer.appendChild(pickaxe);
-    
-            var blockRect = targetBlock.getBoundingClientRect();
-            var blockLeft = blockRect.left + window.scrollX;
-            var blockTop = blockRect.top + window.scrollY;
-    
-            var offsetX = clientX - blockLeft - targetBlock.offsetWidth / 2;
-            var offsetY = clientY - blockTop - targetBlock.offsetHeight / 2;
-    
-            pickaxe.style.left = offsetX + "px";
-            pickaxe.style.top = offsetY + "px";
-    
-            cracks[currentCrackIndex].style.display = "none";
-    
-            currentCrackIndex = (currentCrackIndex + 1) % cracks.length;
-    
-            cracks[currentCrackIndex].style.display = "block";
-    
-            anime({
-                targets: pickaxe,
-                rotate: -20,
-                duration: 500,
-                easing: "easeInOutQuad",
-                complete: function () {
-                    pickaxe.remove();
-                },
-            });
-    
-            // Добавляем анимацию shake к minecraftContainer
-            anime({
-                targets: minecraftContainer,
-                translateX: [
-                    { value: -2, duration: 50 },
-                    { value: 2, duration: 50 },
-                    { value: -2, duration: 50 },
-                    { value: 2, duration: 50 },
-                    { value: 0, duration: 50 }
-                ],
-                translateY: [
-                    { value: -2, duration: 50 },
-                    { value: 2, duration: 50 },
-                    { value: -2, duration: 50 },
-                    { value: 2, duration: 50 },
-                    { value: 0, duration: 50 }
-                ],
-                complete: function () {
-                    if (currentCrackIndex === cracks.length - 1) {
-                        // Удаляем блок после завершения анимации трещин
-                        targetBlock.remove();
-                        cracks[currentCrackIndex].style.display = "none";
-                        createShards(blockTop, minecraftContainer);
-    
-                        // Подождите 1 секунду, а затем создайте новый блок и разлетающиеся осколки
-                        setTimeout(function () {
-                            isMining = false; // Сбрасываем флаг добычи
-                            createMinecraftBlock();
-                        }, 1000);
-                    } else {
-                        isMining = false; // Сбрасываем флаг добычи, чтобы можно было кликнуть снова
-                    }
-                },
-            });
-        }
-    
-        // Инициализация
-        createMinecraftBlock();
+        },
+    });
+}
+
+// Инициализация
+createMinecraftBlock();
+
     </script>
     
     

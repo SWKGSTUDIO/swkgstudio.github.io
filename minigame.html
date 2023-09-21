@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Minecraft Block</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet"
-            href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan&display=swap">
 
-        <style>
+<head>
+    <title>Minecraft Block</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan&display=swap">
+
+    <style>
         html {
             overflow: hidden;
         }
@@ -70,7 +70,7 @@
             pointer-events: none;
 
             background-size: cover;
-            
+
             z-index: 999;
 
         }
@@ -85,26 +85,74 @@
             background-image: url('assets/img/minecraft/Chest.webp');
         }
 
+        /* Стили для модального окна */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Стили для кнопок в модальном окне */
+        .modal-buttons {
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin: 0 10px;
+            cursor: pointer;
+        }
+
+
 
         @keyframes swing {
             0% {
                 transform: rotate(0deg);
             }
+
             100% {
                 transform: rotate(100deg);
             }
         }
     </style>
-    </head>
+</head>
 
-    <body>
+<body>
 
-        <div id="minecraftContainer"></div>
+    <div id="minecraftContainer"></div>
 
-        <script
-            src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
 
-        <script type="module">
+    <div class="modal" id="offerModal">
+        <div class="modal-content">
+            <h2>Получить +50 очков</h2>
+            <p>Просмотрите рекламу, чтобы получить дополнительные 50 очков.</p>
+            <div class="modal-buttons">
+                <button id="confirmButton">ДА</button>
+                <button id="cancelButton">ОТМЕНА</button>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+
+    <script type="module">
 
         var blockCounter = 0;
         var currentCrackIndex = 0;
@@ -114,329 +162,355 @@
 
 
 
-var crackImages = [
-    'assets/img/minecraft/d1.png',
-    'assets/img/minecraft/d2.png',
-    'assets/img/minecraft/d3.png',
-    'assets/img/minecraft/d4.png',
-    'assets/img/minecraft/d5.png',
-    'assets/img/minecraft/d6.png',
-    'assets/img/minecraft/d6.png',
-    'assets/img/minecraft/d6.png',
-    'assets/img/minecraft/d6.png',
-    'assets/img/minecraft/d6.png'
-];
+        var crackImages = [
+            'assets/img/minecraft/d1.png',
+            'assets/img/minecraft/d2.png',
+            'assets/img/minecraft/d3.png',
+            'assets/img/minecraft/d4.png',
+            'assets/img/minecraft/d5.png',
+            'assets/img/minecraft/d6.png',
+            'assets/img/minecraft/d6.png',
+            'assets/img/minecraft/d6.png',
+            'assets/img/minecraft/d6.png',
+            'assets/img/minecraft/d6.png'
+        ];
 
-var shardsImages = [
-    'assets/img/minecraft/BlueGem.png',
-    'assets/img/minecraft/GreenGem.webp',
-    'assets/img/minecraft/RedGem.png',
-    'assets/img/minecraft/Coin.webp',
-    'assets/img/minecraft/BlueGem.png',
-    'assets/img/minecraft/GreenGem.webp',
-    'assets/img/minecraft/RedGem.png',
-    'assets/img/minecraft/Coin.webp',
-    'assets/img/minecraft/BlueGem.png',
-    'assets/img/minecraft/GreenGem.webp',
-    'assets/img/minecraft/RedGem.png',
-    'assets/img/minecraft/Coin.webp',
-    'assets/img/minecraft/BlueGem.png',
-    'assets/img/minecraft/GreenGem.webp',
-    'assets/img/minecraft/RedGem.png',
-    'assets/img/minecraft/Coin.webp',
-
-    
-];
+        var shardsImages = [
+            'assets/img/minecraft/BlueGem.png',
+            'assets/img/minecraft/GreenGem.webp',
+            'assets/img/minecraft/RedGem.png',
+            'assets/img/minecraft/Coin.webp',
+            'assets/img/minecraft/BlueGem.png',
+            'assets/img/minecraft/GreenGem.webp',
+            'assets/img/minecraft/RedGem.png',
+            'assets/img/minecraft/Coin.webp',
+            'assets/img/minecraft/BlueGem.png',
+            'assets/img/minecraft/GreenGem.webp',
+            'assets/img/minecraft/RedGem.png',
+            'assets/img/minecraft/Coin.webp',
+            'assets/img/minecraft/BlueGem.png',
+            'assets/img/minecraft/GreenGem.webp',
+            'assets/img/minecraft/RedGem.png',
+            'assets/img/minecraft/Coin.webp',
 
 
-var blocks = [
-    'assets/img/minecraft/blocks/block_earth.webp',
-    'assets/img/minecraft/blocks/gold.png',
-    'assets/img/minecraft/blocks/mush.webp',
-    'assets/img/minecraft/blocks/oak.webp',
-    // Добавьте сюда остальные изображения блоков
-];
+        ];
 
 
+        var blocks = [
+            'assets/img/minecraft/blocks/block_earth.webp',
+            'assets/img/minecraft/blocks/gold.png',
+            'assets/img/minecraft/blocks/mush.webp',
+            'assets/img/minecraft/blocks/oak.webp',
+            // Добавьте сюда остальные изображения блоков
+        ];
 
 
+        // Функция создания нового блока Minecraft
+        function createMinecraftBlock() {
+            if (isMining) {
+                return;
+            }
 
+            var minecraftContainer = document.getElementById("minecraftContainer");
+            var minecraftBlock = document.createElement("div");
+            minecraftBlock.className = "minecraftBlock";
+            minecraftBlock.id = "block" + blockCounter;
 
-// Функция создания нового блока Minecraft
-function createMinecraftBlock() {
-    if (isMining) {
-        return; 
-    }
+            // Генерируем случайный индекс для выбора картинки блока
+            var randomBlockIndex = Math.floor(Math.random() * blocks.length);
+            minecraftBlock.style.backgroundImage = `url(${blocks[randomBlockIndex]})`;
 
-    var minecraftContainer = document.getElementById("minecraftContainer");
-    var minecraftBlock = document.createElement("div");
-    minecraftBlock.className = "minecraftBlock";
-    minecraftBlock.id = "block" + blockCounter;
+            minecraftContainer.appendChild(minecraftBlock);
 
-    // Генерируем случайный индекс для выбора картинки блока
-    var randomBlockIndex = Math.floor(Math.random() * blocks.length);
-    minecraftBlock.style.backgroundImage = `url(${blocks[randomBlockIndex]})`;
+            var cracks = [];
+            var crackIndex = 0; // Индекс текущей трещины
 
-    minecraftContainer.appendChild(minecraftBlock);
+            for (var i = 0; i < 10; i++) {
+                var crack = document.createElement("div");
+                crack.className = "crack";
+                minecraftBlock.appendChild(crack);
+                cracks.push(crack);
 
-    var cracks = [];
-    var crackIndex = 0; // Индекс текущей трещины
+                // Устанавливаем изображение трещины поочередно
+                crack.style.backgroundImage = `url(${crackImages[crackIndex]})`;
 
-    for (var i = 0; i < 10; i++) {
-        var crack = document.createElement("div");
-        crack.className = "crack";
-        minecraftBlock.appendChild(crack);
-        cracks.push(crack);
+                // Увеличиваем индекс текущей трещины, переходя к следующей
+                crackIndex = (crackIndex + 1) % crackImages.length;
+            }
 
-        // Устанавливаем изображение трещины поочередно
-        crack.style.backgroundImage = `url(${crackImages[crackIndex]})`;
+            minecraftBlock.addEventListener("click", function (event) {
+                if (isMining) {
+                    return; // Не реагируем на клики, если уже идет добыча
+                }
 
-        // Увеличиваем индекс текущей трещины, переходя к следующей
-        crackIndex = (crackIndex + 1) % crackImages.length;
-    }
+                isMining = true; // Устанавливаем флаг добычи
 
-    minecraftBlock.addEventListener("click", function (event) {
-        if (isMining) {
-            return; // Не реагируем на клики, если уже идет добыча
+                var targetBlock = event.currentTarget;
+                var offsetX = event.clientX;
+                var offsetY = event.clientY;
+                mineBlock(targetBlock, offsetX, offsetY, cracks);
+
+                // Увеличиваем currentBlockIndex и проверяем на конец массива
+                currentBlockIndex++;
+                if (currentBlockIndex >= blocks.length) {
+                    currentBlockIndex = 0; // Сбрасываем на начало массива
+                }
+
+                // Увеличиваем счетчик блоков
+                blockCounter++;
+
+                // Проверяем, создавать ли сундук
+                if (chestCounter > 0 && chestCounter % 5 === 0) {
+                    createChest(minecraftContainer);
+                }
+            });
         }
 
-        isMining = true; // Устанавливаем флаг добычи
 
-        var targetBlock = event.currentTarget;
-        var offsetX = event.clientX;
-        var offsetY = event.clientY;
-        mineBlock(targetBlock, offsetX, offsetY, cracks);
 
-        // Увеличиваем currentBlockIndex и проверяем на конец массива
-        currentBlockIndex++;
-        if (currentBlockIndex >= blocks.length) {
-            currentBlockIndex = 0; // Сбрасываем на начало массива
+
+
+
+
+        // Функция создания сундука
+        function createChest(container) {
+            var chest = document.createElement("div");
+            chest.className = "chest";
+
+            // Добавьте обработчик события клика
+            chest.addEventListener("click", function () {
+                openChest();
+            });
+
+            container.appendChild(chest);
+
+            chestCounter = 0;
         }
 
-        // Увеличиваем счетчик блоков
-        blockCounter++;
-
-        // Проверяем, создавать ли сундук
-        if (chestCounter > 0 && chestCounter % 5 === 0) {
-            createChest(minecraftContainer);
-        }
-    });
-}
 
 
+        function openChest() {
+            var chest = document.querySelector(".chest");
 
+            openModal();
 
+            // Получаем размеры окна браузера
+            var windowWidth = window.innerWidth;
+            var windowHeight = window.innerHeight;
 
+            // Получаем размеры и позицию сундука
+            var chestWidth = chest.offsetWidth;
+            var chestHeight = chest.offsetHeight;
+            var chestLeft = chest.getBoundingClientRect().left + window.scrollX;
+            var chestTop = chest.getBoundingClientRect().top + window.scrollY;
 
+            // Вычисляем центр сундука
+            var centerX = chestLeft + chestWidth / 2;
+            var centerY = chestTop + chestHeight / 2;
 
-// Функция создания сундука
-function createChest(container) {
-    var chest = document.createElement("div");
-    chest.className = "chest";
-    
-    // Добавьте обработчик события клика
-    chest.addEventListener("click", function () {
-        openChest();
-    });
-    
-    container.appendChild(chest);
+            // Вычисляем расстояние от центра сундука до центра страницы
+            var deltaX = centerX - windowWidth / 2;
+            var deltaY = centerY - windowHeight / 2;
 
-    chestCounter = 0;
-}
-
-
-
-function openChest() {
-    var chest = document.querySelector(".chest");
-
-
-    // Получаем размеры окна браузера
-    var windowWidth = window.innerWidth;
-    var windowHeight = window.innerHeight;
-
-    // Получаем размеры и позицию сундука
-    var chestWidth = chest.offsetWidth;
-    var chestHeight = chest.offsetHeight;
-    var chestLeft = chest.getBoundingClientRect().left + window.scrollX;
-    var chestTop = chest.getBoundingClientRect().top + window.scrollY;
-
-    // Вычисляем центр сундука
-    var centerX = chestLeft + chestWidth / 2;
-    var centerY = chestTop + chestHeight / 2;
-
-    // Вычисляем расстояние от центра сундука до центра страницы
-    var deltaX = centerX - windowWidth / 2;
-    var deltaY = centerY - windowHeight / 2;
-
-    // Задержка перед удалением сундука
-    setTimeout(function () {
-        anime({
-            targets: chest,
-            opacity: 0, // Устанавливаем нулевую прозрачность
-            scale: 0.1, // Уменьшаем масштаб до 10%
-            translateX: -deltaX + "px", // Смещаем по горизонтали к центру страницы
-            translateY: -deltaY + "px", // Смещаем по вертикали к центру страницы
-            duration: 1000, // Длительность анимации
-            easing: "easeOutExpo", // Эффект анимации
-            complete: function () {
-                chest.remove(); // Удаляем сундук после анимации
-            },
-        });
-    }, 500);
-}
-
-
-
-
-function createShards(minecraftContainer) {
-    const shardCount = shardsImages.length;
-
-    // Получаем размеры окна браузера
-    const windowWidth = window.innerWidth;
-    const windowHeight = window.innerHeight;
-
-    // Минимальная и максимальная скорость осколков
-    const minSpeed = 1;
-    const maxSpeed = 5;
-
-    for (let i = 0; i < shardCount; i++) {
-        let shard = document.createElement("div");
-        shard.className = "shard";
-        shard.style.backgroundImage = `url(${shardsImages[i]})`;
-        minecraftContainer.appendChild(shard);
-
-        // Генерируем случайные начальные координаты осколков в центре страницы
-        const randomInitialX = windowWidth / 2;
-        const randomInitialY = windowHeight / 2;
-
-        // Генерируем случайную скорость для осколка
-        const speed = Math.random() * (maxSpeed - minSpeed) + minSpeed;
-
-        // Генерируем случайный угол направления осколка
-        const angle = Math.random() * Math.PI * 2;
-
-        // Вычисляем компоненты скорости по x и y
-        const velocityX = Math.cos(angle) * speed;
-        const velocityY = Math.sin(angle) * speed;
-
-        shard.style.cursor = "pointer";
-
-        // Используем библиотеку anime.js для анимации перемещения осколков
-        anime({
-            targets: shard,
-            translateX: [0, velocityX * 50], // Изменяем положение по X
-            translateY: [0, velocityY * 50], // Изменяем положение по Y
-            duration: 100, // Анимация разлета
-            easing: "linear",
-            complete: function () {
-                // После разлета, меняем анимацию на падение за пределы страницы
+            // Задержка перед удалением сундука
+            setTimeout(function () {
                 anime({
-                    targets: shard,
-                    translateY: [velocityY * 100, windowHeight + 100], // Падение за пределы страницы
-                    duration: 6000, // Длительность падения
-                    easing: "linear",
+                    targets: chest,
+                    opacity: 0, // Устанавливаем нулевую прозрачность
+                    scale: 0.1, // Уменьшаем масштаб до 10%
+                    translateX: -deltaX + "px", // Смещаем по горизонтали к центру страницы
+                    translateY: -deltaY + "px", // Смещаем по вертикали к центру страницы
+                    duration: 1000, // Длительность анимации
+                    easing: "easeOutExpo", // Эффект анимации
                     complete: function () {
-                        shard.remove();
+                        chest.remove(); // Удаляем сундук после анимации
                     },
                 });
-            },
+            }, 500);
+        }
+
+
+
+        // Отображение модального окна
+        function openModal() {
+            var modal = document.getElementById("offerModal");
+            modal.style.display = "block";
+        }
+
+        // Закрытие модального окна
+        function closeModal() {
+            var modal = document.getElementById("offerModal");
+            modal.style.display = "none";
+        }
+
+        // Добавьте обработчики событий для кнопок "ДА" и "ОТМЕНА"
+        document.getElementById("confirmButton").addEventListener("click", function () {
+            // Здесь вы можете добавить логику для просмотра рекламы и добавления +50 очков
+            // После успешного просмотра рекламы, закройте модальное окно с помощью closeModal()
+            closeModal();
         });
-    }
-}
+
+        document.getElementById("cancelButton").addEventListener("click", function () {
+            // Закройте модальное окно, если пользователь отказался от предложения
+            closeModal();
+        });
+
+        // Вызывайте openModal() для отображения окна, когда вам нужно предложить +50 очков
+        // Например, вызывайте openModal() после достижения определенных условий в вашей игре
 
 
 
 
 
-function mineBlock(targetBlock, clientX, clientY, cracks) {
-    var minecraftContainer = document.getElementById("minecraftContainer");
+        function createShards(minecraftContainer) {
+            const shardCount = shardsImages.length;
 
-    // Проверяем, не является ли кликнутый элемент сундуком
-    if (targetBlock.classList.contains("chest")) {
-        return; // Если кликнутый элемент - сундук, не обрабатываем клик
-    }
+            // Получаем размеры окна браузера
+            const windowWidth = window.innerWidth;
+            const windowHeight = window.innerHeight;
 
-    // Удалить старую кирку, если она существует
-    if (minecraftContainer.querySelector(".pickaxe")) {
-        minecraftContainer.querySelector(".pickaxe").remove();
-    }
+            // Минимальная и максимальная скорость осколков
+            const minSpeed = 1;
+            const maxSpeed = 5;
 
-    var pickaxe = document.createElement("div");
-    pickaxe.className = "pickaxe";
-    minecraftContainer.appendChild(pickaxe);
+            for (let i = 0; i < shardCount; i++) {
+                let shard = document.createElement("div");
+                shard.className = "shard";
+                shard.style.backgroundImage = `url(${shardsImages[i]})`;
+                minecraftContainer.appendChild(shard);
 
-    var blockRect = targetBlock.getBoundingClientRect();
-    var blockLeft = blockRect.left + window.scrollX;
-    var blockTop = blockRect.top + window.scrollY;
+                // Генерируем случайные начальные координаты осколков в центре страницы
+                const randomInitialX = windowWidth / 2;
+                const randomInitialY = windowHeight / 2;
 
-    var offsetX = clientX - blockLeft - targetBlock.offsetWidth / 2;
-    var offsetY = clientY - blockTop - targetBlock.offsetHeight / 2;
+                // Генерируем случайную скорость для осколка
+                const speed = Math.random() * (maxSpeed - minSpeed) + minSpeed;
 
-    pickaxe.style.left = offsetX + "px";
-    pickaxe.style.top = offsetY + "px";
+                // Генерируем случайный угол направления осколка
+                const angle = Math.random() * Math.PI * 2;
 
-    cracks[currentCrackIndex].style.display = "none";
+                // Вычисляем компоненты скорости по x и y
+                const velocityX = Math.cos(angle) * speed;
+                const velocityY = Math.sin(angle) * speed;
 
-    currentCrackIndex = (currentCrackIndex + 1) % cracks.length;
+                shard.style.cursor = "pointer";
 
-    cracks[currentCrackIndex].style.display = "block";
-
-    anime({
-        targets: pickaxe,
-        rotate: -20,
-        duration: 500,
-        easing: "easeInOutQuad",
-        complete: function () {
-            pickaxe.remove();
-        },
-    });
-
-    // Добавляем анимацию shake к minecraftContainer
-    anime({
-        targets: minecraftContainer,
-        translateX: [
-            { value: -2, duration: 50 },
-            { value: 2, duration: 50 },
-            { value: -2, duration: 50 },
-            { value: 2, duration: 50 },
-            { value: 0, duration: 50 }
-        ],
-        translateY: [
-            { value: -2, duration: 50 },
-            { value: 2, duration: 50 },
-            { value: -2, duration: 50 },
-            { value: 2, duration: 50 },
-            { value: 0, duration: 50 }
-        ],
-        complete: function () {
-            if (currentCrackIndex === cracks.length - 1) {
-                // Удаляем блок после завершения анимации трещин
-                targetBlock.remove();
-                cracks[currentCrackIndex].style.display = "none";
-                
-                createShards(minecraftContainer);
-                
-
-                // Подождите 1 секунду, а затем создайте новый блок и разлетающиеся осколки
-                setTimeout(function () {
-                    isMining = false; // Сбрасываем флаг добычи
-
-                    createMinecraftBlock();
-                    chestCounter++;
-
-                }, 1000);
-            } else {
-                isMining = false; // Сбрасываем флаг добычи, чтобы можно было кликнуть снова
+                anime({
+                    targets: shard,
+                    translateX: [0, velocityX * 50], // Изменяем положение по X
+                    translateY: [0, velocityY * 50], // Изменяем положение по Y
+                    duration: 200, // Анимация разлета
+                    easing: "linear",
+                    complete: function () {
+                        // После разлета, меняем анимацию на падение за пределы страницы
+                        anime({
+                            targets: shard,
+                            translateY: [velocityY * 100, windowHeight + 100], // Падение за пределы страницы
+                            duration: 6000, // Длительность падения
+                            easing: "linear",
+                            complete: function () {
+                                shard.remove();
+                            },
+                        });
+                    },
+                });
             }
-        },
-    });
-}
+        }
 
 
-// Инициализация
-createMinecraftBlock();
+
+
+
+        function mineBlock(targetBlock, clientX, clientY, cracks) {
+            var minecraftContainer = document.getElementById("minecraftContainer");
+
+            // Проверяем, не является ли кликнутый элемент сундуком
+            if (targetBlock.classList.contains("chest")) {
+                return; // Если кликнутый элемент - сундук, не обрабатываем клик
+            }
+
+            // Удалить старую кирку, если она существует
+            if (minecraftContainer.querySelector(".pickaxe")) {
+                minecraftContainer.querySelector(".pickaxe").remove();
+            }
+
+            var pickaxe = document.createElement("div");
+            pickaxe.className = "pickaxe";
+            minecraftContainer.appendChild(pickaxe);
+
+            var blockRect = targetBlock.getBoundingClientRect();
+            var blockLeft = blockRect.left + window.scrollX;
+            var blockTop = blockRect.top + window.scrollY;
+
+            var offsetX = clientX - blockLeft - targetBlock.offsetWidth / 2;
+            var offsetY = clientY - blockTop - targetBlock.offsetHeight / 2;
+
+            pickaxe.style.left = offsetX + "px";
+            pickaxe.style.top = offsetY + "px";
+
+            cracks[currentCrackIndex].style.display = "none";
+
+            currentCrackIndex = (currentCrackIndex + 1) % cracks.length;
+
+            cracks[currentCrackIndex].style.display = "block";
+
+            anime({
+                targets: pickaxe,
+                rotate: -20,
+                duration: 500,
+                easing: "easeInOutQuad",
+                complete: function () {
+                    pickaxe.remove();
+                },
+            });
+
+            // Добавляем анимацию shake к minecraftContainer
+            anime({
+                targets: minecraftContainer,
+                translateX: [
+                    { value: -2, duration: 50 },
+                    { value: 2, duration: 50 },
+                    { value: -2, duration: 50 },
+                    { value: 2, duration: 50 },
+                    { value: 0, duration: 50 }
+                ],
+                translateY: [
+                    { value: -2, duration: 50 },
+                    { value: 2, duration: 50 },
+                    { value: -2, duration: 50 },
+                    { value: 2, duration: 50 },
+                    { value: 0, duration: 50 }
+                ],
+                complete: function () {
+                    if (currentCrackIndex === cracks.length - 1) {
+                        // Удаляем блок после завершения анимации трещин
+                        targetBlock.remove();
+                        cracks[currentCrackIndex].style.display = "none";
+
+                        createShards(minecraftContainer);
+
+
+                        // Подождите 1 секунду, а затем создайте новый блок и разлетающиеся осколки
+                        setTimeout(function () {
+                            isMining = false; // Сбрасываем флаг добычи
+
+                            createMinecraftBlock();
+                            chestCounter++;
+
+                        }, 1000);
+                    } else {
+                        isMining = false; // Сбрасываем флаг добычи, чтобы можно было кликнуть снова
+                    }
+                },
+            });
+        }
+
+        // Инициализация
+        createMinecraftBlock();
 
     </script>
 
-    </body>
+</body>
+
 </html>

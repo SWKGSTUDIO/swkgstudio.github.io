@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Minecraft Block</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan&display=swap">
+    <head>
+        <title>Minecraft Block</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan&display=swap">
 
-
-    <style>
+        <style>
         html {
             overflow: hidden;
         }
@@ -57,18 +57,34 @@
             height: 300px;
             background-size: cover;
             pointer-events: none;
+
             display: none;
+            z-index: 9;
         }
 
         .shard {
             position: absolute;
             width: 80px;
             height: 80px;
-            background-size: cover;
+
             pointer-events: none;
+
+            background-size: cover;
+            
             z-index: 999;
 
         }
+
+        .chest {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background-size: cover;
+            z-index: 999;
+            transform: translate(-50%, -50%);
+            background-image: url('assets/img/minecraft/Chest.webp');
+        }
+
 
         @keyframes swing {
             0% {
@@ -79,20 +95,23 @@
             }
         }
     </style>
-</head>
+    </head>
 
-<body>
+    <body>
 
-    <div id="minecraftContainer"></div>
+        <div id="minecraftContainer"></div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
 
-    <script type="module">
+        <script type="module">
 
         var blockCounter = 0;
         var currentCrackIndex = 0;
         var isMining = false;
         var currentBlockIndex = 0;
+        var chestCounter = 0;
+
 
 
 var crackImages = [
@@ -154,21 +173,26 @@ function createMinecraftBlock() {
     minecraftBlock.className = "minecraftBlock";
     minecraftBlock.id = "block" + blockCounter;
 
-    // Генерируем случайный индекс для выбора картинки
+    // Генерируем случайный индекс для выбора картинки блока
     var randomBlockIndex = Math.floor(Math.random() * blocks.length);
     minecraftBlock.style.backgroundImage = `url(${blocks[randomBlockIndex]})`;
 
     minecraftContainer.appendChild(minecraftBlock);
 
     var cracks = [];
-    for (var i = 0; i < 5; i++) {
+    var crackIndex = 0; // Индекс текущей трещины
+
+    for (var i = 0; i < 10; i++) {
         var crack = document.createElement("div");
         crack.className = "crack";
-        if (i === 0) {
-            crack.style.display = "none";
-        }
         minecraftBlock.appendChild(crack);
         cracks.push(crack);
+
+        // Устанавливаем изображение трещины поочередно
+        crack.style.backgroundImage = `url(${crackImages[crackIndex]})`;
+
+        // Увеличиваем индекс текущей трещины, переходя к следующей
+        crackIndex = (crackIndex + 1) % crackImages.length;
     }
 
     minecraftBlock.addEventListener("click", function (event) {
@@ -182,11 +206,84 @@ function createMinecraftBlock() {
         var offsetX = event.clientX;
         var offsetY = event.clientY;
         mineBlock(targetBlock, offsetX, offsetY, cracks);
-    });
 
-    blockCounter++;
+        // Увеличиваем currentBlockIndex и проверяем на конец массива
+        currentBlockIndex++;
+        if (currentBlockIndex >= blocks.length) {
+            currentBlockIndex = 0; // Сбрасываем на начало массива
+        }
+
+        // Увеличиваем счетчик блоков
+        blockCounter++;
+
+        // Проверяем, создавать ли сундук
+        if (chestCounter > 0 && chestCounter % 5 === 0) {
+            createChest(minecraftContainer);
+        }
+    });
 }
 
+
+
+
+
+
+
+// Функция создания сундука
+function createChest(container) {
+    var chest = document.createElement("div");
+    chest.className = "chest";
+    
+    // Добавьте обработчик события клика
+    chest.addEventListener("click", function () {
+        openChest();
+    });
+    
+    container.appendChild(chest);
+
+    chestCounter = 0;
+}
+
+
+
+function openChest() {
+    var chest = document.querySelector(".chest");
+
+
+    // Получаем размеры окна браузера
+    var windowWidth = window.innerWidth;
+    var windowHeight = window.innerHeight;
+
+    // Получаем размеры и позицию сундука
+    var chestWidth = chest.offsetWidth;
+    var chestHeight = chest.offsetHeight;
+    var chestLeft = chest.getBoundingClientRect().left + window.scrollX;
+    var chestTop = chest.getBoundingClientRect().top + window.scrollY;
+
+    // Вычисляем центр сундука
+    var centerX = chestLeft + chestWidth / 2;
+    var centerY = chestTop + chestHeight / 2;
+
+    // Вычисляем расстояние от центра сундука до центра страницы
+    var deltaX = centerX - windowWidth / 2;
+    var deltaY = centerY - windowHeight / 2;
+
+    // Задержка перед удалением сундука
+    setTimeout(function () {
+        anime({
+            targets: chest,
+            opacity: 0, // Устанавливаем нулевую прозрачность
+            scale: 0.1, // Уменьшаем масштаб до 10%
+            translateX: -deltaX + "px", // Смещаем по горизонтали к центру страницы
+            translateY: -deltaY + "px", // Смещаем по вертикали к центру страницы
+            duration: 1000, // Длительность анимации
+            easing: "easeOutExpo", // Эффект анимации
+            complete: function () {
+                chest.remove(); // Удаляем сундук после анимации
+            },
+        });
+    }, 500);
+}
 
 
 
@@ -251,11 +348,13 @@ function createShards(minecraftContainer) {
 
 
 
-
-
-// Функция добычи блока
 function mineBlock(targetBlock, clientX, clientY, cracks) {
     var minecraftContainer = document.getElementById("minecraftContainer");
+
+    // Проверяем, не является ли кликнутый элемент сундуком
+    if (targetBlock.classList.contains("chest")) {
+        return; // Если кликнутый элемент - сундук, не обрабатываем клик
+    }
 
     // Удалить старую кирку, если она существует
     if (minecraftContainer.querySelector(".pickaxe")) {
@@ -321,7 +420,10 @@ function mineBlock(targetBlock, clientX, clientY, cracks) {
                 // Подождите 1 секунду, а затем создайте новый блок и разлетающиеся осколки
                 setTimeout(function () {
                     isMining = false; // Сбрасываем флаг добычи
+
                     createMinecraftBlock();
+                    chestCounter++;
+
                 }, 1000);
             } else {
                 isMining = false; // Сбрасываем флаг добычи, чтобы можно было кликнуть снова
@@ -335,7 +437,6 @@ function mineBlock(targetBlock, clientX, clientY, cracks) {
 createMinecraftBlock();
 
     </script>
-    
-    
-</body>
+
+    </body>
 </html>

@@ -188,7 +188,7 @@ function createShards(blockTop, minecraftContainer) {
             translateX: anime.random(-300, 300),
             translateY: [
                 { value: anime.random(-10, -500), duration: 500 },
-                { value: window.innerHeight - blockTop - shard.offsetTop - shard.offsetHeight, duration: 20000 },
+                { value: window.innerHeight - blockTop - shard.offsetTop - shard.offsetHeight, duration: 10000 },
             ],
             rotate: anime.random(0, 90),
             opacity: 1,
@@ -200,6 +200,9 @@ function createShards(blockTop, minecraftContainer) {
             },
         });
 
+
+
+        
         // Функция для удаления осколков за пределами видимой области
         function removeShardIfOutOfViewport() {
             if (shard.getBoundingClientRect().bottom < 0 || shard.getBoundingClientRect().top > window.innerHeight) {

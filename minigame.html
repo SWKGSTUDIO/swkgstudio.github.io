@@ -12,6 +12,7 @@
             justify-content: center;
             height: 100vh;
             margin: 0;
+            overflow: hidden;
         }
 
         #minecraftContainer {
@@ -33,16 +34,18 @@
         }
 
         .pickaxe {
-            width: 200px;
-            height: 200px;
-            background-image: url('assets/img/minecraft/pickaxe.png');
-            background-size: cover;
-            position: absolute;
-            transform-origin: top left;
-            animation: swing 0.1s ease-in-out;
-            pointer-events: none;
-            z-index: 10;
-        }
+    width: 200px;
+    height: 200px;
+    background-image: url('assets/img/minecraft/pickaxe.png');
+    background-size: cover;
+    position: absolute;
+    /* transform-origin: top left; */
+    animation: swing 0.1s ease-in-out;
+    pointer-events: none;
+    z-index: 10;
+    transform: translateY(-500px); /* Измененное значение для поднятия кирки с помощью transform */
+}
+
 
         .crack {
             position: absolute;
@@ -53,12 +56,21 @@
             display: none;
         }
 
+        .shard {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background-size: cover;
+            pointer-events: none;
+            z-index: 20;
+        }
+
         @keyframes swing {
             0% {
                 transform: rotate(0deg);
             }
             100% {
-                transform: rotate(30deg);
+                transform: rotate(100deg);
             }
         }
     </style>
@@ -77,6 +89,19 @@
             'assets/img/minecraft/d4.png',
             'assets/img/minecraft/d5.png',
             'assets/img/minecraft/d6.png',
+        ];
+
+        var shardsImages = [
+            'assets/img/minecraft/block_earth.webp',
+            'assets/img/minecraft/block_earth.webp',
+            'assets/img/minecraft/block_earth.webp',
+            'assets/img/minecraft/block_earth.webp',
+            'assets/img/minecraft/block_earth.webp',
+            'assets/img/minecraft/block_earth.webp',
+            'assets/img/minecraft/block_earth.webp',
+            'assets/img/minecraft/block_earth.webp',
+   
+            // Добавьте здесь другие изображения осколков, если необходимо
         ];
 
         function createMinecraftBlock() {
@@ -132,7 +157,7 @@
 
             anime({
                 targets: pickaxe,
-                rotate: 10,
+                rotate: -20,
                 duration: 200,
                 easing: "easeInOutQuad",
                 complete: function () {
@@ -158,6 +183,42 @@
                     { value: 0, duration: 50 }
                 ]
             });
+
+            if (currentCrackIndex === cracks.length - 1) {
+
+                cracks[currentCrackIndex].style.display = "none";
+
+                for (var i = 0; i < shardsImages.length; i++) {
+                    var shard = document.createElement("div");
+                    shard.className = "shard";
+                    shard.style.backgroundImage = `url(${shardsImages[i]})`;
+                    shard.style.left = "0px";
+                    shard.style.top = "0px";
+                    minecraftContainer.appendChild(shard);
+
+                    anime({
+                        targets: shard,
+                        translateX: anime.random(-500, 500),
+                        translateY: [
+                            { value: anime.random(-10, -500), duration: 500 },
+                            { value: window.innerHeight - blockTop - shard.offsetTop - shard.offsetHeight, duration: 10000 },
+                        ],
+                        rotate: anime.random(0, 90),
+                        opacity: 1,
+                        duration: 10000,
+                        easing: "easeOutExpo",
+                        complete: function () {
+                            shard.remove();
+                        },
+                    });
+                }
+
+                setTimeout(function () {
+                    targetBlock.remove();
+
+                    createMinecraftBlock();
+                }, 0);
+            }
         }
 
         createMinecraftBlock();

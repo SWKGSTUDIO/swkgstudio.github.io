@@ -61,8 +61,8 @@
 
         .shard {
             position: absolute;
-            width: 100px;
-            height: 100px;
+            width: 80px;
+            height: 80px;
             background-size: cover;
             pointer-events: none;
             z-index: 20;
@@ -96,8 +96,7 @@
             'assets/img/minecraft/d6.png',
             'assets/img/minecraft/d6.png',
             'assets/img/minecraft/d6.png',
-            'assets/img/minecraft/d6.png',
-
+            'assets/img/minecraft/d6.png'
         ];
     
         var shardsImages = [
@@ -108,9 +107,10 @@
             'assets/img/minecraft/block_earth.webp',
             'assets/img/minecraft/block_earth.webp',
             'assets/img/minecraft/block_earth.webp',
-            'assets/img/minecraft/block_earth.webp',
+            'assets/img/minecraft/block_earth.webp'
         ];
     
+        // Функция создания нового блока Minecraft
         function createMinecraftBlock() {
             if (isMining) {
                 return; // Не создаем новый блок, если уже идет добыча
@@ -150,6 +150,7 @@
             blockCounter++;
         }
     
+        // Функция создания разлетающихся осколков
         function createShards(blockTop, minecraftContainer) {
             for (var i = 0; i < shardsImages.length; i++) {
                 var shard = document.createElement("div");
@@ -177,6 +178,7 @@
             }
         }
     
+        // Функция добычи блока
         function mineBlock(targetBlock, clientX, clientY, cracks) {
             var pickaxe = document.createElement("div");
             pickaxe.className = "pickaxe";
@@ -232,7 +234,6 @@
                         targetBlock.remove();
                         cracks[currentCrackIndex].style.display = "none";
                         createShards(blockTop, minecraftContainer);
-
     
                         // Подождите 1 секунду, а затем создайте новый блок и разлетающиеся осколки
                         setTimeout(function () {
@@ -246,8 +247,10 @@
             });
         }
     
+        // Инициализация
         createMinecraftBlock();
     </script>
+    
     
 </body>
 </html>

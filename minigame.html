@@ -48,7 +48,7 @@ html {
     background-size: cover;
     position: absolute;
     /* transform-origin: top left; */
-    animation: swing 0.1s ease-in-out;
+    animation: swing 0.3s ease-in-out;
     pointer-events: none;
     z-index: 10;
     transform: translateY(-500px); /* Измененное значение для поднятия кирки с помощью transform */
@@ -166,7 +166,7 @@ html {
             anime({
                 targets: pickaxe,
                 rotate: -20,
-                duration: 200,
+                duration: 500,
                 easing: "easeInOutQuad",
                 complete: function () {
                     pickaxe.remove();

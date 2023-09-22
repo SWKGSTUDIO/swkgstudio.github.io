@@ -194,7 +194,8 @@
         </p>
         <p class="my-3 promocode-value">TEST-TEST-TEST</p>
 
-        <button id="copyButton" class="btn btn-primary" data-clipboard-target="#promoCode">COPY</button>
+        <button id="copyButton" class="btn btn-primary">COPY</button>
+
       </div>
     </div>
   </div>
@@ -206,36 +207,38 @@
 
 <script>
 
-document.addEventListener("DOMContentLoaded", function () {
-    var clipboard = new ClipboardJS("#copyButton");
+  var promoCodeText = "TEST-TEST-TEST";
+  
+  document.addEventListener("DOMContentLoaded", function () {
+      var clipboard = new ClipboardJS("#copyButton", {
+          text: function() {
+              return promoCodeText;
+          }
+      });
+  
+      clipboard.on("success", function (e) {
+          alert("Promo code copied to clipboard: " + e.text);
+          e.clearSelection();
+      });
+  
+      clipboard.on("error", function (e) {
+          alert("Failed to copy promo code to clipboard. Please copy it manually.");
+      });
+  
+      document.getElementById("copyButton").addEventListener("click", function () {
 
-    clipboard.on("success", function (e) {
-        alert("Promo code copied to clipboard: " + e.text);
-        e.clearSelection();
-    });
-
-    clipboard.on("error", function (e) {
-        alert("Failed to copy promo code to clipboard. Please copy it manually.");
-    });
-});
-
-
-  document.getElementById("copyButton").addEventListener("click", function () {
-    // Попытка открыть приложение mineapp
-    window.location.href = "mineapp://";
-    // Задержка в миллисекундах для определения, успешно ли приложение открыто
-    var timeout = setTimeout(function () {
-        // Если приложение не открылось, перенаправляем пользователя на Google Play Store
-        window.location.href = "https://play.google.com/store/apps/details?id=com.swkgstudio.mineapp2";
-    }, 1000); // 1 секунда (вы можете изменить это значение по желанию)
-});
-
-// Очистка таймаута при успешном открытии приложения
-window.addEventListener("blur", function () {
-    clearTimeout(timeout);
-});
-
-</script>
+          window.location.href = "mineapp://";
+          var timeout = setTimeout(function () {
+              window.location.href = "https://play.google.com/store/apps/details?id=com.swkgstudio.mineapp2";
+          }, 1000);
+      });
+  
+      window.addEventListener("blur", function () {
+          clearTimeout(timeout);
+      });
+  });
+  
+  </script>
 
 
 

@@ -81,7 +81,6 @@
             height: 200px;
             background-size: cover;
             z-index: 999;
-            transform: translate(-50%, -50%);
             background-image: url('assets/img/minecraft/Chest.webp');
         }
 
@@ -226,7 +225,7 @@
             var cracks = [];
             var crackIndex = 0; // Индекс текущей трещины
 
-            for (var i = 0; i < 10; i++) {
+            for (var i = 0; i < 2; i++) {
                 var crack = document.createElement("div");
                 crack.className = "crack";
                 minecraftBlock.appendChild(crack);
@@ -268,25 +267,24 @@
         }
 
 
+       // Функция создания сундука
+function createChest() {
+    var chest = document.createElement("div");
+    chest.className = "chest";
 
+    // Добавьте обработчик события клика
+    chest.addEventListener("click", function () {
+        openChest();
+    });
 
+    // Добавьте сундук в body документа
+    document.body.appendChild(chest);
 
+    chestCounter = 0;
+    minecraftContainer.style.display = "none";
 
+}
 
-        // Функция создания сундука
-        function createChest(container) {
-            var chest = document.createElement("div");
-            chest.className = "chest";
-
-            // Добавьте обработчик события клика
-            chest.addEventListener("click", function () {
-                openChest();
-            });
-
-            container.appendChild(chest);
-
-            chestCounter = 0;
-        }
 
 
 
@@ -344,79 +342,88 @@
             modal.style.display = "none";
         }
 
-        // Добавьте обработчики событий для кнопок "ДА" и "ОТМЕНА"
         document.getElementById("confirmButton").addEventListener("click", function () {
             // Здесь вы можете добавить логику для просмотра рекламы и добавления +50 очков
             // После успешного просмотра рекламы, закройте модальное окно с помощью closeModal()
             closeModal();
+            minecraftContainer.style.display = "block";
+
         });
 
         document.getElementById("cancelButton").addEventListener("click", function () {
-            // Закройте модальное окно, если пользователь отказался от предложения
+
             closeModal();
+            minecraftContainer.style.display = "block";
         });
-
-        // Вызывайте openModal() для отображения окна, когда вам нужно предложить +50 очков
-        // Например, вызывайте openModal() после достижения определенных условий в вашей игре
-
 
 
 
 
         function createShards(minecraftContainer) {
-            const shardCount = shardsImages.length;
+    const shardCount = shardsImages.length;
+    const windowWidth = window.innerWidth;
+    const windowHeight = window.innerHeight;
+    const minSpeed = 1;
+    const maxSpeed = 5;
 
-            // Получаем размеры окна браузера
-            const windowWidth = window.innerWidth;
-            const windowHeight = window.innerHeight;
+    const shards = [];
 
-            // Минимальная и максимальная скорость осколков
-            const minSpeed = 1;
-            const maxSpeed = 5;
+    for (let i = 0; i < shardCount; i++) {
+        let shard = document.createElement("div");
+        shard.className = "shard";
+        shard.style.backgroundImage = `url(${shardsImages[i]})`;
+        minecraftContainer.appendChild(shard);
 
-            for (let i = 0; i < shardCount; i++) {
-                let shard = document.createElement("div");
-                shard.className = "shard";
-                shard.style.backgroundImage = `url(${shardsImages[i]})`;
-                minecraftContainer.appendChild(shard);
+        // Начальные координаты осколков выше и левее центра экрана
+        const centerX = windowWidth / 2;
+        const centerY = windowHeight / 2;
 
-                // Генерируем случайные начальные координаты осколков в центре страницы
-                const randomInitialX = windowWidth / 2;
-                const randomInitialY = windowHeight / 2;
+        const speed = Math.random() * (maxSpeed - minSpeed) + minSpeed;
+        const angle = Math.random() * Math.PI * 2;
 
-                // Генерируем случайную скорость для осколка
-                const speed = Math.random() * (maxSpeed - minSpeed) + minSpeed;
+        const velocityX = Math.cos(angle) * speed;
+        const velocityY = Math.sin(angle) * speed;
 
-                // Генерируем случайный угол направления осколка
-                const angle = Math.random() * Math.PI * 2;
+        const mass = Math.random() * 2 + 1; // Масса осколка
 
-                // Вычисляем компоненты скорости по x и y
-                const velocityX = Math.cos(angle) * speed;
-                const velocityY = Math.sin(angle) * speed;
+        shard.style.cursor = "pointer";
 
-                shard.style.cursor = "pointer";
+        shards.push({
+            element: shard,
+            x: centerX - (windowWidth / 2), // Выше и левее центра экрана
+            y: centerY - (windowHeight / 2), // Выше и левее центра экрана
+            velocityX,
+            velocityY,
+            mass,
+        });
+    }
 
-                anime({
-                    targets: shard,
-                    translateX: [0, velocityX * 50], // Изменяем положение по X
-                    translateY: [0, velocityY * 50], // Изменяем положение по Y
-                    duration: 200, // Анимация разлета
-                    easing: "linear",
-                    complete: function () {
-                        // После разлета, меняем анимацию на падение за пределы страницы
-                        anime({
-                            targets: shard,
-                            translateY: [velocityY * 100, windowHeight + 100], // Падение за пределы страницы
-                            duration: 6000, // Длительность падения
-                            easing: "linear",
-                            complete: function () {
-                                shard.remove();
-                            },
-                        });
-                    },
-                });
-            }
+    const gravity = 0.1; // Гравитация
+
+    // Функция для обновления позиции осколков
+    function updateShards() {
+        for (let i = 0; i < shardCount; i++) {
+            const shard = shards[i];
+
+            // Применяем гравитацию
+            shard.velocityY += gravity;
+
+            // Обновляем позицию осколка
+            shard.x += shard.velocityX;
+            shard.y += shard.velocityY;
+
+            // Обновляем позицию элемента
+            shard.element.style.transform = `translate(${shard.x}px, ${shard.y}px)`;
         }
+
+        requestAnimationFrame(updateShards);
+    }
+
+    // Запускаем анимацию
+    updateShards();
+}
+
+
 
 
 

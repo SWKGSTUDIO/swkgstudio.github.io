@@ -267,23 +267,23 @@
         }
 
 
-       // Функция создания сундука
-function createChest() {
-    var chest = document.createElement("div");
-    chest.className = "chest";
+        // Функция создания сундука
+        function createChest() {
+            var chest = document.createElement("div");
+            chest.className = "chest";
 
-    // Добавьте обработчик события клика
-    chest.addEventListener("click", function () {
-        openChest();
-    });
+            // Добавьте обработчик события клика
+            chest.addEventListener("click", function () {
+                openChest();
+            });
 
-    // Добавьте сундук в body документа
-    document.body.appendChild(chest);
+            // Добавьте сундук в body документа
+            document.body.appendChild(chest);
 
-    chestCounter = 0;
-    minecraftContainer.style.display = "none";
+            chestCounter = 0;
+            minecraftContainer.style.display = "none";
 
-}
+        }
 
 
 
@@ -361,68 +361,89 @@ function createChest() {
 
 
         function createShards(minecraftContainer) {
-    const shardCount = shardsImages.length;
-    const windowWidth = window.innerWidth;
-    const windowHeight = window.innerHeight;
-    const minSpeed = 1;
-    const maxSpeed = 5;
+            const shardCount = shardsImages.length;
+            const windowWidth = window.innerWidth;
+            const windowHeight = window.innerHeight;
+            const minSpeed = 1;
+            const maxSpeed = 3;
 
-    const shards = [];
+            const shards = [];
 
-    for (let i = 0; i < shardCount; i++) {
-        let shard = document.createElement("div");
-        shard.className = "shard";
-        shard.style.backgroundImage = `url(${shardsImages[i]})`;
-        minecraftContainer.appendChild(shard);
+            for (let i = 0; i < shardCount; i++) {
+                let shard = document.createElement("div");
+                shard.className = "shard";
+                shard.style.backgroundImage = `url(${shardsImages[i]})`;
+                minecraftContainer.appendChild(shard);
 
-        // Начальные координаты осколков выше и левее центра экрана
-        const centerX = windowWidth / 2;
-        const centerY = windowHeight / 2;
+                // Начальные координаты осколков в центре экрана
+                const centerX = windowWidth / 2;
+                const centerY = windowHeight / 2;
 
-        const speed = Math.random() * (maxSpeed - minSpeed) + minSpeed;
-        const angle = Math.random() * Math.PI * 2;
+                // Генерируем случайное значение угла направления
+                const angle = Math.random() * Math.PI * 2;
 
-        const velocityX = Math.cos(angle) * speed;
-        const velocityY = Math.sin(angle) * speed;
+                const speed = Math.random() * (maxSpeed - minSpeed) + minSpeed;
 
-        const mass = Math.random() * 2 + 1; // Масса осколка
+                const velocityX = Math.cos(angle) * speed;
+                const velocityY = Math.sin(angle) * speed;
 
-        shard.style.cursor = "pointer";
+                const mass = Math.random() * 2 + 1; // Масса осколка
 
-        shards.push({
-            element: shard,
-            x: centerX - (windowWidth / 2), // Выше и левее центра экрана
-            y: centerY - (windowHeight / 2), // Выше и левее центра экрана
-            velocityX,
-            velocityY,
-            mass,
-        });
-    }
+                shard.style.cursor = "pointer";
 
-    const gravity = 0.2; // Гравитация
+                shards.push({
+                    element: shard,
+                    x: centerX - (windowWidth / 1.8),
+                    y: centerY - (windowHeight / 1.8),
+                    velocityX,
+                    velocityY: -velocityY,
+                    mass,
+                });
 
-    // Функция для обновления позиции осколков
-    function updateShards() {
-        for (let i = 0; i < shardCount; i++) {
-            const shard = shards[i];
+            }
 
-            // Применяем гравитацию
-            shard.velocityY += gravity;
+            const gravity = 0.2; // Гравитация
 
-            // Обновляем позицию осколка
-            shard.x += shard.velocityX;
-            shard.y += shard.velocityY;
 
-            // Обновляем позицию элемента
-            shard.element.style.transform = `translate(${shard.x}px, ${shard.y}px)`;
+            function addScoreAndRemoveShard() {
+                // Вызывайте эту функцию при достижении осколком нижней границы
+                // Добавьте 1 очко в Android-приложение
+                AndroidAppInterface.addScore(1);
+
+                // Удалите осколок
+                shard.remove();
+            }
+
+            // Функция для обновления позиции осколков
+            function updateShards() {
+                for (let i = 0; i < shardCount; i++) {
+                    const shard = shards[i];
+
+                    // Применяем гравитацию
+                    shard.velocityY += gravity;
+
+                    // Обновляем позицию осколка
+                    shard.x += shard.velocityX;
+                    shard.y += shard.velocityY;
+
+                    // Проверяем, достиг ли осколок нижней границы страницы
+                    if (shard.y > windowHeight) {
+                        // Если достиг, вызываем функцию добавления очка и удаления осколка
+                        addScoreAndRemoveShard(shard);
+                    } else {
+                        // Иначе, обновляем позицию элемента
+                        shard.element.style.transform = `translate(${shard.x}px, ${shard.y}px)`;
+                    }
+                }
+
+                requestAnimationFrame(updateShards);
+            }
+
+
+            // Запускаем анимацию
+            updateShards();
         }
 
-        requestAnimationFrame(updateShards);
-    }
-
-    // Запускаем анимацию
-    updateShards();
-}
 
 
 

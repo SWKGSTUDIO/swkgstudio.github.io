@@ -562,8 +562,10 @@
                         shard.remove();
                         shards.splice(shardIndex, 1);
                         totalShards--;
+                        
                     }
                 }, shardLifespan);
+
             }
 
             const gravity = 0.1;

@@ -405,10 +405,20 @@
             const gravity = 0.1; // Гравитация
 
 
-            function addScoreAndRemoveShard() {
-            Android.addScore(10);
-            shard.remove();
+            // Функция для добавления очков и удаления осколка
+            function addScoreAndRemoveShard(shard) {
+                Android.addScore(1); // Добавляем 1 очко
+
+                // Удаляем осколок
+                shard.element.remove();
+
+                // Удаляем осколок из массива
+                const shardIndex = shards.indexOf(shard);
+                if (shardIndex !== -1) {
+                    shards.splice(shardIndex, 1);
+                }
             }
+
 
 
             // Функция для обновления позиции осколков

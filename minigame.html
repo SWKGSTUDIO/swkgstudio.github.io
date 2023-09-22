@@ -40,13 +40,15 @@
         }
 
         .pickaxe {
-            width: 200px;
-            height: 200px;
+            width: 230px;
+            height: 230px;
             background-image: url('assets/img/minecraft/pickaxe.png');
             background-size: cover;
             position: absolute;
             animation: swing 0.3s ease-in-out;
             pointer-events: none;
+            transform: translate(-50%, -50%);
+
             z-index: 10;
             transform: translateY(-500px);
         }
@@ -64,13 +66,11 @@
 
         .shard {
             position: absolute;
-            width: 80px;
-            height: 80px;
-
+            width: 70px;
+            height: 70px;
+            transform: translate(-50%, -50%);
             pointer-events: none;
-
             background-size: cover;
-
             z-index: 999;
 
         }
@@ -291,7 +291,6 @@ function createChest() {
         function openChest() {
             var chest = document.querySelector(".chest");
 
-            openModal();
 
             // Получаем размеры окна браузера
             var windowWidth = window.innerWidth;
@@ -323,6 +322,8 @@ function createChest() {
                     easing: "easeOutExpo", // Эффект анимации
                     complete: function () {
                         chest.remove(); // Удаляем сундук после анимации
+                        openModal();
+
                     },
                 });
             }, 500);
@@ -398,7 +399,7 @@ function createChest() {
         });
     }
 
-    const gravity = 0.1; // Гравитация
+    const gravity = 0.2; // Гравитация
 
     // Функция для обновления позиции осколков
     function updateShards() {

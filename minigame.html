@@ -83,33 +83,36 @@
             height: 200px;
             background-size: cover;
             z-index: 999;
+            background-size: contain;
+            background-repeat: no-repeat;
             background-image: url('assets/img/minecraft/Chest.webp');
         }
 
         .modal {
-    display: none;
-    justify-content: center;
-    align-items: center;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 1000;
-}
+            display: none;
+            justify-content: center;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
 
-.modal-content {
-    background-color: rgba(0, 0, 0, 0.507);
-    padding: 20px;
-    color: aliceblue;
-    text-align: center;
-    border-radius: 30px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-    z-index: 1001;
-}
+        .modal-content {
+            background-color: rgba(0, 0, 0, 0.507);
+            padding: 20px;
+            color: aliceblue;
+            text-align: center;
+            border-radius: 30px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+            z-index: 1001;
+        }
+
         button {
-            background-color:black;
+            background-color: black;
             color: aliceblue;
             padding: 10px 20px;
             margin: 0 10px;
@@ -351,22 +354,21 @@
         function openChest() {
             var chest = document.querySelector(".chest");
 
-            // Получаем размеры окна браузера
             var windowWidth = window.innerWidth;
             var windowHeight = window.innerHeight;
 
-            // Получаем размеры и позицию сундука
             var chestWidth = chest.offsetWidth;
             var chestHeight = chest.offsetHeight;
             var chestLeft = chest.getBoundingClientRect().left + window.scrollX;
             var chestTop = chest.getBoundingClientRect().top + window.scrollY;
 
-            // Вычисляем центр сундука
             var centerX = chestLeft + chestWidth / 2;
             var centerY = chestTop + chestHeight / 2;
 
             var deltaX = centerX - windowWidth / 2;
             var deltaY = centerY - windowHeight / 2;
+
+            chest.style.backgroundImage = "url('assets/img/minecraft/chest2.png')";
 
             setTimeout(function () {
                 anime({
@@ -386,7 +388,6 @@
         }
 
 
-
         // Отображение модального окна
         function openModal() {
             var modal = document.getElementById("offerModal");
@@ -398,7 +399,6 @@
             var modal = document.getElementById("offerModal");
             modal.style.display = "none";
 
-            // Скрываем контейнер с лучами
             var raysContainer = document.querySelector(".rays-container");
             if (raysContainer) {
                 raysContainer.style.display = "none";
@@ -406,8 +406,7 @@
         }
 
         document.getElementById("confirmButton").addEventListener("click", function () {
-            // Здесь вы можете добавить логику для просмотра рекламы и добавления +50 очков
-            // После успешного просмотра рекламы, закройте модальное окно с помощью closeModal()
+            Android.addScore(50);
             closeModal();
             minecraftContainer.style.display = "block";
         });

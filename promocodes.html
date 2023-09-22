@@ -215,14 +215,14 @@
           }
       });
   
-      clipboard.on("success", function (e) {
-          alert("Promo code copied to clipboard: " + e.text);
-          e.clearSelection();
-      });
+      // clipboard.on("success", function (e) {
+      //     alert("Promo code copied to clipboard: " + e.text);
+      //     e.clearSelection();
+      // });
   
-      clipboard.on("error", function (e) {
-          alert("Failed to copy promo code to clipboard. Please copy it manually.");
-      });
+      // clipboard.on("error", function (e) {
+      //     alert("Failed to copy promo code to clipboard. Please copy it manually.");
+      // });
   
       document.getElementById("copyButton").addEventListener("click", function () {
 

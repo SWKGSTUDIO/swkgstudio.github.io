@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
@@ -18,22 +19,22 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <link rel="stylesheet" href="assets/css/mineGamePanel.css">
   <link rel="stylesheet" href="minecraftsite.css">
-  <link rel="stylesheet" type="text/css" href="node_modules/slick-carousel/slick/slick.css"/>
-  <link rel="stylesheet" type="text/css" href="node_modules/slick-carousel/slick/slick-theme.css"/>
+  <link rel="stylesheet" type="text/css" href="node_modules/slick-carousel/slick/slick.css" />
+  <link rel="stylesheet" type="text/css" href="node_modules/slick-carousel/slick/slick-theme.css" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan&display=swap">
 
- 
+
 
 
 
   <!-- Yandex.RTB -->
-  <script>window.yaContextCb=window.yaContextCb||[]</script>
+  <script>window.yaContextCb = window.yaContextCb || []</script>
   <script src="https://yandex.ru/ads/system/context.js" async></script>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.2.0/firebase-app.js";
     import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.2.0/firebase-analytics.js";
-  
+
     const firebaseConfig = {
       apiKey: "AIzaSyBkqcs5Y-PBT0ar28KUysYIlwcCzoAOFao",
       authDomain: "swkg-595fe.firebaseapp.com",
@@ -57,81 +58,81 @@
   </script>
 
 
-<style>
-  .carousel-container {
-    display: flex;
-    flex-wrap: nowrap;
-    overflow: hidden;
-    max-width: 200px; /* Adjust as needed */
-    margin: 0 auto;
-    position: relative;
-}
+  <style>
+    .carousel-container {
+      display: flex;
+      flex-wrap: nowrap;
+      overflow: hidden;
+      max-width: 200px;
+      /* Adjust as needed */
+      margin: 0 auto;
+      position: relative;
+    }
 
-.carousel-images {
-    display: flex;
-    transition: transform 0.3s ease-in-out;
-}
+    .carousel-images {
+      display: flex;
+      transition: transform 0.3s ease-in-out;
+    }
 
-.carousel-image {
-    max-width: 200px; 
-    height: auto;
-}
+    .carousel-image {
+      max-width: 200px;
+      height: auto;
+    }
 
-.carousel-button {
-    cursor: pointer;
-    position: absolute;
-    top: 0%;
-    background: linear-gradient(0deg, #2a2623, #494536);
-    border: none;
-    font-size: 15px;
-    padding: 2px 10px;
-    color: white;
-    z-index: 999;
-    text-align: center;
-    text-transform: uppercase;
-    transition: transform 0.2s;
-    border-radius: 5px;
-  }
+    .carousel-button {
+      cursor: pointer;
+      position: absolute;
+      top: 0%;
+      background: linear-gradient(0deg, #2a2623, #494536);
+      border: none;
+      font-size: 15px;
+      padding: 2px 10px;
+      color: white;
+      z-index: 999;
+      text-align: center;
+      text-transform: uppercase;
+      transition: transform 0.2s;
+      border-radius: 5px;
+    }
 
-  .prev-button {
-    left: 0px;
-    transform-origin: left;
-  }
+    .prev-button {
+      left: 0px;
+      transform-origin: left;
+    }
 
-  .next-button {
-    right: 0px;
-    transform-origin: right;
-  }
+    .next-button {
+      right: 0px;
+      transform-origin: right;
+    }
 
-.content-block {
-    margin-bottom: 10px;
-    padding: 10px;
-    cursor: pointer;
-}
+    .content-block {
+      margin-bottom: 10px;
+      padding: 10px;
+      cursor: pointer;
+    }
 
-.toggle-content {
-    overflow: hidden;
-    max-height: 30px;
-    transition: max-height 0.3s ease-in-out;
-}
+    .toggle-content {
+      overflow: hidden;
+      max-height: 30px;
+      transition: max-height 0.3s ease-in-out;
+    }
 
-.promocode-text {
-    font-size: 18px;
-    font-weight: bold;
-    color: #ffffff;
-    font-family: 'Baloo Bhaijaan', cursive;
+    .promocode-text {
+      font-size: 18px;
+      font-weight: bold;
+      color: #ffffff;
+      font-family: 'Baloo Bhaijaan', cursive;
 
-  }
+    }
 
-  .promocode-value {
-    font-family: 'Baloo Bhaijaan', cursive;
-    font-size: 35px;
-    font-weight: bold;
-    color: #ffffff;
-    margin-bottom: 20px;
-  }
-
-</style>
+    .promocode-value {
+      font-family: 'Baloo Bhaijaan', cursive;
+      font-size: 35px;
+      font-weight: bold;
+      color: #ffffff;
+      margin-bottom: 20px;
+    }
+  </style>
 
 </head>
 
@@ -144,7 +145,7 @@
 
 
 
-   <!-- БЛОК: ЛОГО И НАВИГАЦИЯ -->
+  <!-- БЛОК: ЛОГО И НАВИГАЦИЯ -->
   <div class="container logo-block mx-auto">
     <div class="row align-items-center">
       <div class="logo-wrapper">
@@ -157,19 +158,19 @@
       <div class="col-md-12 d-flex justify-content-between">
 
         <a href="index.html" class="btn btn-primary" target="_blank">
-          <i class="fas fa-home"></i> 
+          <i class="fas fa-home"></i>
         </a>
-        
-                <!-- <span class="btn btn-primary scroll-to-app-tiles">MODS</span> -->
-                <!-- <span class="btn btn-primary scroll-to-app-tiles">GAME</span> -->
+
+        <!-- <span class="btn btn-primary scroll-to-app-tiles">MODS</span> -->
+        <!-- <span class="btn btn-primary scroll-to-app-tiles">GAME</span> -->
       </div>
     </div>
   </div>
-  
 
-   <!-- БЛОК: НАШИ МОДЫ -->
 
-   <!-- <div class="container my-4 mod-block mx-auto">
+  <!-- БЛОК: НАШИ МОДЫ -->
+
+  <!-- <div class="container my-4 mod-block mx-auto">
     <div class="row">
       <div class="col-md-12">
         <div class="app-tiles-container" id="appTiles">
@@ -181,70 +182,73 @@
   </div> -->
 
 
-<!-- Блок: Информация -->
-<div class="container my-4 content-block mx-auto">
-  <div class="row">
-    <div class="col-md-12">
-      <div class="toggle-content text-center" id="info-content-3">
+  <!-- Блок: Информация -->
+  <div class="container my-4 content-block mx-auto">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="toggle-content text-center" id="info-content-3">
 
-        <h1 class="text-uppercase fw-bold">SPONGE BOB</h1>
+          <h1 class="text-uppercase fw-bold">SPONGE BOB</h1>
 
-        <p class="my-3">
-          <span class="promocode-text">#Promocode</span>
-        </p>
-        <p class="my-3 promocode-value">TEST-TEST-TEST</p>
+          <p class="my-3">
+            <span class="promocode-text">#Promocode</span>
+          </p>
+          <p class="my-3 promocode-value">TEST-TEST-TEST</p>
 
-        <button id="copyButton" class="btn btn-primary">COPY</button>
+          <button id="copyButton" class="btn btn-primary">COPY</button>
 
+        </div>
       </div>
     </div>
   </div>
-</div>
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js" integrity="sha512-7O5pXpc0oCRrxk8RUfDYFgn0nO1t+jLuIOQdOMRp4APB7uZ4vSjspzp5y6YDtDs4VzUSTbWzBFZ/LKJhnyFOKw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js"
+    integrity="sha512-7O5pXpc0oCRrxk8RUfDYFgn0nO1t+jLuIOQdOMRp4APB7uZ4vSjspzp5y6YDtDs4VzUSTbWzBFZ/LKJhnyFOKw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-<script>
+  <script>
 
-  var promoCodeText = "TEST-TEST-TEST";
-  
-  document.addEventListener("DOMContentLoaded", function () {
+    var promoCodeText = "TEST-TEST-TEST";
+
+    document.addEventListener("DOMContentLoaded", function () {
       var clipboard = new ClipboardJS("#copyButton", {
-          text: function() {
-              return promoCodeText;
-          }
+        text: function () {
+          return promoCodeText;
+        }
       });
-  
-      // clipboard.on("success", function (e) {
-      //     alert("Promo code copied to clipboard: " + e.text);
-      //     e.clearSelection();
-      // });
-  
-      // clipboard.on("error", function (e) {
-      //     alert("Failed to copy promo code to clipboard. Please copy it manually.");
-      // });
-  
+
+      clipboard.on("success", function (e) {
+        console.log("Promo code copied to clipboard: " + e.text);
+        e.clearSelection();
+      });
+
+      clipboard.on("error", function (e) {
+        console.log("Failed to copy promo code to clipboard. Please copy it manually.");
+      });
+
+
       document.getElementById("copyButton").addEventListener("click", function () {
 
-          window.location.href = "mineapp://";
-          var timeout = setTimeout(function () {
-              window.location.href = "https://play.google.com/store/apps/details?id=com.swkgstudio.mineapp2";
-          }, 1000);
+        window.location.href = "mineapp://";
+        var timeout = setTimeout(function () {
+          window.location.href = "https://play.google.com/store/apps/details?id=com.swkgstudio.mineapp2";
+        }, 1000);
       });
-  
+
       window.addEventListener("blur", function () {
-          clearTimeout(timeout);
+        clearTimeout(timeout);
       });
-  });
-  
+    });
+
   </script>
 
 
 
-<script src="assets/js/MinecraftModPanel.js"></script>
-<script src="assets/bootstrap/js/bootstrap.min.js"></script>
-<script src="node_modules/jquery/dist/jquery.min.js"></script>
-<script type="text/javascript" src="node_modules/slick-carousel/slick/slick.min.js"></script>
+  <script src="assets/js/MinecraftModPanel.js"></script>
+  <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+  <script src="node_modules/jquery/dist/jquery.min.js"></script>
+  <script type="text/javascript" src="node_modules/slick-carousel/slick/slick.min.js"></script>
 
 
   <!-- логика сайта -->
@@ -259,24 +263,24 @@
     let isAnimating = false;
 
     function prevSlide() {
-        if (isAnimating) return;
-        currentIndex = (currentIndex - 1 + slideCount) % slideCount;
-        updateCarousel();
+      if (isAnimating) return;
+      currentIndex = (currentIndex - 1 + slideCount) % slideCount;
+      updateCarousel();
     }
 
     function nextSlide() {
-        if (isAnimating) return;
-        currentIndex = (currentIndex + 1) % slideCount;
-        updateCarousel();
+      if (isAnimating) return;
+      currentIndex = (currentIndex + 1) % slideCount;
+      updateCarousel();
     }
 
     function updateCarousel() {
-        isAnimating = true;
-        const offset = -currentIndex * imageWidth;
-        images.style.transform = `translateX(${offset}px)`;
-        setTimeout(() => {
-            isAnimating = false;
-        }, 500);
+      isAnimating = true;
+      const offset = -currentIndex * imageWidth;
+      images.style.transform = `translateX(${offset}px)`;
+      setTimeout(() => {
+        isAnimating = false;
+      }, 500);
     }
 
 
@@ -284,31 +288,32 @@
     const contentBlocks = document.querySelectorAll('.content-block');
 
     contentBlocks.forEach((block) => {
-        const content = block.querySelector('.toggle-content');
-        content.style.maxHeight = '30px';
-        block.addEventListener('click', (event) => {
-            if (event.target.classList.contains('carousel-button')) {
-                return;
-            }
-            toggleContent(block);
-        });
+      const content = block.querySelector('.toggle-content');
+      content.style.maxHeight = '30px';
+      block.addEventListener('click', (event) => {
+        if (event.target.classList.contains('carousel-button')) {
+          return;
+        }
+        toggleContent(block);
+      });
     });
 
     function toggleContent(block) {
-        const content = block.querySelector('.toggle-content');
-        const contentHeight = content.scrollHeight;
+      const content = block.querySelector('.toggle-content');
+      const contentHeight = content.scrollHeight;
 
-        if (block.classList.contains('show-content')) {
-            content.style.maxHeight = '30px';
-            block.classList.remove('show-content');
-        } else {
-            content.style.maxHeight = contentHeight + 'px';
-            block.classList.add('show-content');
-        }
+      if (block.classList.contains('show-content')) {
+        content.style.maxHeight = '30px';
+        block.classList.remove('show-content');
+      } else {
+        content.style.maxHeight = contentHeight + 'px';
+        block.classList.add('show-content');
+      }
     }
-</script>
+  </script>
 
 
 
 </body>
+
 </html>

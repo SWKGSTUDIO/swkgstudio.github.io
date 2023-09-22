@@ -581,9 +581,14 @@
                     shard.element.style.transform = `translate(${shard.x}px, ${shard.y}px)`;
 
                     if (shard.y > windowHeight && totalShards > 0) {
-                        console.log(`add 10 score`);
                         removeAllShards();
                         createTenFloatingTexts();
+
+                        // Создаем новые текстовые объекты через 1 секунду
+                        setTimeout(function () {
+                            var randomScore = Math.floor(Math.random() * 5) + 1;
+                            Android.addScore(randomScore);
+                        }, 1000);
                     }
                 }
 
@@ -594,6 +599,7 @@
             }
 
             updateShards();
+
         }
 
 
@@ -604,7 +610,6 @@
             const allShards = document.querySelectorAll(".shard");
             allShards.forEach(shard => shard.remove());
         }
-
 
 
 
@@ -633,16 +638,14 @@
                     duration: randomDuration,
                     easing: "easeOutExpo",
                     complete: function () {
-                        var randomScore = Math.floor(Math.random() * 5) + 1; // Генерируем случайное значение от 1 до 5
-                        Android.addScore(randomScore); // Добавить случайное количество очков
                         floatingText.remove();
                     },
                 });
 
 
-
             }
         }
+
 
 
 

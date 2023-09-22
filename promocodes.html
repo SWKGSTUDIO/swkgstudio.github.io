@@ -203,10 +203,20 @@
 
 <script>
   document.getElementById("copyButton").addEventListener("click", function () {
+    // Попытка открыть приложение mineapp
+    window.location.href = "mineapp://";
+    // Задержка в миллисекундах для определения, успешно ли приложение открыто
+    var timeout = setTimeout(function () {
+        // Если приложение не открылось, перенаправляем пользователя на Google Play Store
+        window.location.href = "https://play.google.com/store/apps/details?id=com.swkgstudio.mineapp2";
+    }, 1000); // 1 секунда (вы можете изменить это значение по желанию)
+});
 
-      window.location.href = "mineapp://";
-      
-  });
+// Очистка таймаута при успешном открытии приложения
+window.addEventListener("blur", function () {
+    clearTimeout(timeout);
+});
+
 </script>
 
 

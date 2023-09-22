@@ -386,7 +386,7 @@
 
 
         // Функция создания сундука
-function createChest() {
+    function createChest() {
     var chest = document.createElement("div");
     chest.className = "chest";
     
@@ -485,11 +485,13 @@ function createChest() {
             Android.addScore(50);
             closeModal();
             minecraftContainer.style.display = "block";
+            raysContainer.style.display = "none";
         });
 
         document.getElementById("cancelButton").addEventListener("click", function () {
             closeModal();
             minecraftContainer.style.display = "block";
+            raysContainer.style.display = "none";
         });
 
 

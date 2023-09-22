@@ -194,14 +194,32 @@
         </p>
         <p class="my-3 promocode-value">TEST-TEST-TEST</p>
 
-        <button id="copyButton" class="btn btn-primary">COPY</button>
+        <button id="copyButton" class="btn btn-primary" data-clipboard-target="#promoCode">COPY</button>
       </div>
     </div>
   </div>
 </div>
 
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>
+
+
 <script>
+
+document.addEventListener("DOMContentLoaded", function () {
+    var clipboard = new ClipboardJS("#copyButton");
+
+    clipboard.on("success", function (e) {
+        alert("Promo code copied to clipboard: " + e.text);
+        e.clearSelection();
+    });
+
+    clipboard.on("error", function (e) {
+        alert("Failed to copy promo code to clipboard. Please copy it manually.");
+    });
+});
+
+
   document.getElementById("copyButton").addEventListener("click", function () {
     // Попытка открыть приложение mineapp
     window.location.href = "mineapp://";

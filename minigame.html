@@ -252,7 +252,8 @@
         .floating-text {
             position: fixed;
             font-size: 24px;
-            font-family: 'Baloo Bhaijaan', cursive; /* Устанавливаем шрифт с Google Fonts */
+            font-family: 'Baloo Bhaijaan', cursive;
+            /* Устанавливаем шрифт с Google Fonts */
             font-weight: bold;
             color: #ffffff;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
@@ -260,9 +261,6 @@
             pointer-events: none;
             z-index: 9999;
         }
-
-
-
     </style>
 
 
@@ -601,7 +599,7 @@
 
 
 
-    
+
         function removeAllShards() {
             const allShards = document.querySelectorAll(".shard");
             allShards.forEach(shard => shard.remove());
@@ -610,40 +608,41 @@
 
 
 
-       function createTenFloatingTexts() {
-    for (var i = 1; i <= 25; i++) {
-        var randomValue = Math.floor(Math.random() * 5) + 1; // Генерируем случайное значение от 1 до 5
-        var text = "+" + randomValue;
-        var floatingText = document.createElement("div");
-        floatingText.className = "floating-text";
-        floatingText.textContent = text;
+        function createTenFloatingTexts() {
+            for (var i = 1; i <= 25; i++) {
+                var randomValue = Math.floor(Math.random() * 5) + 1; // Генерируем случайное значение от 1 до 5
+                var text = "+" + randomValue;
+                var floatingText = document.createElement("div");
+                floatingText.className = "floating-text";
+                floatingText.textContent = text;
 
-        floatingText.style.transform = 'translateX(0) translateY(50vh)';
-        floatingText.style.opacity = 1;
-        document.body.appendChild(floatingText);
+                floatingText.style.transform = 'translateX(0) translateY(50vh)';
+                floatingText.style.opacity = 1;
+                document.body.appendChild(floatingText);
 
-        var randomX = Math.random() * window.innerWidth;
-        floatingText.style.transform = `translateX(${randomX}px) translateY(50vh)`;
+                var randomX = Math.random() * window.innerWidth;
+                floatingText.style.transform = `translateX(${randomX}px) translateY(50vh)`;
 
-        var randomDuration = Math.random() * (50000 - 10000) + 80000;
+                var randomDuration = Math.random() * (50000 - 10000) + 80000;
 
-        anime({
-            targets: floatingText,
-            translateX: window.innerWidth,
-            translateY: -window.innerHeight,
-            opacity: 0,
-            duration: randomDuration,
-            easing: "easeOutExpo",
-            complete: function () {
-                
-                Android.addScore(10); // Добавить 10 очков
-                floatingText.remove();
-            },
-        });
+                anime({
+                    targets: floatingText,
+                    translateX: window.innerWidth,
+                    translateY: -window.innerHeight,
+                    opacity: 0,
+                    duration: randomDuration,
+                    easing: "easeOutExpo",
+                    complete: function () {
+                        var randomScore = Math.floor(Math.random() * 5) + 1; // Генерируем случайное значение от 1 до 5
+                        Android.addScore(randomScore); // Добавить случайное количество очков
+                        floatingText.remove();
+                    },
+                });
 
 
-    }
-}
+
+            }
+        }
 
 
 

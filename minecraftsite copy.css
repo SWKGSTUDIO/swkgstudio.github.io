@@ -1,0 +1,167 @@
+.html {
+  width: 100%;
+  height: 100vh;
+  background-color: transparent;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+body {
+  background-size: cover;
+  background-color: transparent;
+  background: linear-gradient(0deg, #191310, #1a250e);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  height: 100%;
+  overflow: visible;
+}
+
+.video-container {
+  max-width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+video {
+  max-width: 100%;
+  max-height: 400px;
+  display: block;
+  border: 5px solid rgb(65, 137, 21);
+  border-radius: 25px;
+}
+
+
+
+
+
+
+
+
+  .custom-container {
+    position: fixed;
+    padding: 0px;
+    color: rgba(33, 37, 41, 0);
+    overflow: hidden;
+    z-index: -100;
+  }
+
+  .background-tile {
+    position: fixed;
+    overflow: hidden;
+    opacity: 0.09;
+    text-align: left;
+    animation: slideAnima 50s linear infinite;
+    height: 100%;
+    width: 100%;
+    z-index: 10;
+    background: url("assets/img/tile.webp"), var(--bs-border-color-translucent);
+  }
+  
+@keyframes slideAnima {
+    0% {
+        background-position: 0 100%;
+    }
+    100% {
+        background-position: 100% 0;
+    }
+}
+
+.col-md-12.mt-3 {
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn-primary {
+  flex-grow: 1;
+  background-color: #542eae00;
+  color: white;
+  font-size: 20px;
+  padding: 10px 20px;
+  border-radius: 11px;
+  text-decoration: none;
+  transition: transform 0.2s ease-in-out;
+  z-index: 999;
+  border: none;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(0deg, #2a2623, #494536);
+  margin-right: 5px;
+}
+
+.btn-primary:last-child {
+  margin-right: 0;
+}
+
+    .center-swkg {
+      display: inline-block;
+      color: #ffffff;
+      padding: 10px 20px;
+      border-radius: 5px;
+      font-size: 24px;
+      font-size: 35px;
+      font-family: 'Bowlby One', serif;
+      z-index: 2;
+    }
+    
+    .minecraftText {
+      color: #ffffff;
+      font-size: 36px;
+      font-weight: bold;
+      text-transform: uppercase;
+      font-family: Arial, sans-serif;
+    }
+  
+    .my-3 {
+      font-size: 14px;
+    }
+
+    .text-uppercase {
+      font-size: 20px;
+    }
+
+    #p-element {
+      color: rgb(232, 236, 241);
+      font-size: 10px;
+      margin-top: 0px;
+      margin-bottom: 0px;
+    }
+
+    .container.logo-block {
+      background: linear-gradient(90deg, #2c211a, #2e4416);
+      padding: 20px;
+      border-radius: 0 0 25px 25px;
+      color: white;
+      text-align: center;
+    }
+    
+    .logo-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .logo-img {
+      width: 38px;
+      height: 61px;
+    }
+
+   
+
+.container.content-block {
+  background: linear-gradient(90deg, #2c211a, #2e4416);
+  padding: 20px;
+  border-radius: 25px;
+  color: white;
+  margin-top: 20px;
+  margin-right: 20px;
+  margin-left: 20px;
+}
+
+.container.mod-block::-webkit-scrollbar {
+  width: 0.5em;
+}
+
+.container.mod-block::-webkit-scrollbar-thumb {
+  background-color: rgba(169, 169, 169, 0);
+}

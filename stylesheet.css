@@ -14,19 +14,6 @@
   overflow-x: hidden;
 }
 
-/* .video {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  min-width: 100%;
-  min-height: 100%;
-  width: auto;
-  height: auto;
-  object-fit: cover;
-  opacity: .1;
-  filter: blur(1px);
-} */
 
 .custom-container {
   position: fixed;
@@ -59,10 +46,11 @@
 }
 
 .game-button,
-.minecraft-button {
+.minecraft-button,
+.promocode-button {
   background-color: #542eae;
   color: white;
-  font-size: 23px;
+  font-size: auto;
   padding: 10px 20px;
   border-radius: 11px;
   text-decoration: none;
@@ -181,6 +169,43 @@
   transform: scale(1.05); /* Увеличение при наведении */
   color: white; /* Цвет текста */
 }
+
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+  background-color: white;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  text-align: center;
+}
+
+/* Стили для кнопки Копировать */
+#copyButton {
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
   
   /* Дополнительные стили для анимации */
   @keyframes jump {

@@ -111,15 +111,76 @@
             z-index: 1001;
         }
 
-        button {
-            background-color: black;
+        button#confirmButton {
+            background-color: green;
+            /* Зеленый фон для кнопки "ДА" */
             color: aliceblue;
-            padding: 10px 20px;
-            margin: 0 10px;
+            padding: 12px 24px;
+            /* Увеличение отступов для увеличения размера */
+            margin: 0 5px;
+            /* Уменьшение горизонтального отступа между кнопками */
             cursor: pointer;
             border: none;
             border-radius: 30px;
+            animation: appearConfirm 1s ease forwards, pulse 1s infinite;
+            /* Анимации появления и пульсации для "ДА" */
         }
+
+        button#cancelButton {
+            background-color: black;
+            color: aliceblue;
+            padding: 10px 20px;
+            margin: 0 5px;
+            /* Уменьшение горизонтального отступа между кнопками */
+            cursor: pointer;
+            border: none;
+            border-radius: 30px;
+            animation: appearCancel 20s ease forwards;
+
+        }
+
+        @keyframes appearConfirm {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+                /* Смещение вниз */
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes appearCancel {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+                /* Смещение вниз */
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+                /* Увеличение размера на полпути анимации */
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+
 
         @keyframes swing {
             0% {

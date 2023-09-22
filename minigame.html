@@ -406,13 +406,10 @@
 
 
             function addScoreAndRemoveShard() {
-                // Вызывайте эту функцию при достижении осколком нижней границы
-                // Добавьте 1 очко в Android-приложение
-                AndroidAppInterface.addScore(1);
-
-                // Удалите осколок
-                shard.remove();
+            Android.addScore(1);
+            shard.remove();
             }
+
 
             // Функция для обновления позиции осколков
             function updateShards() {

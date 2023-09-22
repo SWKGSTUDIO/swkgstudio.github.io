@@ -247,6 +247,22 @@
                 transform: rotate(360deg);
             }
         }
+
+        /* Стили для текстовых объектов */
+        .floating-text {
+            position: fixed;
+            font-size: 24px;
+            font-family: 'Baloo Bhaijaan', cursive; /* Устанавливаем шрифт с Google Fonts */
+            font-weight: bold;
+            color: #ffffff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            user-select: none;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+
+
     </style>
 
 
@@ -567,6 +583,7 @@
                     if (shard.y > windowHeight && totalShards > 0) {
                         console.log(`add 10 score`);
                         removeAllShards();
+                        createTenFloatingTexts();
                         Android.addScore(10); // Добавить 10 очков
                     }
                 }
@@ -587,7 +604,45 @@
             allShards.forEach(shard => shard.remove());
         }
 
+        function createTenFloatingTexts() {
+            for (var i = 1; i <= 10; i++) {
+                var text = "+" + i;
+                var floatingText = document.createElement("div");
+                floatingText.className = "floating-text";
+                floatingText.textContent = text;
 
+                floatingText.style.transform = 'translateX(0) translateY(50vh)';
+
+                floatingText.style.opacity = 1;
+
+                document.body.appendChild(floatingText);
+
+
+
+                // Генерируем случайную позицию по оси X
+                var randomX = Math.random() * window.innerWidth;
+                floatingText.style.transform = `translateX(${randomX}px) translateY(50vh)`;
+
+                // Генерируем случайную длительность анимации от 5 секунд до 20 секунд
+                var randomDuration = Math.random() * (50000 - 10000) + 80000;
+
+                anime({
+                    targets: floatingText,
+                    translateX: window.innerWidth, // Движение вправо до правой границы экрана
+                    translateY: -window.innerHeight, // Движение вверх до верхней границы экрана
+                    opacity: 0, // Прозрачность уменьшается до 0
+                    duration: randomDuration, // Случайная длительность анимации
+                    easing: "easeOutExpo", // Эффект анимации
+                    complete: function () {
+                        // Удаляем текст после завершения анимации
+                        floatingText.remove();
+                    },
+                });
+
+
+
+            }
+        }
 
 
 

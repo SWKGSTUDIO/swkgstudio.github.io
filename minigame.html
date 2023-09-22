@@ -488,6 +488,10 @@
         minecraftContainer.querySelector(".pickaxe").remove();
     }
 
+     if (navigator.vibrate) {
+        navigator.vibrate(50);
+    }
+
     var pickaxe = document.createElement("div");
     pickaxe.className = "pickaxe";
     minecraftContainer.appendChild(pickaxe);
@@ -507,6 +511,7 @@
     currentCrackIndex = (currentCrackIndex + 1) % cracks.length;
 
     cracks[currentCrackIndex].style.display = "block";
+
 
     anime({
         targets: pickaxe,

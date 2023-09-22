@@ -369,6 +369,7 @@
             const maxSpeed = 2;
 
             let shards = [];
+            let totalShards = shardCount;
 
             for (let i = 0; i < shardCount; i++) {
                 let shard = document.createElement("div");
@@ -404,63 +405,48 @@
 
             const gravity = 0.1; // Гравитация
 
-            // Создайте массив, чтобы отслеживать каждый осколок
-            const shardStates = new Array(shardCount).fill(false);
-
-            // Функция для обновления позиции осколков
-            function updateShards() {
-                for (let i = 0; i < shardCount; i++) {
-                    const shard = shards[i];
-
-                    // Применяем гравитацию
-                    shard.velocityY += gravity;
-
-                    // Обновляем позицию осколка
-                    shard.x += shard.velocityX;
-                    shard.y += shard.velocityY;
-
-                    // Проверяем, достиг ли осколок нижней границы страницы
-                    if (shard.y > windowHeight && !shardStates[i]) {
-                        // Если достиг и еще не обработан, вызываем функцию добавления очка и удаления осколка
-                        addScoreAndRemoveShard(shard);
-
-                        // Устанавливаем состояние осколка как обработанное
-                        shardStates[i] = true;
-                    }
-
-                    // Проверяем состояния всех осколков
-                    if (shardStates.every(state => state)) {
-                        // Если все осколки обработаны, очищаем массив состояний
-                        shardStates.fill(false);
-                    }
-
-                    // Обновляем позицию элемента
-                    shard.element.style.transform = `translate(${shard.x}px, ${shard.y}px)`;
-                }
-
-                requestAnimationFrame(updateShards);
-            }
-
-
-
-            // Функция для добавления очков и удаления осколка
             function addScoreAndRemoveShard(shard) {
-                Android.addScore(1); // Добавляем 1 очко
+        Android.addScore(1); // Добавляем 1 очко
+        totalShards--; // Уменьшаем общее число осколков
 
-                // Удаляем осколок
-                shard.element.remove();
+        // Удаляем осколок
+        shard.element.remove();
 
-                // Удаляем осколок из массива
-                const shardIndex = shards.indexOf(shard);
-                if (shardIndex !== -1) {
-                    shards.splice(shardIndex, 1);
-                }
+        // Удаляем осколок из массива
+        const shardIndex = shards.indexOf(shard);
+        if (shardIndex !== -1) {
+            shards.splice(shardIndex, 1);
+        }
+    }
+
+    // Функция для обновления позиции осколков
+    function updateShards() {
+        for (let i = 0; i < shardCount; i++) {
+            const shard = shards[i];
+
+            // Применяем гравитацию
+            shard.velocityY += gravity;
+
+            // Обновляем позицию осколка
+            shard.x += shard.velocityX;
+            shard.y += shard.velocityY;
+
+            // Проверяем, достиг ли осколок нижней границы страницы, и общее число осколков больше нуля
+            if (shard.y > windowHeight && totalShards > 0) {
+                // Если условие выполняется, вызываем функцию добавления очка и удаления осколка
+                addScoreAndRemoveShard(shard);
             }
 
-            // Запускаем анимацию
-            updateShards();
+            // Обновляем позицию элемента
+            shard.element.style.transform = `translate(${shard.x}px, ${shard.y}px)`;
         }
 
+        requestAnimationFrame(updateShards);
+    }
+
+    // Запускаем анимацию
+    updateShards();
+}
 
 
 

@@ -386,27 +386,43 @@
 
 
         // Функция создания сундука
-        function createChest() {
-            var chest = document.createElement("div");
-            chest.className = "chest";
+function createChest() {
+    var chest = document.createElement("div");
+    chest.className = "chest";
+    
+    // Устанавливаем начальное положение сверху и нулевую прозрачность
+    chest.style.transform = 'translateY(-100px)';
+    chest.style.opacity = 0;
 
+    document.body.appendChild(chest);
+
+    // Используем анимацию для появления сундука
+    anime({
+        targets: chest,
+        translateY: 0, // Конечное положение сверху
+        opacity: 1, // Конечная прозрачность
+        duration: 1000, // Длительность анимации
+        easing: "easeOutExpo", // Эффект анимации
+        complete: function () {
+            // Добавляем обработчик события клика после завершения анимации появления
             chest.addEventListener("click", function () {
                 openChest();
             });
+        },
+    });
+    
+    chestCounter = 0;
+    minecraftContainer.style.display = "none";
 
-            document.body.appendChild(chest);
+    var raysContainer = document.createElement("div");
+    raysContainer.className = "rays-container";
+    var raysImage = document.createElement("div");
+    raysImage.className = "rays-image";
+    raysContainer.appendChild(raysImage);
 
-            chestCounter = 0;
-            minecraftContainer.style.display = "none";
+    document.body.appendChild(raysContainer);
+}
 
-            var raysContainer = document.createElement("div");
-            raysContainer.className = "rays-container";
-            var raysImage = document.createElement("div");
-            raysImage.className = "rays-image";
-            raysContainer.appendChild(raysImage);
-
-            document.body.appendChild(raysContainer);
-        }
 
 
 

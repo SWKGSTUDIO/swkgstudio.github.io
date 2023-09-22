@@ -261,7 +261,7 @@
             <h2>Получить +50 очков</h2>
             <p>Просмотрите рекламу, чтобы получить дополнительные 50 очков.</p>
             <div class="modal-buttons">
-                
+
                 <button id="cancelButton">НЕТ</button>
                 <button id="confirmButton">ДА</button>
 
@@ -380,10 +380,7 @@
                 // Увеличиваем счетчик блоков
                 blockCounter++;
 
-                // Проверяем, создавать ли сундук
-                if (chestCounter > 0 && chestCounter % 2 === 0) {
-                    createChest(minecraftContainer);
-                }
+
             });
         }
 
@@ -417,38 +414,38 @@
         function openChest() {
             var chest = document.querySelector(".chest");
 
-            var windowWidth = window.innerWidth;
-            var windowHeight = window.innerHeight;
-
             var chestWidth = chest.offsetWidth;
             var chestHeight = chest.offsetHeight;
-            var chestLeft = chest.getBoundingClientRect().left + window.scrollX;
-            var chestTop = chest.getBoundingClientRect().top + window.scrollY;
 
-            var centerX = chestLeft + chestWidth / 2;
-            var centerY = chestTop + chestHeight / 2;
-
-            var deltaX = centerX - windowWidth / 2;
-            var deltaY = centerY - windowHeight / 2;
-
+            // Вычисляем высоту, на которую должен подпрыгнуть сундук (например, 50 пикселей)
+            var jumpHeight = 50;
             chest.style.backgroundImage = "url('assets/img/minecraft/chest2.png')";
 
-            setTimeout(function () {
-                anime({
-                    targets: chest,
-                    opacity: 0, // Устанавливаем нулевую прозрачность
-                    scale: 0.1, // Уменьшаем масштаб до 10%
-                    translateX: -deltaX + "px", // Смещаем по горизонтали к центру страницы
-                    translateY: -deltaY + "px", // Смещаем по вертикали к центру страницы
-                    duration: 1000, // Длительность анимации
-                    easing: "easeOutExpo", // Эффект анимации
-                    complete: function () {
-                        chest.remove(); // Удаляем сундук после анимации
-                        openModal();
-                    },
-                });
-            }, 500);
+            // Применяем анимацию подпрыгивания сундука
+            anime({
+                targets: chest,
+                translateY: -jumpHeight,
+                duration: 500,
+                easing: "easeOutCubic", // Эффект анимации для подпрыгивания
+
+                complete: function () {
+                    // После подпрыгивания меняем фоновое изображение
+                    // Применяем анимацию уменьшения сундука
+                    anime({
+                        targets: chest,
+                        opacity: 0,
+                        scale: 0.1,
+                        duration: 1000,
+                        easing: "easeOutExpo", // Эффект анимации для уменьшения
+                        complete: function () {
+                            chest.remove(); // Удаляем сундук после анимации
+                            openModal();
+                        },
+                    });
+                },
+            });
         }
+
 
 
         // Отображение модального окна
@@ -656,10 +653,18 @@
 
                             createMinecraftBlock();
                             chestCounter++;
+
+                            // Проверяем, создавать ли сундук
+                            if (chestCounter > 0 && chestCounter % 2 === 0) {
+                                createChest(minecraftContainer);
+                            }
+
                         }, 1000);
                     } else {
                         isMining = false;
                     }
+
+
                 },
             });
         }

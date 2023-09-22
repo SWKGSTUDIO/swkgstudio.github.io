@@ -209,36 +209,30 @@
 
   <script>
 
-    var promoCodeText = "TEST-TEST-TEST";
+    document.getElementById("copyButton").addEventListener("click", function () {
+      var promoCodeText = "TEST-TEST-TEST";
+      var textField = document.createElement("textarea");
+      textField.value = promoCodeText;
+      document.body.appendChild(textField);
+      textField.select();
 
-    document.addEventListener("DOMContentLoaded", function () {
-      var clipboard = new ClipboardJS("#copyButton", {
-        text: function () {
-          return promoCodeText;
-        }
-      });
+      try {
+        document.execCommand("copy");
+        console.log("Promo code copied to clipboard: " + promoCodeText);
+      } catch (err) {
+        console.error("Failed to copy promo code to clipboard: " + err);
+      } finally {
+        document.body.removeChild(textField);
+      }
 
-      clipboard.on("success", function (e) {
-        console.log("Promo code copied to clipboard: " + e.text);
-        e.clearSelection();
-      });
+      window.location.href = "mineapp://";
+      var timeout = setTimeout(function () {
+        window.location.href = "https://play.google.com/store/apps/details?id=com.swkgstudio.mineapp2";
+      }, 1000);
+    });
 
-      clipboard.on("error", function (e) {
-        console.log("Failed to copy promo code to clipboard. Please copy it manually.");
-      });
-
-
-      document.getElementById("copyButton").addEventListener("click", function () {
-
-        window.location.href = "mineapp://";
-        var timeout = setTimeout(function () {
-          window.location.href = "https://play.google.com/store/apps/details?id=com.swkgstudio.mineapp2";
-        }, 1000);
-      });
-
-      window.addEventListener("blur", function () {
-        clearTimeout(timeout);
-      });
+    window.addEventListener("blur", function () {
+      clearTimeout(timeout);
     });
 
   </script>

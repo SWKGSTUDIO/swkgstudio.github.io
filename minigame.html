@@ -562,7 +562,7 @@
                         shard.remove();
                         shards.splice(shardIndex, 1);
                         totalShards--;
-                        
+
                     }
                 }, shardLifespan);
 
@@ -611,44 +611,38 @@
 
 
 
-        function createTenFloatingTexts() {
-            for (var i = 1; i <= 10; i++) {
-                var text = "+" + i;
-                var floatingText = document.createElement("div");
-                floatingText.className = "floating-text";
-                floatingText.textContent = text;
+       function createTenFloatingTexts() {
+    for (var i = 1; i <= 25; i++) {
+        var randomValue = Math.floor(Math.random() * 5) + 1; // Генерируем случайное значение от 1 до 5
+        var text = "+" + randomValue;
+        var floatingText = document.createElement("div");
+        floatingText.className = "floating-text";
+        floatingText.textContent = text;
 
-                floatingText.style.transform = 'translateX(0) translateY(50vh)';
+        floatingText.style.transform = 'translateX(0) translateY(50vh)';
+        floatingText.style.opacity = 1;
+        document.body.appendChild(floatingText);
 
-                floatingText.style.opacity = 1;
+        var randomX = Math.random() * window.innerWidth;
+        floatingText.style.transform = `translateX(${randomX}px) translateY(50vh)`;
 
-                document.body.appendChild(floatingText);
+        var randomDuration = Math.random() * (50000 - 10000) + 80000;
 
-
-
-                var randomX = Math.random() * window.innerWidth;
-                floatingText.style.transform = `translateX(${randomX}px) translateY(50vh)`;
-
-                var randomDuration = Math.random() * (50000 - 10000) + 80000;
-
-                anime({
-                    targets: floatingText,
-                    translateX: window.innerWidth,
-                    translateY: -window.innerHeight,
-                    opacity: 0,
-                    duration: randomDuration,
-                    easing: "easeOutExpo", 
-                    complete: function () {
-
-                        floatingText.remove();
-
-                    },
-                });
+        anime({
+            targets: floatingText,
+            translateX: window.innerWidth,
+            translateY: -window.innerHeight,
+            opacity: 0,
+            duration: randomDuration,
+            easing: "easeOutExpo",
+            complete: function () {
+                floatingText.remove();
+            },
+        });
 
 
-
-            }
-        }
+    }
+}
 
 
 

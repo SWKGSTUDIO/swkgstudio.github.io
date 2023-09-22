@@ -360,6 +360,7 @@
 
 
 
+        // Функция для создания осколков
         function createShards(minecraftContainer) {
             const shardCount = shardsImages.length;
             const windowWidth = window.innerWidth;
@@ -367,7 +368,7 @@
             const minSpeed = 1;
             const maxSpeed = 2;
 
-            const shards = [];
+            let shards = [];
 
             for (let i = 0; i < shardCount; i++) {
                 let shard = document.createElement("div");
@@ -399,10 +400,47 @@
                     velocityY: -velocityY,
                     mass,
                 });
-
             }
 
             const gravity = 0.1; // Гравитация
+
+            // Создайте массив, чтобы отслеживать каждый осколок
+            const shardStates = new Array(shardCount).fill(false);
+
+            // Функция для обновления позиции осколков
+            function updateShards() {
+                for (let i = 0; i < shardCount; i++) {
+                    const shard = shards[i];
+
+                    // Применяем гравитацию
+                    shard.velocityY += gravity;
+
+                    // Обновляем позицию осколка
+                    shard.x += shard.velocityX;
+                    shard.y += shard.velocityY;
+
+                    // Проверяем, достиг ли осколок нижней границы страницы
+                    if (shard.y > windowHeight && !shardStates[i]) {
+                        // Если достиг и еще не обработан, вызываем функцию добавления очка и удаления осколка
+                        addScoreAndRemoveShard(shard);
+
+                        // Устанавливаем состояние осколка как обработанное
+                        shardStates[i] = true;
+                    }
+
+                    // Проверяем состояния всех осколков
+                    if (shardStates.every(state => state)) {
+                        // Если все осколки обработаны, очищаем массив состояний
+                        shardStates.fill(false);
+                    }
+
+                    // Обновляем позицию элемента
+                    shard.element.style.transform = `translate(${shard.x}px, ${shard.y}px)`;
+                }
+
+                requestAnimationFrame(updateShards);
+            }
+
 
 
             // Функция для добавления очков и удаления осколка
@@ -419,37 +457,10 @@
                 }
             }
 
-
-
-            // Функция для обновления позиции осколков
-            function updateShards() {
-                for (let i = 0; i < shardCount; i++) {
-                    const shard = shards[i];
-
-                    // Применяем гравитацию
-                    shard.velocityY += gravity;
-
-                    // Обновляем позицию осколка
-                    shard.x += shard.velocityX;
-                    shard.y += shard.velocityY;
-
-                    // Проверяем, достиг ли осколок нижней границы страницы
-                    if (shard.y > windowHeight) {
-                        // Если достиг, вызываем функцию добавления очка и удаления осколка
-                        addScoreAndRemoveShard(shard);
-                    } else {
-                        // Иначе, обновляем позицию элемента
-                        shard.element.style.transform = `translate(${shard.x}px, ${shard.y}px)`;
-                    }
-                }
-
-                requestAnimationFrame(updateShards);
-            }
-
-
             // Запускаем анимацию
             updateShards();
         }
+
 
 
 

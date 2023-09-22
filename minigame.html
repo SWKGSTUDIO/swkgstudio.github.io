@@ -5,6 +5,8 @@
     <title>Minecraft Block</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan&display=swap">
+    <!-- <link rel="stylesheet" type="text/css" href="assets/css/minigame.css"> -->
+
 
     <style>
         html {
@@ -84,41 +86,37 @@
             background-image: url('assets/img/minecraft/Chest.webp');
         }
 
-        /* Стили для модального окна */
         .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 999;
-        }
+    display: none;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
 
-        .modal-content {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: white;
-            padding: 20px;
-            text-align: center;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-        }
-
-        /* Стили для кнопок в модальном окне */
-        .modal-buttons {
-            margin-top: 20px;
-        }
-
+.modal-content {
+    background-color: rgba(0, 0, 0, 0.507);
+    padding: 20px;
+    color: aliceblue;
+    text-align: center;
+    border-radius: 30px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    z-index: 1001;
+}
         button {
+            background-color:black;
+            color: aliceblue;
             padding: 10px 20px;
             margin: 0 10px;
             cursor: pointer;
+            border: none;
+            border-radius: 30px;
         }
-
-
 
         @keyframes swing {
             0% {
@@ -130,14 +128,12 @@
             }
         }
 
-
         .explosion {
             position: absolute;
             width: 300px;
             height: 300px;
             background-size: cover;
             z-index: 100;
-            /* transform-origin: center center; */
         }
 
         @keyframes explode {
@@ -151,13 +147,50 @@
                 opacity: 0;
             }
         }
+
+        .rays-container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: raysAppear 1s ease-in-out;
+        }
+
+        .rays-image {
+            width: 550px;
+            height: 550px;
+            background-image: url('assets/img/minecraft/rays.png');
+            background-size: cover;
+            animation: raysRotate 55s linear infinite;
+        }
+
+        @keyframes raysAppear {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes raysRotate {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
     </style>
+
+
 </head>
 
 <body>
 
     <div id="minecraftContainer"></div>
-
 
     <div class="modal" id="offerModal">
         <div class="modal-content">
@@ -282,7 +315,7 @@
                 blockCounter++;
 
                 // Проверяем, создавать ли сундук
-                if (chestCounter > 0 && chestCounter % 5 === 0) {
+                if (chestCounter > 0 && chestCounter % 2 === 0) {
                     createChest(minecraftContainer);
                 }
             });
@@ -294,17 +327,22 @@
             var chest = document.createElement("div");
             chest.className = "chest";
 
-            // Добавьте обработчик события клика
             chest.addEventListener("click", function () {
                 openChest();
             });
 
-            // Добавьте сундук в body документа
             document.body.appendChild(chest);
 
             chestCounter = 0;
             minecraftContainer.style.display = "none";
 
+            var raysContainer = document.createElement("div");
+            raysContainer.className = "rays-container";
+            var raysImage = document.createElement("div");
+            raysImage.className = "rays-image";
+            raysContainer.appendChild(raysImage);
+
+            document.body.appendChild(raysContainer);
         }
 
 
@@ -312,7 +350,6 @@
 
         function openChest() {
             var chest = document.querySelector(".chest");
-
 
             // Получаем размеры окна браузера
             var windowWidth = window.innerWidth;
@@ -328,11 +365,9 @@
             var centerX = chestLeft + chestWidth / 2;
             var centerY = chestTop + chestHeight / 2;
 
-            // Вычисляем расстояние от центра сундука до центра страницы
             var deltaX = centerX - windowWidth / 2;
             var deltaY = centerY - windowHeight / 2;
 
-            // Задержка перед удалением сундука
             setTimeout(function () {
                 anime({
                     targets: chest,
@@ -345,7 +380,6 @@
                     complete: function () {
                         chest.remove(); // Удаляем сундук после анимации
                         openModal();
-
                     },
                 });
             }, 500);
@@ -356,13 +390,19 @@
         // Отображение модального окна
         function openModal() {
             var modal = document.getElementById("offerModal");
-            modal.style.display = "block";
+            modal.style.display = "flex";
         }
 
         // Закрытие модального окна
         function closeModal() {
             var modal = document.getElementById("offerModal");
             modal.style.display = "none";
+
+            // Скрываем контейнер с лучами
+            var raysContainer = document.querySelector(".rays-container");
+            if (raysContainer) {
+                raysContainer.style.display = "none";
+            }
         }
 
         document.getElementById("confirmButton").addEventListener("click", function () {
@@ -370,11 +410,9 @@
             // После успешного просмотра рекламы, закройте модальное окно с помощью closeModal()
             closeModal();
             minecraftContainer.style.display = "block";
-
         });
 
         document.getElementById("cancelButton").addEventListener("click", function () {
-
             closeModal();
             minecraftContainer.style.display = "block";
         });
@@ -446,136 +484,123 @@
                 for (let i = 0; i < shardCount; i++) {
                     const shard = shards[i];
 
-                    // Применяем гравитацию
                     shard.velocityY += gravity;
 
-                    // Обновляем позицию осколка
                     shard.x += shard.velocityX;
                     shard.y += shard.velocityY;
 
-                    // Проверяем, достиг ли осколок нижней границы страницы, и общее число осколков больше нуля
                     if (shard.y > windowHeight && totalShards > 0) {
-                        // Если условие выполняется, вызываем функцию добавления очка и удаления осколка
                         addScoreAndRemoveShard(shard);
                     }
 
-                    // Обновляем позицию элемента
                     shard.element.style.transform = `translate(${shard.x}px, ${shard.y}px)`;
                 }
 
                 requestAnimationFrame(updateShards);
             }
-
-            // Запускаем анимацию
             updateShards();
         }
 
 
 
 
-
-
-
-
         function mineBlock(targetBlock, clientX, clientY, cracks) {
-    var minecraftContainer = document.getElementById("minecraftContainer");
+            var minecraftContainer = document.getElementById("minecraftContainer");
 
-    if (targetBlock.classList.contains("chest")) {
-        return;
-    }
-
-    if (minecraftContainer.querySelector(".pickaxe")) {
-        minecraftContainer.querySelector(".pickaxe").remove();
-    }
-
-     if (navigator.vibrate) {
-        navigator.vibrate(50);
-    }
-
-    var pickaxe = document.createElement("div");
-    pickaxe.className = "pickaxe";
-    minecraftContainer.appendChild(pickaxe);
-
-    var blockRect = targetBlock.getBoundingClientRect();
-    var blockLeft = blockRect.left + window.scrollX;
-    var blockTop = blockRect.top + window.scrollY;
-
-    var offsetX = clientX - blockLeft - targetBlock.offsetWidth / 2;
-    var offsetY = clientY - blockTop - targetBlock.offsetHeight / 2;
-
-    pickaxe.style.left = offsetX + "px";
-    pickaxe.style.top = offsetY + "px";
-
-    cracks[currentCrackIndex].style.display = "none";
-
-    currentCrackIndex = (currentCrackIndex + 1) % cracks.length;
-
-    cracks[currentCrackIndex].style.display = "block";
-
-
-    anime({
-        targets: pickaxe,
-        rotate: -20,
-        duration: 500,
-        easing: "easeInOutQuad",
-        complete: function () {
-            pickaxe.remove();
-        },
-    });
-
-    anime({
-        targets: minecraftContainer,
-        translateX: [
-            { value: -2, duration: 50 },
-            { value: 2, duration: 50 },
-            { value: -2, duration: 50 },
-            { value: 2, duration: 50 },
-            { value: 0, duration: 50 },
-        ],
-        translateY: [
-            { value: -2, duration: 50 },
-            { value: 2, duration: 50 },
-            { value: -2, duration: 50 },
-            { value: 2, duration: 50 },
-            { value: 0, duration: 50 },
-        ],
-        complete: function () {
-            if (currentCrackIndex === cracks.length - 1) {
-                // Удаляем целевой блок
-                targetBlock.remove();
-                cracks[currentCrackIndex].style.display = "none";
-
-                // Создаем элемент для анимации взрыва
-                var explosion = document.createElement("div");
-                explosion.className = "explosion";
-                document.body.appendChild(explosion);
-
-                // Настройка стилей и анимации для элемента взрыва
-                explosion.style.backgroundImage = "url(assets/img/minecraft/boom.webp)";
-                explosion.style.animation = "explode 0.3s ease-in-out";
-                explosion.style.position = "fixed";
-                explosion.style.left = "10%";
-                explosion.style.top = "30%";
-
-
-                setTimeout(function () {
-                    explosion.remove();
-                }, 300);
-
-                createShards(minecraftContainer);
-
-                setTimeout(function () {
-                    isMining = false;
-
-                    createMinecraftBlock();
-                    chestCounter++;
-                }, 1000);
-            } else {
-                isMining = false;
+            if (targetBlock.classList.contains("chest")) {
+                return;
             }
-        },
-    });
-}
+
+            if (minecraftContainer.querySelector(".pickaxe")) {
+                minecraftContainer.querySelector(".pickaxe").remove();
+            }
+
+            if (navigator.vibrate) {
+                navigator.vibrate(50);
+            }
+
+            var pickaxe = document.createElement("div");
+            pickaxe.className = "pickaxe";
+            minecraftContainer.appendChild(pickaxe);
+
+            var blockRect = targetBlock.getBoundingClientRect();
+            var blockLeft = blockRect.left + window.scrollX;
+            var blockTop = blockRect.top + window.scrollY;
+
+            var offsetX = clientX - blockLeft - targetBlock.offsetWidth / 2;
+            var offsetY = clientY - blockTop - targetBlock.offsetHeight / 2;
+
+            pickaxe.style.left = offsetX + "px";
+            pickaxe.style.top = offsetY + "px";
+
+            cracks[currentCrackIndex].style.display = "none";
+
+            currentCrackIndex = (currentCrackIndex + 1) % cracks.length;
+
+            cracks[currentCrackIndex].style.display = "block";
+
+
+            anime({
+                targets: pickaxe,
+                rotate: -20,
+                duration: 500,
+                easing: "easeInOutQuad",
+                complete: function () {
+                    pickaxe.remove();
+                },
+            });
+
+            anime({
+                targets: minecraftContainer,
+                translateX: [
+                    { value: -2, duration: 50 },
+                    { value: 2, duration: 50 },
+                    { value: -2, duration: 50 },
+                    { value: 2, duration: 50 },
+                    { value: 0, duration: 50 },
+                ],
+                translateY: [
+                    { value: -2, duration: 50 },
+                    { value: 2, duration: 50 },
+                    { value: -2, duration: 50 },
+                    { value: 2, duration: 50 },
+                    { value: 0, duration: 50 },
+                ],
+                complete: function () {
+                    if (currentCrackIndex === cracks.length - 1) {
+
+                        targetBlock.remove();
+                        cracks[currentCrackIndex].style.display = "none";
+
+                        var explosion = document.createElement("div");
+                        explosion.className = "explosion";
+                        document.body.appendChild(explosion);
+
+                        explosion.style.backgroundImage = "url(assets/img/minecraft/boom.webp)";
+                        explosion.style.animation = "explode 0.3s ease-in-out";
+                        explosion.style.position = "fixed";
+                        explosion.style.left = "10%";
+                        explosion.style.top = "30%";
+
+
+                        setTimeout(function () {
+                            explosion.remove();
+                        }, 300);
+
+                        createShards(minecraftContainer);
+
+                        setTimeout(function () {
+                            isMining = false;
+
+                            createMinecraftBlock();
+                            chestCounter++;
+                        }, 1000);
+                    } else {
+                        isMining = false;
+                    }
+                },
+            });
+        }
 
 
 

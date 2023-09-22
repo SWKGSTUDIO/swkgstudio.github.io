@@ -1,19 +1,161 @@
-/* Стили для кнопки "Add Score" */
-#addButton {
-    display: block;
-    margin: 0 auto;
-    background-color: #3498db;
-    color: #ffffff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    font-size: 18px;
-    cursor: pointer;
-    box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.2);
+html {
+    overflow: hidden;
 }
 
-/* Стили для элемента счета */
-#score {
-    font-size: 24px;
-    font-weight: bold;
+body {
+    background: linear-gradient(to bottom, #151C0B, #13100E);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+}
+
+#minecraftContainer {
+    position: relative;
+    z-index: 5;
+}
+
+.minecraftBlock {
+    width: 300px;
+    height: 300px;
+    background-image: url('assets/img/minecraft/blocks/block_earth.webp');
+    background-size: cover;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    overflow: hidden;
+    transform-origin: center bottom;
+}
+
+.pickaxe {
+    width: 230px;
+    height: 230px;
+    background-image: url('assets/img/minecraft/pickaxe.png');
+    background-size: cover;
+    position: absolute;
+    animation: swing 0.3s ease-in-out;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+
+    z-index: 10;
+    transform: translateY(-500px);
+}
+
+.crack {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    background-size: cover;
+    pointer-events: none;
+
+    display: none;
+    z-index: 9;
+}
+
+.shard {
+    position: absolute;
+    width: 70px;
+    height: 70px;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    background-size: cover;
+    z-index: 999;
+
+}
+
+.chest {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    background-size: cover;
+    z-index: 999;
+    background-image: url('assets/img/minecraft/Chest.webp');
+}
+
+/* Стили для модального окна */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+
+.modal-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Стили для кнопок в модальном окне */
+.modal-buttons {
+    margin-top: 20px;
+}
+
+button {
+    padding: 10px 20px;
+    margin: 0 10px;
+    cursor: pointer;
+}
+
+
+
+
+@keyframes swing {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(100deg);
+    }
+}
+
+
+.explosion {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    background-size: cover;
+    z-index: 100;
+    /* transform-origin: center center; */
+}
+
+@keyframes explode {
+    0% {
+        transform: scale(0.3) rotate(-20deg);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(2) rotate(20deg);
+        opacity: 0;
+    }
+}
+
+
+/* Стили для контейнера лучей */
+.rays-container {
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+}
+
+.rays-image {
+width: 500px; /* Ширина изображения лучей */
+height: 500px; /* Высота изображения лучей */
+background-image: url('assets/img/minecraft/rays.png'); /* Путь к изображению лучей */
+background-size: cover;
 }

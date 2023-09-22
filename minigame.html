@@ -635,8 +635,9 @@
             duration: randomDuration,
             easing: "easeOutExpo",
             complete: function () {
-                floatingText.remove();
+                
                 Android.addScore(10); // Добавить 10 очков
+                floatingText.remove();
             },
         });
 

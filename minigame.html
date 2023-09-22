@@ -586,7 +586,6 @@
                         console.log(`add 10 score`);
                         removeAllShards();
                         createTenFloatingTexts();
-                        Android.addScore(10); // Добавить 10 очков
                     }
                 }
 
@@ -637,6 +636,7 @@
             easing: "easeOutExpo",
             complete: function () {
                 floatingText.remove();
+                Android.addScore(10); // Добавить 10 очков
             },
         });
 

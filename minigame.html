@@ -129,6 +129,28 @@
                 transform: rotate(100deg);
             }
         }
+
+
+        .explosion {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background-size: cover;
+            z-index: 100;
+            /* transform-origin: center center; */
+        }
+
+        @keyframes explode {
+            0% {
+                transform: scale(0.3) rotate(-20deg);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(2) rotate(20deg);
+                opacity: 0;
+            }
+        }
     </style>
 </head>
 
@@ -456,88 +478,101 @@
 
 
         function mineBlock(targetBlock, clientX, clientY, cracks) {
-            var minecraftContainer = document.getElementById("minecraftContainer");
+    var minecraftContainer = document.getElementById("minecraftContainer");
 
-            // Проверяем, не является ли кликнутый элемент сундуком
-            if (targetBlock.classList.contains("chest")) {
-                return; // Если кликнутый элемент - сундук, не обрабатываем клик
+    if (targetBlock.classList.contains("chest")) {
+        return;
+    }
+
+    if (minecraftContainer.querySelector(".pickaxe")) {
+        minecraftContainer.querySelector(".pickaxe").remove();
+    }
+
+    var pickaxe = document.createElement("div");
+    pickaxe.className = "pickaxe";
+    minecraftContainer.appendChild(pickaxe);
+
+    var blockRect = targetBlock.getBoundingClientRect();
+    var blockLeft = blockRect.left + window.scrollX;
+    var blockTop = blockRect.top + window.scrollY;
+
+    var offsetX = clientX - blockLeft - targetBlock.offsetWidth / 2;
+    var offsetY = clientY - blockTop - targetBlock.offsetHeight / 2;
+
+    pickaxe.style.left = offsetX + "px";
+    pickaxe.style.top = offsetY + "px";
+
+    cracks[currentCrackIndex].style.display = "none";
+
+    currentCrackIndex = (currentCrackIndex + 1) % cracks.length;
+
+    cracks[currentCrackIndex].style.display = "block";
+
+    anime({
+        targets: pickaxe,
+        rotate: -20,
+        duration: 500,
+        easing: "easeInOutQuad",
+        complete: function () {
+            pickaxe.remove();
+        },
+    });
+
+    anime({
+        targets: minecraftContainer,
+        translateX: [
+            { value: -2, duration: 50 },
+            { value: 2, duration: 50 },
+            { value: -2, duration: 50 },
+            { value: 2, duration: 50 },
+            { value: 0, duration: 50 },
+        ],
+        translateY: [
+            { value: -2, duration: 50 },
+            { value: 2, duration: 50 },
+            { value: -2, duration: 50 },
+            { value: 2, duration: 50 },
+            { value: 0, duration: 50 },
+        ],
+        complete: function () {
+            if (currentCrackIndex === cracks.length - 1) {
+                // Удаляем целевой блок
+                targetBlock.remove();
+                cracks[currentCrackIndex].style.display = "none";
+
+                // Создаем элемент для анимации взрыва
+                var explosion = document.createElement("div");
+                explosion.className = "explosion";
+                document.body.appendChild(explosion);
+
+                // Настройка стилей и анимации для элемента взрыва
+                explosion.style.backgroundImage = "url(assets/img/minecraft/boom.webp)";
+                explosion.style.animation = "explode 0.3s ease-in-out";
+                explosion.style.position = "fixed";
+                explosion.style.left = "10%";
+                explosion.style.top = "30%";
+
+
+                setTimeout(function () {
+                    explosion.remove();
+                }, 300);
+
+                createShards(minecraftContainer);
+
+                setTimeout(function () {
+                    isMining = false;
+
+                    createMinecraftBlock();
+                    chestCounter++;
+                }, 1000);
+            } else {
+                isMining = false;
             }
-
-            // Удалить старую кирку, если она существует
-            if (minecraftContainer.querySelector(".pickaxe")) {
-                minecraftContainer.querySelector(".pickaxe").remove();
-            }
-
-            var pickaxe = document.createElement("div");
-            pickaxe.className = "pickaxe";
-            minecraftContainer.appendChild(pickaxe);
-
-            var blockRect = targetBlock.getBoundingClientRect();
-            var blockLeft = blockRect.left + window.scrollX;
-            var blockTop = blockRect.top + window.scrollY;
-
-            var offsetX = clientX - blockLeft - targetBlock.offsetWidth / 2;
-            var offsetY = clientY - blockTop - targetBlock.offsetHeight / 2;
-
-            pickaxe.style.left = offsetX + "px";
-            pickaxe.style.top = offsetY + "px";
-
-            cracks[currentCrackIndex].style.display = "none";
-
-            currentCrackIndex = (currentCrackIndex + 1) % cracks.length;
-
-            cracks[currentCrackIndex].style.display = "block";
-
-            anime({
-                targets: pickaxe,
-                rotate: -20,
-                duration: 500,
-                easing: "easeInOutQuad",
-                complete: function () {
-                    pickaxe.remove();
-                },
-            });
-
-            // Добавляем анимацию shake к minecraftContainer
-            anime({
-                targets: minecraftContainer,
-                translateX: [
-                    { value: -2, duration: 50 },
-                    { value: 2, duration: 50 },
-                    { value: -2, duration: 50 },
-                    { value: 2, duration: 50 },
-                    { value: 0, duration: 50 }
-                ],
-                translateY: [
-                    { value: -2, duration: 50 },
-                    { value: 2, duration: 50 },
-                    { value: -2, duration: 50 },
-                    { value: 2, duration: 50 },
-                    { value: 0, duration: 50 }
-                ],
-                complete: function () {
-                    if (currentCrackIndex === cracks.length - 1) {
-                        // Удаляем блок после завершения анимации трещин
-                        targetBlock.remove();
-                        cracks[currentCrackIndex].style.display = "none";
-
-                        createShards(minecraftContainer);
+        },
+    });
+}
 
 
-                        // Подождите 1 секунду, а затем создайте новый блок и разлетающиеся осколки
-                        setTimeout(function () {
-                            isMining = false; // Сбрасываем флаг добычи
-
-                            createMinecraftBlock();
-                            chestCounter++;
-
-                        }, 1000);
-                    } else {
-                        isMining = false; // Сбрасываем флаг добычи, чтобы можно было кликнуть снова
-                    }
-                },
-            });
-        }
 
         // Инициализация
         createMinecraftBlock();

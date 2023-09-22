@@ -498,14 +498,15 @@
 
 
 
-
-        // Функция для создания осколков
         function createShards(minecraftContainer) {
+
+
             const shardCount = shardsImages.length;
             const windowWidth = window.innerWidth;
             const windowHeight = window.innerHeight;
             const minSpeed = 1;
             const maxSpeed = 2;
+            const shardLifespan = 3000;
 
             let shards = [];
             let totalShards = shardCount;
@@ -516,11 +517,9 @@
                 shard.style.backgroundImage = `url(${shardsImages[i]})`;
                 minecraftContainer.appendChild(shard);
 
-                // Начальные координаты осколков в центре экрана
                 const centerX = windowWidth / 2;
                 const centerY = windowHeight / 2;
 
-                // Генерируем случайное значение угла направления
                 const angle = Math.random() * Math.PI * 2;
 
                 const speed = Math.random() * (maxSpeed - minSpeed) + minSpeed;
@@ -528,7 +527,7 @@
                 const velocityX = Math.cos(angle) * speed;
                 const velocityY = Math.sin(angle) * speed;
 
-                const mass = Math.random() * 2 + 1; // Масса осколка
+                const mass = Math.random() * 2 + 1;
 
                 shard.style.cursor = "pointer";
 
@@ -540,25 +539,20 @@
                     velocityY: -velocityY,
                     mass,
                 });
+
+                setTimeout(function () {
+                    const shardIndex = shards.indexOf(shard);
+                    if (shardIndex !== -1) {
+                        shard.remove();
+                        shards.splice(shardIndex, 1);
+                        totalShards--;
+                    }
+                }, shardLifespan);
             }
 
-            const gravity = 0.1; // Гравитация
+            const gravity = 0.1;
 
-            function addScoreAndRemoveShard(shard) {
-                Android.addScore(10); // Добавляем 1 очко
-                totalShards--; // Уменьшаем общее число осколков
 
-                // Удаляем осколок
-                shard.element.remove();
-
-                // Удаляем осколок из массива
-                const shardIndex = shards.indexOf(shard);
-                if (shardIndex !== -1) {
-                    shards.splice(shardIndex, 1);
-                }
-            }
-
-            // Функция для обновления позиции осколков
             function updateShards() {
                 for (let i = 0; i < shardCount; i++) {
                     const shard = shards[i];
@@ -568,17 +562,31 @@
                     shard.x += shard.velocityX;
                     shard.y += shard.velocityY;
 
-                    if (shard.y > windowHeight && totalShards > 0) {
-                        addScoreAndRemoveShard(shard);
-                    }
-
                     shard.element.style.transform = `translate(${shard.x}px, ${shard.y}px)`;
+
+                    if (shard.y > windowHeight && totalShards > 0) {
+                        console.log(`add 10 score`);
+                        removeAllShards();
+                        Android.addScore(10); // Добавить 10 очков
+                    }
                 }
+
+                // Удалить все осколки, которые достигли нижней границы экрана
+                shards = shards.filter(shard => shard.y <= windowHeight);
 
                 requestAnimationFrame(updateShards);
             }
+
+
             updateShards();
         }
+
+
+        function removeAllShards() {
+            const allShards = document.querySelectorAll(".shard");
+            allShards.forEach(shard => shard.remove());
+        }
+
 
 
 

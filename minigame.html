@@ -272,8 +272,8 @@
 
     <div class="modal" id="offerModal">
         <div class="modal-content">
-            <h2>Получить +50 очков</h2>
-            <p>Просмотрите рекламу, чтобы получить дополнительные 50 очков.</p>
+            <h2>Получить ~300 очков</h2>
+            <p>Просмотрите рекламу, чтобы получить дополнительные ~300 очков.</p>
             <div class="modal-buttons">
 
                 <button id="cancelButton">НЕТ</button>
@@ -498,17 +498,19 @@
 
 
         document.getElementById("confirmButton").addEventListener("click", function () {
-            Android.addScore(50);
-            closeModal();
-            minecraftContainer.style.display = "block";
+                var min = 100;
+                var max = 300;
+                var randomScore = Math.floor(Math.random() * (max - min + 1)) + min;
+                Android.addScore(randomScore); closeModal();
+                minecraftContainer.style.display = "block";
 
-        });
+            });
 
-        document.getElementById("cancelButton").addEventListener("click", function () {
-            closeModal();
-            minecraftContainer.style.display = "block";
+            document.getElementById("cancelButton").addEventListener("click", function () {
+                closeModal();
+                minecraftContainer.style.display = "block";
 
-        });
+            });
 
 
 
@@ -586,8 +588,11 @@
 
                         // Создаем новые текстовые объекты через 1 секунду
                         setTimeout(function () {
-                            var randomScore = Math.floor(Math.random() * 5) + 1;
+                            var min = 20;
+                            var max = 30;
+                            var randomScore = Math.floor(Math.random() * (max - min + 1)) + min;
                             Android.addScore(randomScore);
+
                         }, 2500);
                     }
                 }
@@ -614,7 +619,7 @@
 
 
         function createTenFloatingTexts() {
-            for (var i = 1; i <= 25; i++) {
+            for (var i = 1; i <= 15; i++) {
                 var randomValue = Math.floor(Math.random() * 5) + 1; // Генерируем случайное значение от 1 до 5
                 var text = "+" + randomValue;
                 var floatingText = document.createElement("div");

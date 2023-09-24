@@ -502,6 +502,7 @@
                 var max = 300;
                 var randomScore = Math.floor(Math.random() * (max - min + 1)) + min;
                 Android.addScore(randomScore); closeModal();
+                Android.rewardAd();
                 minecraftContainer.style.display = "block";
 
             });

@@ -498,23 +498,24 @@
 
 
         document.getElementById("confirmButton").addEventListener("click", function () {
-                var min = 100;
-                var max = 300;
-                var randomScore = Math.floor(Math.random() * (max - min + 1)) + min;
-                
-                Android.addScore(randomScore); closeModal();
+            var min = 100;
+            var max = 300;
+            var randomScore = Math.floor(Math.random() * (max - min + 1)) + min;
 
-                minecraftContainer.style.display = "block";
+            Android.addScore(randomScore); closeModal();
 
-                Android.showRewardedAd();
+            minecraftContainer.style.display = "block";
 
-            });
+            // Вызов метода rewardAd() из JavaScript
+            Android.rewardAd();
 
-            document.getElementById("cancelButton").addEventListener("click", function () {
-                closeModal();
-                minecraftContainer.style.display = "block";
+        });
 
-            });
+        document.getElementById("cancelButton").addEventListener("click", function () {
+            closeModal();
+            minecraftContainer.style.display = "block";
+
+        });
 
 
 

@@ -500,6 +500,7 @@
         document.getElementById("confirmButton").addEventListener("click", function () {
             // Показываем рекламу перед выполнением остальных действий
             Android.rewardAd();
+            minecraftContainer.style.display = "block";
 
             // Функция, которая будет вызвана после завершения показа рекламы
             function afterRewardAdShown() {

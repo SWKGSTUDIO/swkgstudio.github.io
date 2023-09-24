@@ -501,11 +501,13 @@
                 var min = 100;
                 var max = 300;
                 var randomScore = Math.floor(Math.random() * (max - min + 1)) + min;
+                
                 Android.addScore(randomScore); closeModal();
+
                 minecraftContainer.style.display = "block";
 
-                Android.rewardAd();
-                
+                Android.showRewardedAd();
+
             });
 
             document.getElementById("cancelButton").addEventListener("click", function () {

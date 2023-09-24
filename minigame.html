@@ -498,35 +498,21 @@
 
 
         document.getElementById("confirmButton").addEventListener("click", function () {
-            // Показываем рекламу перед выполнением остальных действий
-            Android.rewardAd();
-            minecraftContainer.style.display = "block";
-
-            // Функция, которая будет вызвана после завершения показа рекламы
-            function afterRewardAdShown() {
                 var min = 100;
                 var max = 300;
                 var randomScore = Math.floor(Math.random() * (max - min + 1)) + min;
-                Android.addScore(randomScore);
+                Android.addScore(randomScore); closeModal();
+                minecraftContainer.style.display = "block";
+
+                Android.rewardAd();
+                
+            });
+
+            document.getElementById("cancelButton").addEventListener("click", function () {
                 closeModal();
+                minecraftContainer.style.display = "block";
 
-                // Проверяем флаг isRewardedAdShown
-                if (Android.isRewardedAdShown()) {
-                    // Если флаг true, выполняем дополнительное действие
-                    minecraftContainer.style.display = "block";
-                }
-            }
-
-            // Задержка перед выполнением после показа рекламы
-            setTimeout(afterRewardAdShown, 500); // Например, 500 миллисекунд (подстройте под свои нужды)
-        });
-
-
-        document.getElementById("cancelButton").addEventListener("click", function () {
-            closeModal();
-            minecraftContainer.style.display = "block";
-
-        });
+            });
 
 
 

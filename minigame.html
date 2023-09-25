@@ -11,6 +11,7 @@
     <style>
         html {
             overflow: hidden;
+
         }
 
         body {
@@ -21,6 +22,8 @@
             height: 100vh;
             margin: 0;
             overflow: hidden;
+            font-family: 'Baloo Bhaijaan', cursive;
+
         }
 
         #minecraftContainer {
@@ -99,6 +102,8 @@
             height: 100%;
             background-color: rgba(0, 0, 0, 0.5);
             z-index: 1000;
+            font-family: 'Baloo Bhaijaan', cursive;
+
         }
 
         .modal-content {
@@ -106,38 +111,59 @@
             padding: 20px;
             color: aliceblue;
             text-align: center;
-            border-radius: 30px;
+            border-radius: 5px;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
             z-index: 1001;
+            font-family: 'Baloo Bhaijaan', cursive;
         }
 
         button#confirmButton {
-            background-color: green;
-            /* Зеленый фон для кнопки "ДА" */
+            background-color: #90a955;
+            font-family: 'Baloo Bhaijaan', cursive;
+            font-size: 24px;
             color: aliceblue;
             padding: 12px 24px;
-            /* Увеличение отступов для увеличения размера */
             margin: 0 5px;
-            /* Уменьшение горизонтального отступа между кнопками */
             cursor: pointer;
             border: none;
-            border-radius: 30px;
+            border-radius: 5px;
             animation: appearConfirm 1s ease forwards, pulse 1s infinite;
-            /* Анимации появления и пульсации для "ДА" */
+        }
+
+        button#getButton {
+            background-color: #4f772d;
+            font-family: 'Baloo Bhaijaan', cursive;
+            font-size: 24px;
+            color: aliceblue;
+            padding: 12px 24px;
+            margin-right: 10px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            /* animation: appearGet 1s ease forwards, pulse 1s infinite; */
+        }
+
+        .modal-header {
+            position: relative;
         }
 
         button#cancelButton {
+            font-family: 'Baloo Bhaijaan', cursive;
+            font-size: 24px;
             background-color: black;
             color: aliceblue;
-            padding: 10px 20px;
-            margin: 0 5px;
-            /* Уменьшение горизонтального отступа между кнопками */
+            padding: 3px 8px;
+            position: absolute;
+            top: 1px;
+            right: 1px;
             cursor: pointer;
             border: none;
-            border-radius: 30px;
+            border-radius: 5px;
             animation: appearCancel 20s ease forwards;
-
+        
         }
+
+
 
         @keyframes appearConfirm {
             0% {
@@ -253,7 +279,6 @@
             position: fixed;
             font-size: 24px;
             font-family: 'Baloo Bhaijaan', cursive;
-            /* Устанавливаем шрифт с Google Fonts */
             font-weight: bold;
             color: #ffffff;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
@@ -272,18 +297,22 @@
 
     <div class="modal" id="offerModal">
         <div class="modal-content">
-            <h2>Получить ~300 очков</h2>
-            <p>Просмотрите рекламу, чтобы получить дополнительные ~300 очков.</p>
+            <div class="modal-header">
+                <button id="cancelButton"><i class="fas fa-times"></i></button>
+            </div>
+            <h2>Get ~300 Points</h2>
+            <p>Watch an ad to earn additional ~300 points.</p>
             <div class="modal-buttons">
+                <button id="getButton">GET</button>
 
-                <button id="cancelButton">НЕТ</button>
-                <button id="confirmButton">ДА</button>
+                <button id="confirmButton">GET X2 <i class="fas fa-ad" style="color: #31572c;"></i> </button>
 
             </div>
         </div>
     </div>
 
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
 
     <script type="module">

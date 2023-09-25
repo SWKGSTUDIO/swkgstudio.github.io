@@ -183,82 +183,82 @@
 
 
   <!-- Блок: Информация -->
-<div class="container my-4 content-block mx-auto">
-  <div class="row">
-    <div class="col-md-12">
-      <div class="toggle-content text-center" id="info-content-3">
+  <div class="container my-4 content-block mx-auto">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="toggle-content text-center" id="info-content-3">
 
-        <h1 class="text-uppercase fw-bold">SPONGE BOB Lite</h1>
+          <h1 class="text-uppercase fw-bold">SPONGE BOB Lite</h1>
 
-        <p class="my-3">
-          <span class="promocode-text">#Promocode</span>
-        </p>
-        <p class="my-3 promocode-value">SPONGEBOBLITE500</p>
+          <p class="my-3">
+            <span class="promocode-text">#Promocode</span>
+          </p>
+          <p class="my-3 promocode-value">SPONGEBOBLITE500</p>
 
-        <button id="copyButtonLite" class="btn btn-primary" data-promocode="SPONGEBOBLITE500">ACTIVATE</button>
+          <button id="copyButtonLite" class="btn btn-primary" data-promocode="SPONGEBOBLITE500">ACTIVATE</button>
 
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-<!-- Блок: Информация -->
-<div class="container my-4 content-block mx-auto">
-  <div class="row">
-    <div class="col-md-12">
-      <div class="toggle-content text-center" id="info-content-3">
+  <!-- Блок: Информация -->
+  <div class="container my-4 content-block mx-auto">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="toggle-content text-center" id="info-content-3">
 
-        <h1 class="text-uppercase fw-bold">SPONGE BOB Premium</h1>
+          <h1 class="text-uppercase fw-bold">SPONGE BOB Premium</h1>
 
-        <p class="my-3">
-          <span class="promocode-text">#Promocode</span>
-        </p>
-        <p class="my-3 promocode-value">SPONGEBOBPREMIUM2500</p>
+          <p class="my-3">
+            <span class="promocode-text">#Promocode</span>
+          </p>
+          <p class="my-3 promocode-value">SPONGEBOBPREMIUM2500</p>
 
-        <button id="copyButtonPremium" class="btn btn-primary" data-promocode="SPONGEBOBPREMIUM2500">ACTIVATE</button>
+          <button id="copyButtonPremium" class="btn btn-primary" data-promocode="SPONGEBOBPREMIUM2500">ACTIVATE</button>
 
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js"
-  integrity="sha512-7O5pXpc0oCRrxk8RUfDYFgn0nO1t+jLuIOQdOMRp4APB7uZ4vSjspzp5y6YDtDs4VzUSTbWzBFZ/LKJhnyFOKw=="
-  crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js"
+    integrity="sha512-7O5pXpc0oCRrxk8RUfDYFgn0nO1t+jLuIOQdOMRp4APB7uZ4vSjspzp5y6YDtDs4VzUSTbWzBFZ/LKJhnyFOKw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-<script>
-  var buttons = document.querySelectorAll(".btn-primary");
+  <script>
+    var buttons = document.querySelectorAll(".btn-primary");
 
-  buttons.forEach(function(button) {
-    button.addEventListener("click", function () {
-      var promoCodeText = this.getAttribute("data-promocode");
-      var textField = document.createElement("textarea");
-      textField.value = promoCodeText;
-      document.body.appendChild(textField);
-      textField.select();
+    buttons.forEach(function (button) {
+      button.addEventListener("click", function () {
+        var promoCodeText = this.getAttribute("data-promocode");
+        var textField = document.createElement("textarea");
+        textField.value = promoCodeText;
+        document.body.appendChild(textField);
+        textField.select();
 
-      try {
-        document.execCommand("copy");
-        console.log("Promo code copied to clipboard: " + promoCodeText);
-      } catch (err) {
-        console.error("Failed to copy promo code to clipboard: " + err);
-      } finally {
-        document.body.removeChild(textField);
-      }
+        try {
+          document.execCommand("copy");
+          console.log("Promo code copied to clipboard: " + promoCodeText);
+        } catch (err) {
+          console.error("Failed to copy promo code to clipboard: " + err);
+        } finally {
+          document.body.removeChild(textField);
+        }
 
-      window.location.href = "mineapp://";
-      var timeout = setTimeout(function () {
-        window.location.href = "https://play.google.com/store/apps/details?id=com.swkgstudio.mineapp2";
-      }, 1000);
+        window.location.href = "mineapp://";
+        var timeout = setTimeout(function () {
+          window.location.href = "https://play.google.com/store/apps/details?id=com.swkgstudio.mineapp2";
+        }, 1000);
+      });
     });
-  });
 
-  var timeout; // Объявляем переменную timeout в области видимости
+    var timeout; // Объявляем переменную timeout в области видимости
 
-  window.addEventListener("blur", function () {
-    clearTimeout(timeout);
-  });
-</script>
+    window.addEventListener("blur", function () {
+      clearTimeout(timeout);
+    });
+  </script>
 
 
 

@@ -160,7 +160,7 @@
             border: none;
             border-radius: 5px;
             animation: appearCancel 20s ease forwards;
-        
+
         }
 
 
@@ -531,14 +531,27 @@
             var max = 300;
             var randomScore = Math.floor(Math.random() * (max - min + 1)) + min;
 
-            Android.addScore(randomScore); closeModal();
-
+            Android.addScore(randomScore * 2);
+            closeModal();
             minecraftContainer.style.display = "block";
 
             // Вызов метода rewardAd() из JavaScript
             Android.rewardAd();
-
         });
+
+
+        document.getElementById("getButton").addEventListener("click", function () {
+            var min = 100;
+            var max = 300;
+            var randomScore = Math.floor(Math.random() * (max - min + 1)) + min;
+
+            Android.addScore(randomScore);
+            closeModal();
+            minecraftContainer.style.display = "block";
+        });
+
+
+
 
         document.getElementById("cancelButton").addEventListener("click", function () {
             closeModal();

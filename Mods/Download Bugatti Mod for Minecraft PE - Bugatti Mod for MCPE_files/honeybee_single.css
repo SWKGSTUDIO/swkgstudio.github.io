@@ -61,7 +61,7 @@ textarea,select[multiple=multiple],input[type="color"],input[type="date"],input[
 
 body {
     color: #424753;
-    background: #000;
+    background: #312f38;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: auto
 }
@@ -1556,6 +1556,20 @@ input[type="color"]:focus,input[type="date"]:focus,input[type="datetime"]:focus,
     background: #000;
 }
 
+/* Стили для полосы прокрутки */
+.g-imagegrid .g-imagegrid-wrapper::-webkit-scrollbar {
+    width:1px; /* Минимальная ширина полосы прокрутки */
+}
+
+.g-imagegrid .g-imagegrid-wrapper::-webkit-scrollbar-track {
+    background: #000; /* Цвет фона полосы прокрутки */
+}
+
+.g-imagegrid .g-imagegrid-wrapper::-webkit-scrollbar-thumb {
+    background: #2a2732; /* Цвет полосы прокрутки */
+}
+
+
 .g-imagegrid .g-imagegrid-item {
     width: 25%;
     -webkit-box-flex: 0;
@@ -1866,7 +1880,7 @@ input[type="color"]:focus,input[type="date"]:focus,input[type="datetime"]:focus,
 }
 
 #g-navigation {
-    background: #000;
+    background: #312f38;
     color: #ffffff;
     position: relative;
     z-index: 11
@@ -2321,7 +2335,7 @@ input[type="color"]:focus,input[type="date"]:focus,input[type="datetime"]:focus,
 }
 
 #g-footer {
-    background: #000000;
+    background: #312f38;
     color: #ffffff;
     padding: 3rem 0;
     padding: 1rem 0 0 0

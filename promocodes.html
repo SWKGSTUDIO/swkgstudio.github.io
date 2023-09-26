@@ -211,7 +211,7 @@
   <script>
    var buttons = document.querySelectorAll(".btn-primary");
 
-buttons.forEach(function (button) {
+  buttons.forEach(function (button) {
   button.addEventListener("click", function () {
     var promoCodeText = this.getAttribute("data-promocode");
     var locationMineapp = this.getAttribute("data-location-mineapp");
@@ -221,6 +221,14 @@ buttons.forEach(function (button) {
     textField.value = promoCodeText;
     document.body.appendChild(textField);
     textField.select();
+
+    window.yaContextCb.push(()=>{
+    Ya.Context.AdvManager.render({
+      "blockId": "R-A-2697791-3",
+      "type": "fullscreen",
+      "platform": "touch"
+    })
+  })
 
     try {
       document.execCommand("copy");

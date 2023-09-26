@@ -148,6 +148,8 @@ body {
     position: fixed;
     bottom: 0;
     left: 0;
+    right: 0; /* Добавляем правое поле, чтобы контейнер растягивался по ширине */
+    margin: 0 auto; /* Центрирование по горизонтали */
     width: 100%;
     background: linear-gradient(90deg, #3e004ea4, #52005e4c);
     -webkit-backdrop-filter: blur(10px);
@@ -155,6 +157,7 @@ body {
     border-radius: 25px 25px 0px 0px;
     text-align: center;
 }
+
 
 
 

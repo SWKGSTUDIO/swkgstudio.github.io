@@ -224,6 +224,19 @@ document.addEventListener('DOMContentLoaded', () => {
             game.special_code = newSpecialCode;
         });
 
+        // Создайте элементы для ввода строкового кода
+const stringCodeLabel = document.createElement('label');
+stringCodeLabel.textContent = 'Код (строка):';
+
+const stringCodeTextarea = document.createElement('textarea');
+stringCodeTextarea.value = game.string_code || ''; // Здесь game.string_code должно содержать текущее значение строки
+
+stringCodeTextarea.addEventListener('input', () => {
+    const newStringCode = stringCodeTextarea.value;
+    game.string_code = newStringCode;
+});
+
+
         tabPanel.appendChild(saveButton);
         saveButton.appendChild(saveIcon);
         tabPanel.appendChild(gameNameLabel);
@@ -242,8 +255,12 @@ document.addEventListener('DOMContentLoaded', () => {
         tabPanel.appendChild(interstitialIdInput);
         tabPanel.appendChild(rewardIdLabel);
         tabPanel.appendChild(rewardIdInput);
+        
         tabPanel.appendChild(codeLabel);
         tabPanel.appendChild(codeTextarea);
+
+        tabPanel.appendChild(stringCodeLabel);
+        tabPanel.appendChild(stringCodeTextarea);
 
         tabContent.appendChild(tabPanel);
 

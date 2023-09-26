@@ -207,8 +207,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const installZipFreeInput = document.createElement('input');
         installZipFreeInput.type = 'text';
-        installZipFreeInput.value = game.install_zip_free || ''; // Предположим, что поле называется install_zip_free
+        installZipFreeInput.value = game.install_zip_free || '';
         installZipFreeInput.id = 'install-zip-free-input';
+
+
+        const linkLiteLabel = document.createElement('label');
+        linkLiteLabel.textContent = 'Ссылка Lite:';
+
+        const linkLiteInput = document.createElement('input');
+        linkLiteInput.type = 'text';
+        linkLiteInput.value = game.link_lite || '';
+        linkLiteInput.id = 'link-lite-input';
+
+        const linkPremiumLabel = document.createElement('label');
+        linkPremiumLabel.textContent = 'Ссылка Premium:';
+
+        const linkPremiumInput = document.createElement('input');
+        linkPremiumInput.type = 'text';
+        linkPremiumInput.value = game.link_premium || '';
+        linkPremiumInput.id = 'link-premium-input';
+
+        const intentLabel = document.createElement('label');
+        intentLabel.textContent = 'Intent:';
+
+        const intentInput = document.createElement('input');
+        intentInput.type = 'text';
+        intentInput.value = game.intent || '';
+        intentInput.id = 'intent-input';
+
 
 
         // Создайте элементы для ввода строкового кода

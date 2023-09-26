@@ -5179,13 +5179,12 @@ a[class*='lightcase-icon-'].lightcase-icon-pause,a[class*='lightcase-icon-'].lig
     display: none;
     width: 100%;
     min-height: 100%;
-    
     position: fixed;
     z-index: 2000;
     top: -9999px;
     bottom: -9999px;
     left: 0;
-    background: #333
+    background: #000000e8
 }
 
 @media screen and (max-width: 640px) {

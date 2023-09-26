@@ -59,7 +59,7 @@ body {
 .btn-primary {
     flex-grow: 1;
     background-color: #542eae00;
-    color: white;
+    color: rgba(255, 255, 255, 0.937);
     font-size: 20px;
     padding: 10px 20px;
     border-radius: 11px;
@@ -69,6 +69,20 @@ body {
     border: none;
     background: linear-gradient(90deg, #001d3dca, #59189a5c);
 
+}
+
+/* Не изменяйте цвет при наведении */
+.btn-primary:hover {
+    background-color: #542eae00;
+    background: linear-gradient(90deg, #001d3dca, #59189a5c);
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+}
+
+.btn-primary:active {
+    background-color: #542eae00;
+    background: linear-gradient(90deg, #001d3dca, #59189a5c);
+    transform: scale(0.95);
 }
 
 .btn-primary-home {

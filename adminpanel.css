@@ -267,7 +267,7 @@ textarea {
   }
   
   .btn-custom:hover {
-    background-color: #c8c8c8; /* Измените цвет фона при наведении на нужный вам */
+    background-color: #c8c8c8;
   }
   
 
@@ -277,4 +277,21 @@ textarea {
     margin: 0 10px; /* Отступы между разделителями и кнопками */
     display: inline-block;
     vertical-align: middle; /* Выравнивание по вертикали */
+}
+
+.generate-code-button {
+    background-color: #6e6e6e;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.generate-code-button:hover {
+    background-color: #353535;
 }

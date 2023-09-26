@@ -225,9 +225,11 @@ document.addEventListener('DOMContentLoaded', () => {
     
         const generateCodeButton = document.createElement('button');
         generateCodeButton.textContent = 'Сгенерировать код';
+        generateCodeButton.classList.add('generate-code-button');
+
     
         generateCodeButton.addEventListener('click', () => {
-            // Получите значения из других полей и сгенерируйте строку кода
+
             const app_name = gameNameInput.value;
             const admob_app_id = googleAdMobInput.value;
             const banner_id = bannerIdInput.value;

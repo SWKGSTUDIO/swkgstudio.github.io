@@ -255,7 +255,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     
         generateCodeButton.addEventListener('click', () => {
-
             const app_name = gameNameInput.value;
             const admob_app_id = googleAdMobInput.value;
             const banner_id = bannerIdInput.value;
@@ -265,7 +264,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const install_zip_free = installZipFreeInput.value;
             const Promo_Lite = promoLiteInput.value;
             const Promo_Premium = promoPremiumInput.value;
-
+            const link_lite = linkLiteInput.value; // Добавлено
+            const link_premium = linkPremiumInput.value; // Добавлено
+            const intent = intentInput.value; // Добавлено
+        
             const generatedCode = `
             <string name="app_name">${app_name}</string>
             <string name="admob_app_id">${admob_app_id}</string>
@@ -276,10 +278,14 @@ document.addEventListener('DOMContentLoaded', () => {
             <string name="install_zip_free">${install_zip_free}</string>
             <string name="Promo_Lite">${Promo_Lite}</string>
             <string name="Promo_Premium">${Promo_Premium}</string>
+            <string name="link_lite">${link_lite}</string> <!-- Добавлено -->
+            <string name="link_premium">${link_premium}</string> <!-- Добавлено -->
+            <string name="intent">${intent}</string> <!-- Добавлено -->
             `;
-
+        
             stringCodeTextarea.value = generatedCode;
         });
+        
 
         tabPanel.appendChild(saveButton);
         saveButton.appendChild(saveIcon);
@@ -305,7 +311,12 @@ document.addEventListener('DOMContentLoaded', () => {
         tabPanel.appendChild(installZipInput);
         tabPanel.appendChild(installZipFreeLabel);
         tabPanel.appendChild(installZipFreeInput);
-
+        tabPanel.appendChild(linkLiteLabel);
+        tabPanel.appendChild(linkLiteInput);
+        tabPanel.appendChild(linkPremiumLabel);
+        tabPanel.appendChild(linkPremiumInput);
+        tabPanel.appendChild(intentLabel);
+        tabPanel.appendChild(intentInput);
 
         tabPanel.appendChild(stringCodeLabel);
         tabPanel.appendChild(stringCodeTextarea);
@@ -324,6 +335,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const newInstallZipFree = installZipFreeInput.value; // Добавлено
             const newPromoLite = promoLiteInput.value;
             const newPromoPremium = promoPremiumInput.value;
+            const newLinkLite = linkLiteInput.value; // Добавлено
+            const newLinkPremium = linkPremiumInput.value; // Добавлено
+            const newIntent = intentInput.value; // Добавлено
             const newStringCode = stringCodeTextarea.value;
         
             game.name = newGameName;
@@ -335,6 +349,9 @@ document.addEventListener('DOMContentLoaded', () => {
             game.install_zip_free = newInstallZipFree; // Обновлено
             game.promo_lite = newPromoLite;
             game.promo_premium = newPromoPremium;
+            game.link_lite = newLinkLite;
+            game.link_premium = newLinkPremium;
+            game.intent = newIntent; // Добавлено
             game.string_code = newStringCode;
         
             try {

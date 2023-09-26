@@ -92,7 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     content: '',
                     id: maxTabId + 1
                 };
-    
+
                 try {
                     const response = await fetch('https://intermediate-easy-ship.glitch.me/adminpaneldata', {
                         method: 'POST',
@@ -101,19 +101,19 @@ document.addEventListener('DOMContentLoaded', () => {
                         },
                         body: JSON.stringify(newTab)
                     });
-    
+
                     if (!response.ok) {
                         throw new Error(`Ошибка добавления вкладки: ${response.statusText}`);
                     }
-    
+
                     location.reload();
                 } catch (error) {
                     console.error('Произошла ошибка при добавлении вкладки на сервере:', error);
                 }
             });
-    
+
             tabContainer.appendChild(addButtonTab);
-        
+
             if (data.games.length > 0) {
                 loadTabContent(data.games[0]);
             }
@@ -125,128 +125,138 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function loadTabContent(game) {
         tabContent.innerHTML = '';
-
+    
         const tabPanel = document.createElement('div');
         tabPanel.classList.add('tab-panel');
-
+    
         const saveButton = document.createElement('button');
         saveButton.textContent = 'Сохранить';
         saveButton.id = 'save-button';
-
+    
         const saveIcon = document.createElement('i');
         saveIcon.classList.add('fas', 'fa-save');
-
+    
         const gameNameLabel = document.createElement('label');
         gameNameLabel.textContent = 'Название:';
-
+    
         const gameNameInput = document.createElement('input');
         gameNameInput.type = 'text';
         gameNameInput.value = game.name;
         gameNameInput.id = 'game-name-input';
-
+    
         const googleAdMobLabel = document.createElement('label');
         googleAdMobLabel.textContent = 'AdMob AppID:';
-
+    
         const googleAdMobInput = document.createElement('input');
         googleAdMobInput.type = 'text';
         googleAdMobInput.value = game.google_admob_id || '';
         googleAdMobInput.id = 'google-admob-input';
-
+    
         const bannerIdLabel = document.createElement('label');
         bannerIdLabel.textContent = 'Баннер ИД:';
-
+    
         const bannerIdInput = document.createElement('input');
         bannerIdInput.type = 'text';
         bannerIdInput.value = game.banner_id || '';
         bannerIdInput.id = 'banner-id-input';
-
+    
         const interstitialIdLabel = document.createElement('label');
         interstitialIdLabel.textContent = 'Межстраничка ИД:';
-
+    
         const interstitialIdInput = document.createElement('input');
         interstitialIdInput.type = 'text';
         interstitialIdInput.value = game.interstitial_id || '';
         interstitialIdInput.id = 'interstitial-id-input';
-
+    
         const rewardIdLabel = document.createElement('label');
         rewardIdLabel.textContent = 'Ревард ИД:';
-
+    
         const rewardIdInput = document.createElement('input');
         rewardIdInput.type = 'text';
         rewardIdInput.value = game.reward_id || '';
         rewardIdInput.id = 'reward-id-input';
 
-        const avatarLabel = document.createElement('label');
-        avatarLabel.textContent = 'Аватар (URL):';
 
-        const avatarInput = document.createElement('input');
-        avatarInput.type = 'text';
-        avatarInput.value = game.avatar || '';
-        avatarInput.id = 'avatar-input';
+        const promoLiteLabel = document.createElement('label');
+        promoLiteLabel.textContent = 'Промо-код Lite:';
 
-        const bannerLabel = document.createElement('label');
-        bannerLabel.textContent = 'Com. :';
+        const promoLiteInput = document.createElement('input');
+        promoLiteInput.type = 'text';
+        promoLiteInput.value = game.promo_lite || ''; // Предположим, что поле называется promo_lite
+        promoLiteInput.id = 'promo-lite-input';
 
-        const bannerInput = document.createElement('input');
-        bannerInput.type = 'text';
-        bannerInput.value = game.banner || '';
-        bannerInput.id = 'banner-input';
+        const promoPremiumLabel = document.createElement('label');
+        promoPremiumLabel.textContent = 'Промо-код Premium:';
 
-        const avatarPreview = document.createElement('img');
-        avatarPreview.classList.add('image-preview');
-        avatarPreview.id = 'avatar-preview';
-        avatarPreview.src = game.avatar || '';
+        const promoPremiumInput = document.createElement('input');
+        promoPremiumInput.type = 'text';
+        promoPremiumInput.value = game.promo_premium || ''; // Предположим, что поле называется promo_premium
+        promoPremiumInput.id = 'promo-premium-input';
 
-        const bannerPreview = document.createElement('img');
-        bannerPreview.classList.add('image-preview');
-        bannerPreview.id = 'banner-preview';
-        bannerPreview.src = game.banner || '';
 
-        avatarInput.addEventListener('input', () => {
-            const newAvatarUrl = avatarInput.value;
-            game.avatar = newAvatarUrl;
-        });
+        const installZipLabel = document.createElement('label');
+        installZipLabel.textContent = 'Install Zip:';
 
-        bannerInput.addEventListener('input', () => {
-            const newBannerUrl = bannerInput.value;
-            game.banner = newBannerUrl;
-        });
+        const installZipInput = document.createElement('input');
+        installZipInput.type = 'text';
+        installZipInput.value = game.install_zip || ''; // Предположим, что поле называется install_zip
+        installZipInput.id = 'install-zip-input';
 
-        const codeLabel = document.createElement('label');
-        codeLabel.textContent = 'код викторины:';
+        const installZipFreeLabel = document.createElement('label');
+        installZipFreeLabel.textContent = 'Install Zip Free:';
 
-        const codeTextarea = document.createElement('textarea');
-        codeTextarea.value = game.special_code || '';
-        codeTextarea.id = 'special-code-input';
+        const installZipFreeInput = document.createElement('input');
+        installZipFreeInput.type = 'text';
+        installZipFreeInput.value = game.install_zip_free || ''; // Предположим, что поле называется install_zip_free
+        installZipFreeInput.id = 'install-zip-free-input';
 
-        codeTextarea.addEventListener('input', () => {
-            const newSpecialCode = codeTextarea.value;
-            game.special_code = newSpecialCode;
-        });
 
         // Создайте элементы для ввода строкового кода
-const stringCodeLabel = document.createElement('label');
-stringCodeLabel.textContent = 'Код (строка):';
+        const stringCodeLabel = document.createElement('label');
+        stringCodeLabel.textContent = 'Код (строка):';
 
-const stringCodeTextarea = document.createElement('textarea');
-stringCodeTextarea.value = game.string_code || ''; // Здесь game.string_code должно содержать текущее значение строки
+        const stringCodeTextarea = document.createElement('textarea');
+        stringCodeTextarea.value = game.string_code || '';
+    
+        stringCodeTextarea.addEventListener('input', () => {
+            const newStringCode = stringCodeTextarea.value;
+            game.string_code = newStringCode;
+        });
+    
+        const generateCodeButton = document.createElement('button');
+        generateCodeButton.textContent = 'Сгенерировать код';
+    
+        generateCodeButton.addEventListener('click', () => {
+            // Получите значения из других полей и сгенерируйте строку кода
+            const app_name = gameNameInput.value;
+            const admob_app_id = googleAdMobInput.value;
+            const banner_id = bannerIdInput.value;
+            const interstitial_id = interstitialIdInput.value;
+            const reward_id = rewardIdInput.value;
+            const install_zip = installZipInput.value;
+            const install_zip_free = installZipFreeInput.value;
+            const Promo_Lite = promoLiteInput.value;
+            const Promo_Premium = promoPremiumInput.value;
 
-stringCodeTextarea.addEventListener('input', () => {
-    const newStringCode = stringCodeTextarea.value;
-    game.string_code = newStringCode;
-});
+            const generatedCode = `
+            <string name="app_name">${app_name}</string>
+            <string name="admob_app_id">${admob_app_id}</string>
+            <string name="banner_id">${banner_id}</string>
+            <string name="interstitial_id">${interstitial_id}</string>
+            <string name="reward_id">${reward_id}</string>
+            <string name="install_zip">${install_zip}</string>
+            <string name="install_zip_free">${install_zip_free}</string>
+            <string name="Promo_Lite">${Promo_Lite}</string>
+            <string name="Promo_Premium">${Promo_Premium}</string>
+            `;
 
+            stringCodeTextarea.value = generatedCode;
+        });
 
         tabPanel.appendChild(saveButton);
         saveButton.appendChild(saveIcon);
         tabPanel.appendChild(gameNameLabel);
         tabPanel.appendChild(gameNameInput);
-        tabPanel.appendChild(avatarLabel);
-        tabPanel.appendChild(avatarInput);
-        tabPanel.appendChild(avatarPreview);
-        tabPanel.appendChild(bannerLabel);
-        tabPanel.appendChild(bannerInput);
-        tabPanel.appendChild(bannerPreview);
         tabPanel.appendChild(googleAdMobLabel);
         tabPanel.appendChild(googleAdMobInput);
         tabPanel.appendChild(bannerIdLabel);
@@ -255,14 +265,26 @@ stringCodeTextarea.addEventListener('input', () => {
         tabPanel.appendChild(interstitialIdInput);
         tabPanel.appendChild(rewardIdLabel);
         tabPanel.appendChild(rewardIdInput);
-        
-        tabPanel.appendChild(codeLabel);
-        tabPanel.appendChild(codeTextarea);
+        tabPanel.appendChild(promoLiteLabel);
+        tabPanel.appendChild(promoLiteInput);
+        tabPanel.appendChild(promoPremiumLabel);
+        tabPanel.appendChild(promoPremiumInput);
+        tabPanel.appendChild(promoLiteLabel);
+        tabPanel.appendChild(promoLiteInput);
+        tabPanel.appendChild(promoPremiumLabel);
+        tabPanel.appendChild(promoPremiumInput);
+        tabPanel.appendChild(installZipLabel);
+        tabPanel.appendChild(installZipInput);
+        tabPanel.appendChild(installZipFreeLabel);
+        tabPanel.appendChild(installZipFreeInput);
+
 
         tabPanel.appendChild(stringCodeLabel);
         tabPanel.appendChild(stringCodeTextarea);
+        tabPanel.appendChild(generateCodeButton);
 
         tabContent.appendChild(tabPanel);
+        
 
         saveButton.addEventListener('click', async () => {
             const newGameName = gameNameInput.value;
@@ -270,15 +292,23 @@ stringCodeTextarea.addEventListener('input', () => {
             const newBannerId = bannerIdInput.value;
             const newInterstitialId = interstitialIdInput.value;
             const newRewardId = rewardIdInput.value;
-            const newSpecialCode = codeTextarea.value;
-
+            const newInstallZip = installZipInput.value; // Добавлено
+            const newInstallZipFree = installZipFreeInput.value; // Добавлено
+            const newPromoLite = promoLiteInput.value;
+            const newPromoPremium = promoPremiumInput.value;
+            const newStringCode = stringCodeTextarea.value;
+        
             game.name = newGameName;
             game.google_admob_id = newGoogleAdMobId;
             game.banner_id = newBannerId;
             game.interstitial_id = newInterstitialId;
             game.reward_id = newRewardId;
-            game.special_code = newSpecialCode;
-
+            game.install_zip = newInstallZip; // Обновлено
+            game.install_zip_free = newInstallZipFree; // Обновлено
+            game.promo_lite = newPromoLite;
+            game.promo_premium = newPromoPremium;
+            game.string_code = newStringCode;
+        
             try {
                 const updateResponse = await fetch(`https://intermediate-easy-ship.glitch.me/adminpaneldata/${game.id}`, {
                     method: 'PUT',
@@ -287,22 +317,24 @@ stringCodeTextarea.addEventListener('input', () => {
                     },
                     body: JSON.stringify(game)
                 });
-
+        
                 if (!updateResponse.ok) {
                     throw new Error(`Ошибка обновления игры: ${updateResponse.statusText}`);
                 }
-
+        
                 const tabElement = document.querySelector(`[data-tab-id="${game.id}"]`);
                 const tabNameElement = tabElement.querySelector('.tab-name');
                 tabNameElement.textContent = newGameName;
-
+        
                 location.reload();
-
+        
             } catch (error) {
                 console.error('Произошла ошибка при обновлении игры на сервере:', error);
             }
         });
     }
+    
+
 
     function removeTab(tabElement) {
         tabElement.remove();

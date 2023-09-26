@@ -61,7 +61,7 @@ textarea,select[multiple=multiple],input[type="color"],input[type="date"],input[
 
 body {
     color: #424753;
-    background: #312f38;
+    background: #000;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: auto
 }
@@ -1866,7 +1866,7 @@ input[type="color"]:focus,input[type="date"]:focus,input[type="datetime"]:focus,
 }
 
 #g-navigation {
-    background: #312f38;
+    background: #000;
     color: #ffffff;
     position: relative;
     z-index: 11
@@ -2321,7 +2321,7 @@ input[type="color"]:focus,input[type="date"]:focus,input[type="datetime"]:focus,
 }
 
 #g-footer {
-    background: #312f38;
+    background: #000000;
     color: #ffffff;
     padding: 3rem 0;
     padding: 1rem 0 0 0

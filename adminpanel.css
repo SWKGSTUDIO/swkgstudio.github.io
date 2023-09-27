@@ -88,7 +88,7 @@ body {
 
 
 .native-tab-container {
-    display: flex;
+    display: none;
     overflow-x: auto;
 }
 
@@ -116,6 +116,7 @@ body {
 }
 
 .native-content {
+    display: none;
     background-color: #4b4b4b;
     padding: 20px;
 }

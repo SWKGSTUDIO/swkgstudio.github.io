@@ -199,7 +199,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const installZipInput = document.createElement('input');
         installZipInput.type = 'text';
-        installZipInput.value = game.install_zip || ''; // Предположим, что поле называется install_zip
+        installZipInput.value = game.install_zip || '';
         installZipInput.id = 'install-zip-input';
 
         const installZipFreeLabel = document.createElement('label');
@@ -264,9 +264,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const install_zip_free = installZipFreeInput.value;
             const Promo_Lite = promoLiteInput.value;
             const Promo_Premium = promoPremiumInput.value;
-            const link_lite = linkLiteInput.value; // Добавлено
-            const link_premium = linkPremiumInput.value; // Добавлено
-            const intent = intentInput.value; // Добавлено
+            const link_lite = linkLiteInput.value;
+            const link_premium = linkPremiumInput.value;
+            const intent = intentInput.value;
         
             const generatedCode = `
             <string name="app_name">${app_name}</string>
@@ -278,9 +278,9 @@ document.addEventListener('DOMContentLoaded', () => {
             <string name="install_zip_free">${install_zip_free}</string>
             <string name="Promo_Lite">${Promo_Lite}</string>
             <string name="Promo_Premium">${Promo_Premium}</string>
-            <string name="link_lite">${link_lite}</string> <!-- Добавлено -->
-            <string name="link_premium">${link_premium}</string> <!-- Добавлено -->
-            <string name="intent">${intent}</string> <!-- Добавлено -->
+            <string name="link_lite">${link_lite}</string>
+            <string name="link_premium">${link_premium}</string>
+            <string name="intent">${intent}</string>
             `;
         
             stringCodeTextarea.value = generatedCode;
@@ -331,13 +331,13 @@ document.addEventListener('DOMContentLoaded', () => {
             const newBannerId = bannerIdInput.value;
             const newInterstitialId = interstitialIdInput.value;
             const newRewardId = rewardIdInput.value;
-            const newInstallZip = installZipInput.value; // Добавлено
-            const newInstallZipFree = installZipFreeInput.value; // Добавлено
+            const newInstallZip = installZipInput.value;
+            const newInstallZipFree = installZipFreeInput.value;
             const newPromoLite = promoLiteInput.value;
             const newPromoPremium = promoPremiumInput.value;
-            const newLinkLite = linkLiteInput.value; // Добавлено
-            const newLinkPremium = linkPremiumInput.value; // Добавлено
-            const newIntent = intentInput.value; // Добавлено
+            const newLinkLite = linkLiteInput.value;
+            const newLinkPremium = linkPremiumInput.value;
+            const newIntent = intentInput.value;
             const newStringCode = stringCodeTextarea.value;
         
             game.name = newGameName;
@@ -345,13 +345,13 @@ document.addEventListener('DOMContentLoaded', () => {
             game.banner_id = newBannerId;
             game.interstitial_id = newInterstitialId;
             game.reward_id = newRewardId;
-            game.install_zip = newInstallZip; // Обновлено
-            game.install_zip_free = newInstallZipFree; // Обновлено
+            game.install_zip = newInstallZip;
+            game.install_zip_free = newInstallZipFree;
             game.promo_lite = newPromoLite;
             game.promo_premium = newPromoPremium;
             game.link_lite = newLinkLite;
             game.link_premium = newLinkPremium;
-            game.intent = newIntent; // Добавлено
+            game.intent = newIntent;
             game.string_code = newStringCode;
         
             try {

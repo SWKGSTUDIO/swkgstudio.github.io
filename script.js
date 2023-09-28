@@ -175,6 +175,24 @@ document.addEventListener('DOMContentLoaded', () => {
         gameAppNameInput.id = 'gameApp-name-input';
 
 
+
+        const ComAppLabel = document.createElement('label');
+        ComAppLabel.textContent = 'COM:';
+        const ComAppInput = document.createElement('input');
+        ComAppInput.type = 'text';
+        ComAppInput.value = game.comapp;
+        ComAppInput.id = 'comApp-name-input';
+
+
+        const GooglePlayLabel = document.createElement('label');
+        GooglePlayLabel.textContent = 'GOOGLE PLAY:';
+        const GooglePlayInput = document.createElement('input');
+        GooglePlayInput.type = 'text';
+        GooglePlayInput.value = game.googleplay;
+        GooglePlayInput.id = 'googlePlay-name-input';
+
+
+
     
         const googleAdMobLabel = document.createElement('label');
         googleAdMobLabel.textContent = 'AdMob AppID:';
@@ -323,6 +341,12 @@ document.addEventListener('DOMContentLoaded', () => {
         tabPanel.appendChild(gameNameLabel);
         tabPanel.appendChild(gameNameInput);
 
+        tabPanel.appendChild(GooglePlayLabel);
+        tabPanel.appendChild(GooglePlayInput);
+
+        tabPanel.appendChild(ComAppLabel);
+        tabPanel.appendChild(ComAppInput);
+
 
         tabPanel.appendChild(linkLiteLabel);
         tabPanel.appendChild(linkLiteInput);
@@ -365,9 +389,12 @@ document.addEventListener('DOMContentLoaded', () => {
         
 
         saveButton.addEventListener('click', async () => {
-            const newGameName = gameNameInput.value;
 
+            const newGameName = gameNameInput.value;
             const newGameAppName = gameAppNameInput.value;
+
+            const newGooglePlay = googlePlayInput.value;
+            const newComApp = comAppInput.value;
 
             const newGoogleAdMobId = googleAdMobInput.value;
             const newBannerId = bannerIdInput.value;
@@ -384,6 +411,9 @@ document.addEventListener('DOMContentLoaded', () => {
         
             game.name = newGameName;
             game.appname = newGameAppName;
+
+            game.comApp = newComApp;
+            game.googlePlay = newGooglePlay;
 
             game.google_admob_id = newGoogleAdMobId;
             game.banner_id = newBannerId;

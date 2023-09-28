@@ -393,8 +393,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const newGameName = gameNameInput.value;
             const newGameAppName = gameAppNameInput.value;
 
-            const newGooglePlay = googlePlayInput.value;
-            const newComApp = comAppInput.value;
+            const newGooglePlay = GooglePlayInput.value;
+            const newComApp = ComAppInput.value;
 
             const newGoogleAdMobId = googleAdMobInput.value;
             const newBannerId = bannerIdInput.value;

@@ -299,19 +299,18 @@ document.addEventListener('DOMContentLoaded', () => {
         tabPanel.appendChild(saveButton);
         saveButton.appendChild(saveIcon);
 
+        tabPanel.appendChild(gameNameLabel);
+        tabPanel.appendChild(gameNameInput);
+
+
         tabPanel.appendChild(linkLiteLabel);
         tabPanel.appendChild(linkLiteInput);
         tabPanel.appendChild(linkPremiumLabel);
         tabPanel.appendChild(linkPremiumInput);
 
-
-        
-        tabPanel.appendChild(gameNameLabel);
-        tabPanel.appendChild(gameNameInput);
-
+       
         tabPanel.appendChild(gameAppNameLabel);
         tabPanel.appendChild(gameAppNameInput);
-
 
         tabPanel.appendChild(googleAdMobLabel);
         tabPanel.appendChild(googleAdMobInput);

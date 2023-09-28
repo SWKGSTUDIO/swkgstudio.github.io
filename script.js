@@ -150,7 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
         const gameAppNameInput = document.createElement('input');
         gameAppNameInput.type = 'text';
-        gameAppNameInput.value = game.name;
+        gameAppNameInput.value = game.appname;
         gameAppNameInput.id = 'gameApp-name-input';
 
 

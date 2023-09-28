@@ -135,6 +135,16 @@ document.addEventListener('DOMContentLoaded', () => {
     
         const saveIcon = document.createElement('i');
         saveIcon.classList.add('fas', 'fa-save');
+
+        
+        const devNameLabel = document.createElement('label');
+        devNameLabel.textContent = 'DEV Название:';
+    
+        const devNameInput = document.createElement('input');
+        devNameInput.type = 'text';
+        devNameInput.value = dev.name;
+        devNameInput.id = 'dev-game-name-input';
+
     
         const gameNameLabel = document.createElement('label');
         gameNameLabel.textContent = 'Название:';
@@ -292,9 +302,15 @@ document.addEventListener('DOMContentLoaded', () => {
         tabPanel.appendChild(linkLiteInput);
         tabPanel.appendChild(linkPremiumLabel);
         tabPanel.appendChild(linkPremiumInput);
-        
+
+        tabPanel.appendChild(DevNameLabel);
+        tabPanel.appendChild(DevNameInput);
+
+
         tabPanel.appendChild(gameNameLabel);
         tabPanel.appendChild(gameNameInput);
+
+
         tabPanel.appendChild(googleAdMobLabel);
         tabPanel.appendChild(googleAdMobInput);
         tabPanel.appendChild(bannerIdLabel);
@@ -341,6 +357,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const newIntent = intentInput.value;
             const newStringCode = stringCodeTextarea.value;
         
+            game.devname = newDevName;
             game.name = newGameName;
             game.google_admob_id = newGoogleAdMobId;
             game.banner_id = newBannerId;

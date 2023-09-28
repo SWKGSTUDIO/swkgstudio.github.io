@@ -287,6 +287,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
         tabPanel.appendChild(saveButton);
         saveButton.appendChild(saveIcon);
+
+        tabPanel.appendChild(linkLiteLabel);
+        tabPanel.appendChild(linkLiteInput);
+        tabPanel.appendChild(linkPremiumLabel);
+        tabPanel.appendChild(linkPremiumInput);
+        
         tabPanel.appendChild(gameNameLabel);
         tabPanel.appendChild(gameNameInput);
         tabPanel.appendChild(googleAdMobLabel);
@@ -309,10 +315,7 @@ document.addEventListener('DOMContentLoaded', () => {
         tabPanel.appendChild(installZipInput);
         tabPanel.appendChild(installZipFreeLabel);
         tabPanel.appendChild(installZipFreeInput);
-        tabPanel.appendChild(linkLiteLabel);
-        tabPanel.appendChild(linkLiteInput);
-        tabPanel.appendChild(linkPremiumLabel);
-        tabPanel.appendChild(linkPremiumInput);
+       
         tabPanel.appendChild(intentLabel);
         tabPanel.appendChild(intentInput);
 

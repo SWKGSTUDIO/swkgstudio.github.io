@@ -39,9 +39,27 @@ document.addEventListener('DOMContentLoaded', () => {
                 closeIcon.textContent = '';
                 tabElement.appendChild(closeIcon);
 
+
+
                 tabElement.addEventListener('click', () => {
+                    console.log("Вкладка была кликнута");
+                
+                    const allTabs = document.querySelectorAll('.tab');
+                    allTabs.forEach(tab => {
+                        console.log("Стиль вкладки '" + tab.textContent + "': " + getComputedStyle(tab).getPropertyValue('background-color')); // Лог стиля выбранной вкладки
+                        tab.classList.remove('active');
+                    });
+                
+                    console.log("Добавляем класс 'active-tab' к текущей вкладке: " + game.name); // Лог названия текущей вкладки
+                    tabElement.classList.add('active');
+                
                     loadTabContent(game);
                 });
+                
+                
+                
+
+
 
                 closeIcon.addEventListener('click', async (event) => {
                     event.stopPropagation();
@@ -124,6 +142,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function loadTabContent(game) {
+
+    
+
         tabContent.innerHTML = '';
     
         const tabPanel = document.createElement('div');

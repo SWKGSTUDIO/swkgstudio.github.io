@@ -49,6 +49,13 @@ body {
     overflow-x: auto;
 }
 
+.active-tab {
+    background-color: #ff0000; /* Замените этот цвет на желаемый */
+    /* Другие стили для активной вкладки */
+}
+
+
+
 
 .tab {
     flex: 0 0 auto;

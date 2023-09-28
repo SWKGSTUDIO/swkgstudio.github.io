@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 const tabName = document.createElement('span');
                 tabName.classList.add('tab-name');
-                tabName.textContent = truncateText(game.name, 15);
+                tabName.textContent = truncateText(dev.name, 15);
                 tabElement.appendChild(tabName);
 
                 const closeIcon = document.createElement('button');
@@ -136,7 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const saveIcon = document.createElement('i');
         saveIcon.classList.add('fas', 'fa-save');
 
-        
+
         const devNameLabel = document.createElement('label');
         devNameLabel.textContent = 'DEV Название:';
     

@@ -143,6 +143,17 @@ document.addEventListener('DOMContentLoaded', () => {
         gameNameInput.type = 'text';
         gameNameInput.value = game.name;
         gameNameInput.id = 'game-name-input';
+
+
+        const gameAppNameLabel = document.createElement('label');
+        gameAppNameLabel.textContent = 'App Название:';
+    
+        const gameAppNameInput = document.createElement('input');
+        gameAppNameInput.type = 'text';
+        gameAppNameInput.value = game.name;
+        gameAppNameInput.id = 'gameApp-name-input';
+
+
     
         const googleAdMobLabel = document.createElement('label');
         googleAdMobLabel.textContent = 'AdMob AppID:';
@@ -255,7 +266,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     
         generateCodeButton.addEventListener('click', () => {
-            const app_name = gameNameInput.value;
+            const app_name = gameAppNameInput.value;
             const admob_app_id = googleAdMobInput.value;
             const banner_id = bannerIdInput.value;
             const interstitial_id = interstitialIdInput.value;
@@ -298,6 +309,9 @@ document.addEventListener('DOMContentLoaded', () => {
         tabPanel.appendChild(gameNameLabel);
         tabPanel.appendChild(gameNameInput);
 
+        tabPanel.appendChild(gameAppNameLabel);
+        tabPanel.appendChild(gameAppNameInput);
+
 
         tabPanel.appendChild(googleAdMobLabel);
         tabPanel.appendChild(googleAdMobInput);
@@ -332,6 +346,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         saveButton.addEventListener('click', async () => {
             const newGameName = gameNameInput.value;
+
+            const newGameAppName = gameAppNameInput.value;
+
             const newGoogleAdMobId = googleAdMobInput.value;
             const newBannerId = bannerIdInput.value;
             const newInterstitialId = interstitialIdInput.value;
@@ -346,6 +363,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const newStringCode = stringCodeTextarea.value;
         
             game.name = newGameName;
+            game.appname = newGameAppName;
+
             game.google_admob_id = newGoogleAdMobId;
             game.banner_id = newBannerId;
             game.interstitial_id = newInterstitialId;

@@ -264,8 +264,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const install_zip_free = installZipFreeInput.value;
             const Promo_Lite = promoLiteInput.value;
             const Promo_Premium = promoPremiumInput.value;
-            const link_lite = linkLiteInput.value;
-            const link_premium = linkPremiumInput.value;
+            
             const intent = intentInput.value;
         
             const generatedCode = `
@@ -278,8 +277,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <string name="install_zip_free">${install_zip_free}</string>
             <string name="Promo_Lite">${Promo_Lite}</string>
             <string name="Promo_Premium">${Promo_Premium}</string>
-            <string name="link_lite">${link_lite}</string>
-            <string name="link_premium">${link_premium}</string>
+           
             <string name="intent">${intent}</string>
             `;
         

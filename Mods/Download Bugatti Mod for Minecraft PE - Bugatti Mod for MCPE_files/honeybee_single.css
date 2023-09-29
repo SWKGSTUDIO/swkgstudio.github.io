@@ -83,7 +83,7 @@ input:not([type]) {
 
 body {
     color: #424753;
-    background: #000;
+    background: #000000;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: auto
 }
@@ -2527,12 +2527,16 @@ textarea:focus {
 
 #g-mainbar {
     background: #000;
-    color: #424753;
-    padding: 1rem 0
+    color: #ffffff;
+    padding: 1rem 0;
+    background-image: url('https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwallpaperaccess.com%2Ffull%2F869.jpg&f=1&nofb=1&ipt=75aa810aec251ab79684e638dba598cb0eb727f97d36815f07a9852c9ddc7e73&ipo=images');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
 }
 
 #g-mainbar .g-content {
-    background: #000;
+    background: #000000a3;
     color: #ffffff
 }
 

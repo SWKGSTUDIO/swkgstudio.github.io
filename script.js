@@ -156,6 +156,11 @@ document.addEventListener('DOMContentLoaded', () => {
     
         const saveIcon = document.createElement('i');
         saveIcon.classList.add('fas', 'fa-save');
+
+        // Создаем элемент прогресс-бара
+        const progressBar = document.createElement('div');
+        progressBar.classList.add('progress-bar');
+        progressBar.style.width = '0%';
     
         const gameNameLabel = document.createElement('label');
         gameNameLabel.textContent = 'Название:';
@@ -336,6 +341,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
 
         tabPanel.appendChild(saveButton);
+        saveButton.appendChild(progressBar);
         saveButton.appendChild(saveIcon);
 
         tabPanel.appendChild(gameNameLabel);
@@ -390,6 +396,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         saveButton.addEventListener('click', async () => {
 
+            progressBar.style.width = '0%';
+            saveButton.textContent = 'Сохранение...';
+        
             const newGameName = gameNameInput.value;
             const newGameAppName = gameAppNameInput.value;
 
@@ -429,6 +438,10 @@ document.addEventListener('DOMContentLoaded', () => {
             game.string_code = newStringCode;
         
             try {
+
+                 // Анимация прогресса
+                progressBar.style.width = '100%';
+
                 const updateResponse = await fetch(`https://intermediate-easy-ship.glitch.me/adminpaneldata/${game.id}`, {
                     method: 'PUT',
                     headers: {
@@ -440,6 +453,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (!updateResponse.ok) {
                     throw new Error(`Ошибка обновления игры: ${updateResponse.statusText}`);
                 }
+
+                 // Скрыть прогресс-бар и вернуть текст кнопки "Сохранить"
+                progressBar.style.width = '0%';
+                saveButton.textContent = 'Сохранить';
         
                 const tabElement = document.querySelector(`[data-tab-id="${game.id}"]`);
                 const tabNameElement = tabElement.querySelector('.tab-name');

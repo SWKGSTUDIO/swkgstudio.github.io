@@ -144,6 +144,7 @@ body {
 }
 
 .close-tab-button {
+    /* position: relative; */
     background-color: #ff6d00;
     color: white;
     font-size: 10px;

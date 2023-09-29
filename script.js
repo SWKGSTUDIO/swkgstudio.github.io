@@ -35,13 +35,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 const tabName = document.createElement('span');
                 tabName.classList.add('tab-name');
-                tabName.textContent = truncateText(game.name, 15);
+                tabName.textContent = truncateText(game.name, 13);
                 tabElement.appendChild(tabName);
 
                 const closeIcon = document.createElement('button');
                 closeIcon.classList.add('close-tab', 'close-tab-button');
                 closeIcon.textContent = '';
                 tabElement.appendChild(closeIcon);
+
+                tabElement.style.width = '170px'; // Настройте ширину по вашему усмотрению
+
 
 
 
@@ -54,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         tab.classList.remove('active');
                     });
                 
-                    console.log("Добавляем класс 'active-tab' к текущей вкладке: " + game.name); // Лог названия текущей вкладки
+                    console.log("Добавляем класс 'active-tab' к текущей вкладке: " + game.name);
                     tabElement.classList.add('active');
                 
                     loadTabContent(game);
@@ -99,6 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                     return text;
                 }
+                
 
                 tabContainer.appendChild(tabElement);
 

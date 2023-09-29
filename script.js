@@ -421,8 +421,9 @@ document.addEventListener('DOMContentLoaded', () => {
             game.name = newGameName;
             game.appname = newGameAppName;
 
-            game.comApp = newComApp;
-            game.googlePlay = newGooglePlay;
+            game.comapp = newComApp;
+            game.googleplay = newGooglePlay;
+
 
             game.google_admob_id = newGoogleAdMobId;
             game.banner_id = newBannerId;

@@ -445,7 +445,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const tabNameElement = tabElement.querySelector('.tab-name');
                 tabNameElement.textContent = newGameName;
         
-                location.reload();
+                // location.reload();
         
             } catch (error) {
                 console.error('Произошла ошибка при обновлении игры на сервере:', error);

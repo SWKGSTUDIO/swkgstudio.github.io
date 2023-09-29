@@ -6,6 +6,10 @@ document.addEventListener('DOMContentLoaded', () => {
     let maxTabId = 0;
 
     async function loadTabs() {
+
+
+
+        
         try {
             const response = await fetch('https://intermediate-easy-ship.glitch.me/adminpaneldata');
             if (!response.ok) {
@@ -54,7 +58,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     tabElement.classList.add('active');
                 
                     loadTabContent(game);
+                    
                 });
+                
                 
                 
                 
@@ -157,7 +163,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const saveIcon = document.createElement('i');
         saveIcon.classList.add('fas', 'fa-save');
         saveButton.appendChild(saveIcon);
-        // Создаем элемент прогресс-бара
         const progressBar = document.createElement('div');
         progressBar.classList.add('progress-bar');
         progressBar.style.width = '0%';
@@ -293,7 +298,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
         const installZipLabel = document.createElement('label');
-        installZipLabel.textContent = 'Install Zip:';
+        installZipLabel.textContent = 'PREMIUM Zip:';
         const installZipInput = document.createElement('input');
         installZipInput.type = 'text';
         installZipInput.value = game.install_zip || '';
@@ -303,7 +308,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
         const installZipFreeLabel = document.createElement('label');
-        installZipFreeLabel.textContent = 'Install Zip Free:';
+        installZipFreeLabel.textContent = 'LITE Zip:';
         const installZipFreeInput = document.createElement('input');
         installZipFreeInput.type = 'text';
         installZipFreeInput.value = game.install_zip_free || '';
@@ -375,16 +380,8 @@ document.addEventListener('DOMContentLoaded', () => {
             stringCodeTextarea.value = generatedCode;
         });
         
-    
-        // tabPanel.appendChild(promoLiteLabel);
-        // tabPanel.appendChild(promoLiteInput);
-
-        // tabPanel.appendChild(promoPremiumLabel);
-        // tabPanel.appendChild(promoPremiumInput);
-
 
         tabContent.appendChild(tabPanel);
-        
         
         saveButton.addEventListener('click', async () => {
 

@@ -113,6 +113,7 @@ body {
     font-size: 20px;
     font-family: 'Bowlby One', serif;
     z-index: 2;
+    
 }
 
 .logo-img {
@@ -148,28 +149,27 @@ body {
     position: fixed;
     bottom: 0;
     left: 0;
-    right: 0; /* Добавляем правое поле, чтобы контейнер растягивался по ширине */
-    margin: 0 auto; /* Центрирование по горизонтали */
+    right: 0;
+    top: auto;
     width: 100%;
-    background: linear-gradient(90deg, #3e004ea4, #52005e4c);
+    /* background: linear-gradient(90deg, #3e004ea4, #52005e4c); */
+    background-color: black;
     -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
-    border-radius: 25px 25px 0px 0px;
+    /* border-radius: 25px 25px 0px 0px; */
+    border-radius: 0px;
     text-align: center;
-}
-
-
+  }
 
 
 
 .container.content-block {
     background: linear-gradient(90deg, #3e004ea4, #52005e4c);
-    -webkit-backdrop-filter: blur(5px);
-    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
     padding: 50px;
     border-radius: 25px;
     color: white;
-
     font-family: 'Baloo Bhaijaan', cursive;
 
 }
@@ -194,12 +194,14 @@ body {
     margin-bottom: 10px;
     padding: 10px;
     cursor: pointer;
+    
   }
 
   .toggle-content {
     overflow: hidden;
     max-height: 30px;
     transition: max-height 0.3s ease-in-out;
+    
   }
 
   .promocode-text {
@@ -207,6 +209,7 @@ body {
     font-weight: bold;
     color: #ffffff;
     font-family: 'Baloo Bhaijaan', cursive;
+    
 
   }
 

@@ -253,16 +253,40 @@
       </div>
     </div>
   </div>
-
-
-
-
+  
+  
+  
+  
   <div class="container logo-block-down mx-auto  ">
-
-    <div class="center-swkg">PROMOCODES</div>
-
+  
+    <div class="center-swkg">#PROMOCODES</div>
+  
   </div>
-
+  
+  
+  <script>
+    function adjustLogoContainerPosition() {
+      const contentHeight = document.body.clientHeight; // Получаем высоту контента
+      const windowHeight = window.innerHeight; // Получаем высоту окна браузера
+      const logoContainer = document.querySelector('.container.logo-block-down');
+  
+      if (contentHeight > windowHeight) {
+        // Если контент больше окна, устанавливаем фиксированную позицию внизу
+        logoContainer.style.position = 'fixed';
+        logoContainer.style.bottom = '0';
+      } else {
+        // В противном случае, возвращаем позицию по умолчанию
+        logoContainer.style.position = 'static';
+        logoContainer.style.bottom = 'auto';
+      }
+    }
+  
+    // Вызываем функцию для начальной настройки позиции
+    adjustLogoContainerPosition();
+  
+    // Слушаем событие изменения размера окна
+    window.addEventListener('resize', adjustLogoContainerPosition);
+  </script>
 
 
 

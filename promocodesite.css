@@ -145,18 +145,13 @@ body {
 
 }
 
-.container.logo-block-down {
-    position: fixed;
-    bottom: 0;
+.logo-block-down {
     left: 0;
     right: 0;
-    top: auto;
     width: 100%;
-    /* background: linear-gradient(90deg, #3e004ea4, #52005e4c); */
     background-color: black;
     -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
-    /* border-radius: 25px 25px 0px 0px; */
     border-radius: 0px;
     text-align: center;
   }

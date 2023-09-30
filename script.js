@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-        
+
         try {
             const response = await fetch('https://intermediate-easy-ship.glitch.me/adminpaneldata');
             if (!response.ok) {
@@ -50,23 +50,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 tabElement.addEventListener('click', () => {
                     console.log("Вкладка была кликнута");
-                
+
                     const allTabs = document.querySelectorAll('.tab');
                     allTabs.forEach(tab => {
                         console.log("Стиль вкладки '" + tab.textContent + "': " + getComputedStyle(tab).getPropertyValue('background-color')); // Лог стиля выбранной вкладки
                         tab.classList.remove('active');
                     });
-                
+
                     console.log("Добавляем класс 'active-tab' к текущей вкладке: " + game.name);
                     tabElement.classList.add('active');
-                
+
                     loadTabContent(game);
-                    
+
                 });
-                
-                
-                
-                
+
+
+
+
 
 
 
@@ -102,7 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                     return text;
                 }
-                
+
 
                 tabContainer.appendChild(tabElement);
 
@@ -155,10 +155,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
         tabContent.innerHTML = '';
-    
+
         const tabPanel = document.createElement('div');
         tabPanel.classList.add('tab-panel');
-    
+
 
         const saveButton = document.createElement('button');
         saveButton.textContent = 'Сохранить';
@@ -172,7 +172,7 @@ document.addEventListener('DOMContentLoaded', () => {
         progressBar.style.width = '0%';
         saveButton.appendChild(progressBar);
 
-    
+
         const gameNameLabel = document.createElement('label');
         gameNameLabel.textContent = 'Название:';
         const gameNameInput = document.createElement('input');
@@ -212,7 +212,7 @@ document.addEventListener('DOMContentLoaded', () => {
         linkLiteInput.id = 'link-lite-input';
         tabPanel.appendChild(linkLiteLabel);
         tabPanel.appendChild(linkLiteInput);
-        
+
 
         const linkPremiumLabel = document.createElement('label');
         linkPremiumLabel.textContent = 'Ссылка Premium:';
@@ -223,7 +223,7 @@ document.addEventListener('DOMContentLoaded', () => {
         tabPanel.appendChild(linkPremiumLabel);
         tabPanel.appendChild(linkPremiumInput);
 
-       
+
 
         const gameAppNameLabel = document.createElement('label');
         gameAppNameLabel.textContent = 'App Название:';
@@ -235,7 +235,7 @@ document.addEventListener('DOMContentLoaded', () => {
         tabPanel.appendChild(gameAppNameInput);
 
 
-    
+
         const googleAdMobLabel = document.createElement('label');
         googleAdMobLabel.textContent = 'AdMob AppID:';
         const googleAdMobInput = document.createElement('input');
@@ -246,7 +246,7 @@ document.addEventListener('DOMContentLoaded', () => {
         tabPanel.appendChild(googleAdMobInput);
 
 
-    
+
         const bannerIdLabel = document.createElement('label');
         bannerIdLabel.textContent = 'Баннер ИД:';
         const bannerIdInput = document.createElement('input');
@@ -298,7 +298,7 @@ document.addEventListener('DOMContentLoaded', () => {
         promoPremiumInput.id = 'promo-premium-input';
         tabPanel.appendChild(promoPremiumLabel);
         tabPanel.appendChild(promoPremiumInput);
-        
+
 
 
         const installZipLabel = document.createElement('label');
@@ -332,6 +332,31 @@ document.addEventListener('DOMContentLoaded', () => {
         tabPanel.appendChild(intentInput);
 
 
+        // Создаем поле для priceLite
+        const priceLiteLabel = document.createElement('label');
+        priceLiteLabel.textContent = 'Price Lite:';
+        const priceLiteInput = document.createElement('input');
+        priceLiteInput.type = 'text';
+        priceLiteInput.value = game.priceLite || ''; // Здесь установите значение по умолчанию, если необходимо
+        priceLiteInput.id = 'price-lite-input';
+        tabPanel.appendChild(priceLiteLabel);
+        tabPanel.appendChild(priceLiteInput);
+
+        // Создаем поле для pricePremium
+        const pricePremiumLabel = document.createElement('label');
+        pricePremiumLabel.textContent = 'Price Premium:';
+        const pricePremiumInput = document.createElement('input');
+        pricePremiumInput.type = 'text';
+        pricePremiumInput.value = game.pricePremium || ''; // Здесь установите значение по умолчанию, если необходимо
+        pricePremiumInput.id = 'price-premium-input';
+        tabPanel.appendChild(pricePremiumLabel);
+        tabPanel.appendChild(pricePremiumInput);
+
+
+
+
+
+
 
         // Создайте элементы для ввода строкового кода
         const stringCodeLabel = document.createElement('label');
@@ -347,7 +372,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const newStringCode = stringCodeTextarea.value;
             game.string_code = newStringCode;
         });
-    
+
         const generateCodeButton = document.createElement('button');
         generateCodeButton.textContent = 'Сгенерировать код';
         generateCodeButton.classList.add('generate-code-button');
@@ -364,9 +389,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const install_zip_free = installZipFreeInput.value;
             const Promo_Lite = promoLiteInput.value;
             const Promo_Premium = promoPremiumInput.value;
-            
+
             const intent = intentInput.value;
-        
+
             const generatedCode = `
             <string name="app_name">${app_name}</string>
             <string name="admob_app_id">${admob_app_id}</string>
@@ -380,18 +405,18 @@ document.addEventListener('DOMContentLoaded', () => {
            
             <string name="intent">${intent}</string>
             `;
-        
+
             stringCodeTextarea.value = generatedCode;
         });
-        
+
 
         tabContent.appendChild(tabPanel);
-        
+
         saveButton.addEventListener('click', async () => {
 
             progressBar.style.width = '0%';
             saveButton.textContent = 'Сохранение...';
-        
+
             const newGameName = gameNameInput.value;
             game.name = newGameName;
 
@@ -437,12 +462,19 @@ document.addEventListener('DOMContentLoaded', () => {
             const newIntent = intentInput.value;
             game.intent = newIntent;
 
+            const newPriceLite = priceLiteInput.value;
+            game.priceLite = newPriceLite;
+
+            const newPricePremium = pricePremiumInput.value;
+            game.pricePremium = newPricePremium;
+
+
             const newStringCode = stringCodeTextarea.value;
             game.string_code = newStringCode;
-        
+
             try {
 
-                 // Анимация прогресса
+                // Анимация прогресса
                 await new Promise(resolve => setTimeout(resolve, 500));
                 progressBar.style.width = '100%';
 
@@ -453,27 +485,27 @@ document.addEventListener('DOMContentLoaded', () => {
                     },
                     body: JSON.stringify(game)
                 });
-        
+
                 if (!updateResponse.ok) {
                     throw new Error(`Ошибка обновления игры: ${updateResponse.statusText}`);
                 }
 
-                 // Скрыть прогресс-бар и вернуть текст кнопки "Сохранить"
+                // Скрыть прогресс-бар и вернуть текст кнопки "Сохранить"
                 progressBar.style.width = '0%';
                 saveButton.textContent = 'Сохранить';
-        
+
                 const tabElement = document.querySelector(`[data-tab-id="${game.id}"]`);
                 const tabNameElement = tabElement.querySelector('.tab-name');
                 tabNameElement.textContent = newGameName;
-        
+
                 // location.reload();
-        
+
             } catch (error) {
                 console.error('Произошла ошибка при обновлении игры на сервере:', error);
             }
         });
     }
-    
+
 
 
     function removeTab(tabElement) {

@@ -1833,7 +1833,7 @@ textarea:focus {
 .g-imagegrid .g-imagegrid-link {
     display: block;
     position: relative;
-    background: #6bbf80;
+    background: #000000;
     width: 100%;
     height: 100%;
     -webkit-transition: all 0.35s;
@@ -2630,7 +2630,7 @@ textarea:focus {
 }
 
 #g-offcanvas {
-    background: #355c7d;
+    background: #535353;
     width: 12rem;
     color: #eceeef
 }
@@ -2640,7 +2640,7 @@ textarea:focus {
 }
 
 #g-offcanvas a:hover {
-    color: #374
+    color: rgb(101, 101, 101)
 }
 
 #g-offcanvas h1,
@@ -2678,7 +2678,7 @@ textarea:focus {
 
 .g-offcanvas-toggle {
     font-size: 2rem;
-    color: #6bbf80;
+    color: #bbbbbb;
     width: 32px;
     height: 32px;
     top: 1.2rem;
@@ -2723,16 +2723,16 @@ textarea:focus {
 }
 
 #g-offcanvas #g-mobilemenu-container ul>li:not(.g-menu-item-type-particle):not(.g-menu-item-type-module).active {
-    background: #4fb368
+    background: #adadad
 }
 
 #g-offcanvas #g-mobilemenu-container ul>li:not(.g-menu-item-type-particle):not(.g-menu-item-type-module):hover {
-    background: #59b771
+    background: #9f9f9f
 }
 
 #g-offcanvas #g-mobilemenu-container ul>li.g-menu-item-link-parent>.g-menu-item-container>.g-menu-parent-indicator {
-    border: 1px solid #80c892;
-    background: #5db974;
+    border: 1px solid #c0c0c0;
+    background: #a8a8a8;
     border-radius: 0.25rem;
     margin: -0.3rem 0 -0.2rem 0.5rem;
     padding: 0.2rem
@@ -3033,13 +3033,13 @@ textarea:focus {
 
 .g-newsslider-headlines li.selected {
     opacity: 1;
-    background: #6bbf80;
+    background: #aeaeae;
     margin-left: -2rem;
     box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.6)
 }
 
 .g-newsslider-headlines li.selected:hover {
-    background: #6bbf80
+    background: #9b9b9b
 }
 
 @media only all and (max-width: 47.938rem) {
@@ -3292,7 +3292,7 @@ textarea:focus {
 }
 
 .g-newsslider-scrollbar .thumb {
-    background: rgba(107, 191, 128, 0.5);
+    background: rgba(162, 162, 162, 0.5);
     height: 20px;
     width: 9px;
     cursor: pointer;
@@ -3395,11 +3395,11 @@ textarea:focus {
 }
 
 .g-newsslider-navigation div.prev {
-    background: #6bbf80
+    background: #afafaf
 }
 
 .g-newsslider-navigation div.prev:hover {
-    background: #3b894f
+    background: #787878
 }
 
 .g-newsslider-navigation div.next {
@@ -3984,7 +3984,7 @@ textarea:focus {
 }
 
 .accordion li.active .accordion-item-title {
-    color: #6bbf80
+    color: #949494
 }
 
 .accordion li.active .toggle {
@@ -4207,12 +4207,12 @@ textarea:focus {
 
 .alert-success {
     color: #fff;
-    background-color: #6bbf80;
+    background-color: #898989;
     border-color: #000
 }
 
 .alert-success h4 {
-    color: #468847
+    color: #878787
 }
 
 .alert-danger,
@@ -4630,14 +4630,14 @@ a img.aligncenter {
 
 .pagination ul.pagination-list li.pagination-list-item>a:hover,
 .page-links ul.pagination-list li.pagination-list-item>a:hover {
-    background: #6bbf80
+    background: #ababab
 }
 
 .pagination ul.pagination-list li.pagination-list-item>span,
 .page-links ul.pagination-list li.pagination-list-item>span {
     padding: 10px 15px;
     color: #f5f5f5;
-    background: #6bbf80;
+    background: #b0b0b0;
     border: 0 none;
     border-radius: 0 !important
 }
@@ -4649,7 +4649,7 @@ a img.aligncenter {
 
 .pagination ul.pagination-list li.pagination-list-item>span.dots:hover,
 .page-links ul.pagination-list li.pagination-list-item>span.dots:hover {
-    background: #6bbf80
+    background: #989898
 }
 
 .pagination ul.pagination-list li.pagination-list-item>span:hover,
@@ -4729,7 +4729,7 @@ a img.aligncenter {
     padding: 0 20px;
     border-radius: 0.25rem;
     background: #f2f2f2;
-    border: 1px solid #6bbf80;
+    border: 1px solid #b3b3b3;
     box-shadow: 0 0 10px #4bac63
 }
 
@@ -4803,7 +4803,7 @@ a img.aligncenter {
 }
 
 #comments ol.commentlist li.comment .comment-author .author-meta .author-name a:hover {
-    color: #6bbf80
+    color: #979797
 }
 
 @media only all and (max-width: 47.938rem) {
@@ -4988,7 +4988,7 @@ a img.aligncenter {
     display: inline-block;
     font-family: "Arial", sans-serif;
     border-radius: 0.25rem;
-    background: #6bbf80;
+    background: #9a9a9a;
     color: #ffffff;
     padding: 5px 8px;
     margin: 0 4px 8px 0;

@@ -289,15 +289,6 @@ document.addEventListener('DOMContentLoaded', () => {
         tabPanel.appendChild(ironSourceAppKeyLabel);
         tabPanel.appendChild(ironSourceAppKeyInput);
 
-        // Создаем поле для межстранички PLACEMENT_NAME
-        const placementNameLabel = document.createElement('label');
-        placementNameLabel.textContent = 'Iron Source - Межстраничка:';
-        const placementNameInput = document.createElement('input');
-        placementNameInput.type = 'text';
-        placementNameInput.value = game.placementName || ''; // Установите значение по умолчанию, если необходимо
-        placementNameInput.id = 'placement-name-input';
-        tabPanel.appendChild(placementNameLabel);
-        tabPanel.appendChild(placementNameInput);
 
 
 
@@ -519,9 +510,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const newIronSourceAppKey = ironSourceAppKeyInput.value;
             game.ironSourceAppKey = newIronSourceAppKey;
 
-            // Получаем значение из поля ввода для межстранички PLACEMENT_NAME
-            const newPlacementName = placementNameInput.value;
-            game.placementName = newPlacementName;
 
             // Получаем значение из поля ввода для YANDEX межстранички
             const newYandexInterstitial = yandexInterstitialInput.value;

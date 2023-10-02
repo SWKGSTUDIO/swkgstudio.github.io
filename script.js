@@ -279,6 +279,53 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
+        // Создаем поле для Iron Source AppKey
+        const ironSourceAppKeyLabel = document.createElement('label');
+        ironSourceAppKeyLabel.textContent = 'Iron Source - AppKey:';
+        const ironSourceAppKeyInput = document.createElement('input');
+        ironSourceAppKeyInput.type = 'text';
+        ironSourceAppKeyInput.value = game.ironSourceAppKey || ''; // Установите значение по умолчанию, если необходимо
+        ironSourceAppKeyInput.id = 'iron-source-appkey-input';
+        tabPanel.appendChild(ironSourceAppKeyLabel);
+        tabPanel.appendChild(ironSourceAppKeyInput);
+
+        // Создаем поле для межстранички PLACEMENT_NAME
+        const placementNameLabel = document.createElement('label');
+        placementNameLabel.textContent = 'Iron Source - Межстраничка:';
+        const placementNameInput = document.createElement('input');
+        placementNameInput.type = 'text';
+        placementNameInput.value = game.placementName || ''; // Установите значение по умолчанию, если необходимо
+        placementNameInput.id = 'placement-name-input';
+        tabPanel.appendChild(placementNameLabel);
+        tabPanel.appendChild(placementNameInput);
+
+
+
+        // Создаем поле для YANDEX межстраничка
+        const yandexInterstitialLabel = document.createElement('label');
+        yandexInterstitialLabel.textContent = 'YANDEX - межстраничка:';
+        const yandexInterstitialInput = document.createElement('input');
+        yandexInterstitialInput.type = 'text';
+        yandexInterstitialInput.value = game.yandexInterstitial || ''; // Установите значение по умолчанию, если необходимо
+        yandexInterstitialInput.id = 'yandex-interstitial-input';
+        tabPanel.appendChild(yandexInterstitialLabel);
+        tabPanel.appendChild(yandexInterstitialInput);
+
+        // Создаем поле для YANDEX Ревард
+        const yandexRewardLabel = document.createElement('label');
+        yandexRewardLabel.textContent = 'YANDEX - Ревард:';
+        const yandexRewardInput = document.createElement('input');
+        yandexRewardInput.type = 'text';
+        yandexRewardInput.value = game.yandexReward || ''; // Установите значение по умолчанию, если необходимо
+        yandexRewardInput.id = 'yandex-reward-input';
+        tabPanel.appendChild(yandexRewardLabel);
+        tabPanel.appendChild(yandexRewardInput);
+
+        
+
+
+
+
         const promoLiteLabel = document.createElement('label');
         promoLiteLabel.textContent = 'Промо-код Lite:';
         const promoLiteInput = document.createElement('input');
@@ -467,6 +514,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const newPricePremium = pricePremiumInput.value;
             game.pricePremium = newPricePremium;
+
+            // Получаем значение из поля ввода для Iron Source AppKey
+            const newIronSourceAppKey = ironSourceAppKeyInput.value;
+            game.ironSourceAppKey = newIronSourceAppKey;
+
+            // Получаем значение из поля ввода для межстранички PLACEMENT_NAME
+            const newPlacementName = placementNameInput.value;
+            game.placementName = newPlacementName;
+
+            // Получаем значение из поля ввода для YANDEX межстранички
+            const newYandexInterstitial = yandexInterstitialInput.value;
+            game.yandexInterstitial = newYandexInterstitial;
+
+            // Получаем значение из поля ввода для YANDEX Ревард
+            const newYandexReward = yandexRewardInput.value;
+            game.yandexReward = newYandexReward;
+
 
 
             const newStringCode = stringCodeTextarea.value;

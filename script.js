@@ -297,7 +297,7 @@ document.addEventListener('DOMContentLoaded', () => {
         yandexInterstitialLabel.textContent = 'YANDEX - межстраничка:';
         const yandexInterstitialInput = document.createElement('input');
         yandexInterstitialInput.type = 'text';
-        yandexInterstitialInput.value = game.yandexInterstitial || ''; // Установите значение по умолчанию, если необходимо
+        yandexInterstitialInput.value = game.yandexInterstitial || '';
         yandexInterstitialInput.id = 'yandex-interstitial-input';
         tabPanel.appendChild(yandexInterstitialLabel);
         tabPanel.appendChild(yandexInterstitialInput);
@@ -307,12 +307,21 @@ document.addEventListener('DOMContentLoaded', () => {
         yandexRewardLabel.textContent = 'YANDEX - Ревард:';
         const yandexRewardInput = document.createElement('input');
         yandexRewardInput.type = 'text';
-        yandexRewardInput.value = game.yandexReward || ''; // Установите значение по умолчанию, если необходимо
+        yandexRewardInput.value = game.yandexReward || '';
         yandexRewardInput.id = 'yandex-reward-input';
         tabPanel.appendChild(yandexRewardLabel);
         tabPanel.appendChild(yandexRewardInput);
 
-        
+        // Создаем поле для YANDEX баннера
+        const yandexBannerLabel = document.createElement('label');
+        yandexBannerLabel.textContent = 'YANDEX - Баннер:';
+        const yandexBannerInput = document.createElement('input');
+        yandexBannerInput.type = 'text';
+        yandexBannerInput.value = game.yandexBanner || '';
+        yandexBannerInput.id = 'yandex-banner-input';
+        tabPanel.appendChild(yandexBannerLabel);
+        tabPanel.appendChild(yandexBannerInput);
+
 
 
 
@@ -427,25 +436,40 @@ document.addEventListener('DOMContentLoaded', () => {
             const install_zip_free = installZipFreeInput.value;
             const Promo_Lite = promoLiteInput.value;
             const Promo_Premium = promoPremiumInput.value;
-
             const intent = intentInput.value;
-
+        
+            // Значения для YANDEX
+            const yandexInterstitial = yandexInterstitialInput.value;
+            const yandexReward = yandexRewardInput.value;
+            const yandexBanner = yandexBannerInput.value;
+        
+            // Значение для IRONSOURCE
+            const ironSourceAppKey = ironSourceAppKeyInput.value;
+        
             const generatedCode = `
-            <string name="app_name">${app_name}</string>
-            <string name="admob_app_id">${admob_app_id}</string>
-            <string name="banner_id">${banner_id}</string>
-            <string name="interstitial_id">${interstitial_id}</string>
-            <string name="reward_id">${reward_id}</string>
-            <string name="install_zip">${install_zip}</string>
-            <string name="install_zip_free">${install_zip_free}</string>
-            <string name="Promo_Lite">${Promo_Lite}</string>
-            <string name="Promo_Premium">${Promo_Premium}</string>
-           
-            <string name="intent">${intent}</string>
+                <string name="app_name">${app_name}</string>
+                <string name="admob_app_id">${admob_app_id}</string>
+                <string name="banner_id">${banner_id}</string>
+                <string name="interstitial_id">${interstitial_id}</string>
+                <string name="reward_id">${reward_id}</string>
+                <string name="install_zip">${install_zip}</string>
+                <string name="install_zip_free">${install_zip_free}</string>
+                <string name="Promo_Lite">${Promo_Lite}</string>
+                <string name="Promo_Premium">${Promo_Premium}</string>
+                <string name="intent">${intent}</string>
+                
+                <!-- Значения для YANDEX -->
+                <string name="yandex_interstitial">${yandexInterstitial}</string>
+                <string name="yandex_reward">${yandexReward}</string>
+                <string name="yandex_banner">${yandexBanner}</string>
+        
+                <!-- Значение для IRONSOURCE -->
+                <string name="iron_source_app_key">${ironSourceAppKey}</string>
             `;
-
+        
             stringCodeTextarea.value = generatedCode;
         });
+        
 
 
         tabContent.appendChild(tabPanel);
@@ -518,6 +542,11 @@ document.addEventListener('DOMContentLoaded', () => {
             // Получаем значение из поля ввода для YANDEX Ревард
             const newYandexReward = yandexRewardInput.value;
             game.yandexReward = newYandexReward;
+
+            // Получаем значение из поля ввода для YANDEX баннера
+            const newYandexBanner = yandexBannerInput.value;
+            game.yandexBanner = newYandexBanner;
+
 
 
 

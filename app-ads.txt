@@ -1,5 +1,5 @@
 google.com, pub-9459765320848198, DIRECT, f08c47fec0942fa0
-
+google.com, pub-6954966990224140, DIRECT, f08c47fec0942fa0
 
 yandex.com, 100193570, DIRECT
 improvedigital.com, 2031, RESELLER

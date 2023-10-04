@@ -437,27 +437,29 @@ document.addEventListener('DOMContentLoaded', () => {
             const Promo_Lite = promoLiteInput.value;
             const Promo_Premium = promoPremiumInput.value;
             const intent = intentInput.value;
-        
             // Значения для YANDEX
             const yandexInterstitial = yandexInterstitialInput.value;
             const yandexReward = yandexRewardInput.value;
             const yandexBanner = yandexBannerInput.value;
-        
             // Значение для IRONSOURCE
             const ironSourceAppKey = ironSourceAppKeyInput.value;
         
             const generatedCode = `
+
                 <string name="app_name">${app_name}</string>
-                <string name="admob_app_id">${admob_app_id}</string>
-                <string name="banner_id">${banner_id}</string>
-                <string name="interstitial_id">${interstitial_id}</string>
-                <string name="reward_id">${reward_id}</string>
+               
                 <string name="install_zip">${install_zip}</string>
                 <string name="install_zip_free">${install_zip_free}</string>
                 <string name="Promo_Lite">${Promo_Lite}</string>
                 <string name="Promo_Premium">${Promo_Premium}</string>
                 <string name="intent">${intent}</string>
                 
+                <!-- Значения для GOOGLE -->
+                <string name="admob_app_id">${admob_app_id}</string>
+                <string name="banner_id">${banner_id}</string>
+                <string name="interstitial_id">${interstitial_id}</string>
+                <string name="reward_id">${reward_id}</string>
+
                 <!-- Значения для YANDEX -->
                 <string name="yandex_interstitial">${yandexInterstitial}</string>
                 <string name="yandex_reward">${yandexReward}</string>
@@ -465,6 +467,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
                 <!-- Значение для IRONSOURCE -->
                 <string name="iron_source_app_key">${ironSourceAppKey}</string>
+
             `;
         
             stringCodeTextarea.value = generatedCode;

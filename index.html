@@ -108,49 +108,50 @@
 
 
   <script>
-    function checkAdBlockError() {
-      var script = document.createElement('script');
-      script.src = 'https://yandex.ru/ads/system/context.js';
-      script.onerror = function () {
-        // Создание кастомного диалога
-        var dialog = document.createElement('div');
-        dialog.classList.add('custom-dialog');
 
-        var message = document.createElement('p');
-        message.textContent = 'You are using an ad blocker.\nPlease disable it to continue using the website.';
-        dialog.appendChild(message);
+    // function checkAdBlockError() {
+    //   var script = document.createElement('script');
+    //   script.src = 'https://yandex.ru/ads/system/context.js';
+    //   script.onerror = function () {
+    //     // Создание кастомного диалога
+    //     var dialog = document.createElement('div');
+    //     dialog.classList.add('custom-dialog');
 
-        var closeButton = document.createElement('button');
-        closeButton.textContent = 'OK';
-        closeButton.addEventListener('click', function () {
-          // Перезагрузка страницы
-          location.reload();
-        });
-        dialog.appendChild(closeButton);
+    //     var message = document.createElement('p');
+    //     message.textContent = 'You are using an ad blocker.\nPlease disable it to continue using the website.';
+    //     dialog.appendChild(message);
 
-        document.body.appendChild(dialog);
+    //     var closeButton = document.createElement('button');
+    //     closeButton.textContent = 'OK';
+    //     closeButton.addEventListener('click', function () {
+    //       // Перезагрузка страницы
+    //       location.reload();
+    //     });
+    //     dialog.appendChild(closeButton);
 
-        // Показать невидимую панель, блокирующую взаимодействие
-        var overlay = document.querySelector('.overlay');
-        overlay.style.display = 'block';
-      };
-      document.body.appendChild(script);
-    }
+    //     document.body.appendChild(dialog);
 
-    window.onload = checkAdBlockError;
+    //     // Показать невидимую панель, блокирующую взаимодействие
+    //     var overlay = document.querySelector('.overlay');
+    //     overlay.style.display = 'block';
+    //   };
+    //   document.body.appendChild(script);
+    // }
+
+    // window.onload = checkAdBlockError;
 
 
-    function handleTileClick(link, imageSrc, isMobile) {
-      if (typeof Ya === "undefined") {
-        window.alert('You are using an ad blocker. Please disable it to continue using the website.');
-        return;
-      }
-      showYandexAd(isMobile, () => {
-        setTimeout(() => {
-          window.open(link, '_blank');
-        }, 500);
-      });
-    }
+    // function handleTileClick(link, imageSrc, isMobile) {
+    //   if (typeof Ya === "undefined") {
+    //     window.alert('You are using an ad blocker. Please disable it to continue using the website.');
+    //     return;
+    //   }
+    //   showYandexAd(isMobile, () => {
+    //     setTimeout(() => {
+    //       window.open(link, '_blank');
+    //     }, 500);
+    //   });
+    // }
 
     function showYandexAd(isMobile, callback) {
       if (typeof Ya === "undefined") {

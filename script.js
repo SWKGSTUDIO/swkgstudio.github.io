@@ -182,6 +182,15 @@ document.addEventListener('DOMContentLoaded', () => {
         tabPanel.appendChild(gameNameLabel);
         tabPanel.appendChild(gameNameInput);
 
+        const intentLabel = document.createElement('label');
+        intentLabel.textContent = 'Intent:';
+        const intentInput = document.createElement('input');
+        intentInput.type = 'text';
+        intentInput.value = game.intent || '';
+        intentInput.id = 'intent-input';
+        tabPanel.appendChild(intentLabel);
+        tabPanel.appendChild(intentInput);
+
 
         const GooglePlayLabel = document.createElement('label');
         GooglePlayLabel.textContent = 'GOOGLE PLAY:';
@@ -292,6 +301,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
+         // Создаем поле для YANDEX баннера
+         const yandexBannerLabel = document.createElement('label');
+         yandexBannerLabel.textContent = 'YANDEX - Баннер:';
+         const yandexBannerInput = document.createElement('input');
+         yandexBannerInput.type = 'text';
+         yandexBannerInput.value = game.yandexBanner || '';
+         yandexBannerInput.id = 'yandex-banner-input';
+         tabPanel.appendChild(yandexBannerLabel);
+         tabPanel.appendChild(yandexBannerInput);
+ 
+ 
         // Создаем поле для YANDEX межстраничка
         const yandexInterstitialLabel = document.createElement('label');
         yandexInterstitialLabel.textContent = 'YANDEX - межстраничка:';
@@ -312,17 +332,7 @@ document.addEventListener('DOMContentLoaded', () => {
         tabPanel.appendChild(yandexRewardLabel);
         tabPanel.appendChild(yandexRewardInput);
 
-        // Создаем поле для YANDEX баннера
-        const yandexBannerLabel = document.createElement('label');
-        yandexBannerLabel.textContent = 'YANDEX - Баннер:';
-        const yandexBannerInput = document.createElement('input');
-        yandexBannerInput.type = 'text';
-        yandexBannerInput.value = game.yandexBanner || '';
-        yandexBannerInput.id = 'yandex-banner-input';
-        tabPanel.appendChild(yandexBannerLabel);
-        tabPanel.appendChild(yandexBannerInput);
-
-
+       
 
 
 
@@ -369,14 +379,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-        const intentLabel = document.createElement('label');
-        intentLabel.textContent = 'Intent:';
-        const intentInput = document.createElement('input');
-        intentInput.type = 'text';
-        intentInput.value = game.intent || '';
-        intentInput.id = 'intent-input';
-        tabPanel.appendChild(intentLabel);
-        tabPanel.appendChild(intentInput);
+       
 
 
         // // Создаем поле для priceLite
@@ -539,18 +542,18 @@ document.addEventListener('DOMContentLoaded', () => {
             // game.ironSourceAppKey = newIronSourceAppKey;
 
 
-            // Получаем значение из поля ввода для YANDEX межстранички
-            const newYandexInterstitial = yandexInterstitialInput.value;
-            game.yandexInterstitial = newYandexInterstitial;
+            // Получаем значение из поля ввода для YANDEX баннера
+            const newYandexBanner = yandexBannerInput.value;
+            game.yandexBanner = newYandexBanner;
 
             // Получаем значение из поля ввода для YANDEX Ревард
             const newYandexReward = yandexRewardInput.value;
             game.yandexReward = newYandexReward;
 
-            // Получаем значение из поля ввода для YANDEX баннера
-            const newYandexBanner = yandexBannerInput.value;
-            game.yandexBanner = newYandexBanner;
 
+            // Получаем значение из поля ввода для YANDEX межстранички
+            const newYandexInterstitial = yandexInterstitialInput.value;
+            game.yandexInterstitial = newYandexInterstitial;
 
 
 

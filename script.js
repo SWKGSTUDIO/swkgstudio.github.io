@@ -432,26 +432,23 @@ document.addEventListener('DOMContentLoaded', () => {
             const banner_id = bannerIdInput.value;
             const interstitial_id = interstitialIdInput.value;
             const reward_id = rewardIdInput.value;
-            const install_zip = installZipInput.value;
-            const install_zip_free = installZipFreeInput.value;
-            const Promo_Lite = promoLiteInput.value;
-            const Promo_Premium = promoPremiumInput.value;
+
+            // const install_zip = installZipInput.value;
+            // const install_zip_free = installZipFreeInput.value;
+            // const Promo_Lite = promoLiteInput.value;
+            // const Promo_Premium = promoPremiumInput.value;
+
             const intent = intentInput.value;
-            // Значения для YANDEX
+
             const yandexInterstitial = yandexInterstitialInput.value;
             const yandexReward = yandexRewardInput.value;
             const yandexBanner = yandexBannerInput.value;
-            // Значение для IRONSOURCE
-            const ironSourceAppKey = ironSourceAppKeyInput.value;
+
+            // const ironSourceAppKey = ironSourceAppKeyInput.value;
         
             const generatedCode = `
-
                 <string name="app_name">${app_name}</string>
                
-                <string name="install_zip">${install_zip}</string>
-                <string name="install_zip_free">${install_zip_free}</string>
-                <string name="Promo_Lite">${Promo_Lite}</string>
-                <string name="Promo_Premium">${Promo_Premium}</string>
                 <string name="intent">${intent}</string>
                 
                 <!-- Значения для GOOGLE -->
@@ -464,9 +461,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 <string name="yandex_interstitial">${yandexInterstitial}</string>
                 <string name="yandex_reward">${yandexReward}</string>
                 <string name="yandex_banner">${yandexBanner}</string>
-        
-                <!-- Значение для IRONSOURCE -->
-                <string name="iron_source_app_key">${ironSourceAppKey}</string>
 
             `;
         
@@ -474,6 +468,13 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         
 
+        // <!-- Значение для IRONSOURCE -->
+        // <string name="iron_source_app_key">${ironSourceAppKey}</string>
+
+        // <string name="install_zip">${install_zip}</string>
+        // <string name="install_zip_free">${install_zip_free}</string>
+        // <string name="Promo_Lite">${Promo_Lite}</string>
+        // <string name="Promo_Premium">${Promo_Premium}</string>
 
         tabContent.appendChild(tabPanel);
 
@@ -506,36 +507,36 @@ document.addEventListener('DOMContentLoaded', () => {
             const newRewardId = rewardIdInput.value;
             game.reward_id = newRewardId;
 
-            const newInstallZip = installZipInput.value;
-            game.install_zip = newInstallZip;
+            // const newInstallZip = installZipInput.value;
+            // game.install_zip = newInstallZip;
 
-            const newInstallZipFree = installZipFreeInput.value;
-            game.install_zip_free = newInstallZipFree;
+            // const newInstallZipFree = installZipFreeInput.value;
+            // game.install_zip_free = newInstallZipFree;
 
-            const newPromoLite = promoLiteInput.value;
-            game.promo_lite = newPromoLite;
+            // const newPromoLite = promoLiteInput.value;
+            // game.promo_lite = newPromoLite;
 
-            const newPromoPremium = promoPremiumInput.value;
-            game.promo_premium = newPromoPremium;
+            // const newPromoPremium = promoPremiumInput.value;
+            // game.promo_premium = newPromoPremium;
 
-            const newLinkLite = linkLiteInput.value;
-            game.link_lite = newLinkLite;
+            // const newLinkLite = linkLiteInput.value;
+            // game.link_lite = newLinkLite;
 
-            const newLinkPremium = linkPremiumInput.value;
-            game.link_premium = newLinkPremium;
+            // const newLinkPremium = linkPremiumInput.value;
+            // game.link_premium = newLinkPremium;
 
             const newIntent = intentInput.value;
             game.intent = newIntent;
 
-            const newPriceLite = priceLiteInput.value;
-            game.priceLite = newPriceLite;
+            // const newPriceLite = priceLiteInput.value;
+            // game.priceLite = newPriceLite;
 
-            const newPricePremium = pricePremiumInput.value;
-            game.pricePremium = newPricePremium;
+            // const newPricePremium = pricePremiumInput.value;
+            // game.pricePremium = newPricePremium;
 
-            // Получаем значение из поля ввода для Iron Source AppKey
-            const newIronSourceAppKey = ironSourceAppKeyInput.value;
-            game.ironSourceAppKey = newIronSourceAppKey;
+            
+            // const newIronSourceAppKey = ironSourceAppKeyInput.value;
+            // game.ironSourceAppKey = newIronSourceAppKey;
 
 
             // Получаем значение из поля ввода для YANDEX межстранички

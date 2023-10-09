@@ -204,24 +204,24 @@ document.addEventListener('DOMContentLoaded', () => {
         tabPanel.appendChild(ComAppInput);
 
 
-        const linkLiteLabel = document.createElement('label');
-        linkLiteLabel.textContent = 'Ссылка Lite:';
-        const linkLiteInput = document.createElement('input');
-        linkLiteInput.type = 'text';
-        linkLiteInput.value = game.link_lite || '';
-        linkLiteInput.id = 'link-lite-input';
-        tabPanel.appendChild(linkLiteLabel);
-        tabPanel.appendChild(linkLiteInput);
+        // const linkLiteLabel = document.createElement('label');
+        // linkLiteLabel.textContent = 'Ссылка Lite:';
+        // const linkLiteInput = document.createElement('input');
+        // linkLiteInput.type = 'text';
+        // linkLiteInput.value = game.link_lite || '';
+        // linkLiteInput.id = 'link-lite-input';
+        // tabPanel.appendChild(linkLiteLabel);
+        // tabPanel.appendChild(linkLiteInput);
 
 
-        const linkPremiumLabel = document.createElement('label');
-        linkPremiumLabel.textContent = 'Ссылка Premium:';
-        const linkPremiumInput = document.createElement('input');
-        linkPremiumInput.type = 'text';
-        linkPremiumInput.value = game.link_premium || '';
-        linkPremiumInput.id = 'link-premium-input';
-        tabPanel.appendChild(linkPremiumLabel);
-        tabPanel.appendChild(linkPremiumInput);
+        // const linkPremiumLabel = document.createElement('label');
+        // linkPremiumLabel.textContent = 'Ссылка Premium:';
+        // const linkPremiumInput = document.createElement('input');
+        // linkPremiumInput.type = 'text';
+        // linkPremiumInput.value = game.link_premium || '';
+        // linkPremiumInput.id = 'link-premium-input';
+        // tabPanel.appendChild(linkPremiumLabel);
+        // tabPanel.appendChild(linkPremiumInput);
 
 
 
@@ -279,15 +279,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-        // Создаем поле для Iron Source AppKey
-        const ironSourceAppKeyLabel = document.createElement('label');
-        ironSourceAppKeyLabel.textContent = 'Iron Source - AppKey:';
-        const ironSourceAppKeyInput = document.createElement('input');
-        ironSourceAppKeyInput.type = 'text';
-        ironSourceAppKeyInput.value = game.ironSourceAppKey || ''; // Установите значение по умолчанию, если необходимо
-        ironSourceAppKeyInput.id = 'iron-source-appkey-input';
-        tabPanel.appendChild(ironSourceAppKeyLabel);
-        tabPanel.appendChild(ironSourceAppKeyInput);
+        // // Создаем поле для Iron Source AppKey
+        // const ironSourceAppKeyLabel = document.createElement('label');
+        // ironSourceAppKeyLabel.textContent = 'Iron Source - AppKey:';
+        // const ironSourceAppKeyInput = document.createElement('input');
+        // ironSourceAppKeyInput.type = 'text';
+        // ironSourceAppKeyInput.value = game.ironSourceAppKey || ''; // Установите значение по умолчанию, если необходимо
+        // ironSourceAppKeyInput.id = 'iron-source-appkey-input';
+        // tabPanel.appendChild(ironSourceAppKeyLabel);
+        // tabPanel.appendChild(ironSourceAppKeyInput);
 
 
 
@@ -326,46 +326,46 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-        const promoLiteLabel = document.createElement('label');
-        promoLiteLabel.textContent = 'Промо-код Lite:';
-        const promoLiteInput = document.createElement('input');
-        promoLiteInput.type = 'text';
-        promoLiteInput.value = game.promo_lite || '';
-        promoLiteInput.id = 'promo-lite-input';
-        tabPanel.appendChild(promoLiteLabel);
-        tabPanel.appendChild(promoLiteInput);
+        // const promoLiteLabel = document.createElement('label');
+        // promoLiteLabel.textContent = 'Промо-код Lite:';
+        // const promoLiteInput = document.createElement('input');
+        // promoLiteInput.type = 'text';
+        // promoLiteInput.value = game.promo_lite || '';
+        // promoLiteInput.id = 'promo-lite-input';
+        // tabPanel.appendChild(promoLiteLabel);
+        // tabPanel.appendChild(promoLiteInput);
 
 
 
-        const promoPremiumLabel = document.createElement('label');
-        promoPremiumLabel.textContent = 'Промо-код Premium:';
-        const promoPremiumInput = document.createElement('input');
-        promoPremiumInput.type = 'text';
-        promoPremiumInput.value = game.promo_premium || '';
-        promoPremiumInput.id = 'promo-premium-input';
-        tabPanel.appendChild(promoPremiumLabel);
-        tabPanel.appendChild(promoPremiumInput);
+        // const promoPremiumLabel = document.createElement('label');
+        // promoPremiumLabel.textContent = 'Промо-код Premium:';
+        // const promoPremiumInput = document.createElement('input');
+        // promoPremiumInput.type = 'text';
+        // promoPremiumInput.value = game.promo_premium || '';
+        // promoPremiumInput.id = 'promo-premium-input';
+        // tabPanel.appendChild(promoPremiumLabel);
+        // tabPanel.appendChild(promoPremiumInput);
 
 
 
-        const installZipLabel = document.createElement('label');
-        installZipLabel.textContent = 'PREMIUM Zip:';
-        const installZipInput = document.createElement('input');
-        installZipInput.type = 'text';
-        installZipInput.value = game.install_zip || '';
-        installZipInput.id = 'install-zip-input';
-        tabPanel.appendChild(installZipLabel);
-        tabPanel.appendChild(installZipInput);
+        // const installZipLabel = document.createElement('label');
+        // installZipLabel.textContent = 'PREMIUM Zip:';
+        // const installZipInput = document.createElement('input');
+        // installZipInput.type = 'text';
+        // installZipInput.value = game.install_zip || '';
+        // installZipInput.id = 'install-zip-input';
+        // tabPanel.appendChild(installZipLabel);
+        // tabPanel.appendChild(installZipInput);
 
 
-        const installZipFreeLabel = document.createElement('label');
-        installZipFreeLabel.textContent = 'LITE Zip:';
-        const installZipFreeInput = document.createElement('input');
-        installZipFreeInput.type = 'text';
-        installZipFreeInput.value = game.install_zip_free || '';
-        installZipFreeInput.id = 'install-zip-free-input';
-        tabPanel.appendChild(installZipFreeLabel);
-        tabPanel.appendChild(installZipFreeInput);
+        // const installZipFreeLabel = document.createElement('label');
+        // installZipFreeLabel.textContent = 'LITE Zip:';
+        // const installZipFreeInput = document.createElement('input');
+        // installZipFreeInput.type = 'text';
+        // installZipFreeInput.value = game.install_zip_free || '';
+        // installZipFreeInput.id = 'install-zip-free-input';
+        // tabPanel.appendChild(installZipFreeLabel);
+        // tabPanel.appendChild(installZipFreeInput);
 
 
 
@@ -379,25 +379,25 @@ document.addEventListener('DOMContentLoaded', () => {
         tabPanel.appendChild(intentInput);
 
 
-        // Создаем поле для priceLite
-        const priceLiteLabel = document.createElement('label');
-        priceLiteLabel.textContent = 'Price Lite:';
-        const priceLiteInput = document.createElement('input');
-        priceLiteInput.type = 'text';
-        priceLiteInput.value = game.priceLite || ''; // Здесь установите значение по умолчанию, если необходимо
-        priceLiteInput.id = 'price-lite-input';
-        tabPanel.appendChild(priceLiteLabel);
-        tabPanel.appendChild(priceLiteInput);
+        // // Создаем поле для priceLite
+        // const priceLiteLabel = document.createElement('label');
+        // priceLiteLabel.textContent = 'Price Lite:';
+        // const priceLiteInput = document.createElement('input');
+        // priceLiteInput.type = 'text';
+        // priceLiteInput.value = game.priceLite || ''; // Здесь установите значение по умолчанию, если необходимо
+        // priceLiteInput.id = 'price-lite-input';
+        // tabPanel.appendChild(priceLiteLabel);
+        // tabPanel.appendChild(priceLiteInput);
 
-        // Создаем поле для pricePremium
-        const pricePremiumLabel = document.createElement('label');
-        pricePremiumLabel.textContent = 'Price Premium:';
-        const pricePremiumInput = document.createElement('input');
-        pricePremiumInput.type = 'text';
-        pricePremiumInput.value = game.pricePremium || ''; // Здесь установите значение по умолчанию, если необходимо
-        pricePremiumInput.id = 'price-premium-input';
-        tabPanel.appendChild(pricePremiumLabel);
-        tabPanel.appendChild(pricePremiumInput);
+        // // Создаем поле для pricePremium
+        // const pricePremiumLabel = document.createElement('label');
+        // pricePremiumLabel.textContent = 'Price Premium:';
+        // const pricePremiumInput = document.createElement('input');
+        // pricePremiumInput.type = 'text';
+        // pricePremiumInput.value = game.pricePremium || ''; // Здесь установите значение по умолчанию, если необходимо
+        // pricePremiumInput.id = 'price-premium-input';
+        // tabPanel.appendChild(pricePremiumLabel);
+        // tabPanel.appendChild(pricePremiumInput);
 
 
 

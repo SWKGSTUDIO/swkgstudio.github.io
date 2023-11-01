@@ -1,7 +1,7 @@
 .custom-html {
   width: 100%;
   height: 100vh;
-  background: linear-gradient(to bottom, #160c2a, #3b1e6c);
+  background: linear-gradient(to top, #2d2047, #462e70);
   margin: 0;
   padding: 0;
   overflow: hidden;
@@ -31,7 +31,7 @@
   animation: slideAnima 190000s linear infinite;
   height: 100vh;
   width: 100%;
-  background: linear-gradient(130deg, #141137, #2f204d 100%), #1f0b43;
+  background: linear-gradient(130deg, #1b0daa, #2f204d 100%), #1f0b43;
 }
 
 .background-tile {
@@ -45,19 +45,47 @@
   background: url("assets/img/tile.webp"), var(--bs-border-color-translucent);
 }
 
+.mt-2 {
+  display: flex;
+  justify-content: space-between;
+}
+
 .game-button,
 .minecraft-button,
 .promocode-button {
+  flex: 1;
   background-color: #542eae;
   color: white;
   font-size: auto;
-  padding: 10px 20px;
   border-radius: 11px;
+  padding: 10px;
   text-decoration: none;
-  transition: transform 0.2s ease-in-out;
+  transition: transform 0.2s ease-in-out, color 0.2s ease-in-out; /* Добавлено свойство color для эффекта при наведении */
   z-index: 999;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  background-image: linear-gradient(to bottom, #7a22ff, #5511cc);
+  margin: 5px;
+  background: linear-gradient(to top, #2d2047, #462e70);
+  cursor: pointer; /* Изменен указатель при наведении */
+}
+
+.game-button::before,
+.minecraft-button::before,
+.promocode-button::before {
+  margin-right: 10px;
+}
+
+.game-button:hover,
+.minecraft-button:hover,
+.promocode-button:hover {
+  transform: scale(1.05); /* Увеличение при наведении */
+  color: white; /* Цвет текста */
+}
+
+.game-button:active,
+.minecraft-button:active,
+.promocode-button:active {
+  transform: scale(1); /* Возвращение к обычному размеру при клике */
+  color: white; /* Цвет текста */
 }
 
 .minecraft-button.disabled {
@@ -65,20 +93,9 @@
   pointer-events: none; /* Отключение событий указателя */
 }
 
-.game-button::before,
-.minecraft-button::before {
-  margin-right: 10px;
-}
-
-.game-button:hover,
-.minecraft-button:hover {
-  transform: scale(1.05); /* Увеличение при наведении */
-  color: white; /* Цвет текста */
-}
-
   .logo-container {
     z-index: 2;
-    background: linear-gradient(to bottom, #160c2a, #3b1e6c);
+    background: linear-gradient(to bottom, #2d2047, #462e70);
     margin-bottom: 20px;
     padding: 20px;
     border-radius: 0 0 25px 25px ;
@@ -102,7 +119,9 @@
   .logo-img {
     height: 80px;
     width: auto;
-    padding: 5px;
+    /* padding: 10px; */
+    /* margin: 10px; */
+    margin-bottom: 20px;
   }
   
   

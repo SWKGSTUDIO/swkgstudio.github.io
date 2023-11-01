@@ -126,12 +126,12 @@
   @keyframes pulse {
     0%, 100% {
         border-image-slice: 1;
-        box-shadow: 0 0 10px rgba(128, 0, 128, 1);
+        box-shadow: 0 0 5px #611a9b;
         border-radius: 40%;
     }
     50% {
         border-image-slice: 1;
-        box-shadow: 0 0 30px rgb(189, 36, 255);
+        box-shadow: 0 0 15px #b96eff;
         border-radius: 30%;
     }
   }

@@ -1,0 +1,212 @@
+<link rel="stylesheet" href="assets/css/GooglePlayGames.css">
+<link rel="stylesheet" href="stylesheet.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700">
+
+
+<div class="row" style="overflow: hidden;">
+    <div class="app-tiles-container mx-auto" id="appTiles"></div>
+    <div class="button-list-container">
+      <div id="list-widget" style="display: none;"></div>
+      <ul class="button-list horizontal" id="list"></ul>
+    </div>
+    <div class="overlay"></div>
+  </div>
+
+
+  <script>
+
+    // function checkAdBlockError() {
+    //   var script = document.createElement('script');
+    //   script.src = 'https://yandex.ru/ads/system/context.js';
+    //   script.onerror = function () {
+    //     // Создание кастомного диалога
+    //     var dialog = document.createElement('div');
+    //     dialog.classList.add('custom-dialog');
+
+    //     var message = document.createElement('p');
+    //     message.textContent = 'You are using an ad blocker.\nPlease disable it to continue using the website.';
+    //     dialog.appendChild(message);
+
+    //     var closeButton = document.createElement('button');
+    //     closeButton.textContent = 'OK';
+    //     closeButton.addEventListener('click', function () {
+    //       // Перезагрузка страницы
+    //       location.reload();
+    //     });
+    //     dialog.appendChild(closeButton);
+
+    //     document.body.appendChild(dialog);
+
+    //     // Показать невидимую панель, блокирующую взаимодействие
+    //     var overlay = document.querySelector('.overlay');
+    //     overlay.style.display = 'block';
+    //   };
+    //   document.body.appendChild(script);
+    // }
+
+    // window.onload = checkAdBlockError;
+
+
+    // function handleTileClick(link, imageSrc, isMobile) {
+    //   if (typeof Ya === "undefined") {
+    //     window.alert('You are using an ad blocker. Please disable it to continue using the website.');
+    //     return;
+    //   }
+    //   showYandexAd(isMobile, () => {
+    //     setTimeout(() => {
+    //       window.open(link, '_blank');
+    //     }, 500);
+    //   });
+    // }
+
+    function showYandexAd(isMobile, callback) {
+      if (typeof Ya === "undefined") {
+        window.alert('You are using an ad blocker. Please disable it to continue using the website.');
+        return;
+      }
+
+      const blockId = isMobile ? 'R-A-2697791-3' : 'R-A-2697791-1';
+
+      if (!isMobile) {
+        Ya.Context.AdvManager.render({
+          blockId: blockId,
+          type: 'fullscreen',
+          platform: 'desktop'
+        });
+      } else {
+        Ya.Context.AdvManager.render({
+          blockId: blockId,
+          type: 'fullscreen',
+          platform: 'touch'
+        });
+      }
+
+      if (callback && typeof callback === 'function') {
+        callback();
+      }
+    }
+
+    function isMobileDevice() {
+      return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    }
+
+    window.yaContextCb = window.yaContextCb || [];
+
+    const apiKey = 'key9kpLHqsdRFXvS2';
+    const baseId = 'appaePimTt1Ji6hSr';
+    const tableName = 'tblivWUpxtGbTszm3';
+
+    fetch(`https://api.airtable.com/v0/${baseId}/${tableName}?api_key=${apiKey}`)
+      .then(response => response.json())
+      .then(data => {
+        console.log('Received data:', data);
+
+        const appTilesContainer = document.getElementById("appTiles");
+
+        data.records.forEach(record => {
+          const fields = record.fields;
+          const appTile = document.createElement("div");
+          appTile.classList.add("app-tile");
+
+          const image = document.createElement("img");
+          image.src = fields.Image;
+
+          const title = document.createElement("div");
+          title.textContent = fields.Title;
+          title.classList.add("app-title");
+
+          appTile.addEventListener('click', () => handleTileClick(fields.URL));
+
+          appTile.appendChild(image);
+          appTile.appendChild(title);
+          appTilesContainer.appendChild(appTile);
+        });
+
+        setTimeout(() => {
+          document.getElementById('list-widget').style.display = 'block';
+        }, 100);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+
+
+    fetch('https://intermediate-easy-ship.glitch.me/games')
+      .then(response => response.json())
+      .then(data => {
+        console.log('Received data:', data);
+
+        const appTilesContainer = document.getElementById("appTiles");
+
+        data.forEach(game => {
+          const appTile = document.createElement("div");
+          appTile.classList.add("app-tile");
+
+          const image = document.createElement("img");
+          image.src = game.image;
+
+          const title = document.createElement("div");
+          title.textContent = game.title;
+          title.classList.add("app-title");
+
+          appTile.addEventListener('click', () => handleTileClick(game.link));
+
+          appTile.appendChild(image);
+          appTile.appendChild(title);
+          appTilesContainer.appendChild(appTile);
+
+          if (game.power === "ON") {
+            const button = document.createElement('button');
+            const img = document.createElement('img');
+            img.src = game.image;
+            img.alt = '';
+            button.appendChild(img);
+
+            button.classList.add('button-on');
+
+            button.addEventListener('click', () => {
+              if (!isMobileDevice()) {
+                Ya.Context.AdvManager.render({
+                  blockId: 'R-A-2697791-1',
+                  type: 'fullscreen',
+                  platform: 'desktop'
+                });
+              } else {
+                Ya.Context.AdvManager.render({
+                  blockId: 'R-A-2697791-3',
+                  type: 'fullscreen',
+                  platform: 'touch'
+                });
+              }
+
+              setTimeout(() => {
+                window.open(game.link, '_blank');
+              }, 2000);
+            });
+
+            const li = document.createElement('li');
+            li.classList.add('hide');
+            li.appendChild(button);
+            list.appendChild(li);
+          } else if (game.power === "OFF") {
+            const button = document.createElement('button');
+            const img = document.createElement('img');
+            img.src = game.image;
+            img.alt = '';
+            button.appendChild(img);
+
+            button.classList.add('button-off');
+            button.disabled = true;
+
+            const li = document.createElement('li');
+            li.classList.add('hide');
+            li.appendChild(button);
+            list.appendChild(li);
+          }
+        });
+      })
+      .catch(error => {
+        console.error('Error fetching app data:', error);
+      });
+
+  </script>
